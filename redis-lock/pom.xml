@@ -13,7 +13,7 @@
     <artifactId>redis-lock</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>test</name>
+    <name>redis-lock</name>
 
     <dependencies>
         <dependency>
