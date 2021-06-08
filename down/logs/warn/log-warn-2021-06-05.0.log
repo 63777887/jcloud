@@ -1,0 +1,333 @@
+2021-06-05 12:51:09.219 [main] WARN  c.a.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[jwk-down.properties] & group[DEFAULT_GROUP]
+2021-06-05 12:51:09.600 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-config' contains invalid characters, please migrate to a valid format.
+2021-06-05 12:51:09.602 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-discovery' contains invalid characters, please migrate to a valid format.
+2021-06-05 12:51:09.748 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2021-06-05 12:51:15.010 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 12:51:15.012 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 12:51:15.208 [main] WARN  o.a.r.s.autoconfigure.RocketMQAutoConfiguration - The necessary spring property 'rocketmq.name-server' is not defined, all rockertmq beans creation are skipped!
+2021-06-05 12:51:15.482 [main] WARN  com.jwk.down.conf.NacosConfig - 获取tomcat外部端口失败
+2021-06-05 12:52:35.498 [main] WARN  c.a.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[jwk-down.properties] & group[DEFAULT_GROUP]
+2021-06-05 12:52:35.865 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-config' contains invalid characters, please migrate to a valid format.
+2021-06-05 12:52:35.868 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-discovery' contains invalid characters, please migrate to a valid format.
+2021-06-05 12:52:36.011 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2021-06-05 12:52:41.093 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 12:52:41.095 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 12:52:41.272 [main] WARN  o.a.r.s.autoconfigure.RocketMQAutoConfiguration - The necessary spring property 'rocketmq.name-server' is not defined, all rockertmq beans creation are skipped!
+2021-06-05 12:52:41.552 [main] WARN  com.jwk.down.conf.NacosConfig - 获取tomcat外部端口失败
+2021-06-05 12:55:53.365 [main] WARN  c.a.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[jwk-down.properties] & group[DEFAULT_GROUP]
+2021-06-05 12:55:53.730 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-config' contains invalid characters, please migrate to a valid format.
+2021-06-05 12:55:53.732 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-discovery' contains invalid characters, please migrate to a valid format.
+2021-06-05 12:55:53.866 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2021-06-05 12:55:59.746 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 12:55:59.748 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 12:55:59.933 [main] WARN  o.a.r.s.autoconfigure.RocketMQAutoConfiguration - The necessary spring property 'rocketmq.name-server' is not defined, all rockertmq beans creation are skipped!
+2021-06-05 12:56:00.222 [main] WARN  com.jwk.down.conf.NacosConfig - 获取tomcat外部端口失败
+2021-06-05 12:56:20.554 [main] WARN  c.a.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[jwk-down.properties] & group[DEFAULT_GROUP]
+2021-06-05 12:56:20.914 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-config' contains invalid characters, please migrate to a valid format.
+2021-06-05 12:56:20.916 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-discovery' contains invalid characters, please migrate to a valid format.
+2021-06-05 12:56:21.054 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2021-06-05 12:56:26.758 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 12:56:26.760 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 12:56:26.942 [main] WARN  o.a.r.s.autoconfigure.RocketMQAutoConfiguration - The necessary spring property 'rocketmq.name-server' is not defined, all rockertmq beans creation are skipped!
+2021-06-05 12:56:27.242 [main] WARN  com.jwk.down.conf.NacosConfig - 获取tomcat外部端口失败
+2021-06-05 12:56:43.077 [main] WARN  c.a.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[jwk-down.properties] & group[DEFAULT_GROUP]
+2021-06-05 12:56:43.467 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-config' contains invalid characters, please migrate to a valid format.
+2021-06-05 12:56:43.469 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-discovery' contains invalid characters, please migrate to a valid format.
+2021-06-05 12:56:43.609 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2021-06-05 12:56:49.385 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 12:56:49.387 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 12:56:49.583 [main] WARN  o.a.r.s.autoconfigure.RocketMQAutoConfiguration - The necessary spring property 'rocketmq.name-server' is not defined, all rockertmq beans creation are skipped!
+2021-06-05 12:56:49.884 [main] WARN  com.jwk.down.conf.NacosConfig - 获取tomcat外部端口失败
+2021-06-05 13:01:14.672 [main] WARN  c.a.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[jwk-down.properties] & group[DEFAULT_GROUP]
+2021-06-05 13:01:15.043 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-config' contains invalid characters, please migrate to a valid format.
+2021-06-05 13:01:15.046 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-discovery' contains invalid characters, please migrate to a valid format.
+2021-06-05 13:01:15.190 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2021-06-05 13:01:22.317 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 13:01:22.319 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 13:01:22.500 [main] WARN  o.a.r.s.autoconfigure.RocketMQAutoConfiguration - The necessary spring property 'rocketmq.name-server' is not defined, all rockertmq beans creation are skipped!
+2021-06-05 13:01:22.814 [main] WARN  com.jwk.down.conf.NacosConfig - 获取tomcat外部端口失败
+2021-06-05 13:23:32.441 [main] WARN  c.a.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[jwk-down.properties] & group[DEFAULT_GROUP]
+2021-06-05 13:23:32.793 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-config' contains invalid characters, please migrate to a valid format.
+2021-06-05 13:23:32.795 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-discovery' contains invalid characters, please migrate to a valid format.
+2021-06-05 13:23:32.934 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2021-06-05 13:23:40.018 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 13:23:40.020 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 13:23:40.207 [main] WARN  o.a.r.s.autoconfigure.RocketMQAutoConfiguration - The necessary spring property 'rocketmq.name-server' is not defined, all rockertmq beans creation are skipped!
+2021-06-05 13:23:40.522 [main] WARN  com.jwk.down.conf.NacosConfig - 获取tomcat外部端口失败
+2021-06-05 13:30:21.764 [main] WARN  c.a.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[jwk-down.properties] & group[DEFAULT_GROUP]
+2021-06-05 13:30:22.125 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-config' contains invalid characters, please migrate to a valid format.
+2021-06-05 13:30:22.127 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-discovery' contains invalid characters, please migrate to a valid format.
+2021-06-05 13:30:22.273 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2021-06-05 13:30:33.375 [main] WARN  c.a.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[jwk-down.properties] & group[DEFAULT_GROUP]
+2021-06-05 13:30:33.741 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-config' contains invalid characters, please migrate to a valid format.
+2021-06-05 13:30:33.744 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-discovery' contains invalid characters, please migrate to a valid format.
+2021-06-05 13:30:33.881 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2021-06-05 13:30:41.162 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 13:30:41.164 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 13:30:41.352 [main] WARN  o.a.r.s.autoconfigure.RocketMQAutoConfiguration - The necessary spring property 'rocketmq.name-server' is not defined, all rockertmq beans creation are skipped!
+2021-06-05 13:30:41.715 [main] WARN  com.jwk.down.conf.NacosConfig - 获取tomcat外部端口失败
+2021-06-05 13:45:51.439 [main] WARN  c.a.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[jwk-down.properties] & group[DEFAULT_GROUP]
+2021-06-05 13:45:52.484 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-config' contains invalid characters, please migrate to a valid format.
+2021-06-05 13:45:52.531 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-discovery' contains invalid characters, please migrate to a valid format.
+2021-06-05 13:45:56.269 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2021-06-05 13:46:24.335 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 13:46:24.355 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 13:46:25.122 [main] WARN  o.a.r.s.autoconfigure.RocketMQAutoConfiguration - The necessary spring property 'rocketmq.name-server' is not defined, all rockertmq beans creation are skipped!
+2021-06-05 13:46:25.471 [main] WARN  com.jwk.down.conf.NacosConfig - 获取tomcat外部端口失败
+2021-06-05 13:47:16.182 [main] WARN  c.a.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[jwk-down.properties] & group[DEFAULT_GROUP]
+2021-06-05 13:47:16.542 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-config' contains invalid characters, please migrate to a valid format.
+2021-06-05 13:47:16.547 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-discovery' contains invalid characters, please migrate to a valid format.
+2021-06-05 13:47:16.706 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2021-06-05 13:47:23.963 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 13:47:23.966 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 13:47:24.164 [main] WARN  o.a.r.s.autoconfigure.RocketMQAutoConfiguration - The necessary spring property 'rocketmq.name-server' is not defined, all rockertmq beans creation are skipped!
+2021-06-05 13:47:24.483 [main] WARN  com.jwk.down.conf.NacosConfig - 获取tomcat外部端口失败
+2021-06-05 13:48:49.336 [main] WARN  c.a.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[jwk-down.properties] & group[DEFAULT_GROUP]
+2021-06-05 13:48:49.712 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-config' contains invalid characters, please migrate to a valid format.
+2021-06-05 13:48:49.714 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-discovery' contains invalid characters, please migrate to a valid format.
+2021-06-05 13:48:49.853 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2021-06-05 13:48:56.797 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 13:48:56.800 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 13:48:56.979 [main] WARN  o.a.r.s.autoconfigure.RocketMQAutoConfiguration - The necessary spring property 'rocketmq.name-server' is not defined, all rockertmq beans creation are skipped!
+2021-06-05 13:48:57.330 [main] WARN  com.jwk.down.conf.NacosConfig - 获取tomcat外部端口失败
+2021-06-05 13:49:26.749 [main] WARN  c.a.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[jwk-down.properties] & group[DEFAULT_GROUP]
+2021-06-05 13:49:27.083 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-config' contains invalid characters, please migrate to a valid format.
+2021-06-05 13:49:27.085 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-discovery' contains invalid characters, please migrate to a valid format.
+2021-06-05 13:49:27.230 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2021-06-05 13:49:34.208 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 13:49:34.210 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 13:49:34.390 [main] WARN  o.a.r.s.autoconfigure.RocketMQAutoConfiguration - The necessary spring property 'rocketmq.name-server' is not defined, all rockertmq beans creation are skipped!
+2021-06-05 13:49:34.737 [main] WARN  com.jwk.down.conf.NacosConfig - 获取tomcat外部端口失败
+2021-06-05 13:53:12.491 [main] WARN  c.a.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[jwk-down.properties] & group[DEFAULT_GROUP]
+2021-06-05 13:53:12.868 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-config' contains invalid characters, please migrate to a valid format.
+2021-06-05 13:53:12.871 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-discovery' contains invalid characters, please migrate to a valid format.
+2021-06-05 13:53:13.015 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2021-06-05 13:53:20.175 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 13:53:20.177 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 13:53:20.357 [main] WARN  o.a.r.s.autoconfigure.RocketMQAutoConfiguration - The necessary spring property 'rocketmq.name-server' is not defined, all rockertmq beans creation are skipped!
+2021-06-05 13:53:20.693 [main] WARN  com.jwk.down.conf.NacosConfig - 获取tomcat外部端口失败
+2021-06-05 13:53:58.886 [main] WARN  c.a.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[jwk-down.properties] & group[DEFAULT_GROUP]
+2021-06-05 13:53:59.233 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-config' contains invalid characters, please migrate to a valid format.
+2021-06-05 13:53:59.235 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-discovery' contains invalid characters, please migrate to a valid format.
+2021-06-05 13:53:59.379 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2021-06-05 13:54:06.693 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 13:54:06.695 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 13:54:06.876 [main] WARN  o.a.r.s.autoconfigure.RocketMQAutoConfiguration - The necessary spring property 'rocketmq.name-server' is not defined, all rockertmq beans creation are skipped!
+2021-06-05 13:54:07.205 [main] WARN  com.jwk.down.conf.NacosConfig - 获取tomcat外部端口失败
+2021-06-05 13:55:48.118 [main] WARN  c.a.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[jwk-down.properties] & group[DEFAULT_GROUP]
+2021-06-05 13:55:48.567 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-config' contains invalid characters, please migrate to a valid format.
+2021-06-05 13:55:48.573 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-discovery' contains invalid characters, please migrate to a valid format.
+2021-06-05 13:55:48.753 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2021-06-05 13:55:56.333 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 13:55:56.340 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 13:55:56.637 [main] WARN  o.a.r.s.autoconfigure.RocketMQAutoConfiguration - The necessary spring property 'rocketmq.name-server' is not defined, all rockertmq beans creation are skipped!
+2021-06-05 13:55:57.045 [main] WARN  com.jwk.down.conf.NacosConfig - 获取tomcat外部端口失败
+2021-06-05 13:57:42.932 [main] WARN  c.a.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[jwk-down.properties] & group[DEFAULT_GROUP]
+2021-06-05 13:57:43.410 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-config' contains invalid characters, please migrate to a valid format.
+2021-06-05 13:57:43.412 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-discovery' contains invalid characters, please migrate to a valid format.
+2021-06-05 13:57:43.590 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2021-06-05 13:57:51.145 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 13:57:51.149 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 13:57:51.433 [main] WARN  o.a.r.s.autoconfigure.RocketMQAutoConfiguration - The necessary spring property 'rocketmq.name-server' is not defined, all rockertmq beans creation are skipped!
+2021-06-05 13:57:51.863 [main] WARN  com.jwk.down.conf.NacosConfig - 获取tomcat外部端口失败
+2021-06-05 14:01:06.559 [com.alibaba.nacos.client.Worker.longPolling.fixed-8.210.233.50_8848] WARN  c.a.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[jwk-down.properties] & group[DEFAULT_GROUP]
+2021-06-05 14:01:21.536 [main] WARN  c.a.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[jwk-down.properties] & group[DEFAULT_GROUP]
+2021-06-05 14:01:22.012 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-config' contains invalid characters, please migrate to a valid format.
+2021-06-05 14:01:22.015 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-discovery' contains invalid characters, please migrate to a valid format.
+2021-06-05 14:01:22.216 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2021-06-05 14:01:30.395 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 14:01:30.401 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 14:01:30.708 [main] WARN  o.a.r.s.autoconfigure.RocketMQAutoConfiguration - The necessary spring property 'rocketmq.name-server' is not defined, all rockertmq beans creation are skipped!
+2021-06-05 14:01:31.020 [main] WARN  com.alibaba.nacos.client.naming - failed to request http://localhost:8848/nacos/v1/ns/instance?app=unknown&metadata=%7B%22preserved.register.source%22%3A%22SPRING_CLOUD%22%7D&ip=192.168.0.106&weight=1.0&ephemeral=true&serviceName=DEFAULT_GROUP%40%40jwk-down&encoding=UTF-8&groupName=DEFAULT_GROUP&namespaceId=public&port=8090&enable=true&healthy=true&clusterName=DEFAULT from 127.0.0.1
+2021-06-05 14:01:31.021 [main] WARN  com.alibaba.nacos.client.naming - failed to request http://localhost:8848/nacos/v1/ns/instance?app=unknown&metadata=%7B%22preserved.register.source%22%3A%22SPRING_CLOUD%22%7D&ip=192.168.0.106&weight=1.0&ephemeral=true&serviceName=DEFAULT_GROUP%40%40jwk-down&encoding=UTF-8&groupName=DEFAULT_GROUP&namespaceId=public&port=8090&enable=true&healthy=true&clusterName=DEFAULT from 127.0.0.1
+2021-06-05 14:01:31.022 [main] WARN  com.alibaba.nacos.client.naming - failed to request http://localhost:8848/nacos/v1/ns/instance?app=unknown&metadata=%7B%22preserved.register.source%22%3A%22SPRING_CLOUD%22%7D&ip=192.168.0.106&weight=1.0&ephemeral=true&serviceName=DEFAULT_GROUP%40%40jwk-down&encoding=UTF-8&groupName=DEFAULT_GROUP&namespaceId=public&port=8090&enable=true&healthy=true&clusterName=DEFAULT from 127.0.0.1
+2021-06-05 14:01:31.023 [main] WARN  com.alibaba.nacos.client.naming - failed to request http://localhost:8848/nacos/v1/ns/instance?app=unknown&metadata=%7B%22preserved.register.source%22%3A%22SPRING_CLOUD%22%7D&ip=192.168.0.106&weight=1.0&ephemeral=true&serviceName=DEFAULT_GROUP%40%40jwk-down&encoding=UTF-8&groupName=DEFAULT_GROUP&namespaceId=public&port=8090&enable=true&healthy=true&clusterName=DEFAULT from 127.0.0.1
+2021-06-05 14:01:31.038 [main] WARN  org.apache.catalina.loader.WebappClassLoaderBase - The web application [ROOT] appears to have started a thread named [spring.cloud.inetutils] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ sun.misc.Unsafe.park(Native Method)
+ java.util.concurrent.locks.LockSupport.park(LockSupport.java:175)
+ java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2044)
+ java.util.concurrent.LinkedBlockingQueue.take(LinkedBlockingQueue.java:442)
+ java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1074)
+ java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1134)
+ java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+ java.lang.Thread.run(Thread.java:748)
+2021-06-05 14:01:31.038 [main] WARN  org.apache.catalina.loader.WebappClassLoaderBase - The web application [ROOT] appears to have started a thread named [com.alibaba.nacos.naming.client.listener] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ sun.misc.Unsafe.park(Native Method)
+ java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:215)
+ java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2083)
+ java.util.concurrent.LinkedBlockingQueue.poll(LinkedBlockingQueue.java:467)
+ com.alibaba.nacos.client.naming.core.EventDispatcher$Notifier.run(EventDispatcher.java:118)
+ java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+ java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+ java.lang.Thread.run(Thread.java:748)
+2021-06-05 14:01:31.038 [main] WARN  org.apache.catalina.loader.WebappClassLoaderBase - The web application [ROOT] appears to have started a thread named [com.alibaba.nacos.client.naming.updater] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ sun.misc.Unsafe.park(Native Method)
+ java.util.concurrent.locks.LockSupport.park(LockSupport.java:175)
+ java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2044)
+ java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1088)
+ java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:809)
+ java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1074)
+ java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1134)
+ java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+ java.lang.Thread.run(Thread.java:748)
+2021-06-05 14:01:31.038 [main] WARN  org.apache.catalina.loader.WebappClassLoaderBase - The web application [ROOT] appears to have started a thread named [com.alibaba.nacos.client.naming.updater] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ sun.misc.Unsafe.park(Native Method)
+ java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:215)
+ java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2083)
+ java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1093)
+ java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:809)
+ java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1074)
+ java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1134)
+ java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+ java.lang.Thread.run(Thread.java:748)
+2021-06-05 14:01:31.038 [main] WARN  org.apache.catalina.loader.WebappClassLoaderBase - The web application [ROOT] appears to have started a thread named [com.alibaba.nacos.naming.failover] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ sun.misc.Unsafe.park(Native Method)
+ java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:215)
+ java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2083)
+ java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1093)
+ java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:809)
+ java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1074)
+ java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1134)
+ java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+ java.lang.Thread.run(Thread.java:748)
+2021-06-05 14:01:31.039 [main] WARN  org.apache.catalina.loader.WebappClassLoaderBase - The web application [ROOT] appears to have started a thread named [com.alibaba.nacos.naming.push.receiver] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ java.net.PlainDatagramSocketImpl.receive0(Native Method)
+ java.net.AbstractPlainDatagramSocketImpl.receive(AbstractPlainDatagramSocketImpl.java:143)
+ java.net.DatagramSocket.receive(DatagramSocket.java:812)
+ com.alibaba.nacos.client.naming.core.PushReceiver.run(PushReceiver.java:73)
+ java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+ java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:266)
+ java.util.concurrent.FutureTask.run(FutureTask.java)
+ java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:180)
+ java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)
+ java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+ java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+ java.lang.Thread.run(Thread.java:748)
+2021-06-05 14:01:31.039 [main] WARN  org.apache.catalina.loader.WebappClassLoaderBase - The web application [ROOT] appears to have started a thread named [Druid-ConnectionPool-Create-1365611185] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ sun.misc.Unsafe.park(Native Method)
+ java.util.concurrent.locks.LockSupport.park(LockSupport.java:175)
+ java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2044)
+ com.alibaba.druid.pool.DruidDataSource$CreateConnectionThread.run(DruidDataSource.java:2443)
+2021-06-05 14:01:31.039 [main] WARN  org.apache.catalina.loader.WebappClassLoaderBase - The web application [ROOT] appears to have started a thread named [Druid-ConnectionPool-Destroy-1365611185] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ java.lang.Thread.sleep(Native Method)
+ com.alibaba.druid.pool.DruidDataSource$DestroyConnectionThread.run(DruidDataSource.java:2540)
+2021-06-05 14:01:31.055 [main] WARN  o.s.beans.factory.support.DisposableBeanAdapter - Invocation of destroy method failed on bean with name 'tomcatMetricsBinder'
+java.lang.NullPointerException: null
+	at org.springframework.boot.actuate.metrics.web.tomcat.TomcatMetricsBinder.destroy(TomcatMetricsBinder.java:89)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:258)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroyBean(DefaultSingletonBeanRegistry.java:571)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingleton(DefaultSingletonBeanRegistry.java:543)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingleton(DefaultListableBeanFactory.java:1072)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingletons(DefaultSingletonBeanRegistry.java:504)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingletons(DefaultListableBeanFactory.java:1065)
+	at org.springframework.context.support.AbstractApplicationContext.destroyBeans(AbstractApplicationContext.java:1060)
+	at org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:1029)
+	at org.springframework.context.support.AbstractApplicationContext.close(AbstractApplicationContext.java:978)
+	at org.springframework.boot.builder.ParentContextCloserApplicationListener$ContextCloserListener.onApplicationEvent(ParentContextCloserApplicationListener.java:94)
+	at org.springframework.boot.builder.ParentContextCloserApplicationListener$ContextCloserListener.onApplicationEvent(ParentContextCloserApplicationListener.java:82)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:172)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:165)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:139)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:403)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:360)
+	at org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:1012)
+	at org.springframework.context.support.AbstractApplicationContext.close(AbstractApplicationContext.java:978)
+	at org.springframework.cloud.bootstrap.BootstrapApplicationListener$CloseContextOnFailureApplicationListener.onApplicationEvent(BootstrapApplicationListener.java:531)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:172)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:165)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:139)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:403)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:360)
+	at org.springframework.boot.context.event.EventPublishingRunListener.failed(EventPublishingRunListener.java:112)
+	at org.springframework.boot.SpringApplicationRunListeners.callFailedListener(SpringApplicationRunListeners.java:90)
+	at org.springframework.boot.SpringApplicationRunListeners.failed(SpringApplicationRunListeners.java:83)
+	at org.springframework.boot.SpringApplication.handleRunFailure(SpringApplication.java:797)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:325)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1226)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1215)
+	at com.jwk.down.DownApplication.main(DownApplication.java:16)
+2021-06-05 14:02:10.569 [main] WARN  c.a.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[jwk-down.properties] & group[DEFAULT_GROUP]
+2021-06-05 14:02:11.018 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-config' contains invalid characters, please migrate to a valid format.
+2021-06-05 14:02:11.020 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-discovery' contains invalid characters, please migrate to a valid format.
+2021-06-05 14:02:11.206 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2021-06-05 14:02:18.855 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 14:02:18.859 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 14:02:19.143 [main] WARN  o.a.r.s.autoconfigure.RocketMQAutoConfiguration - The necessary spring property 'rocketmq.name-server' is not defined, all rockertmq beans creation are skipped!
+2021-06-05 14:02:19.544 [main] WARN  com.jwk.down.conf.NacosConfig - 获取tomcat外部端口失败
+2021-06-05 14:06:29.665 [main] WARN  c.a.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[jwk-down.properties] & group[DEFAULT_GROUP]
+2021-06-05 14:06:30.758 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-config' contains invalid characters, please migrate to a valid format.
+2021-06-05 14:06:30.807 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-discovery' contains invalid characters, please migrate to a valid format.
+2021-06-05 14:06:33.766 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2021-06-05 14:07:00.215 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 14:07:00.242 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 14:07:03.865 [main] WARN  o.a.r.s.autoconfigure.RocketMQAutoConfiguration - The necessary spring property 'rocketmq.name-server' is not defined, all rockertmq beans creation are skipped!
+2021-06-05 14:07:08.245 [main] WARN  com.jwk.down.conf.NacosConfig - 获取tomcat外部端口失败
+2021-06-05 14:09:48.924 [main] WARN  c.a.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[jwk-down.properties] & group[DEFAULT_GROUP]
+2021-06-05 14:09:50.051 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-config' contains invalid characters, please migrate to a valid format.
+2021-06-05 14:09:50.099 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-discovery' contains invalid characters, please migrate to a valid format.
+2021-06-05 14:09:52.105 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2021-06-05 14:09:55.639 [main] WARN  c.a.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[jwk-down.properties] & group[DEFAULT_GROUP]
+2021-06-05 14:09:56.703 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-config' contains invalid characters, please migrate to a valid format.
+2021-06-05 14:09:56.750 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-discovery' contains invalid characters, please migrate to a valid format.
+2021-06-05 14:09:59.721 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2021-06-05 14:10:08.374 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 14:10:08.383 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 14:10:08.789 [main] WARN  o.a.r.s.autoconfigure.RocketMQAutoConfiguration - The necessary spring property 'rocketmq.name-server' is not defined, all rockertmq beans creation are skipped!
+2021-06-05 14:10:09.197 [main] WARN  com.jwk.down.conf.NacosConfig - 获取tomcat外部端口失败
+2021-06-05 14:14:18.301 [main] WARN  c.a.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[jwk-down.properties] & group[DEFAULT_GROUP]
+2021-06-05 14:14:19.359 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-config' contains invalid characters, please migrate to a valid format.
+2021-06-05 14:14:19.406 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-discovery' contains invalid characters, please migrate to a valid format.
+2021-06-05 14:14:22.352 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2021-06-05 14:14:44.317 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 14:14:44.325 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 14:14:44.649 [main] WARN  o.a.r.s.autoconfigure.RocketMQAutoConfiguration - The necessary spring property 'rocketmq.name-server' is not defined, all rockertmq beans creation are skipped!
+2021-06-05 14:14:45.122 [main] WARN  com.jwk.down.conf.NacosConfig - 获取tomcat外部端口失败
+2021-06-05 17:23:33.509 [main] WARN  c.a.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[jwk-down.properties] & group[DEFAULT_GROUP]
+2021-06-05 17:23:33.996 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-config' contains invalid characters, please migrate to a valid format.
+2021-06-05 17:23:34.000 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-discovery' contains invalid characters, please migrate to a valid format.
+2021-06-05 17:23:34.198 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2021-06-05 17:23:40.911 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 17:23:40.917 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 17:23:41.285 [main] WARN  o.a.r.s.autoconfigure.RocketMQAutoConfiguration - The necessary spring property 'rocketmq.name-server' is not defined, all rockertmq beans creation are skipped!
+2021-06-05 17:23:41.777 [main] WARN  com.jwk.down.conf.NacosConfig - 获取tomcat外部端口失败
+2021-06-05 17:24:17.461 [main] WARN  c.a.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[jwk-down.properties] & group[DEFAULT_GROUP]
+2021-06-05 17:24:17.908 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-config' contains invalid characters, please migrate to a valid format.
+2021-06-05 17:24:17.912 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-discovery' contains invalid characters, please migrate to a valid format.
+2021-06-05 17:24:18.092 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2021-06-05 17:24:24.749 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 17:24:24.754 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 17:24:25.051 [main] WARN  o.a.r.s.autoconfigure.RocketMQAutoConfiguration - The necessary spring property 'rocketmq.name-server' is not defined, all rockertmq beans creation are skipped!
+2021-06-05 17:24:25.462 [main] WARN  com.jwk.down.conf.NacosConfig - 获取tomcat外部端口失败
+2021-06-05 17:26:25.398 [com.alibaba.nacos.client.Worker.longPolling.fixed-8.210.233.50_8848] WARN  c.a.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[jwk-down.properties] & group[DEFAULT_GROUP]
+2021-06-05 17:26:41.606 [main] WARN  c.a.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[jwk-down.properties] & group[DEFAULT_GROUP]
+2021-06-05 17:26:42.060 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-config' contains invalid characters, please migrate to a valid format.
+2021-06-05 17:26:42.063 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-discovery' contains invalid characters, please migrate to a valid format.
+2021-06-05 17:26:42.242 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2021-06-05 17:26:48.370 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 17:26:48.375 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 17:26:48.668 [main] WARN  o.a.r.s.autoconfigure.RocketMQAutoConfiguration - The necessary spring property 'rocketmq.name-server' is not defined, all rockertmq beans creation are skipped!
+2021-06-05 17:26:49.074 [main] WARN  com.jwk.down.conf.NacosConfig - 获取tomcat外部端口失败
+2021-06-05 17:36:20.754 [main] WARN  c.a.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[jwk-down.properties] & group[DEFAULT_GROUP]
+2021-06-05 17:36:21.228 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-config' contains invalid characters, please migrate to a valid format.
+2021-06-05 17:36:21.232 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-discovery' contains invalid characters, please migrate to a valid format.
+2021-06-05 17:36:21.402 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2021-06-05 17:36:30.130 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 17:36:30.136 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 17:36:30.440 [main] WARN  o.a.r.s.autoconfigure.RocketMQAutoConfiguration - The necessary spring property 'rocketmq.name-server' is not defined, all rockertmq beans creation are skipped!
+2021-06-05 17:36:30.869 [main] WARN  com.jwk.down.conf.NacosConfig - 获取tomcat外部端口失败
+2021-06-05 18:05:59.653 [main] WARN  c.a.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[jwk-down.properties] & group[DEFAULT_GROUP]
+2021-06-05 18:06:00.093 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-config' contains invalid characters, please migrate to a valid format.
+2021-06-05 18:06:00.097 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-discovery' contains invalid characters, please migrate to a valid format.
+2021-06-05 18:06:00.275 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2021-06-05 18:06:06.699 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 18:06:06.705 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 18:06:07.041 [main] WARN  o.a.r.s.autoconfigure.RocketMQAutoConfiguration - The necessary spring property 'rocketmq.name-server' is not defined, all rockertmq beans creation are skipped!
+2021-06-05 18:06:07.452 [main] WARN  com.jwk.down.conf.NacosConfig - 获取tomcat外部端口失败
+2021-06-05 18:08:05.065 [main] WARN  c.a.cloud.nacos.client.NacosPropertySourceBuilder - Ignore the empty nacos configuration and get it based on dataId[jwk-down.properties] & group[DEFAULT_GROUP]
+2021-06-05 18:08:05.532 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-config' contains invalid characters, please migrate to a valid format.
+2021-06-05 18:08:05.534 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'nacos-discovery' contains invalid characters, please migrate to a valid format.
+2021-06-05 18:08:05.717 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2021-06-05 18:08:13.826 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 18:08:13.832 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-06-05 18:08:14.126 [main] WARN  o.a.r.s.autoconfigure.RocketMQAutoConfiguration - The necessary spring property 'rocketmq.name-server' is not defined, all rockertmq beans creation are skipped!
+2021-06-05 18:08:14.558 [main] WARN  com.jwk.down.conf.NacosConfig - 获取tomcat外部端口失败
