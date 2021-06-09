@@ -1,3 +1,4 @@
 /.idea/
 /my-gateway/target/
 /logs/
+/jwk-gateway/target/
