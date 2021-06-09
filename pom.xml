@@ -5,9 +5,9 @@
     <modules>
         <module>redis-lock</module>
         <module>test-thread</module>
-        <module>down</module>
+        <module>jwk-security</module>
         <module>webmagic</module>
-        <module>my-gateway</module>
+        <module>jwk-gateway</module>
     </modules>
 
 
