@@ -27,10 +27,10 @@ public class RestResponse implements Serializable {
   @JsonProperty("data")
   private Object result;
 
-  @JsonProperty("message")
-  public String getMessage() {
-    return this.msg;
-  }
+//  @JsonProperty("message")
+//  public String getMessage() {
+//    return this.msg;
+//  }
 
   private RestResponse() {
   }
