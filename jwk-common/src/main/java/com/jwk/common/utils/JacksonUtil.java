@@ -3,7 +3,7 @@
 // (powered by FernFlower decompiler)
 //
 
-package com.jwk.security.util;
+package com.jwk.common.utils;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonProcessingException;

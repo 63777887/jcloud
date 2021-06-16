@@ -1,6 +1,6 @@
 package com.jwk.security.exception;
 
-import com.jwk.security.common.RestResponse;
+import com.jwk.common.model.RestResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.BindException;

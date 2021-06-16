@@ -3,12 +3,12 @@
 // (powered by FernFlower decompiler)
 //
 
-package com.jwk.security.common;
+package com.jwk.common.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreType;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.jwk.security.util.JacksonUtil;
+import com.jwk.common.utils.JacksonUtil;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;

@@ -8,6 +8,8 @@
         <module>jwk-security</module>
         <module>webmagic</module>
         <module>jwk-gateway</module>
+        <module>jwk-common</module>
+        <module>jwk-test</module>
     </modules>
 
 
@@ -26,12 +28,11 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <druid.version>1.0.11</druid.version>
-        <aspectjweaver.version>1.6.11</aspectjweaver.version>
-        <cglib.version>3.1</cglib.version>
-        <mybatis-ehcache-version>1.0.2</mybatis-ehcache-version>
-        <mysql.version>5.1.44</mysql.version>
-        <fastjson.version>1.2.58</fastjson.version>
+        <fastjson.version>1.2.73</fastjson.version>
+        <hutool-all.version>5.4.2</hutool-all.version>
+        <lombok.version>1.18.12</lombok.version>
+        <jjwt.version>0.9.1</jjwt.version>
+        <log4j.version>1.2.17</log4j.version>
     </properties>
 
 
@@ -65,6 +66,38 @@
                 <version>Hoxton.SR3</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <!--        工具类-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool-all.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jjwt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <version>${log4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

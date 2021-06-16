@@ -1,7 +1,7 @@
 package com.jwk.security.web.controller;
 
 
-import com.jwk.security.common.RestResponse;
+import com.jwk.common.model.RestResponse;
 import com.jwk.security.web.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

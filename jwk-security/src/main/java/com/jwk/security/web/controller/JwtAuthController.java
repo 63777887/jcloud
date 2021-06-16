@@ -1,6 +1,6 @@
 package com.jwk.security.web.controller;
 
-import com.jwk.security.common.RestResponse;
+import com.jwk.common.model.RestResponse;
 import com.jwk.security.security.service.impl.JwtAuthService;
 import com.jwk.security.web.dto.RegisterReq;
 import java.util.Map;

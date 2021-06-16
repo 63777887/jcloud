@@ -1,7 +1,7 @@
 package com.jwk.security.web.controller;
 
 
-import com.jwk.security.common.RestResponse;
+import com.jwk.common.model.RestResponse;
 import com.jwk.security.web.entity.SysApi;
 import com.jwk.security.web.service.SysApiService;
 import java.util.List;
