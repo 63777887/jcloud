@@ -28,6 +28,13 @@
       </dependency>
 
 
+      <dependency>
+        <groupId>com.jwk</groupId>
+        <artifactId>jwk-api</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+      </dependency>
+
+
 <!--        springboot相关依赖-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

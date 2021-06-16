@@ -8,7 +8,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableScheduling
 @MapperScan("com.jwk.security.web.dao")
 public class JwkSecurityApplication {
 

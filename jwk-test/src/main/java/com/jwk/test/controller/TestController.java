@@ -1,18 +1,23 @@
 package com.jwk.test.controller;
 
 import com.jwk.common.model.RestResponse;
+import com.jwk.test.service.inner.TestService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/web/advertise")
+@RequestMapping("/web")
 public class TestController {
 
-  @GetMapping("/test")
-  public RestResponse advertiseList(){
+  @Autowired
+  private TestService testService;
 
-    return RestResponse.RestResponseBuilder.createSuccessBuilder().buidler();
+  @GetMapping("/test")
+  public RestResponse advertiseList(Long id){
+
+    return RestResponse.RestResponseBuilder.createSuccessBuilder().setResult(testService.queryBrandListByOrganId(id)).buidler();
   }
 
 }

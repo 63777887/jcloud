@@ -10,6 +10,7 @@
         <module>jwk-gateway</module>
         <module>jwk-common</module>
         <module>jwk-test</module>
+        <module>jwk-api</module>
     </modules>
 
 
