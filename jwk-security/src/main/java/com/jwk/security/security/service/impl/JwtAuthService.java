@@ -1,11 +1,11 @@
 package com.jwk.security.security.service.impl;
 
 import cn.hutool.core.convert.Convert;
+import com.jwk.common.utils.DateHelper;
 import com.jwk.security.constants.SecurityConstant;
 import com.jwk.security.exception.ServiceException;
 import com.jwk.security.enums.StatusE;
 import com.jwk.security.security.service.TokenService;
-import com.jwk.security.util.DateHelper;
 import com.jwk.security.web.dto.RegisterReq;
 import com.jwk.security.web.entity.SysUser;
 import com.jwk.security.web.service.SysUserService;
@@ -66,7 +66,7 @@ public class JwtAuthService {
   }
 
 
-  public void register(@Valid RegisterReq user) {
+  public void register( RegisterReq user) {
     List<SysUser> allUser = sysUserService.list();
     allUser.forEach(t->{
       if (user.getPhone().equals(t.getPhone())){

@@ -15,7 +15,7 @@ public interface TestService {
      * @return
      */
     @GetMapping("/inner/test")
-    String queryBrandListByOrganId(@Valid @RequestParam("id") Long id)throws InternalApiException;
+    String getId(@Valid @RequestParam("id") Long id)throws InternalApiException;
 
 
 }

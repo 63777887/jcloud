@@ -1,0 +1,41 @@
+server:
+  port: 9100
+
+# 网关地址
+gateway-uri: 127.0.0.1:8091
+knife4j:
+  enableAggregation: true
+  cloud:
+    enable: true
+    routes:
+      - name: 测试服务
+        uri: ${gateway-uri}
+        location: /v2/api-docs?group=jwk-test
+        swaggerVersion: 2.0
+#      - name: 运维小程序服务
+#        uri: ${gateway-uri}
+#        location: /op/v2/api-docs
+#      - name: 统计服务
+#        uri: ${gateway-uri}
+#        location: /statistics/v2/api-docs
+#      - name: 电子秤服务
+#        uri: ${gateway-uri}
+#        location: /electronic-scale/v2/api-docs
+#      - name: 菜篮子大小服务
+#        uri: ${gateway-uri}
+#        location: /customer/v2/api-docs
+#      - name: 广宣服务
+#        uri: ${gateway-uri}
+#        location: /extension/v2/api-docs
+#      - name: 收银台服务
+#        uri: ${gateway-uri}
+#        location: /cashier/v2/api-docs
+#      - name: 媒体分发服务
+#        uri: ${gateway-uri}
+#        location: /mediaPublish/v2/api-docs
+#      - name: 访客服务
+#        uri: ${gateway-uri}
+#        location: /visitor/v2/api-docs
+#      - name: 支付服务
+#        uri: ${gateway-uri}
+#        location: /pay/v2/api-docs

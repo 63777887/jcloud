@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <!-- 彩色日志 -->
+  <!-- 彩色日志依赖的渲染类 -->
+  <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
+  <conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" />
+  <conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
+
+  <!-- 控制台日志样式 -->
+  <property name="CONSOLE_LOG_PATTERN" value="${CONSOLE_LOG_PATTERN:-%clr(%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss}}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr([%15.15t]){faint} [%X{requestId}] %clr(%-40.40logger{39}){cyan} [%L] %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
+
+  <!-- 禁用logback自身日志输出 -->
+  <statusListener class="ch.qos.logback.core.status.NopStatusListener" />
+
+  <!-- 日志输出到控制台 -->
+  <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <!-- 指定日志输出格式 -->
+      <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+    </encoder>
+  </appender>
+
+  <!--
+      日志级别介绍（从低到高）：TRACE < DEBUG < INFO < WARN < ERROR
+      配置 ERROR 打印 ERROR
+      配置 WARN  打印 WARN、ERROR
+      配置 INFO  打印 INFO、WARN、 ERROR
+      配置 DEBUG 打印 INFO、WARN、 ERROR、DEBUG
+      配置 TRACE 打印 INFO、WARN、 ERROR、DEBUG、TRACE
+   -->
+
+  <!-- 多环境日志级别配置，开发环境DEBUG -->
+  <springProfile name="dev">
+    <logger name="com.jwk" level="DEBUG"/>
+  </springProfile>
+
+  <!-- 多环境日志级别配置，测试环境DEBUG -->
+  <springProfile name="test">
+    <logger name="com.jwk" level="INFO"/>
+  </springProfile>
+
+  <!-- 多环境日志级别配置，生产环境ERROR -->
+  <springProfile name="prod">
+    <logger name="com.jwk" level="ERROR"/>
+  </springProfile>
+
+  <!-- 配置root，root只有一个level属性，如果配置成ERROR，那么只会打印ERROR级别的日志 -->
+  <root level="INFO">
+    <appender-ref ref="CONSOLE" />
+  </root>
+</configuration>

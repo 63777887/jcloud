@@ -14,7 +14,7 @@ public interface TestService {
      * @return
      */
     @GetMapping("/inner/test")
-    String queryBrandListByOrganId(@Valid @RequestParam("id") Long id);
+    String getId(@Valid @RequestParam("id") Long id);
 
 
 }

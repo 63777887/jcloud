@@ -1,7 +1,10 @@
 package com.jwk.security.web.controller;
 
 
+import io.swagger.annotations.Api;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
+import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/sysApiCategory")
+@Api(tags = "系统-登陆", produces = MediaType.APPLICATION_JSON_VALUE)
+@ApiSupport(author = "jiwk")
 public class SysApiCategoryController {
 
 }

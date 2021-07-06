@@ -3,15 +3,18 @@ package com.jwk.security.web.controller;
 import com.jwk.common.model.RestResponse;
 import com.jwk.security.security.service.impl.JwtAuthService;
 import com.jwk.security.web.dto.RegisterReq;
+import io.swagger.annotations.Api;
 import java.util.Map;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController()
 @RequestMapping("/admin")
+@Api(tags = "系统-登陆 API", produces = MediaType.APPLICATION_JSON_VALUE)
 public class JwtAuthController {
 
   @Resource
@@ -28,10 +32,10 @@ public class JwtAuthController {
    * 使用用户名密码换JWT令牌
    */
   @PostMapping(value = "/login")
-  public RestResponse login(@RequestBody Map<String, String> map) {
+  public RestResponse login(@RequestParam String username,@RequestParam String password) {
 
-    String username = map.get("username");
-    String password = map.get("password");
+//    String username = map.get("username");
+//    String password = map.get("password");
 
         if(StringUtils.isEmpty(username)
                 || StringUtils.isEmpty(password)){

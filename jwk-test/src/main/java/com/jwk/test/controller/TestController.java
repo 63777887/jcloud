@@ -1,6 +1,7 @@
 package com.jwk.test.controller;
 
 import com.jwk.common.model.RestResponse;
+import com.jwk.test.netty.TestServerChannel;
 import com.jwk.test.service.inner.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +18,14 @@ public class TestController {
   @GetMapping("/test")
   public RestResponse advertiseList(Long id){
 
-    return RestResponse.RestResponseBuilder.createSuccessBuilder().setResult(testService.queryBrandListByOrganId(id)).buidler();
+    return RestResponse.RestResponseBuilder.createSuccessBuilder().setResult(testService.getId(id)).buidler();
+  }
+
+  @GetMapping("/test1")
+  public void advertiseList(String msg){
+    TestServerChannel.channelGroup.forEach(channel -> {
+      channel.writeAndFlush(msg);
+    });
   }
 
 }

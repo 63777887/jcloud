@@ -1,6 +1,7 @@
 package com.jwk.security.security.handler;
 
 import com.alibaba.fastjson.JSON;
+import com.jwk.common.model.RestResponse;
 import com.jwk.security.enums.ApiStatusE;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +23,7 @@ public class AuthenticationFailHandler implements AuthenticationEntryPoint {
     response.setCharacterEncoding("utf-8");
     response.setContentType("application/json");
     response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-    response.getWriter().println(JSON.toJSONString(ApiStatusE.SC_UNAUTHORIZED.getValue()));
+    response.getWriter().println(JSON.toJSONString(RestResponse.RestResponseBuilder.createFailBuilder(ApiStatusE.SC_UNAUTHORIZED.getValue()).buidler()));
     response.getWriter().flush();
   }
 }

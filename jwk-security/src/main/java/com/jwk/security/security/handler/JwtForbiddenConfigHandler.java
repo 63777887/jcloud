@@ -2,6 +2,7 @@ package com.jwk.security.security.handler;
 
 //import com.jwk.security.common.ResponseResult;
 import com.alibaba.fastjson.JSON;
+import com.jwk.common.model.RestResponse;
 import com.jwk.security.enums.ApiStatusE;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -19,7 +20,7 @@ public class JwtForbiddenConfigHandler implements AccessDeniedHandler {
     httpServletResponse.setCharacterEncoding("utf-8");
     httpServletResponse.setContentType("application/json");
     httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
-    httpServletResponse.getWriter().println(JSON.toJSONString(ApiStatusE.SC_FORBIDDEN.getValue()));
+    httpServletResponse.getWriter().println(JSON.toJSONString(RestResponse.RestResponseBuilder.createFailBuilder(ApiStatusE.SC_FORBIDDEN.getValue()).buidler()));
     httpServletResponse.getWriter().flush();
   }
 }

@@ -7,26 +7,24 @@
         <groupId>com.jwk</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <groupId>com.jwk</groupId>
+
+<!--    <groupId>com.jwk</groupId>-->
     <artifactId>jwk-security</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
-    <name>jwk-security</name>
-    <description>Demo project for Spring Boot</description>
+<!--    <version>0.0.1-SNAPSHOT</version>-->
+<!--    <packaging>pom</packaging>-->
+<!--    <name>jwk-security</name>-->
+<!--    <description>Demo project for Spring Boot</description>-->
     <properties>
         <java.version>1.8</java.version>
-        <mybatisplus-spring-boot-starter.version>1.0.5</mybatisplus-spring-boot-starter.version>
-        <mybatis.version>3.4.1</mybatis.version>
     </properties>
 
 
     <dependencies>
       <dependency>
         <groupId>com.jwk</groupId>
-        <artifactId>jiwk-common</artifactId>
+        <artifactId>jwk-common</artifactId>
         <version>0.0.1-SNAPSHOT</version>
       </dependency>
-
 
       <dependency>
         <groupId>com.jwk</groupId>
@@ -34,32 +32,17 @@
         <version>0.0.1-SNAPSHOT</version>
       </dependency>
 
-
-<!--        springboot相关依赖-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-          <exclusions>
-            <exclusion>
-              <groupId>org.springframework.boot</groupId>
-              <artifactId>spring-boot-starter-logging</artifactId>
-            </exclusion>
-          </exclusions>
-        </dependency>
-<!--      log日志-->
       <dependency>
-        <groupId>log4j</groupId>
-        <artifactId>log4j</artifactId>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-test</artifactId>
+        <scope>test</scope>
       </dependency>
+
+<!--&lt;!&ndash;      log日志&ndash;&gt;-->
+<!--      <dependency>-->
+<!--        <groupId>log4j</groupId>-->
+<!--        <artifactId>log4j</artifactId>-->
+<!--      </dependency>-->
 
 <!--        rocketmq-->
         <dependency>
@@ -81,12 +64,7 @@
           <groupId>org.projectlombok</groupId>
           <artifactId>lombok</artifactId>
         </dependency>
-<!--        Excel导出-->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>easyexcel</artifactId>
-            <version>2.2.1</version>
-        </dependency>
+
 <!--    阿里sdk 在这儿用于发短信-->
         <dependency>
             <groupId>com.aliyun</groupId>
@@ -94,17 +72,7 @@
             <version>4.5.12</version>
         </dependency>
 
-<!--        springCloud nacos-->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-            <version>2.2.1.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-            <version>2.2.1.RELEASE</version>
-        </dependency>
+
 
 <!--        登陆鉴权-->
         <dependency>
@@ -117,73 +85,45 @@
         </dependency>
 
 
-        <!-- mybatis-plus begin -->
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>${mybatis.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-generator</artifactId>
-            <version>${mybatis.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.freemarker</groupId>
-            <artifactId>freemarker</artifactId>
-            <version>2.3.28</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid-spring-boot-starter</artifactId>
-            <version>1.1.10</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.11</version>
-        </dependency>
 
     </dependencies>
 
-    <build>
-        <finalName>jwk-security</finalName>
-        <sourceDirectory>src/main/java</sourceDirectory>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <includes>
-                    <include>**/*</include>
-                </includes>
-                <excludes>
-                    <exclude>**/.git/</exclude>
-                </excludes>
-            </resource>
-        </resources>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
+<!--    <build>-->
+<!--        <finalName>jwk-security</finalName>-->
+<!--        <sourceDirectory>src/main/java</sourceDirectory>-->
+<!--        <resources>-->
+<!--            <resource>-->
+<!--                <directory>src/main/resources</directory>-->
+<!--                <includes>-->
+<!--                    <include>**/*</include>-->
+<!--                </includes>-->
+<!--                <excludes>-->
+<!--                    <exclude>**/.git/</exclude>-->
+<!--                </excludes>-->
+<!--            </resource>-->
+<!--        </resources>-->
+<!--        <plugins>-->
+<!--            <plugin>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--            </plugin>-->
 
-<!--          <plugin>-->
-<!--            <groupId>org.mybatis.generator</groupId>-->
-<!--            <artifactId>mybatis-generator-maven-plugin</artifactId>-->
-<!--            <version>1.3.2</version>-->
-<!--            <dependencies>-->
-<!--              <dependency>-->
-<!--                <groupId>mysql</groupId>-->
-<!--                <artifactId>mysql-connector-java</artifactId>-->
-<!--                <version>5.1.6</version>-->
-<!--              </dependency>-->
-<!--            </dependencies>-->
-<!--            <configuration>-->
-<!--              <overwrite>true</overwrite>-->
-<!--            </configuration>-->
-<!--          </plugin>-->
-        </plugins>
-    </build>
+<!--&lt;!&ndash;          <plugin>&ndash;&gt;-->
+<!--&lt;!&ndash;            <groupId>org.mybatis.generator</groupId>&ndash;&gt;-->
+<!--&lt;!&ndash;            <artifactId>mybatis-generator-maven-plugin</artifactId>&ndash;&gt;-->
+<!--&lt;!&ndash;            <version>1.3.2</version>&ndash;&gt;-->
+<!--&lt;!&ndash;            <dependencies>&ndash;&gt;-->
+<!--&lt;!&ndash;              <dependency>&ndash;&gt;-->
+<!--&lt;!&ndash;                <groupId>mysql</groupId>&ndash;&gt;-->
+<!--&lt;!&ndash;                <artifactId>mysql-connector-java</artifactId>&ndash;&gt;-->
+<!--&lt;!&ndash;                <version>5.1.6</version>&ndash;&gt;-->
+<!--&lt;!&ndash;              </dependency>&ndash;&gt;-->
+<!--&lt;!&ndash;            </dependencies>&ndash;&gt;-->
+<!--&lt;!&ndash;            <configuration>&ndash;&gt;-->
+<!--&lt;!&ndash;              <overwrite>true</overwrite>&ndash;&gt;-->
+<!--&lt;!&ndash;            </configuration>&ndash;&gt;-->
+<!--&lt;!&ndash;          </plugin>&ndash;&gt;-->
+<!--        </plugins>-->
+<!--    </build>-->
 
 </project>

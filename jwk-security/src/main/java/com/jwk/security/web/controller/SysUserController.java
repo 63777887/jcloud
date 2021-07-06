@@ -3,7 +3,10 @@ package com.jwk.security.web.controller;
 
 import com.jwk.common.model.RestResponse;
 import com.jwk.security.web.service.SysUserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/user")
+@Api(tags = "SysUserController API", description = "系统-用户", produces = MediaType.APPLICATION_JSON_VALUE)
 public class SysUserController {
 
   @Autowired
@@ -26,6 +30,7 @@ public class SysUserController {
   /**
    * 用户列表
    */
+  @ApiOperation(value = "用户列表")
   @PostMapping(value = "/list")
   public RestResponse list() {
 
