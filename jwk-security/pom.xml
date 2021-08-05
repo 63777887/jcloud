@@ -88,42 +88,4 @@
 
     </dependencies>
 
-<!--    <build>-->
-<!--        <finalName>jwk-security</finalName>-->
-<!--        <sourceDirectory>src/main/java</sourceDirectory>-->
-<!--        <resources>-->
-<!--            <resource>-->
-<!--                <directory>src/main/resources</directory>-->
-<!--                <includes>-->
-<!--                    <include>**/*</include>-->
-<!--                </includes>-->
-<!--                <excludes>-->
-<!--                    <exclude>**/.git/</exclude>-->
-<!--                </excludes>-->
-<!--            </resource>-->
-<!--        </resources>-->
-<!--        <plugins>-->
-<!--            <plugin>-->
-<!--                <groupId>org.springframework.boot</groupId>-->
-<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
-<!--            </plugin>-->
-
-<!--&lt;!&ndash;          <plugin>&ndash;&gt;-->
-<!--&lt;!&ndash;            <groupId>org.mybatis.generator</groupId>&ndash;&gt;-->
-<!--&lt;!&ndash;            <artifactId>mybatis-generator-maven-plugin</artifactId>&ndash;&gt;-->
-<!--&lt;!&ndash;            <version>1.3.2</version>&ndash;&gt;-->
-<!--&lt;!&ndash;            <dependencies>&ndash;&gt;-->
-<!--&lt;!&ndash;              <dependency>&ndash;&gt;-->
-<!--&lt;!&ndash;                <groupId>mysql</groupId>&ndash;&gt;-->
-<!--&lt;!&ndash;                <artifactId>mysql-connector-java</artifactId>&ndash;&gt;-->
-<!--&lt;!&ndash;                <version>5.1.6</version>&ndash;&gt;-->
-<!--&lt;!&ndash;              </dependency>&ndash;&gt;-->
-<!--&lt;!&ndash;            </dependencies>&ndash;&gt;-->
-<!--&lt;!&ndash;            <configuration>&ndash;&gt;-->
-<!--&lt;!&ndash;              <overwrite>true</overwrite>&ndash;&gt;-->
-<!--&lt;!&ndash;            </configuration>&ndash;&gt;-->
-<!--&lt;!&ndash;          </plugin>&ndash;&gt;-->
-<!--        </plugins>-->
-<!--    </build>-->
-
 </project>

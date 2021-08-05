@@ -14,15 +14,15 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class NacosConfig implements ApplicationRunner {
-    private final static Logger log = LoggerFactory.getLogger(NacosConfig.class);
+public class NacosConfiguration implements ApplicationRunner {
+    private final static Logger log = LoggerFactory.getLogger(NacosConfiguration.class);
 
     private final NacosAutoServiceRegistration registration;
 
     @Value("${server.port}")
     Integer port;
 
-    public NacosConfig(NacosAutoServiceRegistration registration) {
+    public NacosConfiguration(NacosAutoServiceRegistration registration) {
         this.registration = registration;
     }
 

@@ -26,7 +26,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
 @Configuration
 @EnableSwagger2WebMvc
-public class OpenApiConfig {
+public class OpenApiConfiguration {
 
   @Value("${jwk.swagger.title:${spring.application.name}}")
   private String title;

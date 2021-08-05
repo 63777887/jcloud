@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
-@SpringBootApplication(scanBasePackages = "com.jwk.*")
+@SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients(basePackages = "com.jwk.test.service.inner")
 public class TestApplication {
