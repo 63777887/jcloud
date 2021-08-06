@@ -7,7 +7,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,7 +31,7 @@ public class SysUserController {
    * 用户列表
    */
   @ApiOperation(value = "用户列表")
-  @PostMapping(value = "/list")
+  @GetMapping(value = "/list")
   public RestResponse list() {
 
     return RestResponse.RestResponseBuilder.createSuccessBuilder()

@@ -3,16 +3,12 @@ package com.jwk.common.config;
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
-import com.jwk.common.resolver.SqlFilterArgumentResolver;
-import java.util.List;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.method.support.HandlerMethodArgumentResolver;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Configuration(proxyBeanMethods = false)
-public class MybatisPlusConfiguration implements WebMvcConfigurer {
+public class MybatisPlusConfiguration extends WebMvcConfigurerAdapter {
 
     // 最新版
   /**
@@ -39,13 +35,5 @@ public class MybatisPlusConfiguration implements WebMvcConfigurer {
       return interceptor;
     }
 
-  /**
-   * SQL 过滤器避免SQL 注入
-   * @param argumentResolvers
-   */
-  @Override
-  public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-    argumentResolvers.add(new SqlFilterArgumentResolver());
-  }
 
 }

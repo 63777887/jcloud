@@ -57,4 +57,8 @@ public class AdminUserDetails implements UserDetails {
   public boolean isEnabled() {
     return sysUser.getStatus() == 1;
   }
+
+  public SysUser getSysUser() {
+    return sysUser;
+  }
 }

@@ -6,9 +6,8 @@ import com.jwk.security.web.entity.SysApi;
 import com.jwk.security.web.service.SysApiService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -29,7 +28,7 @@ public class SysApiController {
   /**
    * 接口列表
    */
-  @PostMapping(value = "/list")
+  @GetMapping(value = "/list")
   public RestResponse list() {
     List<SysApi> list = sysApiService.list();
     return RestResponse.RestResponseBuilder.createSuccessBuilder()

@@ -53,11 +53,6 @@ public class SecurityCoreConfig {
   public SecurityCoreConfig() {
   }
 
-//  @PostConstruct
-//  public void initProp() {
-//    ExceptionManager.loadProperties(SecurityCoreConfig.class.getClassLoader(), "securityCore", (Locale)null);
-//  }
-
   @Bean
   public SysApiCategoryMapper sysApiCategoryMapper() throws Exception {
     this.sqlSessionTemplate.getConfiguration().addMapper(SysApiCategoryMapper.class);

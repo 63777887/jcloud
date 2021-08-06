@@ -41,6 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     http.csrf().disable()
         .sessionManagement()
+        //  无状态模式
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     // 自定义权限拒绝处理类
     // AuthenticationException指的是未登录状态下访问受保护资源
