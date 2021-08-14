@@ -28,7 +28,7 @@ public class TestServerChannelInitializer extends ChannelInitializer<SocketChann
     //在http上有一些数据流产生，有大有小，我们对其进行处理，既然如此，我们需要使用netty 对下数据流写 提供支持，这个类叫：ChunkedWriteHandler
     pipeline.addLast(new ChunkedWriteHandler());
     //对httpMessage 进行聚合处理，聚合成request或 response
-    pipeline.addLast(new HttpObjectAggregator(1024*64));
+    pipeline.addLast(new HttpObjectAggregator(1024 * 64));
 
 //    //添加解压缩Handler
 //    pipeline.addLast("decompressor", new HttpContentDecompressor());

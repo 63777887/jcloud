@@ -18,8 +18,8 @@ public class TestServerChannel extends SimpleChannelInboundHandler<TextWebSocket
     Channel channel = ctx.channel();
     channelGroup.add(channel);
 //    channelGroup.writeAndFlush(channel.remoteAddress()+"加入聊天室");
-    channelGroup.writeAndFlush(new TextWebSocketFrame(channel.remoteAddress()+"加入聊天室"));
-    System.out.println("连接注册成功:"+ ctx.channel().remoteAddress());
+    channelGroup.writeAndFlush(new TextWebSocketFrame(channel.remoteAddress() + "加入聊天室"));
+    System.out.println("连接注册成功:" + ctx.channel().remoteAddress());
   }
 
   @Override
@@ -27,18 +27,18 @@ public class TestServerChannel extends SimpleChannelInboundHandler<TextWebSocket
     Channel channel = ctx.channel();
     channelGroup.remove(ctx.channel());
 //    channelGroup.writeAndFlush(channel.remoteAddress()+"退出聊天室");
-    channelGroup.writeAndFlush(new TextWebSocketFrame(channel.remoteAddress()+"退出聊天室"));
-    System.out.println("连接注销成功:"+ ctx.channel().remoteAddress());
+    channelGroup.writeAndFlush(new TextWebSocketFrame(channel.remoteAddress() + "退出聊天室"));
+    System.out.println("连接注销成功:" + ctx.channel().remoteAddress());
   }
 
   @Override
   public void channelActive(ChannelHandlerContext ctx) throws Exception {
-    System.out.println("活跃连接:"+ ctx.channel().remoteAddress());
+    System.out.println("活跃连接:" + ctx.channel().remoteAddress());
   }
 
   @Override
   public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-    System.out.println("不活跃连接:"+ ctx.channel().remoteAddress());
+    System.out.println("不活跃连接:" + ctx.channel().remoteAddress());
   }
 
   @Override
@@ -49,12 +49,14 @@ public class TestServerChannel extends SimpleChannelInboundHandler<TextWebSocket
     Channel channel = channelHandlerContext.channel();
 
     channelGroup.forEach(channelOther -> {
-      if (channelOther.equals(channel)){
+      if (channelOther.equals(channel)) {
 //        channelOther.writeAndFlush("我: "+message);
-        channelOther.writeAndFlush(new TextWebSocketFrame("服务器时间" + LocalDateTime.now() + " 我: " + msg.text()));
-      }else {
+        channelOther.writeAndFlush(
+            new TextWebSocketFrame("服务器时间" + LocalDateTime.now() + " 我: " + msg.text()));
+      } else {
 //        channelOther.writeAndFlush(channel.remoteAddress()+": "+message);
-        channelOther.writeAndFlush(new TextWebSocketFrame("服务器时间" + LocalDateTime.now() + " "+channel.remoteAddress()+": " + msg.text()));
+        channelOther.writeAndFlush(new TextWebSocketFrame(
+            "服务器时间" + LocalDateTime.now() + " " + channel.remoteAddress() + ": " + msg.text()));
       }
     });
 
@@ -70,7 +72,7 @@ public class TestServerChannel extends SimpleChannelInboundHandler<TextWebSocket
    */
   @Override
   public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
-    super.userEventTriggered(ctx,evt);
+    super.userEventTriggered(ctx, evt);
   }
 
 

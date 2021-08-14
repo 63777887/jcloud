@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * Springcloud返回分页对象
+ *
  * @author guansc
  */
 @Data
@@ -15,7 +16,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class IPaginator implements Serializable {
-    private Integer pageLimit;
-    private Integer pageNo;
-    private Integer totalCount;
+
+  private Integer pageLimit;
+  private Integer pageNo;
+  private Integer totalCount;
 }

@@ -1,51 +1,57 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
-        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<!DOCTYPE generatorConfiguration PUBLIC
+  "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
 <generatorConfiguration>
-    <context id="mybatisCommunitybusiness" targetRuntime="MyBatis3">
-        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
-        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
-        <plugin type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin"/>
-        <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"/>
-        <plugin type="org.mybatis.generator.plugins.RenameExampleClassPlugin">
-            <property name="searchString" value="Example$"/>
-            <property name="replaceString" value="Criteria"/>
-        </plugin>
+  <context id="mybatisCommunitybusiness" targetRuntime="MyBatis3">
+    <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+    <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+    <plugin type="org.mybatis.generator.plugins.CaseInsensitiveLikePlugin"/>
+    <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"/>
+    <plugin type="org.mybatis.generator.plugins.RenameExampleClassPlugin">
+      <property name="searchString" value="Example$"/>
+      <property name="replaceString" value="Criteria"/>
+    </plugin>
 
-        <commentGenerator>
-            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
-            <property name="suppressAllComments" value="true"/>
-        </commentGenerator>
+    <commentGenerator>
+      <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+      <property name="suppressAllComments" value="true"/>
+    </commentGenerator>
 
-        <jdbcConnection
-                driverClass="com.mysql.jdbc.Driver"
-                connectionURL="jdbc:mysql://192.168.1.12:3306/uhome_hcs?characterEncoding=UTF-8" userId="rentApp"
-                password="abcdefg123"/>
+    <jdbcConnection
+      driverClass="com.mysql.jdbc.Driver"
+      connectionURL="jdbc:mysql://192.168.1.12:3306/uhome_hcs?characterEncoding=UTF-8"
+      userId="rentApp"
+      password="abcdefg123"/>
 
-        <!--默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer true，把JDBC DECIMAL 和-->
-        <!--NUMERIC 类型解析为java.math.BigDecimal-->
-        <javaTypeResolver>
-            <property name="forceBigDecimals" value="false"/>
-        </javaTypeResolver>
+    <!--默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer true，把JDBC DECIMAL 和-->
+    <!--NUMERIC 类型解析为java.math.BigDecimal-->
+    <javaTypeResolver>
+      <property name="forceBigDecimals" value="false"/>
+    </javaTypeResolver>
 
-        <javaModelGenerator targetPackage="com.segi.uhomecp.hcs.web.checkout.model" targetProject="src/main/java">
-            <property name="enableSubPackages" value="true"/>
-            <property name="trimStrings" value="true"/>
-        </javaModelGenerator>
+    <javaModelGenerator targetPackage="com.segi.uhomecp.hcs.web.checkout.model"
+      targetProject="src/main/java">
+      <property name="enableSubPackages" value="true"/>
+      <property name="trimStrings" value="true"/>
+    </javaModelGenerator>
 
-        <sqlMapGenerator targetPackage="com.segi.uhomecp.hcs.web.checkout.dao" targetProject="src/main/resources">
-            <property name="enableSubPackages" value="true"/>
-        </sqlMapGenerator>
+    <sqlMapGenerator targetPackage="com.segi.uhomecp.hcs.web.checkout.dao"
+      targetProject="src/main/resources">
+      <property name="enableSubPackages" value="true"/>
+    </sqlMapGenerator>
 
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.segi.uhomecp.hcs.web.checkout.dao" targetProject="src/main/java">
-            <property name="enableSubPackages" value="true"/>
-            <property name="rootInterface" value="com.segi.uhomecp.common.dao.AbstractMapperDao"/>
-        </javaClientGenerator>
+    <javaClientGenerator type="XMLMAPPER" targetPackage="com.segi.uhomecp.hcs.web.checkout.dao"
+      targetProject="src/main/java">
+      <property name="enableSubPackages" value="true"/>
+      <property name="rootInterface" value="com.segi.uhomecp.common.dao.AbstractMapperDao"/>
+    </javaClientGenerator>
 
 
-        <table schema="uhome_hcs" tableName="hc_check_out_record" domainObjectName="HcCheckOutRecord"/>
-        <table schema="uhome_hcs" tableName="hc_check_out_record_item" domainObjectName="HcCheckOutRecordItem"/>
-<!--        <table schema="uhome_hcs" tableName="hc_room_change_record" domainObjectName="HcRoomChangeRecord"/>-->
-<!--        <table schema="uhome_hcs" tableName="hc_room_change_record_item" domainObjectName="HcRoomChangeRecordItem"/>-->
-    </context>
+    <table schema="uhome_hcs" tableName="hc_check_out_record" domainObjectName="HcCheckOutRecord"/>
+    <table schema="uhome_hcs" tableName="hc_check_out_record_item"
+      domainObjectName="HcCheckOutRecordItem"/>
+    <!--        <table schema="uhome_hcs" tableName="hc_room_change_record" domainObjectName="HcRoomChangeRecord"/>-->
+    <!--        <table schema="uhome_hcs" tableName="hc_room_change_record_item" domainObjectName="HcRoomChangeRecordItem"/>-->
+  </context>
 </generatorConfiguration>

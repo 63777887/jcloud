@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 public class RestResponse implements Serializable {
+
   public static final String REST_RESPONSE_SUCCESS_CODE = "0";
   public static final String REST_RESPONSE_FIAL_CODE = "-1";
   public static final String REST_SERVER_RESPONSE_FIAL_CODE = "1";
@@ -70,7 +71,7 @@ public class RestResponse implements Serializable {
 
   @JsonIgnore
   public boolean isSuccess() {
-    return "0".equals(this.code);
+    return REST_RESPONSE_SUCCESS_CODE.equals(this.code);
   }
 
   public String toString() {
@@ -84,6 +85,7 @@ public class RestResponse implements Serializable {
 
   @JsonIgnoreType
   public static class RestResponseBuilder {
+
     private final RestResponse response;
 
     private RestResponseBuilder(String code) {
@@ -93,31 +95,31 @@ public class RestResponse implements Serializable {
     private RestResponseBuilder(String code, String message) {
       this.response = new RestResponse(code);
       this.setMessage(message);
-      this.setResult((Object)"");
+      this.setResult((Object) "");
     }
 
     public static RestResponse.RestResponseBuilder createSuccessBuilder() {
-      return createBuilder("0");
+      return createBuilder(REST_RESPONSE_SUCCESS_CODE);
     }
 
     public static RestResponse.RestResponseBuilder createSuccessBuilder(String message) {
-      return createBuilder("0", message);
+      return createBuilder(REST_RESPONSE_SUCCESS_CODE, message);
     }
 
     public static RestResponse.RestResponseBuilder createFailBuilder() {
-      return createBuilder("-1");
+      return createBuilder(REST_RESPONSE_FIAL_CODE);
     }
 
     public static RestResponse.RestResponseBuilder createFailBuilder(String message) {
-      return createBuilder("-1", message);
+      return createBuilder(REST_RESPONSE_FIAL_CODE, message);
     }
 
     public static RestResponse.RestResponseBuilder createFailForServerBuilder(String message) {
-      return createBuilder("1", message);
+      return createBuilder(REST_SERVER_RESPONSE_FIAL_CODE, message);
     }
 
     public static RestResponse.RestResponseBuilder createFailForTemplateBuilder(String message) {
-      return createBuilder("2", message);
+      return createBuilder(REST_TEMPLATE_RESPONSE_FIAL_CODE, message);
     }
 
     public static RestResponse.RestResponseBuilder createBuilder(String code) {

@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class DateUtil {
+
   private static Logger logger = LoggerFactory.getLogger(DateUtil.class);
   public static final String FORMAT_YYYY_MM_DD = "yyyy-MM-dd";
   public static final String FORMAT_YYYYMM = "yyyyMM";
@@ -284,7 +285,8 @@ public class DateUtil {
     if (billingType == 1) {
       calendar.set(Integer.parseInt(year), month - 1, 1);
       maxDay = calendar.getActualMaximum(5);
-      retStr = formatDateToStringYY_MM(date) + "-01," + formatDateToStringYY_MM(date) + "-" + maxDay;
+      retStr =
+          formatDateToStringYY_MM(date) + "-01," + formatDateToStringYY_MM(date) + "-" + maxDay;
     } else if (billingType == 3) {
       if (month >= 1 && month <= 3) {
         calendar.set(Integer.parseInt(year), 2, 1);
@@ -322,9 +324,6 @@ public class DateUtil {
     return retStr;
   }
 
-  public static void main(String[] arg) {
-    System.out.println(parseStringToDate("2016-01", "yyyy-MM"));
-  }
 
   public static final Date lastDayOfMonth(Date date) {
     Calendar cal = Calendar.getInstance();
@@ -375,7 +374,9 @@ public class DateUtil {
     caled.set(11, 0);
     caled.set(12, 0);
     caled.set(13, 0);
-    int days = ((int)(caled.getTime().getTime() / 1000L) - (int)(calst.getTime().getTime() / 1000L)) / 3600 / 24;
+    int days =
+        ((int) (caled.getTime().getTime() / 1000L) - (int) (calst.getTime().getTime() / 1000L))
+            / 3600 / 24;
     return days;
   }
 

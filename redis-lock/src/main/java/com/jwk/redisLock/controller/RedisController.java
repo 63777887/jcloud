@@ -20,66 +20,68 @@ import java.util.concurrent.TimeUnit;
 @RestController
 public class RedisController {
 
-    final String LOCK_KEY="justLock";
+  final String LOCK_KEY = "justLock";
 
-    @Autowired
-    RedisTemplate redisTemplate;
+  @Autowired
+  RedisTemplate redisTemplate;
 
-    @Autowired
-    StringRedisTemplate stringRedisTemplate;
+  @Autowired
+  StringRedisTemplate stringRedisTemplate;
 
-    @Autowired
-    Redisson redisson;
+  @Autowired
+  Redisson redisson;
 
-    @GetMapping("/setRedis")
-    public String setRedis(@RequestParam("value") String value,@RequestParam("key") String key){
-        Boolean aBoolean = stringRedisTemplate.opsForValue().setIfAbsent(key, value, 60L, TimeUnit.SECONDS);
-        return aBoolean.toString();
-    }
+  @GetMapping("/setRedis")
+  public String setRedis(@RequestParam("value") String value, @RequestParam("key") String key) {
+    Boolean aBoolean = stringRedisTemplate.opsForValue()
+        .setIfAbsent(key, value, 60L, TimeUnit.SECONDS);
+    return aBoolean.toString();
+  }
 
-    @GetMapping("/getRedis")
-    public String getRedis(@RequestParam("key") String key){
-        Object o = stringRedisTemplate.opsForValue().get(key);
-        return o.toString();
-    }
+  @GetMapping("/getRedis")
+  public String getRedis(@RequestParam("key") String key) {
+    Object o = stringRedisTemplate.opsForValue().get(key);
+    return o.toString();
+  }
 
-    // 分布式锁
-    @GetMapping("/redisLock")
-    public String redisLock(@RequestParam("key") String key){
+  // 分布式锁
+  @GetMapping("/redisLock")
+  public String redisLock(@RequestParam("key") String key) {
 
 //          redisson分布式锁
 //        RLock lock = redisson.getLock(LOCK_KEY);
-        Object o2 = stringRedisTemplate.opsForValue().get(LOCK_KEY);
-        String value = UUID.randomUUID().toString() + Thread.currentThread().getName();
-        Boolean aBoolean = stringRedisTemplate.opsForValue().setIfAbsent(LOCK_KEY, value, 3L, TimeUnit.SECONDS);
-        if (!aBoolean) {
-            return "获取锁失败";
-        }
-        try {
+    Object o2 = stringRedisTemplate.opsForValue().get(LOCK_KEY);
+    String value = UUID.randomUUID().toString() + Thread.currentThread().getName();
+    Boolean aBoolean = stringRedisTemplate.opsForValue()
+        .setIfAbsent(LOCK_KEY, value, 3L, TimeUnit.SECONDS);
+    if (!aBoolean) {
+      return "获取锁失败";
+    }
+    try {
 
 //          redisson分布式锁加锁
 //            lock.lock();
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            Object o = stringRedisTemplate.opsForValue().get(key);
-            Object o1 = stringRedisTemplate.opsForValue().get(LOCK_KEY);
-            return o.toString()+"------"+o1+"》》》》》》》》"+o2;
-        } finally {
-            stringRedisTemplate.watch(LOCK_KEY);
-            if (value.equalsIgnoreCase(stringRedisTemplate.opsForValue().get(LOCK_KEY))) {
-                stringRedisTemplate.setEnableTransactionSupport(true);
-                stringRedisTemplate.multi();
-                stringRedisTemplate.delete(LOCK_KEY);
-                stringRedisTemplate.exec();
-            }
-            stringRedisTemplate.unwatch();
+      try {
+        Thread.sleep(1000);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+      Object o = stringRedisTemplate.opsForValue().get(key);
+      Object o1 = stringRedisTemplate.opsForValue().get(LOCK_KEY);
+      return o.toString() + "------" + o1 + "》》》》》》》》" + o2;
+    } finally {
+      stringRedisTemplate.watch(LOCK_KEY);
+      if (value.equalsIgnoreCase(stringRedisTemplate.opsForValue().get(LOCK_KEY))) {
+        stringRedisTemplate.setEnableTransactionSupport(true);
+        stringRedisTemplate.multi();
+        stringRedisTemplate.delete(LOCK_KEY);
+        stringRedisTemplate.exec();
+      }
+      stringRedisTemplate.unwatch();
 //            redisson分布式锁解锁
 //            if (lock.isLocked()&&lock.isHeldByCurrentThread()){
 //                lock.unlock();
 //            }
-        }
     }
+  }
 }

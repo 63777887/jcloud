@@ -110,5 +110,12 @@
     <orderEntry type="library" name="Maven: net.bytebuddy:byte-buddy:1.10.14" level="project" />
     <orderEntry type="library" name="Maven: org.jodd:jodd-bean:5.1.6" level="project" />
     <orderEntry type="library" name="Maven: org.jodd:jodd-core:5.1.6" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-configuration-processor:2.3.4.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: com.github.ulisesbocchio:jasypt-spring-boot-starter:2.1.0" level="project" />
+    <orderEntry type="library" name="Maven: com.github.ulisesbocchio:jasypt-spring-boot:2.1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.jasypt:jasypt:1.9.2" level="project" />
+    <orderEntry type="library" name="Maven: de.codecentric:spring-boot-admin-starter-client:2.4.3" level="project" />
+    <orderEntry type="library" name="Maven: de.codecentric:spring-boot-admin-client:2.4.3" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.projectlombok:lombok:1.18.12" level="project" />
   </component>
 </module>

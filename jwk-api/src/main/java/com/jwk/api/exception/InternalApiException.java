@@ -1,27 +1,28 @@
 package com.jwk.api.exception;
 
-public class InternalApiException extends Exception{
-    private static final long serialVersionUID = 6922970840107066104L;
+public class InternalApiException extends Exception {
 
-    private String errorCode;
+  private static final long serialVersionUID = 6922970840107066104L;
 
-    public InternalApiException() {
-        super();
-    }
+  private String errorCode;
 
-    public InternalApiException(String message){
-        super(message);
-    }
+  public InternalApiException() {
+    super();
+  }
 
-    public InternalApiException(Throwable cause) {
-        super(cause);
-    }
+  public InternalApiException(String message) {
+    super(message);
+  }
 
-    public String getErrorCode() {
-        return errorCode;
-    }
+  public InternalApiException(Throwable cause) {
+    super(cause);
+  }
 
-    public void setErrorCode(String errorCode) {
-        this.errorCode = errorCode;
-    }
+  public String getErrorCode() {
+    return errorCode;
+  }
+
+  public void setErrorCode(String errorCode) {
+    this.errorCode = errorCode;
+  }
 }

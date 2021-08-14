@@ -33,10 +33,10 @@ public class EchoServer {
       //create ServerBootstrap instance
       ServerBootstrap b = new ServerBootstrap();
       System.out.println(
-          EchoServer.class.getName() + "started and listen on " );
+          EchoServer.class.getName() + "started and listen on ");
       //Specifies NIO transport, local socket address
       //Adds handler to channel pipeline
-      b.group(bossGroup,workGroup).channel(NioServerSocketChannel.class).localAddress(port)
+      b.group(bossGroup, workGroup).channel(NioServerSocketChannel.class).localAddress(port)
           .option(ChannelOption.SO_BACKLOG, 128)
           .childOption(ChannelOption.SO_KEEPALIVE, true)
           .childHandler(new ChannelInitializer<Channel>() {

@@ -1,17 +1,29 @@
 package com.jwk.test;
 
+import com.jwk.common.fegin.annotation.EnableJwkFeignClients;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.core.env.ConfigurableEnvironment;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableFeignClients(basePackages = "com.jwk.test.service.inner")
+//@EnableFeignClients(basePackages = "com.jwk.test.service.inner")
+@EnableJwkFeignClients
 public class TestApplication {
 
+  private static final Logger LOGGER = LoggerFactory.getLogger(TestApplication.class);
+
   public static void main(String[] args) {
-    SpringApplication.run(TestApplication.class, args);
+    ConfigurableApplicationContext applicationContext = SpringApplication
+        .run(TestApplication.class, args);
+    ConfigurableEnvironment environment = applicationContext.getEnvironment();
+    String port = environment.getProperty("server.port");
+    LOGGER.info("接口聚合文档地址：{}{}{}{}", "http://127.0.0.1:", port, "/", "doc.html");
   }
 
 }

@@ -23,7 +23,7 @@ public class TestClientChannel extends SimpleChannelInboundHandler<Long> {
     //ctx.writeAndFlush(Unpooled.copiedBuffer(""))
     for (int i = 0; i < 100; i++) {
 
-    ctx.writeAndFlush((long)i); //发送的是一个long
+      ctx.writeAndFlush((long) i); //发送的是一个long
     }
 
     //分析
