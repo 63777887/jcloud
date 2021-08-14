@@ -20,31 +20,29 @@ import static com.sun.xml.internal.fastinfoset.util.ValueArray.MAXIMUM_CAPACITY;
 public class ThreadController {
 
 
-
-    @GetMapping("/setRedis")
-    public String setRedis(@RequestParam("value") String value,@RequestParam("key") String key){
+  @GetMapping("/setRedis")
+  public String setRedis(@RequestParam("value") String value, @RequestParam("key") String key) {
 //        new ThreadPoolExecutor();
 //        new Thread();
 //        new ReentrantReadWriteLock();
 //        new Hashtable<>()
 //        HashMap<Object, Object> objectObjectHashMap = new HashMap<>();
 
+    return null;
+  }
 
-        return null;
-    }
-
-    public static void main(String[] args) {
+  public static void main(String[] args) {
 //        for (int i = 0; i < 35; i++) {
 //            System.out.println(31 & i);
 //        }
-        ArrayList<Object> objects = new ArrayList<>();
+    ArrayList<Object> objects = new ArrayList<>();
 //        new HashSet<>()
-        int n = 33 - 1;
-        n |= n >>> 1;
-        n |= n >>> 2;
-        n |= n >>> 4;
-        n |= n >>> 8;
-        n |= n >>> 16;
-        System.out.println(((n < 0) ? 1 : (n >= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1));
-    }
+    int n = 33 - 1;
+    n |= n >>> 1;
+    n |= n >>> 2;
+    n |= n >>> 4;
+    n |= n >>> 8;
+    n |= n >>> 16;
+    System.out.println(((n < 0) ? 1 : (n >= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1));
+  }
 }

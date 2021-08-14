@@ -13,10 +13,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class TestServer {
 
-  private Integer port=7000;
+  private Integer port = 7000;
 
   public TestServer(Integer port) {
-    this.port=port;
+    this.port = port;
   }
 
   @PostConstruct
@@ -25,22 +25,22 @@ public class TestServer {
     NioEventLoopGroup workGroup = new NioEventLoopGroup();
 
     ServerBootstrap serverBootstrap = new ServerBootstrap();
-    serverBootstrap.group(bossGroup,workGroup)
+    serverBootstrap.group(bossGroup, workGroup)
         .channel(NioServerSocketChannel.class)
         // 链接数量
-        .option(ChannelOption.SO_BACKLOG,128)
+        .option(ChannelOption.SO_BACKLOG, 128)
         // 保持长链接
-        .childOption(ChannelOption.SO_KEEPALIVE,true)
+        .childOption(ChannelOption.SO_KEEPALIVE, true)
         .childOption(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT)
         .childHandler(new TestServerChannelInitializer());
 
-      ChannelFuture bind = serverBootstrap.bind(port);
-      if (bind.isSuccess()) {
-        log.info("启动 Netty 成功");
-      }
+    ChannelFuture bind = serverBootstrap.bind(port);
+    if (bind.isSuccess()) {
+      log.info("启动 Netty 成功");
+    }
 
-      //监听关闭
-      bind.channel().closeFuture().sync();
+    //监听关闭
+    bind.channel().closeFuture().sync();
 
   }
 

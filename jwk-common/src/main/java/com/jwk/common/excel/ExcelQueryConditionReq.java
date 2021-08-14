@@ -21,32 +21,33 @@ import lombok.Data;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ExcelQueryConditionReq implements Serializable {
-    private static final long serialVersionUID = -9136281407825878396L;
 
-    /**
-     * 条件编码
-     */
-    @NotBlank
-    @Length(min = 1)
-    private String code;
-    /**
-     * 对应编码值
-     */
-    private String value;
+  private static final long serialVersionUID = -9136281407825878396L;
 
-    public String getCode() {
-        return code;
-    }
+  /**
+   * 条件编码
+   */
+  @NotBlank
+  @Length(min = 1)
+  private String code;
+  /**
+   * 对应编码值
+   */
+  private String value;
 
-    public void setCode(String code) {
-        this.code = code;
-    }
+  public String getCode() {
+    return code;
+  }
 
-    public String getValue() {
-        return value;
-    }
+  public void setCode(String code) {
+    this.code = code;
+  }
 
-    public void setValue(String value) {
-        this.value = value;
-    }
+  public String getValue() {
+    return value;
+  }
+
+  public void setValue(String value) {
+    this.value = value;
+  }
 }

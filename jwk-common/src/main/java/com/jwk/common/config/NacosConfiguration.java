@@ -15,42 +15,46 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class NacosConfiguration implements ApplicationRunner {
-    private final static Logger log = LoggerFactory.getLogger(NacosConfiguration.class);
 
-    private final NacosAutoServiceRegistration registration;
+  private final static Logger log = LoggerFactory.getLogger(NacosConfiguration.class);
 
-    @Value("${server.port}")
-    Integer port;
+  private final NacosAutoServiceRegistration registration;
 
-    public NacosConfiguration(NacosAutoServiceRegistration registration) {
-        this.registration = registration;
+  @Value("${server.port}")
+  Integer port;
+
+  public NacosConfiguration(NacosAutoServiceRegistration registration) {
+    this.registration = registration;
+  }
+
+  @Override
+  public void run(ApplicationArguments args) {
+    if (registration != null && port != null) {
+      int tomcatPort = port;
+      try {
+        tomcatPort = new Integer(getTomcatPort());
+      } catch (Exception e) {
+        log.warn("获取tomcat外部端口失败");
+      }
+      log.info("Tomcat port:" + tomcatPort);
+      registration.setPort(tomcatPort);
+      registration.start();
     }
+  }
 
-    @Override
-    public void run(ApplicationArguments args) {
-        if (registration != null && port != null) {
-            int tomcatPort = port;
-            try {
-                tomcatPort = new Integer(getTomcatPort());
-            } catch (Exception e) {
-                log.warn("获取tomcat外部端口失败");
-            }
-            log.info("Tomcat port:" + tomcatPort);
-            registration.setPort(tomcatPort);
-            registration.start();
-        }
+  /**
+   * 获取外部tomcat端口
+   */
+  public String getTomcatPort() throws Exception {
+    Set<ObjectName> objectNames;
+    MBeanServer beanServer = ManagementFactory.getPlatformMBeanServer();
+    objectNames = beanServer.queryNames(new ObjectName("*:type=Connector,*"),
+        Query.match(Query.attr("protocol"), Query.value("HTTP/1.1")));
+    if (!objectNames.iterator().hasNext()) {
+      objectNames = beanServer.queryNames(new ObjectName("*:type=Connector,*"), Query
+          .match(Query.attr("protocol"),
+              Query.value("org.apache.coyote.http11.Http11AprProtocol")));
     }
-
-    /**
-     *	获取外部tomcat端口
-     */
-    public String getTomcatPort() throws Exception {
-        Set<ObjectName> objectNames;
-        MBeanServer beanServer = ManagementFactory.getPlatformMBeanServer();
-        objectNames = beanServer.queryNames(new ObjectName("*:type=Connector,*"), Query.match(Query.attr("protocol"), Query.value("HTTP/1.1")));
-        if (!objectNames.iterator().hasNext()) {
-            objectNames = beanServer.queryNames(new ObjectName("*:type=Connector,*"), Query.match(Query.attr("protocol"), Query.value("org.apache.coyote.http11.Http11AprProtocol")));
-        }
-        return objectNames.iterator().next().getKeyProperty("port");
-    }
+    return objectNames.iterator().next().getKeyProperty("port");
+  }
 }

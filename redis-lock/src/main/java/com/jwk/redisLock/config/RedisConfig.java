@@ -28,14 +28,15 @@ public class RedisConfig extends CachingConfigurerSupport {
 
 
   @Bean
-  public Redisson redisson(){
-      // 1. Create config object
+  public Redisson redisson() {
+    // 1. Create config object
     Config config = new Config();
     config.useSingleServer()
-            // use "rediss://" for SSL connection
-            .setAddress("redis://127.0.0.1:6379").setDatabase(0);
-    return (Redisson)Redisson.create(config);
+        // use "rediss://" for SSL connection
+        .setAddress("redis://127.0.0.1:6379").setDatabase(0);
+    return (Redisson) Redisson.create(config);
   }
+
   @Bean
   public RedisTemplate<String, Object> redisTemplate(
       RedisConnectionFactory redisConnectionFactory) {

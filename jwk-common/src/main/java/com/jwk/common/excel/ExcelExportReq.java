@@ -21,31 +21,32 @@ import lombok.Data;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ExcelExportReq implements Serializable {
-    private static final long serialVersionUID = -7618298119225197705L;
 
-    /**
-     * 导出的业务类型。
-     */
-    @NotNull
-    private String businessType;
+  private static final long serialVersionUID = -7618298119225197705L;
 
-    /**
-     * 导出条件集合
-     */
-    @Valid
-    @NotNull
-    private List<ExcelQueryConditionReq> reqList;
+  /**
+   * 导出的业务类型。
+   */
+  @NotNull
+  private String businessType;
 
-    /**
-     * 导出表头集合
-     */
-    @Valid
-    @NotNull
-    private List<ExcelHeadReq> exportList;
+  /**
+   * 导出条件集合
+   */
+  @Valid
+  @NotNull
+  private List<ExcelQueryConditionReq> reqList;
 
-    private String cookie;
+  /**
+   * 导出表头集合
+   */
+  @Valid
+  @NotNull
+  private List<ExcelHeadReq> exportList;
 
-    public String getBusinessType() {
-        return businessType;
-    }
+  private String cookie;
+
+  public String getBusinessType() {
+    return businessType;
+  }
 }

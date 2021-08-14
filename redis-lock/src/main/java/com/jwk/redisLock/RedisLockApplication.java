@@ -16,7 +16,8 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 @ServletComponentScan
 //@EnableDiscoveryClient
 public class RedisLockApplication extends SpringBootServletInitializer {
-    public static void main(String[] args) {
-        SpringApplication.run(RedisLockApplication.class, args);
-    }
+
+  public static void main(String[] args) {
+    SpringApplication.run(RedisLockApplication.class, args);
+  }
 }
