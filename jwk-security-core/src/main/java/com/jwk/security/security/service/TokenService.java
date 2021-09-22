@@ -1,11 +1,18 @@
 package com.jwk.security.security.service;
 
 
+import java.util.Date;
 import java.util.Map;
 
 public interface TokenService {
 
   String generateToken(String subject);
+
+  String generateToken(String subject,Long expiration);
+
+  String generateToken(String subject, Date expiration);
+
+  String generateToken(Map<String, Object> claims, Date expiration);
 
   String generateToken(Map<String, Object> claims);
 

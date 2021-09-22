@@ -13,7 +13,6 @@ import io.jsonwebtoken.UnsupportedJwtException;
 import java.util.Date;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 
@@ -32,9 +31,40 @@ public class TokenServiceImpl implements TokenService {
    */
   @Override
   public String generateToken(String subject) {
+    return generateToken(subject,jwkAuthProperties.getExpireSec());
+  }
+
+  @Override
+  public String generateToken(String subject, Long expiration) {
+    // HMAC SHA256
+    return generateToken(subject,expiration,SignatureAlgorithm.HS512,jwkAuthProperties.getSecretKey());
+  }
+
+  @Override
+  public String generateToken(String subject, Date expiration) {
+    // HMAC SHA256
     return Jwts.builder()
         .setSubject(subject)
-        .setExpiration(new Date(System.currentTimeMillis() + jwkAuthProperties.getExpireSec()))
+        .setExpiration(expiration)
+        .signWith(SignatureAlgorithm.HS512, jwkAuthProperties.getSecretKey())
+        .compact();
+  }
+
+
+  private String generateToken(String subject, Long expiration,SignatureAlgorithm sign,String secretKey) {
+    return Jwts.builder()
+        .setSubject(subject)
+        .setExpiration(new Date(System.currentTimeMillis() + expiration))
+        .signWith(sign, secretKey)
+        .compact();
+  }
+
+  @Override
+  public String generateToken(Map<String, Object> claims, Date expiration) {
+    // HMAC SHA256
+    return Jwts.builder()
+        .setClaims(claims)
+        .setExpiration(expiration)
         .signWith(SignatureAlgorithm.HS512, jwkAuthProperties.getSecretKey())
         .compact();
   }
@@ -56,7 +86,7 @@ public class TokenServiceImpl implements TokenService {
    */
   private Claims getClaimsFromToken(String token) {
     try {
-      return Jwts.parser().setSigningKey(jwkAuthProperties.getSecretKey()).parseClaimsJws(token).getBody();
+      return Jwts.parser().setSigningKey("jiwk").parseClaimsJws(token).getBody();
     } catch (ExpiredJwtException e) {
       //过期也解析body
       return e.getClaims();

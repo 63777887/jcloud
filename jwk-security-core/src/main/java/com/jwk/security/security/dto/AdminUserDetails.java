@@ -36,7 +36,7 @@ public class AdminUserDetails implements UserDetails {
 
   @Override
   public String getUsername() {
-    return String.valueOf(sysUser.getId());
+    return String.valueOf(sysUser.getUsername());
   }
 
   @Override

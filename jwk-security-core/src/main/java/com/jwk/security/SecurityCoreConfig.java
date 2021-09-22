@@ -1,16 +1,11 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
 package com.jwk.security;
 
 import com.jwk.security.security.component.JwkAuthProperties;
 import com.jwk.security.security.conf.DynamicAccessDecisionManager;
 import com.jwk.security.security.conf.DynamicMetadataSource;
 import com.jwk.security.security.service.TokenService;
-import com.jwk.security.security.service.impl.JwtAuthService;
 import com.jwk.security.security.service.impl.JwkUserDetailsService;
+import com.jwk.security.security.service.impl.JwtAuthService;
 import com.jwk.security.security.service.impl.TokenServiceImpl;
 import com.jwk.security.web.controller.JwtAuthController;
 import com.jwk.security.web.controller.SysUserController;

@@ -1,19 +1,3 @@
-/*
- * Copyright (c) 2020 pig4cloud Authors. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.jwk.uaa.service;
 
 import javax.sql.DataSource;
@@ -29,6 +13,11 @@ public class JwkClientDetailsService extends JdbcClientDetailsService {
 
 	public JwkClientDetailsService(DataSource dataSource) {
 		super(dataSource);
+//		//	配置JdbcClientDetailsService，用于查询Client信息
+//		//	设置默认根据client_id查询Client语句
+//		setSelectClientDetailsSql(SecurityConstants.DEFAULT_SELECT_STATEMENT);
+//		//	设置默认的查询所有Client语句
+//		setFindClientDetailsSql(SecurityConstants.DEFAULT_FIND_STATEMENT);
 	}
 
 //	/**

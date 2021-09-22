@@ -6,9 +6,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 
 /**
- * @author lengleng
- * @date 2020/10/4
- * <p>
  * 网关配置文件
  */
 @Data

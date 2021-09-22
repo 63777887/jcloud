@@ -3,17 +3,18 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <modules>
-    <module>redis-lock</module>
-    <module>test-thread</module>
     <module>jwk-security-core</module>
-    <module>webmagic</module>
     <module>jwk-gateway</module>
     <module>jwk-common</module>
     <module>jwk-test</module>
     <module>jwk-api</module>
-    <module>netty-demo</module>
     <module>jwk-knife4j</module>
     <module>jwk-uaa</module>
+    <module>jwk-rocketmq</module>
+    <module>webmagic</module>
+    <module>netty-demo</module>
+    <module>redis-lock</module>
+    <module>test-thread</module>
   </modules>
 
 
@@ -83,11 +84,11 @@
       <scope>provided</scope>
     </dependency>
     <!--测试依赖-->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-test</artifactId>
-      <scope>test</scope>
-    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>org.springframework.boot</groupId>-->
+<!--      <artifactId>spring-boot-starter-test</artifactId>-->
+<!--      <scope>test</scope>-->
+<!--    </dependency>-->
   </dependencies>
 
   <dependencyManagement>

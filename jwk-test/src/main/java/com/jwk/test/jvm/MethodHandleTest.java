@@ -4,7 +4,9 @@ import static java.lang.invoke.MethodHandles.lookup;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodType;
+import org.springframework.stereotype.Service;
 
+@Service
 public class MethodHandleTest {
 
   static class ClassA {
@@ -36,5 +38,14 @@ public class MethodHandleTest {
 //收者，也即this指向的对象，这个参数以前是放在参数列表中进行传递，现在提供了bindTo()
 //方法来完成这件事情。
     return lookup().findVirtual(reveiver.getClass(), "println", mt).bindTo(reveiver);
+  }
+
+  private boolean testOne(boolean bool){
+    return bool;
+  }
+
+  public Integer testTwo(boolean bool){
+
+    return testOne(bool) ? 1 :2;
   }
 }

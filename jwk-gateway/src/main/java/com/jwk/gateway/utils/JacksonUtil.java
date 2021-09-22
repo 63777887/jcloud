@@ -1,8 +1,3 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
 package com.jwk.gateway.utils;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;

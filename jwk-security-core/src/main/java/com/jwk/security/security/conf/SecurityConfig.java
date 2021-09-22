@@ -1,12 +1,9 @@
 package com.jwk.security.security.conf;
 
-import cn.hutool.core.util.StrUtil;
 import com.jwk.security.security.component.JwkAuthProperties;
 import com.jwk.security.security.handler.AuthenticationFailHandler;
 import com.jwk.security.security.handler.JwtForbiddenConfigHandler;
-import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +14,6 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
@@ -34,8 +30,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Autowired
   private AutowireCapableBeanFactory autowireCapableBeanFactory;
 
-  private String defaultNoAuthUrl = "/swagger-resources/**,/v2/api-docs/**,/webjars/**,"
-      + "/doc.html,/**/*.css,/**/*.jpg/**/*.jpeg,/**/*.gif,/js/*.js,/**/*.png,/login.jsp";
 
   @Override
   public void configure(WebSecurity web) throws Exception {
@@ -57,11 +51,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .accessDeniedHandler(new JwtForbiddenConfigHandler());
 
     String noauthUrl = jwkAuthProperties.getNoauthUrl();
-    if (StrUtil.isBlank(noauthUrl)){
-      noauthUrl = defaultNoAuthUrl;
-    }else {
-      noauthUrl = noauthUrl +","+defaultNoAuthUrl;
-    }
     String[] noAuthUrlList = noauthUrl.split(",");
     http.authorizeRequests().antMatchers(noAuthUrlList).permitAll().anyRequest().authenticated();
 
