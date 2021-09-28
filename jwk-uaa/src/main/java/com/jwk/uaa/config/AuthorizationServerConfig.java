@@ -1,16 +1,12 @@
 package com.jwk.uaa.config;
 
-import cn.hutool.jwt.JWT;
 import com.jwk.security.constants.JwkSecurityConstants;
+import com.jwk.security.security.component.JwkWebResponseExceptionTranslator;
 import com.jwk.security.security.dto.AdminUserDetails;
-import com.jwk.security.security.service.TokenService;
 import com.jwk.security.security.service.impl.JwkUserDetailsService;
 import com.jwk.uaa.comonpent.JwkAccessTokenConverter;
 import com.jwk.uaa.service.JwkClientDetailsService;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.impl.DefaultClaims;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import javax.sql.DataSource;
@@ -52,6 +48,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Autowired
 	private final JwkUserDetailsService jwkUserDetailsService;
 
+	@Autowired
 	private final AuthenticationManager authenticationManager;
 
 	@Autowired
@@ -61,8 +58,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
-	@Autowired
-	private TokenService tokenService;
 //	private final RedisConnectionFactory redisConnectionFactory;
 
 	private String SIGNING_KEY = "jiwk";
@@ -105,11 +100,11 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 				.reuseRefreshTokens(true)
 //				.tokenServices(tokenServices(endpoints))
 				// 授权码保存方式设为数据库保存
-				.authorizationCodeServices(authorizationCodeServices());
+				.authorizationCodeServices(authorizationCodeServices())
 //				// 	路径映射
 //				.pathMapping("/oauth/confirm_access", "/token/confirm_access")
 				//	异常翻译器
-//				.exceptionTranslator(new JwkWebResponseExceptionTranslator());
+				.exceptionTranslator(new JwkWebResponseExceptionTranslator());
 	}
 
 	// 保存授权码由内存的方式改为数据库的方式
@@ -149,7 +144,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	public JwtAccessTokenConverter accessTokenConverter() {
 		//JwtAccessTokenConverter是用来生成token的转换器，而token令牌默认是有签名的，且资源服务器需要验证这个签名。
 		// 此处的加密及验签包括两种方式：对称加密、非对称加密（公钥密钥）
-		JwkAccessTokenConverter converter = new JwkAccessTokenConverter();
+		JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
 		converter.setSigningKey(SIGNING_KEY); //对称秘钥，资源服务器使用该秘钥来验证
 		return converter;
 	}
@@ -170,27 +165,26 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 			}
 			additionalInfo.put(JwkSecurityConstants.DETAILS_USERNAME, username);
 			additionalInfo.put(JwkSecurityConstants.DETAILS_LICENSE, JwkSecurityConstants.PROJECT_LICENSE);
-			DefaultAccessTokenConverter defaultAccessTokenConverter = new DefaultAccessTokenConverter();
-			Map<String, ?> stringMap = defaultAccessTokenConverter
-					.convertAccessToken(accessToken, authentication);
-			additionalInfo.putAll(stringMap);
+//			DefaultAccessTokenConverter defaultAccessTokenConverter = new DefaultAccessTokenConverter();
+//			Map<String, ?> stringMap = defaultAccessTokenConverter
+//					.convertAccessToken(accessToken, authentication);
+//			additionalInfo.putAll(stringMap);
 			((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
 
-			HashMap<String, Object> claimsParam = new HashMap<>();
-			stringMap.forEach(claimsParam::put);
-			Claims claims = new DefaultClaims(claimsParam);
-			claims.setSubject(username);
-			// 设置token的值
-			String token ;
-			Object exp = JWT.of(accessToken.getValue())
-					.getPayload("exp");
-			if (null != exp){
-				System.out.println("==================="+exp+"===================");
-				token = tokenService.generateToken(claims,new Date((Integer) exp*1000L));
-			}else {
-				token = tokenService.generateToken(username);
-			}
-			((DefaultOAuth2AccessToken) accessToken).setValue(token);
+//			HashMap<String, Object> claimsParam = new HashMap<>();
+//			stringMap.forEach(claimsParam::put);
+//			Claims claims = new DefaultClaims(claimsParam);
+//			claims.setSubject(username);
+//			// 设置token的值
+//			String token ;
+//			Object exp = JWT.of(accessToken.getValue())
+//					.getPayload(AccessTokenConverter.EXP);
+//			if (null != exp){
+//				token = tokenService.generateToken(claims,new Date((Integer) exp*1000L));
+//			}else {
+//				token = tokenService.generateToken(username);
+//			}
+//			((DefaultOAuth2AccessToken) accessToken).setValue(token);
 			return accessToken;
 		};
 	}

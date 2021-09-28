@@ -1,18 +1,14 @@
 package com.jwk.security.security.component;
 
 import com.jwk.security.constants.JwkSecurityConstants;
-import com.jwk.security.security.service.impl.JwkUserDetailsService;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.provider.token.UserAuthenticationConverter;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 /**

@@ -17,7 +17,7 @@ public class ResourceConfigAttribute implements ConfigAttribute, GrantedAuthorit
 
   @Override
   public String getAttribute() {
-    return sysApi.getId() + ":" + sysApi.getUrl();
+    return sysApi.getUrl();
   }
 
   public SysApi getSysApi() {

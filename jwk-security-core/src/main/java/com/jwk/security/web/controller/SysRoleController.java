@@ -1,6 +1,11 @@
 package com.jwk.security.web.controller;
 
 
+import com.jwk.common.model.RestResponse;
+import com.jwk.security.web.service.SysRoleService;
+import com.jwk.security.web.service.SysUserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,5 +20,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/sysRole")
 public class SysRoleController {
+  @Autowired
+  private SysRoleService sysRoleService;
 
+  /**
+   * 用户列表
+   */
+  @GetMapping(value = "/list")
+  public RestResponse list() {
+
+    return RestResponse.RestResponseBuilder.createSuccessBuilder()
+        .setResult(sysRoleService.list()).buidler();
+  }
 }

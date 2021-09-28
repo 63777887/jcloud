@@ -12,7 +12,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 /**
  * 异常处理
  */
-public class AuthenticationFailHandler implements AuthenticationEntryPoint {
+public class JwkAuthenticationFailHandler implements AuthenticationEntryPoint {
 
   @Override
   public void commence(HttpServletRequest request,

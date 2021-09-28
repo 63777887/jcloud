@@ -5,12 +5,12 @@ import feign.Contract;
 import feign.Feign;
 import feign.InvocationHandlerFactory;
 import feign.Target;
-import feign.hystrix.FallbackFactory;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.util.Map;
 import org.springframework.beans.BeansException;
+import org.springframework.cloud.openfeign.FallbackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.cloud.openfeign.FeignContext;
 import org.springframework.context.ApplicationContext;
@@ -24,12 +24,9 @@ import org.springframework.util.StringUtils;
  */
 public final class SentinelFeign {
 
-  private SentinelFeign() {
 
-  }
-
-  public static Builder builder() {
-    return new Builder();
+  public static SentinelFeign.Builder builder() {
+    return new SentinelFeign.Builder();
   }
 
   public static final class Builder extends Feign.Builder implements ApplicationContextAware {
@@ -41,13 +38,12 @@ public final class SentinelFeign {
     private FeignContext feignContext;
 
     @Override
-    public Feign.Builder invocationHandlerFactory(
-        InvocationHandlerFactory invocationHandlerFactory) {
+    public Feign.Builder invocationHandlerFactory(InvocationHandlerFactory invocationHandlerFactory) {
       throw new UnsupportedOperationException();
     }
 
     @Override
-    public Builder contract(Contract contract) {
+    public SentinelFeign.Builder contract(Contract contract) {
       this.contract = contract;
       return this;
     }
@@ -59,8 +55,7 @@ public final class SentinelFeign {
         public InvocationHandler create(Target target, Map<Method, MethodHandler> dispatch) {
 
           // 查找 FeignClient 上的 降级策略
-          FeignClient feignClient = AnnotationUtils
-              .findAnnotation(target.type(), FeignClient.class);
+          FeignClient feignClient = AnnotationUtils.findAnnotation(target.type(), FeignClient.class);
           Class<?> fallback = feignClient.fallback();
           Class<?> fallbackFactory = feignClient.fallbackFactory();
 
@@ -78,16 +73,14 @@ public final class SentinelFeign {
           }
 
           if (void.class != fallbackFactory) {
-            fallbackFactoryInstance = (FallbackFactory<?>) getFromContext(beanName,
-                "fallbackFactory",
+            fallbackFactoryInstance = (FallbackFactory<?>) getFromContext(beanName, "fallbackFactory",
                 fallbackFactory, FallbackFactory.class);
             return new SentinelInvocationHandler(target, dispatch, fallbackFactoryInstance);
           }
           return new SentinelInvocationHandler(target, dispatch);
         }
 
-        private Object getFromContext(String name, String type, Class<?> fallbackType,
-            Class<?> targetType) {
+        private Object getFromContext(String name, String type, Class<?> fallbackType, Class<?> targetType) {
           Object fallbackInstance = feignContext.getInstance(name, fallbackType);
           if (fallbackInstance == null) {
             throw new IllegalStateException(String.format(
@@ -112,7 +105,8 @@ public final class SentinelFeign {
       field.setAccessible(true);
       try {
         return field.get(instance);
-      } catch (IllegalAccessException e) {
+      }
+      catch (IllegalAccessException e) {
         // ignore
       }
       return null;

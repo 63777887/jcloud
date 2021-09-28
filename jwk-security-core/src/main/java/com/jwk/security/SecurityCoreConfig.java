@@ -3,11 +3,14 @@ package com.jwk.security;
 import com.jwk.security.security.component.JwkAuthProperties;
 import com.jwk.security.security.conf.DynamicAccessDecisionManager;
 import com.jwk.security.security.conf.DynamicMetadataSource;
+import com.jwk.security.security.conf.JwkBearerTokenExtractor;
 import com.jwk.security.security.service.TokenService;
 import com.jwk.security.security.service.impl.JwkUserDetailsService;
 import com.jwk.security.security.service.impl.JwtAuthService;
 import com.jwk.security.security.service.impl.TokenServiceImpl;
 import com.jwk.security.web.controller.JwtAuthController;
+import com.jwk.security.web.controller.SysApiController;
+import com.jwk.security.web.controller.SysRoleController;
 import com.jwk.security.web.controller.SysUserController;
 import com.jwk.security.web.dao.SysApiCategoryMapper;
 import com.jwk.security.web.dao.SysApiMapper;
@@ -42,6 +45,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableConfigurationProperties(JwkAuthProperties.class)
@@ -202,6 +207,18 @@ public class SecurityCoreConfig {
 
   @Bean
   @ConditionalOnMissingBean
+  public SysApiController sysApiController() {
+    return new SysApiController();
+  }
+
+  @Bean
+  @ConditionalOnMissingBean
+  public SysRoleController sysRoleController() {
+    return new SysRoleController();
+  }
+
+  @Bean
+  @ConditionalOnMissingBean
   public DynamicAccessDecisionManager dynamicAccessDecisionManager() {
     return new DynamicAccessDecisionManager();
   }
@@ -210,6 +227,12 @@ public class SecurityCoreConfig {
   @ConditionalOnMissingBean
   public DynamicMetadataSource dynamicMetadataSource() {
     return new DynamicMetadataSource();
+  }
+
+  @Bean
+  @ConditionalOnMissingBean
+  public PasswordEncoder passwordEncoder() {
+    return PasswordEncoderFactories.createDelegatingPasswordEncoder();
   }
 
 }

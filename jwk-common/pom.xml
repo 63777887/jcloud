@@ -32,11 +32,6 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
-<!--    <dependency>-->
-<!--      <groupId>org.springframework.boot</groupId>-->
-<!--      <artifactId>spring-boot-starter-test</artifactId>-->
-<!--      <scope>test</scope>-->
-<!--    </dependency>-->
     <!-- 参数校验依赖(注意：该注解于 SpringBoot 2.3.0 版本移除,需手动加入该依赖,如果不加,@NotBlank等注解可以使用但是不会校验) -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -54,6 +49,7 @@
       <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
       <version>2.2.1.RELEASE</version>
     </dependency>
+    <!--        springCloud sentinel-->
     <dependency>
       <groupId>com.alibaba.cloud</groupId>
       <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
@@ -61,6 +57,11 @@
     <dependency>
       <groupId>com.alibaba.csp</groupId>
       <artifactId>sentinel-datasource-nacos</artifactId>
+    </dependency>
+    <!--        springCloud bootstrap-->
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-bootstrap</artifactId>
     </dependency>
     <!--feign 依赖-->
     <dependency>

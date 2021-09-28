@@ -45,7 +45,7 @@ public class GatewayConfiguration {
   }
 
   @Bean
-  public RequestGlobalFilter pigRequestGlobalFilter() {
+  public RequestGlobalFilter jwkRequestGlobalFilter() {
     return new RequestGlobalFilter();
   }
 
@@ -72,11 +72,11 @@ public class GatewayConfiguration {
     return new SentinelGatewayBlockExceptionHandler(viewResolvers, serverCodecConfigurer);
   }
 
-  @Bean
-  @Order(-1)
-  public GlobalFilter sentinelGatewayFilter() {
-    return new SentinelGatewayFilter();
-  }
+//  @Bean
+//  @Order(-1)
+//  public GlobalFilter sentinelGatewayFilter() {
+//    return new SentinelGatewayFilter();
+//  }
 
   @PostConstruct
   public void doInit() {

@@ -65,7 +65,7 @@ public interface JwkSecurityConstants {
 	/**
 	 * 用户名字段
 	 */
-	String DETAILS_USERNAME = "username";
+	String DETAILS_USERNAME = "user_name";
 
 	/**
 	 * 用户部门字段

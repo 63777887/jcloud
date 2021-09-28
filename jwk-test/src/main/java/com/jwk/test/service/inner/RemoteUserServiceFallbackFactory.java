@@ -1,11 +1,10 @@
 package com.jwk.test.service.inner;
 
-import feign.hystrix.FallbackFactory;
+import org.springframework.cloud.openfeign.FallbackFactory;
 import org.springframework.stereotype.Component;
 
 /**
- * @author lengleng
- * @date 2019/2/1
+ * 服务降级
  */
 @Component
 public class RemoteUserServiceFallbackFactory implements FallbackFactory<TestService> {

@@ -24,8 +24,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class JwtAuthService {
 
-  @Autowired
-  private AuthenticationManager authenticationManager;
+//  @Autowired
+//  private AuthenticationManager authenticationManager;
   @Autowired
   private TokenService tokenService;
   @Autowired
@@ -54,7 +54,7 @@ public class JwtAuthService {
       // AbstractUserDetailsAuthenticationProvider.authenticate()方法
       // 他会去调用我们重写的loadUserByUsername()方法获取UserDetails对象，
       // 校验用户状态，同时校验用户密码与前端传入的是否一致
-      Authentication authentication = authenticationManager.authenticate(upToken);
+      Authentication authentication = null;
 
       // 把认证以后的信息放入security上下文
       SecurityContextHolder.getContext().setAuthentication(authentication);

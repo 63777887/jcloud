@@ -29,18 +29,20 @@
 
   <properties>
     <java.version>1.8</java.version>
-    <spring-boot.version>2.2.1.RELEASE</spring-boot.version>
+    <spring-boot.version>2.5.2</spring-boot.version>
+    <cloud.version>2020.0.3</cloud.version>
+    <cloud-alibaba.version>2021.1</cloud-alibaba.version>
+<!--    <spring-boot.version>2.2.1.RELEASE</spring-boot.version>-->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
     <fastjson.version>1.2.73</fastjson.version>
     <hutool-all.version>5.7.3</hutool-all.version>
     <lombok.version>1.18.12</lombok.version>
     <jjwt.version>0.9.1</jjwt.version>
     <log4j.version>1.2.17</log4j.version>
     <knife4j.version>2.0.9</knife4j.version>
-    <cloud.version>Hoxton.SR3</cloud.version>
-    <cloud-alibaba.version>2.2.1.RELEASE</cloud-alibaba.version>
+<!--    <cloud.version>Hoxton.SR3</cloud.version>-->
+<!--    <cloud-alibaba.version>2.2.1.RELEASE</cloud-alibaba.version>-->
     <spring-boot-admin.version>2.4.3</spring-boot-admin.version>
     <jasypt.version>2.1.0</jasypt.version>
   </properties>
@@ -49,7 +51,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.3.4.RELEASE</version>
+    <version>2.5.2</version>
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
 
@@ -83,12 +85,6 @@
       <artifactId>lombok</artifactId>
       <scope>provided</scope>
     </dependency>
-    <!--测试依赖-->
-<!--    <dependency>-->
-<!--      <groupId>org.springframework.boot</groupId>-->
-<!--      <artifactId>spring-boot-starter-test</artifactId>-->
-<!--      <scope>test</scope>-->
-<!--    </dependency>-->
   </dependencies>
 
   <dependencyManagement>

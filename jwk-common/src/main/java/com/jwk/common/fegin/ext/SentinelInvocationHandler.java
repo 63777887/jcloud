@@ -15,7 +15,6 @@ import feign.Feign;
 import feign.InvocationHandlerFactory;
 import feign.MethodMetadata;
 import feign.Target;
-import feign.hystrix.FallbackFactory;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -23,6 +22,7 @@ import java.lang.reflect.Proxy;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.openfeign.FallbackFactory;
 
 /**
  * 支持自动降级注入 重写 {@link com.alibaba.cloud.sentinel.feign.SentinelInvocationHandler}
@@ -112,7 +112,7 @@ public class SentinelInvocationHandler implements InvocationHandler {
               throw new AssertionError(e.getCause());
             }
           } else {
-            // 若是R类型 执行自动降级返回R
+            // 若是业务统一类型 执行自动降级返回R
             if (RestResponse.class == method.getReturnType()) {
               log.error("feign 服务间调用异常", ex);
               return RestResponseBuilder.createFailBuilder(ex.getLocalizedMessage()).buidler();
