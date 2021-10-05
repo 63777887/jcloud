@@ -3,9 +3,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <modules>
-    <module>jwk-security-core</module>
     <module>jwk-gateway</module>
-    <module>jwk-common</module>
     <module>jwk-test</module>
     <module>jwk-api</module>
     <module>jwk-knife4j</module>
@@ -15,6 +13,7 @@
     <module>netty-demo</module>
     <module>redis-lock</module>
     <module>test-thread</module>
+    <module>jwk-common</module>
   </modules>
 
 

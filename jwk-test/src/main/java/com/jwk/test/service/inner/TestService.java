@@ -1,9 +1,8 @@
 package com.jwk.test.service.inner;
 
-import com.jwk.common.model.RestResponse;
+import com.jwk.common.core.model.RestResponse;
 import javax.validation.Valid;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 

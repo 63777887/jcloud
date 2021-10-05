@@ -1,6 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.jwk.common.config.MybatisPlusConfiguration,\
-  com.jwk.common.config.NacosConfiguration,\
-  com.jwk.common.config.SwaggerConfiguration,\
-  com.jwk.common.config.FeignAutoConfiguration,\
-  com.jwk.common.config.RestTemplateConfiguration

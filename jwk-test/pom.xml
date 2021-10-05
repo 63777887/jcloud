@@ -31,8 +31,8 @@
 
     <dependency>
       <groupId>com.jwk</groupId>
-      <artifactId>jwk-security</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
+      <artifactId>jwk-common-security</artifactId>
+      <version>1.0.0</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -84,6 +84,17 @@
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
       <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.alibaba.otter</groupId>
+      <artifactId>canal.client</artifactId>
+      <version>1.1.5</version>
+    </dependency>
+    <dependency>
+      <groupId>com.alibaba.otter</groupId>
+      <artifactId>canal.protocol</artifactId>
+      <version>1.1.5</version>
     </dependency>
 
   </dependencies>

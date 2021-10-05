@@ -5,8 +5,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
-import com.jwk.common.model.RestResponse;
-import com.jwk.common.model.RestResponse.RestResponseBuilder;
+import com.jwk.common.core.model.RestResponse;
+import com.jwk.common.core.model.RestResponse.RestResponseBuilder;
 import java.util.*;
 
 /**

@@ -1,7 +1,7 @@
 package com.jwk.test.service.inner;
 
-import com.jwk.common.model.RestResponse;
-import com.jwk.common.model.RestResponse.RestResponseBuilder;
+import com.jwk.common.core.model.RestResponse;
+import com.jwk.common.core.model.RestResponse.RestResponseBuilder;
 import javax.validation.Valid;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
