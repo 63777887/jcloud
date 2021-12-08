@@ -32,9 +32,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 
 /**
- * @author lengleng
- * @date 2019/03/08
- * <p>
  * 资源服务注解
  */
 @Documented

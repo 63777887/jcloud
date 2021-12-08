@@ -9,7 +9,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>jwk-common-canal-mq</artifactId>
+  <artifactId>jwk-common-canal-rocketmq</artifactId>
 
   <properties>
     <maven.compiler.source>8</maven.compiler.source>

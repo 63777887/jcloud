@@ -17,8 +17,6 @@ import static com.alibaba.otter.canal.protocol.CanalEntry.EventType.*;
 
 /**
  * Otter 客户端抽象类
- *
- * @author fanxuankai
  */
 @Slf4j
 public abstract class AbstractOtter implements Otter {

@@ -9,8 +9,8 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>jwk-gateway</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>war</packaging>
+  <version>1.0</version>
+  <packaging>jar</packaging>
   <name>jwk-gateway</name>
   <description>jwk-gateway project for Spring Boot</description>
   <properties>
@@ -49,12 +49,12 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-validation</artifactId>
     </dependency>
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>javax.servlet-api</artifactId>
-      <version>3.1.0</version>
-      <scope>provided</scope>
-    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>javax.servlet</groupId>-->
+<!--      <artifactId>javax.servlet-api</artifactId>-->
+<!--      <version>3.1.0</version>-->
+<!--      <scope>provided</scope>-->
+<!--    </dependency>-->
     <!--断路器依赖-->
     <dependency>
       <groupId>com.alibaba.cloud</groupId>
@@ -79,11 +79,41 @@
     </dependency>
   </dependencies>
 
+
   <build>
+    <finalName>jwk-gateway</finalName>
+    <sourceDirectory>src/main/java</sourceDirectory>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <includes>
+          <include>**/*</include>
+        </includes>
+        <excludes>
+          <exclude>**/.git/</exclude>
+        </excludes>
+      </resource>
+    </resources>
     <plugins>
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+
+      <plugin>
+        <groupId>org.mybatis.generator</groupId>
+        <artifactId>mybatis-generator-maven-plugin</artifactId>
+        <version>1.3.2</version>
+        <dependencies>
+          <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.25</version>
+          </dependency>
+        </dependencies>
+        <configuration>
+          <overwrite>true</overwrite>
+        </configuration>
       </plugin>
     </plugins>
   </build>

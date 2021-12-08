@@ -11,7 +11,7 @@
   <groupId>com.jwk</groupId>
   <artifactId>jwk-test</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <packaging>war</packaging>
+  <packaging>jar</packaging>
   <name>jwk-test</name>
   <description>Demo project for Spring Boot</description>
   <properties>
@@ -34,11 +34,11 @@
       <artifactId>jwk-common-security</artifactId>
       <version>1.0.0</version>
     </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-tomcat</artifactId>
-      <scope>provided</scope>
-    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>org.springframework.boot</groupId>-->
+<!--      <artifactId>spring-boot-starter-tomcat</artifactId>-->
+<!--      <scope>provided</scope>-->
+<!--    </dependency>-->
 <!--    <dependency>-->
 <!--      <groupId>org.springframework.boot</groupId>-->
 <!--      <artifactId>spring-boot-starter-test</artifactId>-->
@@ -96,6 +96,17 @@
       <artifactId>canal.protocol</artifactId>
       <version>1.1.5</version>
     </dependency>
+<!--    <dependency>-->
+<!--      <groupId>de.codecentric</groupId>-->
+<!--      <artifactId>spring-boot-admin-starter-client</artifactId>-->
+<!--      <version>2.2.0</version>-->
+<!--    </dependency>-->
+
+    <dependency>
+      <groupId>org.apache.skywalking</groupId>
+      <artifactId>apm-toolkit-logback-1.x</artifactId>
+      <version>8.6.0</version>
+    </dependency>
 
   </dependencies>
 
@@ -136,5 +147,6 @@
       </plugin>
     </plugins>
   </build>
+
 
 </project>

@@ -77,9 +77,9 @@ public class JwkResourceServerConfigurerAdapter extends ResourceServerConfigurer
 //		httpSecurity.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 //
     //添加自定义的权限过滤器
-    DynamicResourceFilter dynamicResourceFilter = new DynamicResourceFilter();
-    autowireCapableBeanFactory.autowireBean(dynamicResourceFilter);
-		httpSecurity.addFilterBefore(dynamicResourceFilter, FilterSecurityInterceptor.class);
+//    DynamicResourceFilter dynamicResourceFilter = new DynamicResourceFilter();
+//    autowireCapableBeanFactory.autowireBean(dynamicResourceFilter);
+//		httpSecurity.addFilterBefore(dynamicResourceFilter, FilterSecurityInterceptor.class);
 	}
 
 	@Override
@@ -88,7 +88,7 @@ public class JwkResourceServerConfigurerAdapter extends ResourceServerConfigurer
 		resources.
 				authenticationEntryPoint(new JwkAuthenticationFailHandler()).
 				tokenExtractor(new JwkBearerTokenExtractor(jwkAuthProperties)).
-				tokenStore(tokenStore()).
+//				tokenStore(tokenStore()).
 				accessDeniedHandler(new JwtForbiddenConfigHandler()).
 				tokenServices(remoteTokenServices());
 

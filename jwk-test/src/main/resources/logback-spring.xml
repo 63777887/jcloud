@@ -50,6 +50,32 @@
     </filter>
   </appender>
 
+<!--    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">-->
+<!--      <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">-->
+<!--        <layout class="org.apache.skywalking.apm.toolkit.log.logback.v1.x.TraceIdPatternLogbackLayout">-->
+<!--          <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level logger_name:%logger{36} - [%tid] - message:%msg%n</pattern>-->
+<!--        </layout>-->
+<!--      </encoder>-->
+<!--    </appender>-->
+
+<!--    <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">-->
+<!--      <discardingThreshold>0</discardingThreshold>-->
+<!--      <queueSize>1024</queueSize>-->
+<!--      <neverBlock>true</neverBlock>-->
+<!--      <appender-ref ref="STDOUT"/>-->
+<!--    </appender>-->
+
+<!--  sky-walking日志收集-->
+  <appender name="msystem-log" class="org.apache.skywalking.apm.toolkit.log.logback.v1.x.log.GRPCLogClientAppender">
+    <!-- 日志输出编码 -->
+    <encoder>
+      <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n
+      </pattern>
+    </encoder>
+  </appender>
+
+
   <!--nacos 心跳 INFO 屏蔽-->
   <logger name="com.alibaba.nacos" level="OFF">
     <appender-ref ref="error"/>
@@ -60,5 +86,7 @@
     <appender-ref ref="console"/>
     <appender-ref ref="debug"/>
     <appender-ref ref="error"/>
+<!--    <appender-ref ref="ASYNC"/>-->
+    <appender-ref ref="msystem-log"/>
   </root>
 </configuration>
