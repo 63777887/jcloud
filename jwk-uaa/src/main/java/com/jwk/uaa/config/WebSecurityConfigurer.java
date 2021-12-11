@@ -5,7 +5,10 @@ import com.jwk.security.security.conf.DynamicResourceFilter;
 import com.jwk.security.security.conf.JwtAuthenticationFilter;
 import com.jwk.security.security.handler.JwkAuthenticationFailHandler;
 import com.jwk.security.security.handler.JwtForbiddenConfigHandler;
+import com.jwk.security.security.service.impl.JwkUserDetailsService;
 import com.jwk.uaa.comonpent.OauthCheckRequestService;
+import com.jwk.uaa.grant.PhoneAuthenticationProvider;
+import com.jwk.uaa.service.JwkClientDetailsService;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
@@ -18,6 +21,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -35,9 +40,16 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 	@Autowired
   private OauthCheckRequestService oauthCheckRequestService;
 
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
+	@Autowired
+	private JwkUserDetailsService jwkUserDetailsService;
+
 	@Override
 	@SneakyThrows
 	protected void configure(HttpSecurity http) {
+		http.authenticationProvider(phoneAuthenticationProvider());
 		http.csrf().disable()
         .sessionManagement()
         //  无状态模式
@@ -64,6 +76,13 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     DynamicResourceFilter dynamicResourceFilter = new DynamicResourceFilter();
     autowireCapableBeanFactory.autowireBean(dynamicResourceFilter);
     http.addFilterBefore(dynamicResourceFilter, FilterSecurityInterceptor.class);
+	}
+
+	private PhoneAuthenticationProvider phoneAuthenticationProvider() {
+		PhoneAuthenticationProvider phoneAuthenticationProvider = new PhoneAuthenticationProvider();
+		phoneAuthenticationProvider.setPasswordEncoder(passwordEncoder);
+		phoneAuthenticationProvider.setUserDetailsService(jwkUserDetailsService);
+		return phoneAuthenticationProvider;
 	}
 
 	@Override

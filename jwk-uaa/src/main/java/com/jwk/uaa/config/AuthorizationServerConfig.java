@@ -5,7 +5,10 @@ import com.jwk.security.security.component.JwkWebResponseExceptionTranslator;
 import com.jwk.security.security.dto.AdminUserDetails;
 import com.jwk.security.security.service.impl.JwkUserDetailsService;
 import com.jwk.uaa.comonpent.JwkAccessTokenConverter;
+import com.jwk.uaa.grant.PhoneAuthenticationProvider;
+import com.jwk.uaa.grant.ResourceOwnerPhoneTokenGranter;
 import com.jwk.uaa.service.JwkClientDetailsService;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,6 +28,8 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.CompositeTokenGranter;
+import org.springframework.security.oauth2.provider.TokenGranter;
 import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.code.JdbcAuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
@@ -105,8 +110,18 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 //				.pathMapping("/oauth/confirm_access", "/token/confirm_access")
 				//	异常翻译器
 				.exceptionTranslator(new JwkWebResponseExceptionTranslator());
+		setTokenGranter(endpoints);
 	}
-
+	private void setTokenGranter(AuthorizationServerEndpointsConfigurer endpoints) {
+		// 获取默认授权类型
+		TokenGranter tokenGranter = endpoints.getTokenGranter();
+		ArrayList<TokenGranter> tokenGranters = new ArrayList<>(Arrays.asList(tokenGranter));
+		ResourceOwnerPhoneTokenGranter resourceOwnerPhoneTokenGranter = new ResourceOwnerPhoneTokenGranter(authenticationManager,
+				endpoints.getTokenServices(), endpoints.getClientDetailsService(), endpoints.getOAuth2RequestFactory());
+		tokenGranters.add(resourceOwnerPhoneTokenGranter);
+		CompositeTokenGranter compositeTokenGranter = new CompositeTokenGranter(tokenGranters);
+		endpoints.tokenGranter(compositeTokenGranter);
+	}
 	// 保存授权码由内存的方式改为数据库的方式
 	@Bean
 	public AuthorizationCodeServices authorizationCodeServices() {

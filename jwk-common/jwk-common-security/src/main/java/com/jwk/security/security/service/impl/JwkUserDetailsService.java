@@ -43,6 +43,13 @@ public class JwkUserDetailsService implements UserDetailsService {
     SysUser user = sysUserService.lambdaQuery().eq(SysUser::getUsername, username).one();
     //加载用户角色列表
 
+    List<ResourceConfigAttribute> configAttributes = getUerDetail(
+        user);
+
+    return new AdminUserDetails(user, configAttributes);
+  }
+
+  private List<ResourceConfigAttribute> getUerDetail(SysUser user) {
     List<SysUserRole> sysUserRoles = userRoleService.lambdaQuery()
         .eq(SysUserRole::getUserId, user.getId()).list();
     List<Long> roleIds = sysUserRoles.stream().map(SysUserRole::getRoleId)
@@ -62,7 +69,18 @@ public class JwkUserDetailsService implements UserDetailsService {
     List<ResourceConfigAttribute> configAttributes = sysApis.stream()
         .map(ResourceConfigAttribute::new)
         .collect(Collectors.toList());
+    return configAttributes;
+  }
 
-    return new AdminUserDetails(user, configAttributes);
+  /**
+   * 手机号码登录
+   *
+   * @param phone 手机号码
+   * @return 用户信息
+   */
+  public UserDetails loadUserByPhone(String phone) {
+    SysUser user = sysUserService.lambdaQuery().eq(SysUser::getPhone, phone).one();
+    List<ResourceConfigAttribute> uerDetail = getUerDetail(user);
+    return new AdminUserDetails(user, uerDetail);
   }
 }

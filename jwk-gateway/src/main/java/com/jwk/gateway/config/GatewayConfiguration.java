@@ -32,8 +32,6 @@ import org.springframework.web.reactive.result.view.ViewResolver;
 
 /**
  * 网关配置
- *
- * @author L.cm
  */
 @Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties(GatewayConfigProperties.class)
