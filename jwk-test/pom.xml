@@ -21,13 +21,13 @@
   </properties>
   <dependencies>
 
-    <!-- https://mvnrepository.com/artifact/org.jmockit/jmockit -->
-    <dependency>
-      <groupId>org.jmockit</groupId>
-      <artifactId>jmockit</artifactId>
-      <version>1.49</version>
-      <scope>test</scope>
-    </dependency>
+<!--    &lt;!&ndash; https://mvnrepository.com/artifact/org.jmockit/jmockit &ndash;&gt;-->
+<!--    <dependency>-->
+<!--      <groupId>org.jmockit</groupId>-->
+<!--      <artifactId>jmockit</artifactId>-->
+<!--      <version>1.49</version>-->
+<!--      <scope>test</scope>-->
+<!--    </dependency>-->
 
     <dependency>
       <groupId>com.jwk</groupId>
