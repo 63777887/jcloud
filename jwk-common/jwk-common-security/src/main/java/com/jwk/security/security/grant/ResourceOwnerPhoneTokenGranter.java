@@ -1,4 +1,4 @@
-package com.jwk.uaa.grant;
+package com.jwk.security.security.grant;
 
 import cn.hutool.core.util.StrUtil;
 import org.springframework.security.authentication.AbstractAuthenticationToken;

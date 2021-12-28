@@ -129,7 +129,7 @@ public class JwkResourceServerConfigurerAdapter extends ResourceServerConfigurer
 		 * 设置JWT令牌的签名key
 		 */
 		JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-		converter.setSigningKey("jiwk");
+		converter.setSigningKey(jwkAuthProperties.getSecretKey());
 		return converter;
 	}
 

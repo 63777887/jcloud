@@ -2,6 +2,7 @@ package com.jwk.test.web.controller;
 
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.jwk.common.core.model.RestResponse;
+import com.jwk.security.security.annotation.Inner;
 import com.jwk.test.netty.TestServerChannel;
 import com.jwk.test.service.inner.TestService;
 import java.io.IOException;
@@ -36,6 +37,7 @@ public class TestController {
   }
 
   @PostMapping("/export1")
+  @Inner
   public String export1(
       HttpServletResponse response, HttpServletRequest request) throws IOException {
     HSSFWorkbook workbook = new HSSFWorkbook();

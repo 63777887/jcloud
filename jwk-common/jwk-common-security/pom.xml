@@ -42,11 +42,11 @@
       <version>1.0.0</version>
     </dependency>
 
-    <dependency>
-      <groupId>com.jwk</groupId>
-      <artifactId>jwk-api</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
-    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>com.jwk</groupId>-->
+<!--      <artifactId>jwk-api</artifactId>-->
+<!--      <version>1.0.0</version>-->
+<!--    </dependency>-->
     <!--        登陆鉴权-->
     <dependency>
       <groupId>org.springframework.boot</groupId>

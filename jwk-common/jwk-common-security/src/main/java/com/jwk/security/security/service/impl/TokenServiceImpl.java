@@ -86,7 +86,7 @@ public class TokenServiceImpl implements TokenService {
    */
   private Claims getClaimsFromToken(String token) {
     try {
-      return Jwts.parser().setSigningKey("jiwk").parseClaimsJws(token).getBody();
+      return Jwts.parser().setSigningKey(jwkAuthProperties.getSecretKey()).parseClaimsJws(token).getBody();
     } catch (ExpiredJwtException e) {
       //过期也解析body
       return e.getClaims();

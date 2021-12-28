@@ -1,12 +1,11 @@
 package com.jwk.uaa.config;
 
 import com.jwk.security.constants.JwkSecurityConstants;
+import com.jwk.security.security.component.JwkAuthProperties;
 import com.jwk.security.security.component.JwkWebResponseExceptionTranslator;
 import com.jwk.security.security.dto.AdminUserDetails;
 import com.jwk.security.security.service.impl.JwkUserDetailsService;
-import com.jwk.uaa.comonpent.JwkAccessTokenConverter;
-import com.jwk.uaa.grant.PhoneAuthenticationProvider;
-import com.jwk.uaa.grant.ResourceOwnerPhoneTokenGranter;
+import com.jwk.security.security.grant.ResourceOwnerPhoneTokenGranter;
 import com.jwk.uaa.service.JwkClientDetailsService;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,7 +31,6 @@ import org.springframework.security.oauth2.provider.CompositeTokenGranter;
 import org.springframework.security.oauth2.provider.TokenGranter;
 import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.code.JdbcAuthorizationCodeServices;
-import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
@@ -59,13 +57,14 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Autowired
 	JwkClientDetailsService jwkClientDetailsService;
 
+	@Autowired
+	JwkAuthProperties jwkAuthProperties;
+
 
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
 //	private final RedisConnectionFactory redisConnectionFactory;
-
-	private String SIGNING_KEY = "jiwk";
 
 	@Override
 	@SneakyThrows
@@ -160,7 +159,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		//JwtAccessTokenConverter是用来生成token的转换器，而token令牌默认是有签名的，且资源服务器需要验证这个签名。
 		// 此处的加密及验签包括两种方式：对称加密、非对称加密（公钥密钥）
 		JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-		converter.setSigningKey(SIGNING_KEY); //对称秘钥，资源服务器使用该秘钥来验证
+		converter.setSigningKey(jwkAuthProperties.getSecretKey()); //对称秘钥，资源服务器使用该秘钥来验证
 		return converter;
 	}
 

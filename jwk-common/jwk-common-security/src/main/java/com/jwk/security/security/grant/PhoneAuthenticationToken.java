@@ -1,4 +1,4 @@
-package com.jwk.uaa.grant;
+package com.jwk.security.security.grant;
 
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.authority.AuthorityUtils;

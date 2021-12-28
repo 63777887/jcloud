@@ -1,9 +1,8 @@
-package com.jwk.uaa.grant;
+package com.jwk.security.security.grant;
 
 import com.jwk.security.security.service.impl.JwkUserDetailsService;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

@@ -8,10 +8,6 @@
     <module>jwk-api</module>
     <module>jwk-knife4j</module>
     <module>jwk-uaa</module>
-    <module>webmagic</module>
-    <module>netty-demo</module>
-    <module>redis-lock</module>
-    <module>test-thread</module>
     <module>jwk-common</module>
     <module>jwk-admin</module>
   </modules>
@@ -21,8 +17,8 @@
 
 
   <groupId>com.jwk</groupId>
-  <artifactId>project</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <artifactId>jcloud-parent</artifactId>
+  <version>1.0.0</version>
   <packaging>pom</packaging>
 
 

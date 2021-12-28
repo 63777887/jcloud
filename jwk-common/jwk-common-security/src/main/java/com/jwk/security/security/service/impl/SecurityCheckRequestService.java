@@ -5,6 +5,7 @@ import com.jwk.security.security.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 public class SecurityCheckRequestService implements CheckRequestService {
 
@@ -12,7 +13,7 @@ public class SecurityCheckRequestService implements CheckRequestService {
   private TokenService tokenService;
 
   @Autowired
-  private JwkUserDetailsService jwkUserDetailsService;
+  private UserDetailsService userDetailsService;
 
   @Override
   public UsernamePasswordAuthenticationToken checkToken(String token) {
@@ -20,7 +21,7 @@ public class SecurityCheckRequestService implements CheckRequestService {
       // 获取用户名
       String username = tokenService.parseSubject(token);
       //获取userDetails用户信息
-      UserDetails userDetails = jwkUserDetailsService.loadUserByUsername(username);
+      UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
       if (userDetails != null) {
 
