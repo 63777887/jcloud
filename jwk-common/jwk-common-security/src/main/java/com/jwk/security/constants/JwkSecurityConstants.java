@@ -68,9 +68,24 @@ public interface JwkSecurityConstants {
 	String DETAILS_USERNAME = "user_name";
 
 	/**
+	 * 用户ID
+	 */
+	String DETAILS_USER_ID = "user_id";
+
+	/**
+	 * 用户手机号码
+	 */
+	String DETAILS_PHONE = "phone";
+
+	/**
 	 * 用户部门字段
 	 */
 	String DETAILS_ORG_ID = "org_id";
+
+	/**
+	 * 用户部门字段
+	 */
+	String DETAILS_EMAIL = "email";
 
 	/**
 	 * 协议字段

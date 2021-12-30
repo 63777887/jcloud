@@ -1,7 +1,7 @@
 package com.jwk.security.security.component;
 
 import com.jwk.security.constants.JwkSecurityConstants;
-import com.jwk.security.web.entity.SysUser;
+import com.jwk.security.security.dto.AdminUserDetails;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -13,9 +13,9 @@ import org.springframework.security.oauth2.provider.token.UserAuthenticationConv
 import org.springframework.util.StringUtils;
 
 /**
- * 根据checktoken 的结果转化用户信息
+ * 根据自定义token 的结果转化用户信息
  */
-public class JwkUserAuthenticationConverter implements UserAuthenticationConverter {
+public class JwkUserCreateAuthenticationConverter implements UserAuthenticationConverter {
 
 	private static final String N_A = "N/A";
 
@@ -31,6 +31,11 @@ public class JwkUserAuthenticationConverter implements UserAuthenticationConvert
 	public Map<String, ?> convertUserAuthentication(Authentication authentication) {
 		Map<String, Object> response = new LinkedHashMap<>();
 		response.put(USERNAME, authentication.getName());
+		AdminUserDetails principal = (AdminUserDetails) authentication.getPrincipal();
+		response.put(JwkSecurityConstants.DETAILS_USER_ID, principal.getSysUser().getId());
+		response.put(JwkSecurityConstants.DETAILS_PHONE, principal.getSysUser().getPhone());
+		response.put(JwkSecurityConstants.DETAILS_ORG_ID, principal.getSysUser().getOrgId());
+		response.put(JwkSecurityConstants.DETAILS_EMAIL, principal.getSysUser().getEmail());
 		if (authentication.getAuthorities() != null && !authentication.getAuthorities().isEmpty()) {
 			response.put(AUTHORITIES, AuthorityUtils.authorityListToSet(authentication.getAuthorities()));
 		}
@@ -50,34 +55,9 @@ public class JwkUserAuthenticationConverter implements UserAuthenticationConvert
 
 			// 此处map加载的信息为生成tokenEnhancer时添加的信息
 			String username = (String) map.get(JwkSecurityConstants.DETAILS_USERNAME);
-			SysUser user = convertUser(map);
-			UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-					username, N_A, authorities);
-			authenticationToken.setDetails(user);
-			return authenticationToken;
+			return new UsernamePasswordAuthenticationToken(username, N_A, authorities);
 		}
-
 		return null;
-	}
-
-	private SysUser convertUser(Map<String, ?> map) {
-		SysUser user = new SysUser();
-		if (null != map.get(JwkSecurityConstants.DETAILS_USER_ID)) {
-			user.setId(Long.valueOf(map.get(JwkSecurityConstants.DETAILS_USER_ID).toString()));
-		}
-		if (null != map.get(JwkSecurityConstants.DETAILS_USERNAME)) {
-			user.setUsername(((String) map.get(JwkSecurityConstants.DETAILS_USERNAME)));
-		}
-		if (null != map.get(JwkSecurityConstants.DETAILS_ORG_ID)) {
-			user.setOrgId(Long.valueOf(map.get(JwkSecurityConstants.DETAILS_ORG_ID).toString()));
-		}
-		if (null != map.get(JwkSecurityConstants.DETAILS_PHONE)) {
-			user.setPhone((String) map.get(JwkSecurityConstants.DETAILS_PHONE));
-		}
-		if (null != map.get(JwkSecurityConstants.DETAILS_EMAIL)) {
-			user.setEmail((String) map.get(JwkSecurityConstants.DETAILS_EMAIL));
-		}
-		return user;
 	}
 
 	private Collection<? extends GrantedAuthority> getAuthorities(Map<String, ?> map) {

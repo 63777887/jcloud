@@ -1,7 +1,7 @@
 package com.jwk.security.enums;
 
 public enum ApiStatusE {
-  SC_UNAUTHORIZED(401, "用户未登陆"),
+  SC_UNAUTHORIZED(401, "用户未登陆或登录已过期"),
   SC_FORBIDDEN(403, "用户没有访问权限");
 
   ApiStatusE(Integer code, String vlaue) {

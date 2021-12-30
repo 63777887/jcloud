@@ -42,8 +42,8 @@ public class JwkResourceServerConfigurerAdapter extends ResourceServerConfigurer
 	@Autowired
 	private RestTemplate lbRestTemplate;
 
-  @Autowired
-  private AutowireCapableBeanFactory autowireCapableBeanFactory;
+//  @Autowired
+//  private AutowireCapableBeanFactory autowireCapableBeanFactory;
 
   @Autowired
   private ResourceServerProperties resourceServerProperties;

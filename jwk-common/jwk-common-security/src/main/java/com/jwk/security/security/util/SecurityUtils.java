@@ -1,6 +1,5 @@
 package com.jwk.security.security.util;
 
-import com.jwk.security.security.dto.AdminUserDetails;
 import com.jwk.security.security.dto.ResourceConfigAttribute;
 import com.jwk.security.web.entity.SysUser;
 import java.util.Collection;
@@ -10,6 +9,7 @@ import lombok.experimental.UtilityClass;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 
 /**
  * 安全工具类
@@ -21,7 +21,11 @@ public class SecurityUtils {
    * 获取Authentication
    */
   public Authentication getAuthentication() {
-    return SecurityContextHolder.getContext().getAuthentication();
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    if (authentication instanceof OAuth2Authentication){
+      return ((OAuth2Authentication) authentication).getUserAuthentication();
+    }
+    return authentication;
   }
 
   /**
@@ -29,8 +33,8 @@ public class SecurityUtils {
    */
   private SysUser getUser(Authentication authentication) {
     Object principal = authentication.getDetails();
-    if (principal instanceof AdminUserDetails) {
-      return ((AdminUserDetails) principal).getSysUser();
+    if (principal instanceof SysUser) {
+      return (SysUser) principal;
     }
     return null;
   }
