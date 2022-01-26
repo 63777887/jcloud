@@ -3,9 +3,10 @@ package com.jwk.security;
 import com.jwk.security.security.component.JwkAuthProperties;
 import com.jwk.security.security.conf.DynamicAccessDecisionManager;
 import com.jwk.security.security.conf.DynamicMetadataSource;
-import com.jwk.security.security.conf.JwkBearerTokenExtractor;
+import com.jwk.security.security.service.JwkUserDetailsService;
 import com.jwk.security.security.service.TokenService;
-import com.jwk.security.security.service.impl.JwkUserDetailsService;
+import com.jwk.security.security.service.impl.JwkPhoneUserDetailsServiceImpl;
+import com.jwk.security.security.service.impl.JwkUserDetailsServiceImpl;
 import com.jwk.security.security.service.impl.JwtAuthService;
 import com.jwk.security.security.service.impl.TokenServiceImpl;
 import com.jwk.security.web.controller.JwtAuthController;
@@ -182,9 +183,13 @@ public class SecurityCoreConfig {
   }
 
   @Bean
-  @ConditionalOnMissingBean
-  public JwkUserDetailsService myUserDetailsService() {
-    return new JwkUserDetailsService();
+  public JwkUserDetailsService jwkUserDetailsService() {
+    return new JwkUserDetailsServiceImpl();
+  }
+
+  @Bean
+  public JwkUserDetailsService jwkPhoneUserDetailsService() {
+    return new JwkPhoneUserDetailsServiceImpl();
   }
 
   @Bean

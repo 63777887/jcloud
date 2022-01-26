@@ -1,7 +1,9 @@
 package com.jwk.security.security.component;
 
 import com.jwk.security.constants.JwkSecurityConstants;
+import com.jwk.security.security.dto.AdminUserDetails;
 import com.jwk.security.web.entity.SysUser;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -31,6 +33,11 @@ public class JwkUserAuthenticationConverter implements UserAuthenticationConvert
 	public Map<String, ?> convertUserAuthentication(Authentication authentication) {
 		Map<String, Object> response = new LinkedHashMap<>();
 		response.put(USERNAME, authentication.getName());
+		AdminUserDetails principal = (AdminUserDetails) authentication.getDetails();
+		response.put(JwkSecurityConstants.DETAILS_USER_ID, principal.getSysUser().getId());
+		response.put(JwkSecurityConstants.DETAILS_PHONE, principal.getSysUser().getPhone());
+		response.put(JwkSecurityConstants.DETAILS_ORG_ID, principal.getSysUser().getOrgId());
+		response.put(JwkSecurityConstants.DETAILS_EMAIL, principal.getSysUser().getEmail());
 		if (authentication.getAuthorities() != null && !authentication.getAuthorities().isEmpty()) {
 			response.put(AUTHORITIES, AuthorityUtils.authorityListToSet(authentication.getAuthorities()));
 		}
@@ -53,7 +60,8 @@ public class JwkUserAuthenticationConverter implements UserAuthenticationConvert
 			SysUser user = convertUser(map);
 			UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
 					username, N_A, authorities);
-			authenticationToken.setDetails(user);
+			AdminUserDetails userDetails = new AdminUserDetails(user, new ArrayList<>());
+			authenticationToken.setDetails(userDetails);
 			return authenticationToken;
 		}
 

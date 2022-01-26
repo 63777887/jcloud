@@ -3,6 +3,7 @@ package com.jwk.security.security.service.impl;
 
 import com.jwk.security.security.dto.AdminUserDetails;
 import com.jwk.security.security.dto.ResourceConfigAttribute;
+import com.jwk.security.security.service.JwkUserDetailsService;
 import com.jwk.security.web.entity.SysApi;
 import com.jwk.security.web.entity.SysRoleApi;
 import com.jwk.security.web.entity.SysUser;
@@ -17,12 +18,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 @Component
-public class JwkUserDetailsService implements UserDetailsService {
+public class JwkPhoneUserDetailsServiceImpl implements JwkUserDetailsService {
 
   @Autowired
   SysUserService sysUserService;
@@ -36,20 +36,19 @@ public class JwkUserDetailsService implements UserDetailsService {
   SysApiService sysApiService;
 
   @Override
-  public UserDetails loadUserByUsername(String username)
+  public UserDetails loadUserByUsername(String phone)
       throws UsernameNotFoundException {
 //        加载基础用户信息
 
-    SysUser user = sysUserService.lambdaQuery().eq(SysUser::getUsername, username).one();
-    //加载用户角色列表
-
-    List<ResourceConfigAttribute> configAttributes = getUerDetail(
-        user);
-
-    return new AdminUserDetails(user, configAttributes);
+    SysUser user = sysUserService.lambdaQuery().eq(SysUser::getPhone, phone).one();
+    List<ResourceConfigAttribute> uerDetail = getUerDetail(user);
+    return new AdminUserDetails(user, uerDetail);
   }
 
   private List<ResourceConfigAttribute> getUerDetail(SysUser user) {
+    if (null == user){
+      throw new UsernameNotFoundException("用户不存在");
+    }
     List<SysUserRole> sysUserRoles = userRoleService.lambdaQuery()
         .eq(SysUserRole::getUserId, user.getId()).list();
     List<Long> roleIds = sysUserRoles.stream().map(SysUserRole::getRoleId)
@@ -72,15 +71,8 @@ public class JwkUserDetailsService implements UserDetailsService {
     return configAttributes;
   }
 
-  /**
-   * 手机号码登录
-   *
-   * @param phone 手机号码
-   * @return 用户信息
-   */
-  public UserDetails loadUserByPhone(String phone) {
-    SysUser user = sysUserService.lambdaQuery().eq(SysUser::getPhone, phone).one();
-    List<ResourceConfigAttribute> uerDetail = getUerDetail(user);
-    return new AdminUserDetails(user, uerDetail);
+  @Override
+  public boolean supportGrantType(String grantType) {
+    return grantType.equals("phone");
   }
 }

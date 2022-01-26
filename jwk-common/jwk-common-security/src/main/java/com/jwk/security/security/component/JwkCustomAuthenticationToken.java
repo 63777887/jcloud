@@ -1,4 +1,4 @@
-package com.jwk.security.security.grant;
+package com.jwk.security.security.component;
 
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -7,22 +7,23 @@ import org.springframework.security.core.userdetails.UserDetails;
 /**
  * 定义token
  */
-public class PhoneAuthenticationToken extends AbstractAuthenticationToken {
+public class JwkCustomAuthenticationToken extends AbstractAuthenticationToken {
 
 	private Object principal;
 
 	// 验证码/密码
-	private String code;
+	private String credentials;
 
-	public PhoneAuthenticationToken(String phone, String code) {
+	public JwkCustomAuthenticationToken(String principal, String credentials) {
 		super(AuthorityUtils.NO_AUTHORITIES);
-		this.principal = phone;
-		this.code = code;
+		this.principal = principal;
+		this.credentials = credentials;
 	}
 
-	public PhoneAuthenticationToken(UserDetails sysUser) {
+	public JwkCustomAuthenticationToken(UserDetails sysUser) {
 		super(sysUser.getAuthorities());
-		this.principal = sysUser;
+		super.setDetails(sysUser);
+		this.principal = sysUser.getUsername();
 		super.setAuthenticated(true); // 设置认证成功 必须
 	}
 
@@ -33,7 +34,7 @@ public class PhoneAuthenticationToken extends AbstractAuthenticationToken {
 
 	@Override
 	public Object getCredentials() {
-		return this.code;
+		return this.credentials;
 	}
 
 }

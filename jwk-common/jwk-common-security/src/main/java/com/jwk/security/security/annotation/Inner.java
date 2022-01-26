@@ -15,7 +15,7 @@ import java.lang.annotation.Target;
 public @interface Inner {
 
 	/**
-	 * 是否AOP统一处理
+	 * 是否AOP统一处理(预留)
 	 * @return false, true
 	 */
 	boolean value() default true;

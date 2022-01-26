@@ -1,18 +1,22 @@
 package com.jwk.security.security.grant;
 
 import cn.hutool.core.util.StrUtil;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.AccountStatusException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.common.exceptions.InvalidGrantException;
-import org.springframework.security.oauth2.provider.*;
+import org.springframework.security.oauth2.provider.ClientDetails;
+import org.springframework.security.oauth2.provider.ClientDetailsService;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.provider.OAuth2Request;
+import org.springframework.security.oauth2.provider.OAuth2RequestFactory;
+import org.springframework.security.oauth2.provider.TokenRequest;
 import org.springframework.security.oauth2.provider.token.AbstractTokenGranter;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
-
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 /**
  * 资源所有者手机令牌授予者
@@ -55,7 +59,7 @@ public class ResourceOwnerPhoneTokenGranter extends AbstractTokenGranter {
 		// Protect from downstream leaks of code
 		parameters.remove("code");
 
-		Authentication userAuth = new PhoneAuthenticationToken(phone, code);
+		Authentication userAuth = new PasswordAuthenticationToken(phone, code);
 		((AbstractAuthenticationToken) userAuth).setDetails(parameters);
 		try {
 			userAuth = authenticationManager.authenticate(userAuth);

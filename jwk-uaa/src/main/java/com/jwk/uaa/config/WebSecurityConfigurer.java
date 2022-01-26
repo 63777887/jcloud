@@ -3,11 +3,10 @@ package com.jwk.uaa.config;
 import com.jwk.security.security.component.JwkAuthProperties;
 import com.jwk.security.security.conf.DynamicResourceFilter;
 import com.jwk.security.security.conf.JwtAuthenticationFilter;
+import com.jwk.security.security.grant.PasswordAuthenticationProvider;
 import com.jwk.security.security.handler.JwkAuthenticationFailHandler;
 import com.jwk.security.security.handler.JwtForbiddenConfigHandler;
-import com.jwk.security.security.service.impl.JwkUserDetailsService;
 import com.jwk.uaa.comonpent.OauthCheckRequestService;
-import com.jwk.security.security.grant.PhoneAuthenticationProvider;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
@@ -16,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -40,9 +40,6 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-
-	@Autowired
-	private JwkUserDetailsService jwkUserDetailsService;
 
 	@Override
 	@SneakyThrows
@@ -76,16 +73,23 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     http.addFilterBefore(dynamicResourceFilter, FilterSecurityInterceptor.class);
 	}
 
-	private PhoneAuthenticationProvider phoneAuthenticationProvider() {
-		PhoneAuthenticationProvider phoneAuthenticationProvider = new PhoneAuthenticationProvider();
-		phoneAuthenticationProvider.setPasswordEncoder(passwordEncoder);
-		phoneAuthenticationProvider.setUserDetailsService(jwkUserDetailsService);
-		return phoneAuthenticationProvider;
+	private PasswordAuthenticationProvider phoneAuthenticationProvider() {
+		PasswordAuthenticationProvider passwordAuthenticationProvider = new PasswordAuthenticationProvider();
+		passwordAuthenticationProvider.setPasswordEncoder(passwordEncoder);
+		return passwordAuthenticationProvider;
 	}
 
 	@Override
 	public void configure(WebSecurity web) {
 		web.ignoring().antMatchers("/css/**");
+	}
+
+	@Override
+	// ！！！！ 死循环
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		// 覆盖父类方法，使得this.disableLocalConfigureAuthenticationBldr = false
+		// 否则，authenticationBuilder会设置parentAuthenticationManager为自己即将生成的AuthenticationManager
+		// 一旦出现错误就会递归调用导致OOM
 	}
 
 	@Bean

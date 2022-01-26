@@ -2,7 +2,7 @@ package com.jwk.uaa.comonpent;
 
 import com.jwk.security.constants.JwkSecurityConstants;
 import com.jwk.security.security.service.CheckRequestService;
-import com.jwk.security.security.service.impl.JwkUserDetailsService;
+import com.jwk.security.security.service.JwkUserDetailsService;
 import java.util.Collection;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;

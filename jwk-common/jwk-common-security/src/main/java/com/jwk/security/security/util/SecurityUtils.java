@@ -1,5 +1,6 @@
 package com.jwk.security.security.util;
 
+import com.jwk.security.security.dto.AdminUserDetails;
 import com.jwk.security.security.dto.ResourceConfigAttribute;
 import com.jwk.security.web.entity.SysUser;
 import java.util.Collection;
@@ -35,6 +36,9 @@ public class SecurityUtils {
     Object principal = authentication.getDetails();
     if (principal instanceof SysUser) {
       return (SysUser) principal;
+    }
+    if (principal instanceof AdminUserDetails) {
+      return ((AdminUserDetails) principal).getSysUser();
     }
     return null;
   }

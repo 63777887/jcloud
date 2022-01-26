@@ -2,12 +2,12 @@ package com.jwk.uaa.config;
 
 import com.jwk.security.constants.JwkSecurityConstants;
 import com.jwk.security.security.component.JwkAuthProperties;
+import com.jwk.security.security.component.JwkPreAuthenticatedAuthenticationProvider;
 import com.jwk.security.security.component.JwkUserAuthenticationConverter;
-import com.jwk.security.security.component.JwkUserCreateAuthenticationConverter;
 import com.jwk.security.security.component.JwkWebResponseExceptionTranslator;
 import com.jwk.security.security.dto.AdminUserDetails;
-import com.jwk.security.security.service.impl.JwkUserDetailsService;
 import com.jwk.security.security.grant.ResourceOwnerPhoneTokenGranter;
+import com.jwk.security.security.service.JwkUserDetailsService;
 import com.jwk.uaa.service.JwkClientDetailsService;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,6 +22,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -33,14 +37,16 @@ import org.springframework.security.oauth2.provider.CompositeTokenGranter;
 import org.springframework.security.oauth2.provider.TokenGranter;
 import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.code.JdbcAuthorizationCodeServices;
+import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
-import org.springframework.security.oauth2.provider.token.DefaultUserAuthenticationConverter;
+import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.UserAuthenticationConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 
 /**
  * 认证服务器配置
@@ -100,17 +106,11 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		endpoints
 				// 配置请求方式
 				.allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST)
-				// JWT令牌存储方案
-				.tokenStore(tokenStore())
-				// token增强
-				.tokenEnhancer(enhancerChain)
-				//	userDetailsService用户检验用户
-				.userDetailsService(jwkUserDetailsService)
+				.tokenServices(tokenServices(endpoints))
 				//	认证管理器
 				.authenticationManager(authenticationManager)
 				//	服务器端点配置器重用刷新令牌
 				.reuseRefreshTokens(true)
-//				.tokenServices(tokenServices(endpoints))
 				// 授权码保存方式设为数据库保存
 				.authorizationCodeServices(authorizationCodeServices())
 				.accessTokenConverter(accessTokenConverter)
@@ -120,6 +120,20 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 				.exceptionTranslator(new JwkWebResponseExceptionTranslator());
 		setTokenGranter(endpoints);
 	}
+
+
+
+	private void addUserDetailsService(
+			DefaultTokenServices tokenServices, UserDetailsService userDetailsService) {
+		if (userDetailsService != null) {
+			JwkPreAuthenticatedAuthenticationProvider provider = new JwkPreAuthenticatedAuthenticationProvider();
+			provider.setPreAuthenticatedUserDetailsService(new UserDetailsByNameServiceWrapper<PreAuthenticatedAuthenticationToken>(
+					userDetailsService));
+			tokenServices
+					.setAuthenticationManager(new ProviderManager(Arrays.<AuthenticationProvider> asList(provider)));
+		}
+	}
+
 	private void setTokenGranter(AuthorizationServerEndpointsConfigurer endpoints) {
 		// 获取默认授权类型
 		TokenGranter tokenGranter = endpoints.getTokenGranter();
@@ -151,17 +165,24 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	}
 
 
-//	private AuthorizationServerTokenServices tokenServices(AuthorizationServerEndpointsConfigurer endpoints) {
-//		DefaultTokenServices tokenServices = new DefaultTokenServices();
-//		tokenServices.setTokenStore(tokenStore());
-//		//支持刷新token
-//		tokenServices.setSupportRefreshToken(true);
-//		tokenServices.setReuseRefreshToken(true);
-//		tokenServices.setClientDetailsService(endpoints.getClientDetailsService());
-//		tokenServices.setTokenEnhancer(endpoints.getTokenEnhancer());
-//		tokenServices.setAuthenticationManager(authenticationManager);
-//		return tokenServices;
-//	}
+	private AuthorizationServerTokenServices tokenServices(AuthorizationServerEndpointsConfigurer endpoints) {
+		DefaultTokenServices tokenServices = new DefaultTokenServices();
+		// 增强器链
+		TokenEnhancerChain enhancerChain = new TokenEnhancerChain();
+		enhancerChain.setTokenEnhancers(Arrays.asList(accessTokenConverter(),tokenEnhancer()));
+
+		DefaultAccessTokenConverter accessTokenConverter = new DefaultAccessTokenConverter();
+		UserAuthenticationConverter userTokenConverter = new JwkUserAuthenticationConverter();
+		accessTokenConverter.setUserTokenConverter(userTokenConverter);
+		tokenServices.setTokenStore(tokenStore());
+		tokenServices.setSupportRefreshToken(true);
+		tokenServices.setReuseRefreshToken(true);
+		tokenServices.setAuthenticationManager(authenticationManager);
+		tokenServices.setClientDetailsService(jwkClientDetailsService);
+		tokenServices.setTokenEnhancer(enhancerChain);
+		addUserDetailsService(tokenServices, jwkUserDetailsService);
+		return tokenServices;
+	}
 
 	@Bean
 	public JwtAccessTokenConverter accessTokenConverter() {
@@ -171,7 +192,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		converter.setSigningKey(jwkAuthProperties.getSecretKey()); //对称秘钥，资源服务器使用该秘钥来验证
 		// 自定义token的值
 		DefaultAccessTokenConverter defaultAccessTokenConverter = new DefaultAccessTokenConverter();
-		defaultAccessTokenConverter.setUserTokenConverter(new JwkUserCreateAuthenticationConverter());
+		defaultAccessTokenConverter.setUserTokenConverter(new JwkUserAuthenticationConverter());
 		converter.setAccessTokenConverter(defaultAccessTokenConverter);
 		return converter;
 	}
@@ -185,9 +206,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 			String username = "";
 			Long userId = -1L;
 			// 颁发令牌和刷新令牌时，authentication存储的信息不一致
-			if (principal instanceof AdminUserDetails){
-				username = ((AdminUserDetails) principal).getUsername();
-				userId = ((AdminUserDetails) principal).getSysUser().getId();
+			Object details = authentication.getUserAuthentication().getDetails();
+			if (details instanceof AdminUserDetails){
+				username = ((AdminUserDetails) details).getUsername();
+				userId = ((AdminUserDetails) details).getSysUser().getId();
 			}
 			additionalInfo.put(JwkSecurityConstants.DETAILS_USERNAME, username);
 			additionalInfo.put(JwkSecurityConstants.DETAILS_USER_ID, userId);
