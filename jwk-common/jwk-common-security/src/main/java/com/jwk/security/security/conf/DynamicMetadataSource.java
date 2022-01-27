@@ -1,10 +1,11 @@
 package com.jwk.security.security.conf;
 
 
+import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.URLUtil;
+import com.jwk.api.api.AuthRemoteService;
 import com.jwk.security.security.dto.ResourceConfigAttribute;
-import com.jwk.security.web.entity.SysApi;
-import com.jwk.security.web.service.SysApiService;
+import com.jwk.security.security.dto.SysApi;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,7 +21,7 @@ import org.springframework.util.AntPathMatcher;
 public class DynamicMetadataSource implements SecurityMetadataSource {
 
   @Autowired
-  private SysApiService sysApiService;
+  AuthRemoteService authRemoteService;
 
 
   /**
@@ -39,7 +40,9 @@ public class DynamicMetadataSource implements SecurityMetadataSource {
     String path = URLUtil.getPath(url);
 
     //获取所有的资源
-    List<SysApi> allResource = sysApiService.list();
+    List<SysApi> allResource = authRemoteService.resourceList().
+        stream().map(t-> Convert.convert(SysApi.class,t)).collect(
+        Collectors.toList());
 
     //URL进行匹配（"/user/**" -> "/user/add -> true"）
     AntPathMatcher antPathMatcher = new AntPathMatcher();

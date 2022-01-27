@@ -2,7 +2,6 @@ package com.jwk.security.security.component;
 
 import cn.hutool.core.util.ReUtil;
 import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.jwk.security.security.annotation.Inner;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,12 +63,12 @@ public class JwkAuthProperties implements InitializingBean, ApplicationContextAw
             // /user/get/{id} -> /user/get/*
             Inner method = AnnotationUtils.findAnnotation(handlerMethod.getMethod(), Inner.class);
             Optional.ofNullable(method).ifPresent(inner -> info.getPatternsCondition().getPatterns()
-                .forEach(url -> noAuthList.add(ReUtil.replaceAll(url, PATTERN, StringPool.ASTERISK))));
+                .forEach(url -> noAuthList.add(ReUtil.replaceAll(url, PATTERN, "*"))));
 
             // 获取类上边的注解, 替代path variable 为 *
             Inner controller = AnnotationUtils.findAnnotation(handlerMethod.getBeanType(), Inner.class);
             Optional.ofNullable(controller).ifPresent(inner -> info.getPatternsCondition().getPatterns()
-                .forEach(url -> noAuthList.add(ReUtil.replaceAll(url, PATTERN, StringPool.ASTERISK))));
+                .forEach(url -> noAuthList.add(ReUtil.replaceAll(url, PATTERN, "*"))));
         });
 
         // 默认开放接口

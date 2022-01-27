@@ -10,6 +10,7 @@
     <module>jwk-uaa</module>
     <module>jwk-common</module>
     <module>jwk-admin</module>
+    <module>jwk-upms</module>
   </modules>
 
 

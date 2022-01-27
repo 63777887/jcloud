@@ -2,8 +2,8 @@ package com.jwk.test.service;
 
 
 import com.jwk.common.core.excel.ExcelExportReq;
-import com.jwk.security.enums.ExportResourcesTypeReqE;
-import com.jwk.security.enums.StatBusinessTypeReqE;
+import com.jwk.common.core.enums.ExportResourcesTypeReqE;
+import com.jwk.common.core.enums.StatBusinessTypeReqE;
 import com.jwk.common.core.exception.ServiceException;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 

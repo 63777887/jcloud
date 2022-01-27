@@ -2,7 +2,7 @@ package com.jwk.security.security.component;
 
 import com.jwk.security.security.annotation.UserParam;
 import com.jwk.security.security.util.SecurityUtils;
-import com.jwk.security.web.entity.SysUser;
+import com.jwk.security.security.dto.SysUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.MethodParameter;

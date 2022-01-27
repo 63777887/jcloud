@@ -4,7 +4,7 @@ import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.jwk.common.core.model.RestResponse;
 import com.jwk.security.security.annotation.Inner;
 import com.jwk.security.security.annotation.UserParam;
-import com.jwk.security.web.entity.SysUser;
+import com.jwk.security.security.dto.SysUser;
 import com.jwk.test.netty.TestServerChannel;
 import com.jwk.test.service.inner.TestService;
 import java.io.IOException;

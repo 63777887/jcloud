@@ -1,6 +1,5 @@
 package com.jwk.security.security.dto;
 
-import com.jwk.security.web.entity.SysUser;
 import java.util.Collection;
 import java.util.List;
 import org.springframework.security.core.GrantedAuthority;

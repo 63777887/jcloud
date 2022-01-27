@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.jwk.common.core.excel.ExcelExportReq;
 import com.jwk.common.core.excel.ExcelHeadReq;
 import com.jwk.common.core.excel.ExcelQueryConditionReq;
-import com.jwk.security.enums.StatBusinessTypeReqE;
+import com.jwk.common.core.enums.StatBusinessTypeReqE;
 import com.jwk.common.core.exception.ServiceException;
 import com.jwk.test.service.ExcelExportService;
 import java.util.ArrayList;

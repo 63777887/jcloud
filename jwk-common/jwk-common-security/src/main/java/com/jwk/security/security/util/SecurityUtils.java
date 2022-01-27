@@ -2,7 +2,7 @@ package com.jwk.security.security.util;
 
 import com.jwk.security.security.dto.AdminUserDetails;
 import com.jwk.security.security.dto.ResourceConfigAttribute;
-import com.jwk.security.web.entity.SysUser;
+import com.jwk.security.security.dto.SysUser;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -54,25 +54,5 @@ public class SecurityUtils {
     return getUser(authentication);
   }
 
-  /**
-   * 获取用户角色信息
-   *
-   * @return 角色集合
-   */
-  public List<Long> getRoles() {
-    Authentication authentication = getAuthentication();
-    if (authentication == null) {
-      return null;
-    }
-    Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-    Object principal = authentication.getPrincipal();
-    Object details = authentication.getDetails();
-    return authorities.stream().map(auth -> {
-      if (auth instanceof ResourceConfigAttribute) {
-        return ((ResourceConfigAttribute) auth).getSysApi().getId();
-      }
-      return null;
-    }).collect(Collectors.toList());
-  }
 
 }

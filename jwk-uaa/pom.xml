@@ -24,9 +24,19 @@
       <version>1.0.0</version>
     </dependency>
     <dependency>
+      <groupId>com.jwk</groupId>
+      <artifactId>jwk-common-knife4j</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+    <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.jwk</groupId>
+      <artifactId>jwk-common-mybatis</artifactId>
+      <version>1.0.0</version>
     </dependency>
 
   </dependencies>

@@ -51,17 +51,4 @@ public class OauthCheckRequestService implements CheckRequestService {
       }
       return null;
   }
-
-
-  private Collection<? extends GrantedAuthority> getAuthorities(Map<String, ?> map) {
-    Object authorities = map.get(AUTHORITIES);
-    if (authorities instanceof String) {
-      return AuthorityUtils.commaSeparatedStringToAuthorityList((String) authorities);
-    }
-    if (authorities instanceof Collection) {
-      return AuthorityUtils.commaSeparatedStringToAuthorityList(
-          StringUtils.collectionToCommaDelimitedString((Collection<?>) authorities));
-    }
-    return AuthorityUtils.NO_AUTHORITIES;
-  }
 }

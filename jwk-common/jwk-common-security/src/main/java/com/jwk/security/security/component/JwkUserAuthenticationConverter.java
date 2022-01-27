@@ -2,7 +2,7 @@ package com.jwk.security.security.component;
 
 import com.jwk.security.constants.JwkSecurityConstants;
 import com.jwk.security.security.dto.AdminUserDetails;
-import com.jwk.security.web.entity.SysUser;
+import com.jwk.security.security.dto.SysUser;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;

@@ -1,6 +1,8 @@
 ```lua
 jCloud
 ├── jwk-uaa -- 授权服务提供
+├── jwk-upms -- 用户管理
+├── jwk-api -- feign接口模块
 └── jwk-common -- 系统公共模块
      ├── jwk-common-core -- 公共工具类核心包
      ├── jwk-common-canal -- Canal组件
