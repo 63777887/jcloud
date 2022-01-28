@@ -1,12 +1,10 @@
-package com.jwk.uaa.config;
+package com.jwk.security.security.component;
 
-import com.jwk.security.security.component.JwkAuthProperties;
 import com.jwk.security.security.conf.DynamicResourceFilter;
 import com.jwk.security.security.conf.JwtAuthenticationFilter;
 import com.jwk.security.security.grant.PasswordAuthenticationProvider;
 import com.jwk.security.security.handler.JwkAuthenticationFailHandler;
 import com.jwk.security.security.handler.JwtForbiddenConfigHandler;
-import com.jwk.uaa.comonpent.OauthCheckRequestService;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;

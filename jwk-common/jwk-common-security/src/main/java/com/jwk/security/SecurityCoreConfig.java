@@ -1,6 +1,7 @@
 package com.jwk.security;
 
 import com.jwk.security.security.component.JwkAuthProperties;
+import com.jwk.security.security.component.OauthCheckRequestService;
 import com.jwk.security.security.conf.DynamicAccessDecisionManager;
 import com.jwk.security.security.conf.DynamicMetadataSource;
 import com.jwk.security.security.service.JwkUserDetailsService;
@@ -50,5 +51,13 @@ public class SecurityCoreConfig {
   public PasswordEncoder passwordEncoder() {
     return PasswordEncoderFactories.createDelegatingPasswordEncoder();
   }
+
+  @Bean
+  @ConditionalOnMissingBean
+  public OauthCheckRequestService oauthCheckRequestService() {
+    return new OauthCheckRequestService();
+  }
+
+
 
 }

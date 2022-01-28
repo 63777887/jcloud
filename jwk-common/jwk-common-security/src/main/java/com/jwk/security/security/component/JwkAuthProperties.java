@@ -1,5 +1,6 @@
 package com.jwk.security.security.component;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ReUtil;
 import cn.hutool.core.util.StrUtil;
 import com.jwk.security.security.annotation.Inner;
@@ -75,11 +76,13 @@ public class JwkAuthProperties implements InitializingBean, ApplicationContextAw
         String defaultNoAuthUrl = "/swagger-resources/**,/v2/api-docs/**,/webjars/**,"
             + "/doc.html,/**/*.css,/**/*.jpg/**/*.jpeg,/**/*.gif,/js/*.js,/**/*.png,/login.jsp";
 
-        noAuthList.add(defaultNoAuthUrl);
-        if (StrUtil.isBlank(noauthUrl)){
-            noAuthList.add(noauthUrl);
+        if (StrUtil.isNotBlank(noauthUrl)){
+            defaultNoAuthUrl = defaultNoAuthUrl + "," + noauthUrl;
         }
-        noauthUrl = String.join(",",noAuthList);
+        noauthUrl = defaultNoAuthUrl;
+        if (CollUtil.isNotEmpty(noAuthList)) {
+            noauthUrl += "," + String.join(",", noAuthList);
+        }
     }
 
     @Override

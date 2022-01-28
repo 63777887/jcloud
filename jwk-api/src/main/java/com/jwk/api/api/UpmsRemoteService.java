@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 @FeignClient(name = ServerNameConstants.SERVER_UMPS,contextId = "authService")
-public interface AuthRemoteService {
+public interface UpmsRemoteService {
 
   @GetMapping("/inner/admin/findUserByName")
   UserInfo findUserByName(@RequestParam String name);

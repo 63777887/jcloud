@@ -3,7 +3,7 @@ package com.jwk.security.security.conf;
 
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.URLUtil;
-import com.jwk.api.api.AuthRemoteService;
+import com.jwk.api.api.UpmsRemoteService;
 import com.jwk.security.security.dto.ResourceConfigAttribute;
 import com.jwk.security.security.dto.SysApi;
 import java.util.Collection;
@@ -21,7 +21,7 @@ import org.springframework.util.AntPathMatcher;
 public class DynamicMetadataSource implements SecurityMetadataSource {
 
   @Autowired
-  AuthRemoteService authRemoteService;
+  UpmsRemoteService upmsRemoteService;
 
 
   /**
@@ -40,7 +40,7 @@ public class DynamicMetadataSource implements SecurityMetadataSource {
     String path = URLUtil.getPath(url);
 
     //获取所有的资源
-    List<SysApi> allResource = authRemoteService.resourceList().
+    List<SysApi> allResource = upmsRemoteService.resourceList().
         stream().map(t-> Convert.convert(SysApi.class,t)).collect(
         Collectors.toList());
 

@@ -2,7 +2,7 @@ package com.jwk.upms.service;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.convert.Convert;
-import com.jwk.api.api.AuthRemoteService;
+import com.jwk.api.api.UpmsRemoteService;
 import com.jwk.api.dto.SysApiDto;
 import com.jwk.api.dto.SysUserDto;
 import com.jwk.api.dto.UserInfo;
@@ -23,7 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class AuthRemoteServiceImpl implements AuthRemoteService {
+public class UpmsRemoteServiceImpl implements UpmsRemoteService {
 
   @Autowired
   SysUserService sysUserService;

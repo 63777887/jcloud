@@ -1,2 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.jwk.security.SecurityCoreConfig
+  com.jwk.security.SecurityCoreConfig,\
+  com.jwk.security.security.component.WebSecurityConfigurer

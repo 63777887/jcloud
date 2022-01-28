@@ -25,6 +25,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
   @Autowired
   private JwkAuthProperties jwkAuthProperties;
 
+  @Autowired
   private CheckRequestService checkRequestService;
 
   public void setCheckRequestService(

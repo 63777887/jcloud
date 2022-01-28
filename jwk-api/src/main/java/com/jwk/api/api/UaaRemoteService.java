@@ -1,23 +1,24 @@
 package com.jwk.api.api;
 
+import com.jwk.api.constant.ServerNameConstants;
+import com.jwk.api.dto.UserInfo;
 import com.jwk.api.exception.InternalApiException;
-import javax.validation.Valid;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
-@FeignClient(name = "jwk-gateway", path = "/jwk-security", contextId = "jwk-gateway")
-public interface TestService {
+@FeignClient(name = ServerNameConstants.SERVER_UAA,contextId = "testService")
+public interface UaaRemoteService {
 
   /**
-   * 测试
+   * 校验token
    *
-   * @param id
+   * @param
    * @return
    */
   @GetMapping("/inner/test")
-  String getId(@Valid @RequestParam("id") Long id) throws InternalApiException;
+  UserInfo checkToken(@RequestParam("token") String token) throws InternalApiException;
 
 
 }
