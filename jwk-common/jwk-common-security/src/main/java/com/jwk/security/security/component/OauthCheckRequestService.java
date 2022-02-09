@@ -28,11 +28,7 @@ public class OauthCheckRequestService implements CheckRequestService {
   public UsernamePasswordAuthenticationToken checkToken(String token) {
 
     UserInfo userInfo = null;
-    try {
-      userInfo = uaaRemoteService.checkToken(token);
-    } catch (InternalApiException e) {
-      e.printStackTrace();
-    }
+    userInfo = uaaRemoteService.checkToken(token).getData();
     //获取userDetails用户信息
     AdminUserDetails userDetails = getUerDetail(userInfo);
     if (userDetails != null) {
@@ -52,7 +48,7 @@ public class OauthCheckRequestService implements CheckRequestService {
 
   private AdminUserDetails getUerDetail(UserInfo user) {
     if (null == user){
-      throw new UsernameNotFoundException("用户不存在");
+      return null;
     }
     SysUserDto sysUserdto = user.getSysUser();
     List<SysApiDto> sysApiDtos = user.getSysApis();

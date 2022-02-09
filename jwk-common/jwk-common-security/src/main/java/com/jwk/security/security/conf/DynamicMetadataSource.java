@@ -1,11 +1,14 @@
 package com.jwk.security.security.conf;
 
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.URLUtil;
 import com.jwk.api.api.UpmsRemoteService;
+import com.jwk.api.dto.SysApiDto;
 import com.jwk.security.security.dto.ResourceConfigAttribute;
 import com.jwk.security.security.dto.SysApi;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,7 +43,11 @@ public class DynamicMetadataSource implements SecurityMetadataSource {
     String path = URLUtil.getPath(url);
 
     //获取所有的资源
-    List<SysApi> allResource = upmsRemoteService.resourceList().
+    List<SysApiDto> sysApiDtos = upmsRemoteService.resourceList().getData();
+    if (CollUtil.isEmpty(sysApiDtos)){
+      return new ArrayList<>();
+    }
+    List<SysApi> allResource = sysApiDtos.
         stream().map(t-> Convert.convert(SysApi.class,t)).collect(
         Collectors.toList());
 

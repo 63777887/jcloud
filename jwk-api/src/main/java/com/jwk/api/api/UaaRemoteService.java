@@ -2,7 +2,7 @@ package com.jwk.api.api;
 
 import com.jwk.api.constant.ServerNameConstants;
 import com.jwk.api.dto.UserInfo;
-import com.jwk.api.exception.InternalApiException;
+import com.jwk.common.core.model.InnerResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,8 +17,8 @@ public interface UaaRemoteService {
    * @param
    * @return
    */
-  @GetMapping("/inner/test")
-  UserInfo checkToken(@RequestParam("token") String token) throws InternalApiException;
+  @GetMapping("/inner/checkToken")
+  InnerResponse<UserInfo> checkToken(@RequestParam("token") String token);
 
 
 }

@@ -1,4 +1,4 @@
-package com.jwk.upms.service;
+package com.jwk.upms.feign.service;
 
 import cn.hutool.core.convert.Convert;
 import com.jwk.api.dto.RegisterReq;

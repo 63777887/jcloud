@@ -19,7 +19,7 @@ public class JwkPhoneUserDetailsServiceImpl implements JwkUserDetailsService {
   public UserDetails loadUserByUsername(String phone)
       throws UsernameNotFoundException {
 //        加载基础用户信息
-    UserInfo userInfo = upmsRemoteService.findUserByPhone(phone);
+    UserInfo userInfo = upmsRemoteService.findUserByPhone(phone).getData();
     return getUerDetail(userInfo);
   }
 

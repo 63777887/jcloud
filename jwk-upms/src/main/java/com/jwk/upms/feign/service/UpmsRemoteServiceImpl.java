@@ -1,4 +1,4 @@
-package com.jwk.upms.service;
+package com.jwk.upms.feign.service;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.convert.Convert;
@@ -7,6 +7,7 @@ import com.jwk.api.dto.SysApiDto;
 import com.jwk.api.dto.SysUserDto;
 import com.jwk.api.dto.UserInfo;
 import com.jwk.common.core.enums.StatusE;
+import com.jwk.common.core.model.InnerResponse;
 import com.jwk.upms.web.entity.SysApi;
 import com.jwk.upms.web.entity.SysRoleApi;
 import com.jwk.upms.web.entity.SysUser;
@@ -37,10 +38,10 @@ public class UpmsRemoteServiceImpl implements UpmsRemoteService {
   SysApiService sysApiService;
 
   @Override
-  public UserInfo findUserByName(String name) {
+  public InnerResponse<UserInfo> findUserByName(String name) {
     SysUser user = sysUserService.lambdaQuery().eq(SysUser::getUsername, name).one();
     UserInfo userInfo = getUserInfo(user);
-    return userInfo;
+    return InnerResponse.success(userInfo);
   }
 
   private UserInfo getUserInfo(SysUser user) {
@@ -74,16 +75,16 @@ public class UpmsRemoteServiceImpl implements UpmsRemoteService {
   }
 
   @Override
-  public UserInfo findUserByPhone(String phone) {
+  public InnerResponse<UserInfo> findUserByPhone(String phone) {
     SysUser user = sysUserService.lambdaQuery().eq(SysUser::getPhone, phone).one();
     UserInfo userInfo = getUserInfo(user);
-    return userInfo;
+    return InnerResponse.success(userInfo);
   }
 
   @Override
-  public List<SysApiDto> resourceList() {
+  public InnerResponse<List<SysApiDto>> resourceList() {
     List<SysApi> list = sysApiService.lambdaQuery().eq(SysApi::getStatus, StatusE.Normal.getId())
         .list();
-    return list.stream().map(t->Convert.convert(SysApiDto.class,t)).collect(Collectors.toList());
+    return InnerResponse.success(list.stream().map(t->Convert.convert(SysApiDto.class,t)).collect(Collectors.toList()));
   }
 }
