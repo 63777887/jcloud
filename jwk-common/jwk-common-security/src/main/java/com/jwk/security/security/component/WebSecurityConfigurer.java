@@ -42,7 +42,6 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 	@Override
 	@SneakyThrows
 	protected void configure(HttpSecurity http) {
-		http.authenticationProvider(phoneAuthenticationProvider());
 		http.csrf().disable()
         .sessionManagement()
         //  无状态模式
@@ -88,6 +87,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 		// 覆盖父类方法，使得this.disableLocalConfigureAuthenticationBldr = false
 		// 否则，authenticationBuilder会设置parentAuthenticationManager为自己即将生成的AuthenticationManager
 		// 一旦出现错误就会递归调用导致OOM
+		auth.authenticationProvider(phoneAuthenticationProvider());
 	}
 
 	@Bean
