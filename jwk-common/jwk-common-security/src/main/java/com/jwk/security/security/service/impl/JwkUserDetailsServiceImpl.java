@@ -5,11 +5,11 @@ import com.jwk.api.api.UpmsRemoteService;
 import com.jwk.api.dto.UserInfo;
 import com.jwk.security.security.service.JwkUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
 
-@Component
+@Primary
 public class JwkUserDetailsServiceImpl implements JwkUserDetailsService {
 
   @Autowired

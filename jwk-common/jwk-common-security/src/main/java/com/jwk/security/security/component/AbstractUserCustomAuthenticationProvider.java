@@ -1,6 +1,7 @@
 package com.jwk.security.security.component;
 
 import cn.hutool.extra.spring.SpringUtil;
+import com.jwk.common.core.utils.JwkSpringUtil;
 import com.jwk.security.security.service.JwkUserDetailsService;
 import java.util.Comparator;
 import java.util.Map;
@@ -38,7 +39,7 @@ public abstract class AbstractUserCustomAuthenticationProvider extends AbstractU
 		Map details = (Map) authentication.getDetails();
 		String grantType = details.get("grant_type").toString();
 
-		Map<String, JwkUserDetailsService> userDetailsServiceMap = SpringUtil
+		Map<String, JwkUserDetailsService> userDetailsServiceMap = JwkSpringUtil
 				.getBeansOfType(JwkUserDetailsService.class);
 		Optional<JwkUserDetailsService> optional = userDetailsServiceMap.values().stream()
 				.filter(service -> service.support(clientId)).filter(service -> service.supportGrantType(grantType)).max(Comparator.comparingInt(Ordered::getOrder));

@@ -7,9 +7,7 @@ import com.jwk.security.security.service.JwkUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
 
-@Component
 public class JwkPhoneUserDetailsServiceImpl implements JwkUserDetailsService {
 
   @Autowired

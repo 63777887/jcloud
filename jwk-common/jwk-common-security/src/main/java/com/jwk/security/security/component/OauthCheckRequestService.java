@@ -5,7 +5,6 @@ import com.jwk.api.api.UaaRemoteService;
 import com.jwk.api.dto.SysApiDto;
 import com.jwk.api.dto.SysUserDto;
 import com.jwk.api.dto.UserInfo;
-import com.jwk.api.exception.InternalApiException;
 import com.jwk.security.security.dto.AdminUserDetails;
 import com.jwk.security.security.dto.ResourceConfigAttribute;
 import com.jwk.security.security.dto.SysApi;
@@ -15,10 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
 
-@Service
 public class OauthCheckRequestService implements CheckRequestService {
 
   @Autowired
@@ -27,8 +23,7 @@ public class OauthCheckRequestService implements CheckRequestService {
   @Override
   public UsernamePasswordAuthenticationToken checkToken(String token) {
 
-    UserInfo userInfo = null;
-    userInfo = uaaRemoteService.checkToken(token).getData();
+    UserInfo userInfo = uaaRemoteService.checkToken(token).getData();
     //获取userDetails用户信息
     AdminUserDetails userDetails = getUerDetail(userInfo);
     if (userDetails != null) {

@@ -28,5 +28,6 @@
     <module>jwk-common-canal</module>
     <module>jwk-common-canal-rocketmq</module>
     <module>jwk-common-rocketmq</module>
+    <module>jwk-common-rabbitmq</module>
   </modules>
 </project>

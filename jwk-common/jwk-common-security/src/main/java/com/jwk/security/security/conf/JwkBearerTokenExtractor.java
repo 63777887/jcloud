@@ -18,7 +18,6 @@ import org.springframework.util.PathMatcher;
  * @author caiqy
  * @date 2020.05.15
  */
-@Component
 public class JwkBearerTokenExtractor extends BearerTokenExtractor {
 
 	private final PathMatcher pathMatcher;

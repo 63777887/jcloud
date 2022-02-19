@@ -13,7 +13,6 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
 public class NacosConfiguration implements ApplicationRunner {
 
   private final static Logger log = LoggerFactory.getLogger(NacosConfiguration.class);

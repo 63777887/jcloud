@@ -3,7 +3,6 @@ package com.jwk.security.security.conf;
 import com.jwk.security.security.component.JwkAuthProperties;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,14 +12,11 @@ import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.stereotype.Component;
-import org.springframework.util.AntPathMatcher;
 
 
 /**
  * 动态的权限验证
  */
-@Component
 public class DynamicAccessDecisionManager implements AccessDecisionManager {
 
   @Autowired

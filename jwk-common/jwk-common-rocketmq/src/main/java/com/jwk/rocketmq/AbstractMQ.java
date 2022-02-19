@@ -5,9 +5,7 @@ import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
-@Component
 public abstract class AbstractMQ implements RocketMqMessageListener {
   public static final Logger logger = LoggerFactory.getLogger(AbstractMQ.class);
 

@@ -10,9 +10,9 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.ConfigurableEnvironment;
 
-@SpringBootApplication(scanBasePackages = "com.jwk")
+@SpringBootApplication
 @EnableDiscoveryClient
-@EnableJwkFeignClients(basePackages = "com.jwk.api")
+@EnableJwkFeignClients
 @EnableJwkResourceServer
 public class TestApplication {
 

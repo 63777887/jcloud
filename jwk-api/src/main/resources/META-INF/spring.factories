@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.jwk.common.core.utils.JwkSpringUtil
+  com.jwk.api.ApiAutoConfiguration
