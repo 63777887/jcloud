@@ -1,8 +1,10 @@
 package com.jwk.security.enums;
 
+import javax.servlet.http.HttpServletResponse;
+
 public enum ApiStatusE {
-  SC_UNAUTHORIZED(401, "用户未登陆或登录已过期"),
-  SC_FORBIDDEN(403, "用户没有访问权限");
+  SC_UNAUTHORIZED(HttpServletResponse.SC_UNAUTHORIZED, "用户未登陆或登录已过期"),
+  SC_FORBIDDEN(HttpServletResponse.SC_FORBIDDEN, "用户没有访问权限");
 
   ApiStatusE(Integer code, String vlaue) {
     this.code = code;

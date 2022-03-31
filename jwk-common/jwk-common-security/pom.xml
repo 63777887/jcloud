@@ -24,18 +24,18 @@
     <dependency>
       <groupId>com.jwk</groupId>
       <artifactId>jwk-common-core</artifactId>
-      <version>1.0.0</version>
+      <version>${parent.version}</version>
     </dependency>
     <dependency>
       <groupId>com.jwk</groupId>
       <artifactId>jwk-common-cloud</artifactId>
-      <version>1.0.0</version>
+      <version>${parent.version}</version>
     </dependency>
 
     <dependency>
       <groupId>com.jwk</groupId>
       <artifactId>jwk-api</artifactId>
-      <version>1.0.0</version>
+      <version>${parent.version}</version>
     </dependency>
     <!--        登陆鉴权-->
     <dependency>

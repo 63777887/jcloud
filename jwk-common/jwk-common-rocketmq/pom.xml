@@ -26,26 +26,14 @@
     <dependency>
       <groupId>com.jwk</groupId>
       <artifactId>jwk-common-core</artifactId>
-      <version>1.0.0</version>
+      <version>${parent.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.rocketmq</groupId>
       <artifactId>rocketmq-spring-boot-starter</artifactId>
-      <version>2.1.1</version>
+      <version>${rocketmq.version}</version>
     </dependency>
 
-<!--    <dependency>-->
-<!--      <groupId>javax.servlet</groupId>-->
-<!--      <artifactId>servlet-api</artifactId>-->
-<!--      <version>2.4</version>-->
-<!--      <scope>provided</scope>-->
-<!--    </dependency>-->
-
-    <dependency>
-      <groupId>redis.clients</groupId>
-      <artifactId>jedis</artifactId>
-      <version>2.9.0</version>
-    </dependency>
   </dependencies>
 
 </project>

@@ -16,7 +16,6 @@
     <maven.compiler.source>8</maven.compiler.source>
     <maven.compiler.target>8</maven.compiler.target>
     <mybatisplus-spring-boot-starter.version>1.0.5</mybatisplus-spring-boot-starter.version>
-    <mybatis.version>3.4.1</mybatis.version>
   </properties>
 
   <dependencies>
@@ -24,7 +23,7 @@
     <dependency>
       <groupId>com.jwk</groupId>
       <artifactId>jwk-common-core</artifactId>
-      <version>1.0.0</version>
+      <version>${parent.version}</version>
     </dependency>
     <!-- mybatis-plus begin -->
     <dependency>
@@ -40,19 +39,19 @@
     <dependency>
       <groupId>org.freemarker</groupId>
       <artifactId>freemarker</artifactId>
-      <version>2.3.28</version>
+      <version>${freemarker.version}</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>com.alibaba</groupId>
       <artifactId>druid-spring-boot-starter</artifactId>
-      <version>1.1.10</version>
+      <version>${druid.version}</version>
     </dependency>
     <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
-      <version>8.0.11</version>
+      <version>${mysql.version}</version>
     </dependency>
 
     <!-- mybatis-plus end -->

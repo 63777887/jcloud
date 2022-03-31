@@ -9,9 +9,6 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractMQ implements RocketMqMessageListener {
   public static final Logger logger = LoggerFactory.getLogger(AbstractMQ.class);
 
-  public AbstractMQ() {
-  }
-
   public abstract boolean handle(List<MessageExt> var1, ConsumeConcurrentlyContext var2);
 
   @Override

@@ -17,6 +17,16 @@
   <properties>
     <maven.compiler.source>8</maven.compiler.source>
     <maven.compiler.target>8</maven.compiler.target>
+    <mybatis.version>3.4.1</mybatis.version>
+    <canal.version>1.1.5</canal.version>
+    <easyexcel.version>2.2.1</easyexcel.version>
+    <knife4j.version>2.0.9</knife4j.version>
+    <freemarker.version>2.3.28</freemarker.version>
+    <druid.version>1.1.10</druid.version>
+    <mysql.version>8.0.11</mysql.version>
+    <amqp.version>2.5.2</amqp.version>
+    <rocketmq.version>2.1.1</rocketmq.version>
+    <sharding-jdbc.version>4.1.1</sharding-jdbc.version>
   </properties>
 
   <modules>
@@ -29,5 +39,6 @@
     <module>jwk-common-canal-rocketmq</module>
     <module>jwk-common-rocketmq</module>
     <module>jwk-common-rabbitmq</module>
+    <module>jwk-common-dynamic-datasource</module>
   </modules>
 </project>

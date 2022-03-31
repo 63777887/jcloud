@@ -39,7 +39,7 @@
     <knife4j.version>2.0.9</knife4j.version>
 <!--    <cloud.version>Hoxton.SR3</cloud.version>-->
 <!--    <cloud-alibaba.version>2.2.1.RELEASE</cloud-alibaba.version>-->
-    <spring-boot-admin.version>2.4.3</spring-boot-admin.version>
+    <spring-boot-admin.version>2.5.2</spring-boot-admin.version>
     <jasypt.version>2.1.0</jasypt.version>
   </properties>
 
@@ -68,12 +68,6 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
-    </dependency>
-    <!--监控客户端-->
-    <dependency>
-      <groupId>de.codecentric</groupId>
-      <artifactId>spring-boot-admin-starter-client</artifactId>
-      <version>${spring-boot-admin.version}</version>
     </dependency>
     <!--Lombok-->
     <dependency>
@@ -130,6 +124,17 @@
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-api</artifactId>
         <version>${slf4j.version}</version>
+      </dependency>
+      <!--监控客户端-->
+      <dependency>
+        <groupId>de.codecentric</groupId>
+        <artifactId>spring-boot-admin-starter-client</artifactId>
+        <version>${spring-boot-admin.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>de.codecentric</groupId>
+        <artifactId>spring-boot-admin-starter-server</artifactId>
+        <version>${spring-boot-admin.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
