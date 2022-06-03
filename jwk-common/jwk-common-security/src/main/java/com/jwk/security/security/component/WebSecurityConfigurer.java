@@ -89,6 +89,10 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 		auth.authenticationProvider(phoneAuthenticationProvider());
 	}
 
+	/**
+	 * 认证管理器
+	 * @return
+	 */
 	@Bean
 	@Override
 	@SneakyThrows

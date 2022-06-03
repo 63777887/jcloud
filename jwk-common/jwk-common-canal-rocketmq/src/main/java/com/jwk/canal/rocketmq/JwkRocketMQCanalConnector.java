@@ -1,7 +1,4 @@
-package com.jwk.canal.rocketmq;//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
+package com.jwk.canal.rocketmq;
 
 
 import com.alibaba.fastjson.JSON;

@@ -5,29 +5,25 @@
   <parent>
     <artifactId>jwk-common</artifactId>
     <groupId>com.jwk</groupId>
-    <version>1.0.0</version>
+    <version>0.1.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>jwk-common-dynamic-datasource</artifactId>
+  <packaging>jar</packaging>
 
-  <properties>
-    <maven.compiler.source>8</maven.compiler.source>
-    <maven.compiler.target>8</maven.compiler.target>
-  </properties>
+  <description>jcloud 动态数据源</description>
 
   <dependencies>
     <!-- https://mvnrepository.com/artifact/com.baomidou/dynamic-datasource-spring-boot-starter -->
     <dependency>
       <groupId>com.baomidou</groupId>
       <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
-      <version>${mybatis.version}</version>
     </dependency>
 
     <dependency>
       <groupId>com.jwk</groupId>
       <artifactId>jwk-common-mybatis</artifactId>
-      <version>${parent.version}</version>
     </dependency>
 
 

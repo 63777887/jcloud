@@ -3,35 +3,28 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+
   <parent>
     <artifactId>jwk-common</artifactId>
     <groupId>com.jwk</groupId>
-    <version>1.0.0</version>
+    <version>0.1.0</version>
   </parent>
   <artifactId>jwk-common-rocketmq</artifactId>
-  <version>1.0.0</version>
-<!--  <packaging>war</packaging>-->
   <name>jwk-common-rocketmq</name>
-  <description>Rocketmq project for jCloud</description>
-  <properties>
-    <java.version>1.8</java.version>
-  </properties>
+  <packaging>jar</packaging>
+
+  <description>jcloud rocketmq消息队列集成</description>
+
+
   <dependencies>
-<!--    <dependency>-->
-<!--      <groupId>org.apache.rocketmq</groupId>-->
-<!--      <artifactId>rocketmq-client</artifactId>-->
-<!--      <version>4.0.0-incubating</version>-->
-<!--    </dependency>-->
 
     <dependency>
       <groupId>com.jwk</groupId>
       <artifactId>jwk-common-core</artifactId>
-      <version>${parent.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.rocketmq</groupId>
       <artifactId>rocketmq-spring-boot-starter</artifactId>
-      <version>${rocketmq.version}</version>
     </dependency>
 
   </dependencies>

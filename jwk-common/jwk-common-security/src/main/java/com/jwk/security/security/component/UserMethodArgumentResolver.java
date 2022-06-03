@@ -20,10 +20,12 @@ public class UserMethodArgumentResolver implements HandlerMethodArgumentResolver
   public UserMethodArgumentResolver() {
   }
 
+  @Override
   public boolean supportsParameter(MethodParameter parameter) {
     return parameter.hasParameterAnnotation(UserParam.class);
   }
 
+  @Override
   public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
 
     Class<?> paramType = parameter.getParameterType();

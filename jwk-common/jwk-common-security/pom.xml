@@ -3,39 +3,32 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+
   <parent>
     <artifactId>jwk-common</artifactId>
     <groupId>com.jwk</groupId>
-    <version>1.0.0</version>
+    <version>0.1.0</version>
   </parent>
 
-  <!--    <groupId>com.jwk</groupId>-->
   <artifactId>jwk-common-security</artifactId>
-  <version>1.0.0</version>
-  <!--    <packaging>pom</packaging>-->
-  <!--    <name>jwk-security</name>-->
-  <!--    <description>Demo project for Spring Boot</description>-->
-  <properties>
-    <java.version>1.8</java.version>
-  </properties>
+  <packaging>jar</packaging>
+
+  <description>jcloud 权限控制</description>
 
 
   <dependencies>
     <dependency>
       <groupId>com.jwk</groupId>
       <artifactId>jwk-common-core</artifactId>
-      <version>${parent.version}</version>
     </dependency>
     <dependency>
       <groupId>com.jwk</groupId>
       <artifactId>jwk-common-cloud</artifactId>
-      <version>${parent.version}</version>
     </dependency>
 
     <dependency>
       <groupId>com.jwk</groupId>
       <artifactId>jwk-api</artifactId>
-      <version>${parent.version}</version>
     </dependency>
     <!--        登陆鉴权-->
     <dependency>

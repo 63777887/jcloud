@@ -72,7 +72,7 @@ public class JwkAuthProperties implements InitializingBean, ApplicationContextAw
 
         // 默认开放接口
         String defaultNoAuthUrl = "/swagger-resources/**,/v2/api-docs/**,/webjars/**,"
-            + "/doc.html,/**/*.css,/**/*.jpg/**/*.jpeg,/**/*.gif,/js/*.js,/**/*.png,/login.jsp";
+            + "/doc.html,/**/*.css,/**/*.jpg/**/*.jpeg,/**/*.gif,/js/*.js,/**/*.png,/login.jsp,/favicon.ico";
 
         if (StrUtil.isNotBlank(noauthUrl)){
             defaultNoAuthUrl = defaultNoAuthUrl + "," + noauthUrl;

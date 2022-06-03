@@ -15,8 +15,6 @@ import org.springframework.util.PathMatcher;
 /**
  * 改造 {@link BearerTokenExtractor} 对公开权限的请求不进行校验
  *
- * @author caiqy
- * @date 2020.05.15
  */
 public class JwkBearerTokenExtractor extends BearerTokenExtractor {
 

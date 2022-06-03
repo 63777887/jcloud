@@ -17,8 +17,6 @@ import org.springframework.stereotype.Service;
 
 /**
  * 入住人员管理Service
- *
- * @author guanshaochi
  */
 @Service
 public class HcCheckInMemberServiceImpl implements ExcelExportService {

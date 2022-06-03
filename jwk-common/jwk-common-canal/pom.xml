@@ -5,27 +5,24 @@
   <parent>
     <artifactId>jwk-common</artifactId>
     <groupId>com.jwk</groupId>
-    <version>1.0.0</version>
+    <version>0.1.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>jwk-common-canal</artifactId>
+  <packaging>jar</packaging>
 
-  <properties>
-    <maven.compiler.source>8</maven.compiler.source>
-    <maven.compiler.target>8</maven.compiler.target>
-  </properties>
+  <description>canal 工具包</description>
+
 
   <dependencies>
     <dependency>
       <groupId>com.alibaba.otter</groupId>
       <artifactId>canal.client</artifactId>
-      <version>${canal.version}</version>
     </dependency>
     <dependency>
       <groupId>com.alibaba.otter</groupId>
       <artifactId>canal.protocol</artifactId>
-      <version>${canal.version}</version>
     </dependency>
   </dependencies>
 

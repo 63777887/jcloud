@@ -1,6 +1,5 @@
 package com.jwk.security.security.component;
 
-import cn.hutool.extra.spring.SpringUtil;
 import com.jwk.common.core.utils.JwkSpringUtil;
 import com.jwk.security.security.service.JwkUserDetailsService;
 import java.util.Comparator;

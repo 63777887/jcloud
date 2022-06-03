@@ -2,43 +2,32 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
   <parent>
     <artifactId>jcloud-parent</artifactId>
     <groupId>com.jwk</groupId>
-    <version>1.0.0</version>
+    <version>0.1.0</version>
   </parent>
-  <modelVersion>4.0.0</modelVersion>
 
 
   <artifactId>jwk-common</artifactId>
-  <version>1.0.0</version>
   <packaging>pom</packaging>
 
-  <properties>
-    <maven.compiler.source>8</maven.compiler.source>
-    <maven.compiler.target>8</maven.compiler.target>
-    <mybatis.version>3.4.1</mybatis.version>
-    <canal.version>1.1.5</canal.version>
-    <easyexcel.version>2.2.1</easyexcel.version>
-    <knife4j.version>2.0.9</knife4j.version>
-    <freemarker.version>2.3.28</freemarker.version>
-    <druid.version>1.1.10</druid.version>
-    <mysql.version>8.0.11</mysql.version>
-    <amqp.version>2.5.2</amqp.version>
-    <rocketmq.version>2.1.1</rocketmq.version>
-    <sharding-jdbc.version>4.1.1</sharding-jdbc.version>
-  </properties>
 
   <modules>
-    <module>jwk-common-security</module>
+    <module>jwk-common-bom</module>
     <module>jwk-common-core</module>
     <module>jwk-common-mybatis</module>
     <module>jwk-common-cloud</module>
+    <module>jwk-common-security</module>
     <module>jwk-common-knife4j</module>
     <module>jwk-common-canal</module>
     <module>jwk-common-canal-rocketmq</module>
     <module>jwk-common-rocketmq</module>
     <module>jwk-common-rabbitmq</module>
+    <module>jwk-common-sharding-jdbc</module>
     <module>jwk-common-dynamic-datasource</module>
+    <module>jwk-common-prometheus</module>
+    <module>jwk-api</module>
   </modules>
 </project>

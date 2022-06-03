@@ -57,6 +57,7 @@ import org.springframework.security.web.authentication.preauth.PreAuthenticatedA
 @Order(6)
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
+	@Autowired
 	private final DataSource dataSource;
 
 	@Autowired

@@ -39,6 +39,7 @@ public interface JwkUserDetailsService extends UserDetailsService, Ordered {
 	 * 排序值 默认取最大的
 	 * @return 排序值
 	 */
+	@Override
 	default int getOrder() {
 		return 0;
 	}

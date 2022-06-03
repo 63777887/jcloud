@@ -15,6 +15,9 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
+/**
+ * 校验用户token是否合法
+ */
 public class OauthCheckRequestService implements CheckRequestService {
 
   @Autowired

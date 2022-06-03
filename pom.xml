@@ -2,55 +2,42 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <modules>
-    <module>jwk-gateway</module>
-    <module>jwk-test</module>
-    <module>jwk-api</module>
-    <module>jwk-knife4j</module>
-    <module>jwk-uaa</module>
-    <module>jwk-common</module>
-    <module>jwk-admin</module>
-    <module>jwk-upms</module>
-  </modules>
-
-
-
-
 
   <groupId>com.jwk</groupId>
   <artifactId>jcloud-parent</artifactId>
-  <version>1.0.0</version>
+  <name>${project.artifactId}</name>
+  <version>0.1.0</version>
   <packaging>pom</packaging>
 
 
   <properties>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
     <java.version>1.8</java.version>
-    <spring-boot.version>2.5.2</spring-boot.version>
-    <cloud.version>2020.0.3</cloud.version>
-    <cloud-alibaba.version>2021.1</cloud-alibaba.version>
-<!--    <spring-boot.version>2.2.1.RELEASE</spring-boot.version>-->
+    <spring-boot.version>2.6.7</spring-boot.version>
+    <cloud.version>2021.0.2</cloud.version>
+    <cloud-alibaba.version>2021.0.1.0</cloud-alibaba.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <fastjson.version>1.2.73</fastjson.version>
     <hutool-all.version>5.7.3</hutool-all.version>
     <lombok.version>1.18.12</lombok.version>
     <jjwt.version>0.9.1</jjwt.version>
-    <log4j.version>1.2.17</log4j.version>
-    <knife4j.version>2.0.9</knife4j.version>
-<!--    <cloud.version>Hoxton.SR3</cloud.version>-->
-<!--    <cloud-alibaba.version>2.2.1.RELEASE</cloud-alibaba.version>-->
-    <spring-boot-admin.version>2.5.2</spring-boot-admin.version>
+    <log4j2.version>2.17.1</log4j2.version>
+    <knife4j.version>3.0.3</knife4j.version>
     <jasypt.version>2.1.0</jasypt.version>
+    <jwk.common.version>${project.version}</jwk.common.version>
   </properties>
 
 
-  <parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.5.2</version>
-    <relativePath/> <!-- lookup parent from repository -->
-  </parent>
+<!--  <parent>-->
+<!--    <groupId>org.springframework.boot</groupId>-->
+<!--    <artifactId>spring-boot-starter-parent</artifactId>-->
+<!--    <version>${spring-boot.version}</version>-->
+<!--    <relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
+<!--  </parent>-->
 
+  <!-- 以下依赖 全局所有的模块都会引入  -->
   <dependencies>
     <!--配置文件处理器-->
     <dependency>
@@ -69,16 +56,48 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
     </dependency>
+    <!--监控客户端-->
+    <dependency>
+      <groupId>de.codecentric</groupId>
+      <artifactId>spring-boot-admin-starter-client</artifactId>
+      <version>${spring-boot.version}</version>
+    </dependency>
     <!--Lombok-->
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <scope>provided</scope>
     </dependency>
+    <!--测试依赖-->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
+
+
+  <modules>
+    <module>jwk-gateway</module>
+    <module>jwk-test</module>
+    <module>jwk-knife4j</module>
+    <module>jwk-uaa</module>
+    <module>jwk-common</module>
+    <module>jwk-admin</module>
+    <module>jwk-upms</module>
+  </modules>
 
   <dependencyManagement>
     <dependencies>
+      <!--jcloud 公共版本定义-->
+      <dependency>
+        <groupId>com.jwk</groupId>
+        <artifactId>jwk-common-bom</artifactId>
+        <version>${project.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- spring cloud alibaba 依赖 -->
       <dependency>
         <groupId>com.alibaba.cloud</groupId>
         <artifactId>spring-cloud-alibaba-dependencies</artifactId>
@@ -86,6 +105,7 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+      <!-- spring cloud 依赖 -->
       <dependency>
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-dependencies</artifactId>
@@ -106,36 +126,95 @@
         <version>${hutool-all.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.projectlombok</groupId>
-        <artifactId>lombok</artifactId>
-        <version>${lombok.version}</version>
-      </dependency>
-      <dependency>
         <groupId>io.jsonwebtoken</groupId>
         <artifactId>jjwt</artifactId>
         <version>${jjwt.version}</version>
       </dependency>
       <dependency>
-        <groupId>log4j</groupId>
-        <artifactId>log4j</artifactId>
-        <version>${log4j.version}</version>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-to-slf4j</artifactId>
+        <version>${log4j2.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.slf4j</groupId>
-        <artifactId>slf4j-api</artifactId>
-        <version>${slf4j.version}</version>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-bom</artifactId>
+        <version>${log4j2.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
       </dependency>
-      <!--监控客户端-->
+      <!-- spring boot 依赖 -->
       <dependency>
-        <groupId>de.codecentric</groupId>
-        <artifactId>spring-boot-admin-starter-client</artifactId>
-        <version>${spring-boot-admin.version}</version>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${spring-boot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>de.codecentric</groupId>
         <artifactId>spring-boot-admin-starter-server</artifactId>
-        <version>${spring-boot-admin.version}</version>
+        <version>${spring-boot.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
+
+
+  <build>
+    <finalName>${project.artifactId}</finalName>
+    <sourceDirectory>src/main/java</sourceDirectory>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <includes>
+          <include>**/*</include>
+        </includes>
+        <excludes>
+          <exclude>**/.git/</exclude>
+        </excludes>
+      </resource>
+    </resources>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <version>${spring-boot.version}</version>
+        <configuration>
+          <finalName>${project.build.finalName}</finalName>
+          <layers>
+            <enabled>true</enabled>
+          </layers>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.mybatis.generator</groupId>
+        <artifactId>mybatis-generator-maven-plugin</artifactId>
+        <version>1.3.2</version>
+        <dependencies>
+          <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.25</version>
+          </dependency>
+        </dependencies>
+        <configuration>
+          <overwrite>true</overwrite>
+        </configuration>
+      </plugin>
+      <!--      用于检测依赖cve漏洞-->
+      <plugin>
+        <groupId>org.owasp</groupId>
+        <artifactId>dependency-check-maven</artifactId>
+        <version>6.5.0</version>
+        <!-- 若添加 goal:check,则mvn verify|install|deploy 时会执行 -->
+        <executions>
+          <execution>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 </project>

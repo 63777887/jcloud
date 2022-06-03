@@ -69,6 +69,7 @@ public class RestResponse implements Serializable {
     return "0".equals(this.code);
   }
 
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder("RestResponse{");
     sb.append("code='").append(this.code).append('\'');

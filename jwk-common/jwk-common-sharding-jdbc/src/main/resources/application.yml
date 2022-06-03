@@ -1,0 +1,99 @@
+#spring:
+#  # shardingjdbc 配置
+#  shardingsphere:
+#    datasource:
+#      names: m1,m2
+#      m1:
+##        jdbc-url: jdbc:h2:mem:test
+#        driver-class-name: com.mysql.cj.jdbc.Driver
+#        password: Awert159
+#        type: com.alibaba.druid.pool.DruidDataSource
+#        url: jdbc:mysql://47.241.180.241:3306/jwk-demo?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&rewriteBatchedStatements=true&useSSL=false
+#        username: root
+#      m2:
+#          #        jdbc-url: jdbc:h2:mem:test
+#          driver-class-name: com.mysql.cj.jdbc.Driver
+#          password: Awert159
+#          type: com.alibaba.druid.pool.DruidDataSource
+#          url: jdbc:mysql://47.241.180.241:3306/jwk-demo?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&rewriteBatchedStatements=true&useSSL=false
+#          username: root
+#    masterslave:
+#      name: ms
+#      load-balance-com.jwk.shardingjdbc.algorithm-type: round_robin
+#      master-data-source-name: m1
+#      slave-data-source-names: m2
+#      #sharding: ## 此处配置shading规则，脱敏策略，分表分库策略，主从规则也可放在这里配置
+
+spring:
+  shardingsphere:
+    datasource:
+      m1:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        password: Awert159
+        type: com.alibaba.druid.pool.DruidDataSource
+        url: jdbc:mysql://47.241.180.241:3306/jwk-demo?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&rewriteBatchedStatements=true&useSSL=false
+        username: root
+      m2:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        password: Awert159
+        type: com.alibaba.druid.pool.DruidDataSource
+        url: jdbc:mysql://47.241.180.241:3306/jwk-demo1?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&rewriteBatchedStatements=true&useSSL=false
+        username: root
+      names: m1,m2
+
+    sharding:
+      tables:
+        user:
+          actual-data-nodes: m1.user_$->{1..2}
+          key-generator:
+            column: id
+            props:
+              worker:
+                id: 1
+            type: SNOWFLAKE
+          table-strategy:
+            standard:
+              precise-algorithm-class-name: com.jwk.shardingjdbc.algorithm.JwkTablePreciseAlgorithm
+              sharding-column: id
+#            inline:
+#              algorithm-expression: user_$->{id%2+1}
+#              sharding-column: id
+
+
+  # 动态数据源配置
+  datasource:
+    dynamic:
+      druid:
+        initial-size: 5
+        min-idle: 5
+        maxActive: 20
+        maxWait: 60000
+        timeBetweenEvictionRunsMillis: 60000
+        minEvictableIdleTimeMillis: 300000
+        validationQuery: SELECT 1 FROM DUAL
+        testWhileIdle: true
+        testOnBorrow: false
+        testOnReturn: false
+        poolPreparedStatements: true
+        maxPoolPreparedStatementPerConnectionSize: 20
+        filters: stat,wall,slf4j
+        connectionProperties: druid.stat.mergeSql\=true;druid.stat.slowSqlMillis\=5000
+      datasource:
+        master1:
+          type: com.alibaba.druid.pool.DruidDataSource
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://47.241.180.241:3306/jwk-demo1?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&rewriteBatchedStatements=true&useSSL=false
+          username: root
+          password: Awert159
+        master:
+          type: com.alibaba.druid.pool.DruidDataSource
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://47.241.180.241:3306/jwk-demo1?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&rewriteBatchedStatements=true&useSSL=false
+          username: root
+          password: Awert159
+
+#    关闭健康检查，sharding-jdbc健康检查失败
+management:
+  health:
+    db:
+      enabled: false

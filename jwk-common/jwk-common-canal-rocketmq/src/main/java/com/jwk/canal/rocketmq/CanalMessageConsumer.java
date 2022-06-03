@@ -19,11 +19,11 @@ public class CanalMessageConsumer extends AbstractCanalMessageConsumer {
 
     public static void main(String[] args) {
         try {
-            final CanalMessageConsumer rocketMQClientExample = new CanalMessageConsumer();
-            JwkRocketMQCanalConnector jwkRocketMQCanalConnector = new JwkRocketMQCanalConnector(
+            final CanalMessageConsumer rocketMqClientExample = new CanalMessageConsumer();
+            JwkRocketMQCanalConnector jwkRocketMqCanalConnector = new JwkRocketMQCanalConnector(
                 nameServers, topic, groupId, 500, true);
-            rocketMQClientExample.setConnector(jwkRocketMQCanalConnector);
-            rocketMQClientExample.init();
+            rocketMqClientExample.setConnector(jwkRocketMqCanalConnector);
+            rocketMqClientExample.init();
         } catch (Throwable e) {
             logger.error("## Something going wrong when starting up the rocketmq consumer:", e);
             System.exit(0);
