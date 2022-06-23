@@ -180,21 +180,21 @@
         </configuration>
       </plugin>
 
-      <plugin>
-        <groupId>org.mybatis.generator</groupId>
-        <artifactId>mybatis-generator-maven-plugin</artifactId>
-        <version>1.3.2</version>
-        <dependencies>
-          <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.25</version>
-          </dependency>
-        </dependencies>
-        <configuration>
-          <overwrite>true</overwrite>
-        </configuration>
-      </plugin>
+<!--      <plugin>-->
+<!--        <groupId>org.mybatis.generator</groupId>-->
+<!--        <artifactId>mybatis-generator-maven-plugin</artifactId>-->
+<!--        <version>1.3.2</version>-->
+<!--        <dependencies>-->
+<!--          <dependency>-->
+<!--            <groupId>mysql</groupId>-->
+<!--            <artifactId>mysql-connector-java</artifactId>-->
+<!--            <version>8.0.25</version>-->
+<!--          </dependency>-->
+<!--        </dependencies>-->
+<!--        <configuration>-->
+<!--          <overwrite>true</overwrite>-->
+<!--        </configuration>-->
+<!--      </plugin>-->
       <!--      用于检测依赖cve漏洞-->
       <plugin>
         <groupId>org.owasp</groupId>
