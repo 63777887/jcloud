@@ -8,14 +8,6 @@ import com.jwk.common.core.exception.ServiceException;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 /**
- * All rights Reserved, Designed By SEGI
- * <pre>
- * Copyright:  Copyright(C) 2018
- * Company:    SEGI.
- * @Author: dengbp
- * @Date: 2018/8/21
- * </pre>
- * <p>
  * excel导出业务服务接口
  * </p>
  */

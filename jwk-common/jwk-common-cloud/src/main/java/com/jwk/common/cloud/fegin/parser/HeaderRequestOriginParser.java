@@ -4,6 +4,10 @@ import com.alibaba.csp.sentinel.adapter.spring.webmvc.callback.RequestOriginPars
 import javax.servlet.http.HttpServletRequest;
 
 /**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
  * sentinel 请求头解析判断
  */
 public class HeaderRequestOriginParser implements RequestOriginParser {

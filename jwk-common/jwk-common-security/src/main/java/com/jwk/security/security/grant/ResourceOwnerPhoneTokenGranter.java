@@ -19,6 +19,10 @@ import org.springframework.security.oauth2.provider.token.AbstractTokenGranter;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 
 /**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
  * 资源所有者手机令牌授予者
  */
 public class ResourceOwnerPhoneTokenGranter extends AbstractTokenGranter {

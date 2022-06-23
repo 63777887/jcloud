@@ -10,6 +10,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * 请求返回值
+ */
+@Deprecated
 public class RestResponse implements Serializable {
 
   public static final String REST_RESPONSE_SUCCESS_CODE = "0";
@@ -22,11 +30,6 @@ public class RestResponse implements Serializable {
   private String msg;
   @JsonProperty("data")
   private Object result;
-
-//  @JsonProperty("message")
-//  public String getMessage() {
-//    return this.msg;
-//  }
 
   private RestResponse() {
   }
@@ -69,6 +72,7 @@ public class RestResponse implements Serializable {
     return REST_RESPONSE_SUCCESS_CODE.equals(this.code);
   }
 
+  @Override
   public String toString() {
     StringBuilder sb = new StringBuilder("RestResponse{");
     sb.append("code='").append(this.code).append('\'');

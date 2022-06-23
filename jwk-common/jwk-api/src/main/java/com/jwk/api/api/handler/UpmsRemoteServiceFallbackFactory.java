@@ -5,16 +5,20 @@ import org.springframework.cloud.openfeign.FallbackFactory;
 import org.springframework.stereotype.Component;
 
 /**
- * 服务降级
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * Umps服务降级
  */
 @Component
 public class UpmsRemoteServiceFallbackFactory implements FallbackFactory<UpmsRemoteService> {
 
   @Override
   public UpmsRemoteService create(Throwable throwable) {
-    UpmsRemoteServiceFallBackService upmsRemoteServiceFallBackService = new UpmsRemoteServiceFallBackService();
-    upmsRemoteServiceFallBackService.setCause(throwable);
-    return upmsRemoteServiceFallBackService;
+    UpmsRemoteServiceFallBackServiceImpl upmsRemoteServiceFallBackServiceImpl = new UpmsRemoteServiceFallBackServiceImpl();
+    upmsRemoteServiceFallBackServiceImpl.setCause(throwable);
+    return upmsRemoteServiceFallBackServiceImpl;
   }
 
 }

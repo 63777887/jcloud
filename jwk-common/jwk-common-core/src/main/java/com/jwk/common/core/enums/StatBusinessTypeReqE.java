@@ -1,16 +1,11 @@
 package com.jwk.common.core.enums;
 
 /**
- * All rights Reserved, Designed By SEGI
- * <pre>
- * Copyright:  Copyright(C) 2018
- * Company:    SEGI.
- * @Author: dengbp
- * @Date: 2018/8/21
- * </pre>
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
  * <p>
  * 统计业务类型
- * </p>
  */
 public enum StatBusinessTypeReqE {
   /**

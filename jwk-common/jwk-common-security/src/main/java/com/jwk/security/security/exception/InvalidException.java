@@ -3,6 +3,13 @@ package com.jwk.security.security.exception;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * 非法异常，如错误的grant异常
+ */
 @JsonSerialize(using = JwkAuth2ExceptionSerializer.class)
 public class InvalidException extends JwkAuth2Exception {
 

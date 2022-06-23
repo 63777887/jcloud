@@ -13,6 +13,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 
 /**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
  * 安全工具类
  */
 @UtilityClass

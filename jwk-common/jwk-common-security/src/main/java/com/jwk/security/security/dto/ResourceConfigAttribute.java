@@ -4,7 +4,13 @@ import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.core.GrantedAuthority;
 
 
-//封装资源，转换资源格式，换成符合权限验证的格式
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * 封装资源，自定义资源类
+ */
 public class ResourceConfigAttribute implements ConfigAttribute, GrantedAuthority {
 
   private SysApi sysApi;

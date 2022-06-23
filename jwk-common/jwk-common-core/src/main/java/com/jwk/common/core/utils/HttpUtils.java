@@ -15,6 +15,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ *
+ */
 public class HttpUtils {
 
   private static final Logger logger = LoggerFactory.getLogger(HttpUtils.class);

@@ -5,16 +5,20 @@ import org.springframework.cloud.openfeign.FallbackFactory;
 import org.springframework.stereotype.Component;
 
 /**
- * 服务降级
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * Uaa服务降级
  */
 @Component
 public class UaaRemoteServiceFallbackFactory implements FallbackFactory<UaaRemoteService> {
 
   @Override
   public UaaRemoteService create(Throwable throwable) {
-    UaaRemoteServiceFallBackService uaaRemoteServiceFallBackService = new UaaRemoteServiceFallBackService();
-    uaaRemoteServiceFallBackService.setCause(throwable);
-    return uaaRemoteServiceFallBackService;
+    UaaRemoteServiceFallBackServiceImpl uaaRemoteServiceFallBackServiceImpl = new UaaRemoteServiceFallBackServiceImpl();
+    uaaRemoteServiceFallBackServiceImpl.setCause(throwable);
+    return uaaRemoteServiceFallBackServiceImpl;
   }
 
 }

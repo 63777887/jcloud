@@ -7,6 +7,13 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * nacos动态路由
+ */
 @Configuration
 @ConditionalOnProperty(prefix = "gateway.dynamicRoute", name = "enabled", havingValue = "true")
 public class DynamicRouteConfig {

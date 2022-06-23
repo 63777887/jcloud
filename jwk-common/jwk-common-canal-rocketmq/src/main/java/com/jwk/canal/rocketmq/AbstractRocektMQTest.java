@@ -1,5 +1,12 @@
 package com.jwk.canal.rocketmq;
 
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ *
+ */
 public abstract class AbstractRocektMQTest {
 
     public static String  topic              = "example";

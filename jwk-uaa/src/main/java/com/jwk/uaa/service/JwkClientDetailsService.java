@@ -3,11 +3,15 @@ package com.jwk.uaa.service;
 import javax.sql.DataSource;
 import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.handler.ResponseStatusExceptionHandler;
 
 /**
- * see JdbcClientDetailsService
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * {@link org.springframework.security.oauth2.provider.client.JdbcClientDetailsService}
  */
-
 @Component
 public class JwkClientDetailsService extends JdbcClientDetailsService {
 

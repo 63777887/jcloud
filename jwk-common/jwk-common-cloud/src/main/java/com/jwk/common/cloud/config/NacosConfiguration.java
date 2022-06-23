@@ -12,6 +12,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * NacosConfig
+ */
 public class NacosConfiguration implements ApplicationRunner {
 
   private final static Logger log = LoggerFactory.getLogger(NacosConfiguration.class);
@@ -35,7 +42,6 @@ public class NacosConfiguration implements ApplicationRunner {
         log.warn("获取tomcat外部端口失败");
       }
       log.info("Tomcat port:" + tomcatPort);
-      registration.setPort(tomcatPort);
       registration.start();
     }
   }

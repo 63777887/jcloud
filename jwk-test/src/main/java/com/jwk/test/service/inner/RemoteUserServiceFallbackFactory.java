@@ -11,7 +11,7 @@ public class RemoteUserServiceFallbackFactory implements FallbackFactory<TestSer
 
   @Override
   public TestService create(Throwable throwable) {
-    TestFallBackService remoteUserServiceFallback = new TestFallBackService();
+    TestFallBackServiceImpl remoteUserServiceFallback = new TestFallBackServiceImpl();
     remoteUserServiceFallback.setCause(throwable);
     return remoteUserServiceFallback;
   }

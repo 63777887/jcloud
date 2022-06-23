@@ -14,6 +14,13 @@ import org.springframework.core.Ordered;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * 获取用户信息
+ */
 public interface JwkUserDetailsService extends UserDetailsService, Ordered {
 
 
@@ -44,6 +51,11 @@ public interface JwkUserDetailsService extends UserDetailsService, Ordered {
 		return 0;
 	}
 
+	/**
+	 * 转换用户详情
+	 * @param user
+	 * @return
+	 */
 	default AdminUserDetails getUerDetail(UserInfo user) {
 		if (null == user){
 			throw new UsernameNotFoundException("用户不存在");

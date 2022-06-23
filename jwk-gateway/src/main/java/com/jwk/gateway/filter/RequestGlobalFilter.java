@@ -32,9 +32,6 @@ public class RequestGlobalFilter implements GlobalFilter, Ordered {
    */
   @Override
   public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-    // 1. 清洗请求头中from 参数
-//		ServerHttpRequest request = exchange.getRequest().mutate()
-//				.headers(httpHeaders -> httpHeaders.remove(SecurityConstants.FROM)).build();
     ServerHttpRequest request = exchange.getRequest();
     // 2. 重写StripPrefix
     // jwk:去掉上下文路由。如：/v2/dingding/cto/employee/getNameByEmployeeCode -> /dingding/cto/employee/getNameByEmployeeCode

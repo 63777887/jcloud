@@ -8,7 +8,11 @@ import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
 
 /**
- *  扩展OAuth2FeignRequestInterceptor
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * 扩展OAuth2FeignRequestInterceptor
  */
 @Slf4j
 public class JwkFeignClientInterceptor extends OAuth2FeignRequestInterceptor {
@@ -38,10 +42,6 @@ public class JwkFeignClientInterceptor extends OAuth2FeignRequestInterceptor {
 	 */
 	@Override
 	public void apply(RequestTemplate template) {
-//		Collection<String> fromHeader = template.headers().get(SecurityConstants.FROM);
-//		if (CollUtil.isNotEmpty(fromHeader) && fromHeader.contains(SecurityConstants.FROM_IN)) {
-//			return;
-//		}
 
 		accessTokenContextRelay.copyToken();
 		if (oAuth2ClientContext != null && oAuth2ClientContext.getAccessToken() != null) {

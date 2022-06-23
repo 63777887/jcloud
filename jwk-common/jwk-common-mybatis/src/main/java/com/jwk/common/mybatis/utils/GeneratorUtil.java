@@ -12,6 +12,9 @@ import com.baomidou.mybatisplus.generator.config.rules.IColumnType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 
+/**
+ * 生成orm文件
+ */
 public class GeneratorUtil {
 
   public static void main(String[] args) {
@@ -25,12 +28,18 @@ public class GeneratorUtil {
     GlobalConfig gc = new GlobalConfig();
     gc.setAuthor("jiwk");
     gc.setOutputDir("/Users/jiweikuan/learnProjects/demo/src/main/java/");
-    gc.setFileOverride(true);// 是否覆盖同名文件，默认是false
-    gc.setActiveRecord(true);// 不需要ActiveRecord特性的请改为false
-    gc.setEnableCache(false);// XML 二级缓存
-    gc.setBaseResultMap(true);// XML ResultMap
-    gc.setBaseColumnList(false);// XML columList
-    gc.setServiceName("%sService"); //去掉Service接口的首字母I
+    // 是否覆盖同名文件，默认是false
+    gc.setFileOverride(true);
+    // 不需要ActiveRecord特性的请改为false
+    gc.setActiveRecord(true);
+    // XML 二级缓存
+    gc.setEnableCache(false);
+    // XML ResultMap
+    gc.setBaseResultMap(true);
+    // XML columList
+    gc.setBaseColumnList(false);
+    //去掉Service接口的首字母I
+    gc.setServiceName("%sService");
     /* 自定义文件命名，注意 %s 会自动填充表实体属性！ */
     // gc.setMapperName("%sDao");
     // gc.setXmlName("%sDao");
@@ -124,15 +133,22 @@ public class GeneratorUtil {
 
     // 5、策略配置
     StrategyConfig strategy = new StrategyConfig();
-    strategy.setInclude(new String[] { "sys_user" });//对那一张表生成代码
-    strategy.setNaming(NamingStrategy.underline_to_camel);//数据库表映射到实体的命名策略
-    strategy.setTablePrefix(pc.getModuleName() + "_"); //生成实体时去掉表前缀
+    //对那一张表生成代码
+    strategy.setInclude(new String[] { "sys_user" });
+    //数据库表映射到实体的命名策略
+    strategy.setNaming(NamingStrategy.underline_to_camel);
+    //生成实体时去掉表前缀
+    strategy.setTablePrefix(pc.getModuleName() + "_");
 
-    strategy.setColumnNaming(NamingStrategy.underline_to_camel);//数据库表字段映射到实体的命名策略
-    strategy.setEntityLombokModel(true); // lombok 模型 @Accessors(chain = true) setter链式操作
-    strategy.setChainModel(true);//是否为构建者模型
+    //数据库表字段映射到实体的命名策略
+    strategy.setColumnNaming(NamingStrategy.underline_to_camel);
+    // lombok 模型 @Accessors(chain = true) setter链式操作
+    strategy.setEntityLombokModel(true);
+    //是否为构建者模型
+    strategy.setChainModel(true);
 
-    strategy.setRestControllerStyle(true); //restful api风格控制器
+    //restful api风格控制器
+    strategy.setRestControllerStyle(true);
 //    strategy.setControllerMappingHyphenStyle(true); //url中驼峰转连字符
 
 

@@ -1,6 +1,5 @@
 package com.jwk.security.security.handler;
 
-//import com.jwk.security.common.ResponseResult;
 
 import com.alibaba.fastjson.JSON;
 import com.jwk.common.core.model.RestResponse;
@@ -12,6 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * 403格式转换
+ */
 public class JwtForbiddenConfigHandler implements AccessDeniedHandler {
 
   @Override

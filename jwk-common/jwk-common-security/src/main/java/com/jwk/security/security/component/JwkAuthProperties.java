@@ -3,6 +3,8 @@ package com.jwk.security.security.component;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ReUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.extra.spring.SpringUtil;
+import com.jwk.common.core.utils.JwkSpringUtil;
 import com.jwk.security.security.annotation.Inner;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,9 +22,16 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * 配置文件
+ */
 @ConfigurationProperties(prefix = "jwk.auth")
 @Data
-public class JwkAuthProperties implements InitializingBean, ApplicationContextAware {
+public class JwkAuthProperties implements InitializingBean {
 
     /**
      * 免鉴权路径
@@ -49,10 +58,15 @@ public class JwkAuthProperties implements InitializingBean, ApplicationContextAw
 
     private static final Pattern PATTERN = Pattern.compile("\\{(.*?)\\}");
 
+    public String[] getNoAuthArray(){
+        String[] noAuthUrlList = noauthUrl.split(",");
+        return noAuthUrlList;
+    }
+
     @Override
-    public void afterPropertiesSet() throws Exception {
+    public void afterPropertiesSet() {
         List<String> noAuthList = new ArrayList<>();
-        RequestMappingHandlerMapping mapping = applicationContext.getBean(RequestMappingHandlerMapping.class);
+        RequestMappingHandlerMapping mapping = JwkSpringUtil.getBean("requestMappingHandlerMapping");
         Map<RequestMappingInfo, HandlerMethod> map = mapping.getHandlerMethods();
 
         map.keySet().forEach(info -> {
@@ -81,10 +95,5 @@ public class JwkAuthProperties implements InitializingBean, ApplicationContextAw
         if (CollUtil.isNotEmpty(noAuthList)) {
             noauthUrl += "," + String.join(",", noAuthList);
         }
-    }
-
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        this.applicationContext = applicationContext;
     }
 }

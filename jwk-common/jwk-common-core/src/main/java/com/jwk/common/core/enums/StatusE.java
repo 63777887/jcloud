@@ -1,7 +1,20 @@
 package com.jwk.common.core.enums;
 
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * 状态
+ */
 public enum StatusE {
+  /**
+   * 删除
+   */
   Delete(0, "删除"),
+  /**
+   * 正常
+   */
   Normal(1, "正常");
 
   StatusE(Integer id, String name) {

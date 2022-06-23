@@ -9,6 +9,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
 
 /**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
  * 注入AccessTokenContextRelay 解决feign 传递token 为空问题
  */
 @AutoConfigureAfter(OAuth2AutoConfiguration.class)

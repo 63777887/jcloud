@@ -4,7 +4,11 @@ import com.jwk.security.security.component.JwkCustomAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 
 /**
- * 定义token
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * 自定义token
  */
 public class PasswordAuthenticationToken extends JwkCustomAuthenticationToken {
 

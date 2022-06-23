@@ -1,7 +1,11 @@
 package com.jwk.common.core.exception;
 
 /**
- * 业务异常
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>业务异常
+ *
  */
 public class ServiceException extends RuntimeException {
 

@@ -7,16 +7,16 @@ import org.springframework.context.annotation.Configuration;
 import reactor.core.publisher.Mono;
 
 /**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
  * 路由限流配置
  */
 @Configuration(proxyBeanMethods = false)
 public class RateLimiterConfiguration {
 
-  /**
-   * Remote addr key resolver key resolver.
-   *
-   * @link {https://docs.spring.io/spring-cloud-gateway/docs/current/reference/html/#the-requestratelimiter-gatewayfilter-factory}
-   */
+
   /*
   spring:
   cloud:
@@ -34,6 +34,11 @@ public class RateLimiterConfiguration {
             redis-rate-limiter.burstCapacity: 3  # 流速 每秒
             key-resolver: "#{@remoteAddrKeyResolver}" #SPEL表达式去的对应的bean
         - StripPrefix=1
+   */
+  /**
+   * Remote addr key resolver key resolver.
+   *
+   * @link {https://docs.spring.io/spring-cloud-gateway/docs/current/reference/html/#the-requestratelimiter-gatewayfilter-factory}
    */
   @Bean
   public KeyResolver remoteAddrKeyResolver() {

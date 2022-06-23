@@ -11,8 +11,11 @@ import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 
 /**
- * @author fengjie 2012-08-26
- * @note 常用日期时间、数据、字符处理
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * 常用日期时间、数据、字符处理
  */
 public class UtilTools {
 

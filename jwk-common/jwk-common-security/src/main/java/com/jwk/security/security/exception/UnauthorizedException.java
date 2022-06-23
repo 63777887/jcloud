@@ -4,6 +4,13 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.springframework.http.HttpStatus;
 
 
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * 401异常
+ */
 @JsonSerialize(using = JwkAuth2ExceptionSerializer.class)
 public class UnauthorizedException extends JwkAuth2Exception {
 

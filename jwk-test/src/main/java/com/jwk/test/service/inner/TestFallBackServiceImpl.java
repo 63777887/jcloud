@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class TestFallBackService implements TestService {
+public class TestFallBackServiceImpl implements TestService {
 
   @Setter
   private Throwable cause;

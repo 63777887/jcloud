@@ -7,6 +7,13 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import lombok.Data;
 
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * excel导出请求体
+ */
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ExcelExportReq implements Serializable {

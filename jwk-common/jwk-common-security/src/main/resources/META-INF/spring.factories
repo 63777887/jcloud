@@ -2,5 +2,5 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.jwk.security.SecurityCoreAutoConfiguration,\
   com.jwk.security.security.service.impl.JwkPhoneUserDetailsServiceImpl,\
   com.jwk.security.security.service.impl.JwkUserDetailsServiceImpl,\
-  com.jwk.security.security.component.OauthCheckRequestService,\
+  com.jwk.security.security.component.OauthCheckRequestServiceImpl,\
   com.jwk.security.security.component.WebSecurityConfigurer

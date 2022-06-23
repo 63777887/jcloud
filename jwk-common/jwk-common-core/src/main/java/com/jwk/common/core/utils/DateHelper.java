@@ -14,7 +14,11 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 
 /**
- * Created by Simple on 2017/11/7.
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ *
  */
 public class DateHelper {
 
@@ -665,11 +669,13 @@ public class DateHelper {
 
       int year1 = cal1.get(Calendar.YEAR);
       int year2 = cal2.get(Calendar.YEAR);
-      if (year1 != year2)   //同一年
+      //同一年
+      if (year1 != year2)
       {
         int timeDistance = 0;
         for (int i = year1; i < year2; i++) {
-          if (i % 4 == 0 && i % 100 != 0 || i % 400 == 0)    //闰年
+          //闰年
+          if (i % 4 == 0 && i % 100 != 0 || i % 400 == 0)
           {
             timeDistance += 366;
           } else    //不是闰年
@@ -993,12 +999,12 @@ public class DateHelper {
       }
       int i = style.getDataFormat();
       String f = style.getDataFormatString();
-      bDate = isADateFormat(i, f);
+      bDate = isDateFormat(i, f);
     }
     return bDate;
   }
 
-  public static boolean isADateFormat(int formatIndex, String formatString) {
+  public static boolean isDateFormat(int formatIndex, String formatString) {
     if (isInternalDateFormat(formatIndex)) {
       return true;
     }
@@ -1068,6 +1074,7 @@ public class DateHelper {
       case 42:
       case 43:
       case 44:
+        break;
     }
     return false;
   }

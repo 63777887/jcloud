@@ -13,6 +13,13 @@ import org.springframework.web.client.DefaultResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 
 
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * 资源服务器自动配置类
+ */
 public class JwkResourceServerAutoConfiguration {
 
 

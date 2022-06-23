@@ -11,8 +11,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 
 /**
- * sentinel统一降级限流策略
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
  * <p>
+ * sentinel统一降级限流策略
  * {@link com.alibaba.csp.sentinel.adapter.spring.webmvc.callback.DefaultBlockExceptionHandler}
  */
 @Slf4j

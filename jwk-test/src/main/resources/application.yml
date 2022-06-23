@@ -9,6 +9,7 @@ jwk:
   prometheus:
     zookeeper:
       address: 127.0.0.1:2181
+#      address: 192.168.6.85:11100
       namespace: /jwk/prometheus
     application: ${spring.application.name}
     registry-mode: zookeeper

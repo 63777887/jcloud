@@ -24,6 +24,9 @@ import org.springframework.security.web.access.intercept.FilterSecurityIntercept
 import org.springframework.web.client.RestTemplate;
 
 /**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
  * <p>
  * 1. 支持remoteTokenServices 负载均衡 2. 支持 获取用户全部信息 3. 接口对外暴露，不校验 Authentication Header 头
  */
@@ -40,8 +43,6 @@ public class JwkResourceServerConfigurerAdapter extends ResourceServerConfigurer
 	@Autowired
 	private RestTemplate lbRestTemplate;
 
-//  @Autowired
-//  private AutowireCapableBeanFactory autowireCapableBeanFactory;
 
   @Autowired
   private ResourceServerProperties resourceServerProperties;
@@ -58,7 +59,7 @@ public class JwkResourceServerConfigurerAdapter extends ResourceServerConfigurer
 		/**
 		 * 微服务的Http安全配置
 		 */
-		String[] noAuthUrlList = jwkAuthProperties.getNoauthUrl().split(",");
+		String[] noAuthUrlList = jwkAuthProperties.getNoAuthArray();
 		// 允许使用iframe 嵌套，避免swagger-ui 不被加载的问题
 		httpSecurity.headers().frameOptions().disable();
 		ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = httpSecurity

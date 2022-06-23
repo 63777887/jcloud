@@ -11,9 +11,12 @@ import org.springframework.security.oauth2.provider.endpoint.CheckTokenEndpoint;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * see JdbcClientDetailsService
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * Uaa远程认证
  */
-
 @RestController
 public class UaaAuthRemoteServiceImpl implements UaaRemoteService {
 

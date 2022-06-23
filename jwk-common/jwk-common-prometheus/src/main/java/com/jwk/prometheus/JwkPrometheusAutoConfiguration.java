@@ -19,6 +19,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Scope;
 
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * 自动配置类
+ */
 @EnableConfigurationProperties(JwkPrometheusProperties.class)
 @Import({JwkPrometheusConfiguration.class})
 @AutoConfigureBefore(FeignAutoConfiguration.class)
@@ -28,8 +35,7 @@ public class JwkPrometheusAutoConfiguration {
 
 
   public JwkPrometheusAutoConfiguration(ApplicationContext applicationContext,
-      MeterRegistry registry, JwkPrometheusProperties jwkPrometheusProperties,
-      CuratorFramework curatorFramework) {
+      MeterRegistry registry, JwkPrometheusProperties jwkPrometheusProperties) {
     JwkPrometheusFactory.init(applicationContext,registry, jwkPrometheusProperties);
   }
 

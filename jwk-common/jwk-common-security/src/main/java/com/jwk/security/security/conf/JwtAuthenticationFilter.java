@@ -15,7 +15,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 /**
- * 进行权限认证
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * 用户认证过滤器
  */
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
@@ -25,7 +29,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
   @Autowired
   private JwkAuthProperties jwkAuthProperties;
 
-  @Autowired
   private CheckRequestService checkRequestService;
 
   public void setCheckRequestService(

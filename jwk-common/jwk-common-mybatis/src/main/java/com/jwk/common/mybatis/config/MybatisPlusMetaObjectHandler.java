@@ -10,8 +10,6 @@ import org.springframework.util.ClassUtils;
 
 /**
  * MybatisPlus 自动填充配置
- *
- * @author L.cm
  */
 @Slf4j
 public class MybatisPlusMetaObjectHandler implements MetaObjectHandler {

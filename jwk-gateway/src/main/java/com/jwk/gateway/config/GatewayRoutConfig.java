@@ -3,6 +3,13 @@ package com.jwk.gateway.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * 网关配置项
+ */
 @Configuration
 public class GatewayRoutConfig {
     private static long DEFAULT_READ_TIMEOUT;

@@ -10,7 +10,11 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
 /**
- * 异常处理
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * 401异常处理
  */
 public class JwkAuthenticationFailHandler implements AuthenticationEntryPoint {
 

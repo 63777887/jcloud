@@ -8,6 +8,13 @@ import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
 import org.springframework.core.type.AnnotationMetadata;
 
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * 注册资源服务器配置项
+ */
 @Slf4j
 public class JwkSecurityBeanDefinitionRegistrar implements ImportBeanDefinitionRegistrar {
 

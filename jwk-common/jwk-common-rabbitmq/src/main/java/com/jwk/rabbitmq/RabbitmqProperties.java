@@ -1,19 +1,24 @@
 package com.jwk.rabbitmq;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
-public class RabbitmqConstants {
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * 常量表
+ */
+@ConfigurationProperties(prefix = "jwk.rabbitmq")
+public class RabbitmqProperties {
 
-    @Value("${spring.rabbitmq.addresses}")
     public String addresses;
 
-    @Value("${spring.rabbitmq.username}")
     public String username;
 
-    @Value("${spring.rabbitmq.password}")
     public String password;
 
-    @Value("${spring.rabbitmq.virtual-host}")
     public String virtualHost;
 
     public String getAddresses() {

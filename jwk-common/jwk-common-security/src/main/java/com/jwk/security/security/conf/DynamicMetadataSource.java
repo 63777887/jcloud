@@ -19,6 +19,13 @@ import org.springframework.security.web.FilterInvocation;
 import org.springframework.util.AntPathMatcher;
 
 
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * 动态认证资源
+ */
 public class DynamicMetadataSource implements SecurityMetadataSource {
 
   @Autowired

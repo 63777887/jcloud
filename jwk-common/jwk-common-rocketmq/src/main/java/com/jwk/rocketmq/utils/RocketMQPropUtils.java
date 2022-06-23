@@ -7,6 +7,13 @@ import java.util.HashMap;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * 获取配置信息
+ */
 public class RocketMQPropUtils {
 
   @Autowired

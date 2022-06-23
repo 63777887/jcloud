@@ -7,6 +7,10 @@ import java.util.List;
 import org.jasypt.util.text.BasicTextEncryptor;
 
 /**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
  * jasypt-spring-boot-starter 生成密文的工具代码
  */
 public class EncryptConfigUtil {

@@ -1,7 +1,11 @@
 package com.jwk.prometheus.constant;
 
 /**
- * 常量
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * Prometheus常量
  */
 public interface JwkPrometheusConstants {
 

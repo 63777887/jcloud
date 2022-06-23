@@ -9,6 +9,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
 
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ *
+ */
 public class CanalMessageConsumer extends AbstractCanalMessageConsumer {
 
     protected final static Logger logger  = LoggerFactory.getLogger(CanalMessageConsumer.class);
@@ -36,7 +43,8 @@ public class CanalMessageConsumer extends AbstractCanalMessageConsumer {
             connector.connect();
             connector.subscribe("*");
             while (running) {
-                List<FlatMessage> messages = connector.getFlatListWithoutAck(100L, TimeUnit.MILLISECONDS); // 获取message
+                // 获取message
+                List<FlatMessage> messages = connector.getFlatListWithoutAck(100L, TimeUnit.MILLISECONDS);
                 filter(messages);
                 for (FlatMessage message : messages) {
                     long batchId = message.getId();
@@ -47,7 +55,7 @@ public class CanalMessageConsumer extends AbstractCanalMessageConsumer {
                         // }
                     } else {
                         // todo 业务逻辑，根据自己的订阅发到不同的topic
-                        if (message.getTable().equals("user_copy")) {
+                        if ("user_copy".equals(message.getTable())) {
                         logger.info(message.toString());
                         }
                     }

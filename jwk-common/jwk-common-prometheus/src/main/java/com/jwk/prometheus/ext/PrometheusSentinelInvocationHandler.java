@@ -26,7 +26,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.openfeign.FallbackFactory;
 
 /**
- * 支持自动降级注入 重写 {@link com.alibaba.cloud.sentinel.feign.SentinelInvocationHandler}
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * 支持自动降级注入 重写 {@link com.jwk.common.cloud.fegin.ext.SentinelInvocationHandler}
  */
 @Slf4j
 public class PrometheusSentinelInvocationHandler implements InvocationHandler {

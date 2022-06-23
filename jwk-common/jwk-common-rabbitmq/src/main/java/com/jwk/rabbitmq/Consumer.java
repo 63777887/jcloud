@@ -17,6 +17,13 @@ import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.util.Assert;
 import org.springframework.util.ErrorHandler;
 
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * 消费者
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -30,7 +37,7 @@ public class Consumer {
   private RabbiitMqMessageListener rabbiitMqMessageListener;
 
   @Resource
-  private RabbitMQConfig rabbitConfig;
+  private RabbitMQAutoConfiguration rabbitConfig;
   @Resource
   AmqpAdmin amqpAdmin;
 

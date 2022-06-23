@@ -8,6 +8,13 @@ import com.jwk.prometheus.component.JwkPrometheusProperties;
 import java.util.UUID;
 import org.springframework.core.env.Environment;
 
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * Prometheus工具类
+ */
 public class JwkPrometheusUtil {
 
 

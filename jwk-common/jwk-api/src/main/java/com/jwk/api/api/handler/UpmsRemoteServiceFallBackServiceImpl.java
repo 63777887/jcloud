@@ -10,10 +10,16 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * Umps服务降级
+ */
 @Component
 @Slf4j
-public class UpmsRemoteServiceFallBackService implements UpmsRemoteService {
+public class UpmsRemoteServiceFallBackServiceImpl implements UpmsRemoteService {
 
   @Setter
   private Throwable cause;

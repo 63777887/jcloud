@@ -5,6 +5,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * 配置文件
+ */
 @ConfigurationProperties(prefix = "jwk.swagger")
 @Data
 public class JwkSwaggerProperties {

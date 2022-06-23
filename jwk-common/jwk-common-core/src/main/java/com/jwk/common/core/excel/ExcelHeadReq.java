@@ -4,6 +4,13 @@ import java.io.Serializable;
 import java.util.List;
 import lombok.Data;
 
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * excel导出表头
+ */
 @Data
 public class ExcelHeadReq implements Serializable {
 

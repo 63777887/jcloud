@@ -1,5 +1,12 @@
 package com.jwk.rocketmq.constant;
 
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * topic
+ */
 public class MessageTopic {
   public static String COMMENT_LIKE_TOPIC = "commentLikeTopic";
   public static String ACTIVITY_FREERIDE_TOPIC = "activityFreeRideTopic";

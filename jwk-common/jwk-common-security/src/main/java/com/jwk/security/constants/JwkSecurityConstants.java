@@ -1,6 +1,13 @@
 package com.jwk.security.constants;
 
 
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * 常量
+ */
 public interface JwkSecurityConstants {
 
 

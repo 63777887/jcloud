@@ -10,6 +10,13 @@ import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * 消费者
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -53,6 +60,7 @@ public class Consumer {
 
   }
 
+  @Override
   public String toString() {
     return "Consumer{topic='" + this.topic + '\'' + ", subExpression='" + this.subExpression + '\'' + ", consumerGroup='" + this.consumerGroup + '\'' + ", namesrvAddr='" + this.namesrvAddr + '\'' + ", rocketMqMessageListener=" + this.rocketMqMessageListener + '}';
   }

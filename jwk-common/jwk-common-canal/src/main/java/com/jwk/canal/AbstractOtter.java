@@ -16,6 +16,10 @@ import java.util.stream.Collectors;
 import static com.alibaba.otter.canal.protocol.CanalEntry.EventType.*;
 
 /**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
  * Otter 客户端抽象类
  */
 @Slf4j

@@ -4,10 +4,21 @@ import com.alibaba.otter.canal.client.CanalMQConnector;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ *
+ */
 public abstract class AbstractCanalMessageConsumer extends AbstractRocektMQTest {
 
     protected final static Logger logger  = LoggerFactory.getLogger(AbstractCanalMessageConsumer.class);
@@ -18,7 +29,15 @@ public abstract class AbstractCanalMessageConsumer extends AbstractRocektMQTest 
 
     private Thread                          thread  = null;
 
-    ExecutorService executorService = Executors.newSingleThreadExecutor();
+//    ExecutorService executorService = Executors.newSingleThreadExecutor();
+    ExecutorService executorService = new ThreadPoolExecutor(1, 1,
+    0L, TimeUnit.MILLISECONDS,
+    new LinkedBlockingQueue<Runnable>(), new ThreadFactory() {
+    @Override
+    public Thread newThread(Runnable r) {
+        return new Thread(r, "canal-rocketmq-callbackThreadPool-" + r.hashCode());
+    }
+});
 
     private Thread.UncaughtExceptionHandler handler = (t, e) -> logger.error("parse events has an error", e);
 
@@ -52,7 +71,7 @@ public abstract class AbstractCanalMessageConsumer extends AbstractRocektMQTest 
 
     private void start() {
         Assert.notNull(connector, "connector is null");
-        thread = new Thread(this::process);
+        thread = Executors.defaultThreadFactory().newThread(this::process);
         thread.setUncaughtExceptionHandler(handler);
         executorService.execute(thread);
         running = true;
@@ -89,7 +108,9 @@ public abstract class AbstractCanalMessageConsumer extends AbstractRocektMQTest 
          connector.disconnect();
     }
 
-
+    /**
+     * 接收canal的消息
+     */
     public abstract void onMessage();
 
 }

@@ -17,5 +17,8 @@ import com.jwk.shardingjdbc.entity.User;
 @DS(value = "master")
 public interface UserMapper extends BaseMapper<User> {
 
+  /**
+   * 空方法做测试
+   */
   void addAll();
 }

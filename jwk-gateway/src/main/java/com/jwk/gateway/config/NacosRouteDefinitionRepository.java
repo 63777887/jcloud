@@ -20,6 +20,13 @@ import org.yaml.snakeyaml.Yaml;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * 动态变更网关路由
+ */
 public class NacosRouteDefinitionRepository implements RouteDefinitionRepository {
  
     NacosConfigManager nacosConfigManager;

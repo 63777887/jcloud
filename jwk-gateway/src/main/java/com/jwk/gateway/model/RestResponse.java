@@ -10,6 +10,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 接口统一返回值
+ * @author jiweikuan
+ */
+@Deprecated
 public class RestResponse implements Serializable {
 
   public static final String REST_RESPONSE_SUCCESS_CODE = "0";
@@ -22,11 +27,6 @@ public class RestResponse implements Serializable {
   private String msg;
   @JsonProperty("data")
   private Object result;
-
-//  @JsonProperty("message")
-//  public String getMessage() {
-//    return this.msg;
-//  }
 
   private RestResponse() {
   }
@@ -161,7 +161,7 @@ public class RestResponse implements Serializable {
 
     public <P, R> RestResponseBuilder setResult(P paginator, R[] resultList) {
       if (null != paginator && null != resultList) {
-        Map<String, Object> pageData = new HashMap();
+        Map<String, Object> pageData = new HashMap<>();
         pageData.put("paginator", paginator);
         pageData.put("resultList", resultList);
         this.response.setResult(pageData);

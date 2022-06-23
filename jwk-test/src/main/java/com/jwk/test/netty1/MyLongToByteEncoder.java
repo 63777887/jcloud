@@ -6,7 +6,14 @@ import io.netty.handler.codec.MessageToByteEncoder;
 
 public class MyLongToByteEncoder extends MessageToByteEncoder<Long> {
 
-  //编码方法
+
+  /**
+   * 编码方法
+   * @param ctx
+   * @param msg
+   * @param out
+   * @throws Exception
+   */
   @Override
   protected void encode(ChannelHandlerContext ctx, Long msg, ByteBuf out) throws Exception {
 

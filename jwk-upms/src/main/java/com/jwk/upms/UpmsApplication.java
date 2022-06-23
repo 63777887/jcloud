@@ -10,6 +10,13 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.ConfigurableEnvironment;
 
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * 启动类
+ */
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableJwkFeignClients

@@ -2,6 +2,13 @@ package com.jwk.canal;
 
 import java.util.List;
 
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ *
+ */
 public class MessageInfo {
   private String topic;
   private List<String> messages;
@@ -32,6 +39,7 @@ public class MessageInfo {
     return other instanceof MessageInfo;
   }
 
+  @Override
   public String toString() {
     return "MessageInfo(topic=" + this.getTopic() + ", messages=" + this.getMessages() + ")";
   }

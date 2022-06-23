@@ -15,9 +15,16 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * 自动配置类
+ */
 @AutoConfigureBefore({DynamicDataSourceAutoConfiguration.class, SpringBootConfiguration.class})
 @EnableConfigurationProperties(JwkDynamicDataSourceProperties.class)
-public class JwkDynamicDbAutoconfiguration{
+public class JwkDynamicDbAutoConfiguration {
 
   @Resource
   private DynamicDataSourceProperties dynamicDataSourceProperties;
@@ -53,8 +60,9 @@ public class JwkDynamicDbAutoconfiguration{
     }
     // 加载jcloud配置
     DynamicDataSourceProperties dynamic = jwkDynamicDataSourceProperties.getDynamic();
-    if (null != dynamic)
-    this.dynamicDataSourceProperties.getDatasource().putAll(dynamic.getDatasource());
+    if (null != dynamic) {
+      this.dynamicDataSourceProperties.getDatasource().putAll(dynamic.getDatasource());
+    }
     return dataSource;
   }
 }

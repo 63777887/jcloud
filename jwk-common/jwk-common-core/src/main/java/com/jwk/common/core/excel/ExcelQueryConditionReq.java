@@ -2,21 +2,17 @@ package com.jwk.common.core.excel;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.constraints.NotBlank;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 
 
 /**
- * All rights Reserved, Designed By SEGI
- * <pre>
- * Copyright:  Copyright(C) 2018
- * Company:    SEGI.
- * @Author: dengbp
- * @Date: 2018/8/21
- * </pre>
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
  * <p>
- * </p>
+ * excel导出条件
  */
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)

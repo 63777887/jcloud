@@ -9,7 +9,11 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
- * Created with IntelliJ IDEA. User: tianshuo Date: 2015-8-17 Description:处理字符串
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ *
  */
 public class FileUtil {
 
@@ -29,32 +33,45 @@ public class FileUtil {
 
     //PS和CAD
     mFileTypes.put("38425053", "psd");
-    mFileTypes.put("41433130", "dwg"); // CAD
+    // CAD
+    mFileTypes.put("41433130", "dwg");
     mFileTypes.put("252150532D41646F6265", "ps");
 
     //办公文档类
-    mFileTypes.put("D0CF11E0", "doc"); //ppt、doc、xls
-    mFileTypes.put("504B0304", "docx");//pptx、docx、xlsx
+
+    //ppt、doc、xls
+    mFileTypes.put("D0CF11E0", "doc");
+    //pptx、docx、xlsx
+    mFileTypes.put("504B0304", "docx");
     mFileTypes.put("255044", "pdf");
     mFileTypes.put("25504446", "pdf");
     mFileTypes.put("255044462D312E", "pdf");
 
     //注意由于文本文档录入内容过多，则读取文件头时较为多变-START
-    mFileTypes.put("0D0A0D0A", "txt");//txt
-    mFileTypes.put("0D0A2D2D", "txt");//txt
-    mFileTypes.put("0D0AB4B4", "txt");//txt
-    mFileTypes.put("B4B4BDA8", "txt");//文件头部为汉字
-    mFileTypes.put("73646673", "txt");//txt,文件头部为英文字母
-    mFileTypes.put("32323232", "txt");//txt,文件头部内容为数字
-    mFileTypes.put("0D0A09B4", "txt");//txt,文件头部内容为数字
-    mFileTypes.put("3132330D", "txt");//txt,文件头部内容为数字
+    //txt
+    mFileTypes.put("0D0A0D0A", "txt");
+    //txt
+    mFileTypes.put("0D0A2D2D", "txt");
+    //txt
+    mFileTypes.put("0D0AB4B4", "txt");
+    //文件头部为汉字
+    mFileTypes.put("B4B4BDA8", "txt");
+    //txt,文件头部为英文字母
+    mFileTypes.put("73646673", "txt");
+    //txt,文件头部内容为数字
+    mFileTypes.put("32323232", "txt");
+    //txt,文件头部内容为数字
+    mFileTypes.put("0D0A09B4", "txt");
+    //txt,文件头部内容为数字
+    mFileTypes.put("3132330D", "txt");
     mFileTypes.put("C6BDCCA8", "txt");
     mFileTypes.put("B0B2C8AB", "txt");
     mFileTypes.put("EFBBBF23", "txt");
 
     /**注意由于文本文档录入内容过多，则读取文件头时较为多变-END**/
 
-    mFileTypes.put("7B5C727466", "rtf"); // 日记本
+    // 日记本
+    mFileTypes.put("7B5C727466", "rtf");
 
     //视频或音频类
     mFileTypes.put("3026B275", "wma");
@@ -75,11 +92,14 @@ public class FileUtil {
     mFileTypes.put("3C3F786D6C", "xml");
     mFileTypes.put("68746D6C3E", "html");
     mFileTypes.put("7061636B", "java");
-    mFileTypes.put("3C252D2D", "jsp");//3C252D2D 3C254020
+    //3C252D2D 3C254020
+    mFileTypes.put("3C252D2D", "jsp");
     mFileTypes.put("4D5A9000", "exe");
 
-    mFileTypes.put("44656C69766572792D646174653A", "eml"); // 邮件
-    mFileTypes.put("5374616E64617264204A", "mdb");//Access数据库文件
+    // 邮件
+    mFileTypes.put("44656C69766572792D646174653A", "eml");
+    //Access数据库文件
+    mFileTypes.put("5374616E64617264204A", "mdb");
 
     mFileTypes.put("46726F6D", "mht");
     mFileTypes.put("4D494D45", "mhtml");

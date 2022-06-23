@@ -18,9 +18,17 @@ import org.springframework.security.web.FilterInvocation;
 import org.springframework.util.AntPathMatcher;
 
 /**
- * 查询用户所有资源 查询当前请求路径资源 然后比较路径资源是否在用户资源列表中 UsernamePasswordAuthenticationToken塞入权限信息后，来到这儿做权限校验
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * 权限过滤器
  */
 public class DynamicResourceFilter extends AbstractSecurityInterceptor implements Filter {
+
+  /**
+   * 查询用户所有资源 查询当前请求路径资源 然后比较路径资源是否在用户资源列表中 UsernamePasswordAuthenticationToken塞入权限信息后，来到这儿做权限校验
+   */
 
   @Autowired
   private DynamicMetadataSource dynamicMetadataSource;
@@ -71,8 +79,7 @@ public class DynamicResourceFilter extends AbstractSecurityInterceptor implement
   }
 
   private AtomicBoolean checkAuth(String requestUri) {
-    String noauthUrl = jwkAuthProperties.getNoauthUrl();
-    String[] noAuthUrlList = noauthUrl.split(",");
+    String[] noAuthUrlList = jwkAuthProperties.getNoAuthArray();
     AntPathMatcher antPathMatcher = new AntPathMatcher();
 
     AtomicBoolean noAuth = new AtomicBoolean(false);

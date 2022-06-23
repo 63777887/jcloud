@@ -15,6 +15,10 @@ import org.springframework.security.core.GrantedAuthority;
 
 
 /**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
  * 动态的权限验证
  */
 public class DynamicAccessDecisionManager implements AccessDecisionManager {
@@ -26,7 +30,7 @@ public class DynamicAccessDecisionManager implements AccessDecisionManager {
   public void decide(Authentication authentication,
       Object object, Collection<ConfigAttribute> configAttributes)
       throws AccessDeniedException, InsufficientAuthenticationException {
-    Set<String> noAuthUrls = Arrays.stream(jwkAuthProperties.getNoauthUrl().split(","))
+    Set<String> noAuthUrls = Arrays.stream(jwkAuthProperties.getNoAuthArray())
         .collect(Collectors.toSet());
     //获取用户所有的权限
     Set<String> adminResources = authentication.getAuthorities().stream().

@@ -9,6 +9,10 @@ import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
 
 /**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
  * feign 拦截器传递 header 中oauth token， 使用hystrix 的信号量模式
  */
 @ConditionalOnProperty("security.oauth2.client.client-id")

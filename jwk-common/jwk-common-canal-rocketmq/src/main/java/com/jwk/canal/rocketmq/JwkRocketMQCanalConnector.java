@@ -30,6 +30,13 @@ import org.apache.rocketmq.remoting.RPCHook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ *
+ */
 public class JwkRocketMQCanalConnector implements CanalMQConnector {
   private static final Logger logger = LoggerFactory.getLogger(JwkRocketMQCanalConnector.class);
   private static final String CLOUD_ACCESS_CHANNEL = "cloud";
@@ -133,6 +140,7 @@ public class JwkRocketMQCanalConnector implements CanalMQConnector {
 
         this.rocketMQConsumer.subscribe(this.topic, filter);
         this.rocketMQConsumer.registerMessageListener(new MessageListenerOrderly() {
+          @Override
           public ConsumeOrderlyStatus consumeMessage(List<MessageExt> messageExts, ConsumeOrderlyContext context) {
             context.setAutoCommit(true);
             boolean isSuccess = JwkRocketMQCanalConnector.this.process(messageExts);

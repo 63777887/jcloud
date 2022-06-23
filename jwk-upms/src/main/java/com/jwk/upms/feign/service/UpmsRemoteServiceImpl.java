@@ -23,6 +23,13 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * 远程认证
+ */
 @RestController
 public class UpmsRemoteServiceImpl implements UpmsRemoteService {
 

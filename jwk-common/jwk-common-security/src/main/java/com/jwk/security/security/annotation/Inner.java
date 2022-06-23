@@ -7,6 +7,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
  * 服务调用不鉴权注解
  */
 @Target({ ElementType.METHOD, ElementType.TYPE })

@@ -7,6 +7,13 @@ import org.apache.rocketmq.common.message.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * RocketMQ操作工具类
+ */
 public class RocketMQUtils {
   private static String namesrvAddr;
   private static String producerGroup;

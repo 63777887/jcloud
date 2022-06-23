@@ -49,6 +49,10 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 
 /**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
  * 认证服务器配置
  */
 @Configuration
@@ -87,9 +91,12 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Override
 	public void configure(AuthorizationServerSecurityConfigurer oauthServer) {
 		//	配置AuthorizationServer的端点（/oauth/****）的安全访问规则
-		oauthServer.allowFormAuthenticationForClients()			//表单认证（申请令牌）
-								.checkTokenAccess("permitAll()")				//oauth/check_token公开
-								.tokenKeyAccess("permitAll()");					//oauth/token_key是公开
+								//表单认证（申请令牌）
+		oauthServer.allowFormAuthenticationForClients()
+								//oauth/check_token公开
+								.checkTokenAccess("permitAll()")
+								//oauth/token_key是公开
+								.tokenKeyAccess("permitAll()");
 
 	}
 
@@ -145,13 +152,21 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		CompositeTokenGranter compositeTokenGranter = new CompositeTokenGranter(tokenGranters);
 		endpoints.tokenGranter(compositeTokenGranter);
 	}
-	// 保存授权码由内存的方式改为数据库的方式
+
+	/**
+	 * 保存授权码由内存的方式改为数据库的方式
+	 * @return
+	 */
 	@Bean
 	public AuthorizationCodeServices authorizationCodeServices() {
 		return new JdbcAuthorizationCodeServices(dataSource);
 	}
 
-	//JWT令牌存储方案
+
+	/**
+	 * JWT令牌存储方案
+	 * @return
+	 */
 	@Bean
 	public TokenStore tokenStore() {
 		// 数据库存储
@@ -190,7 +205,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		//JwtAccessTokenConverter是用来生成token的转换器，而token令牌默认是有签名的，且资源服务器需要验证这个签名。
 		// 此处的加密及验签包括两种方式：对称加密、非对称加密（公钥密钥）
 		JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-		converter.setSigningKey(jwkAuthProperties.getSecretKey()); //对称秘钥，资源服务器使用该秘钥来验证
+		//对称秘钥，资源服务器使用该秘钥来验证
+		converter.setSigningKey(jwkAuthProperties.getSecretKey());
 		// 自定义token的值
 		DefaultAccessTokenConverter defaultAccessTokenConverter = new DefaultAccessTokenConverter();
 		defaultAccessTokenConverter.setUserTokenConverter(new JwkUserAuthenticationConverter());

@@ -1,5 +1,12 @@
 package com.jwk.rocketmq.constant;
 
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * tag
+ */
 public class MessageTag {
   public static String COMMENT_LIKE_TAG = "commentLikeTag";
   public static String ACTIVITY_TAG = "activityTag";

@@ -31,6 +31,10 @@ import org.springframework.http.codec.ServerCodecConfigurer;
 import org.springframework.web.reactive.result.view.ViewResolver;
 
 /**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
  * 网关配置
  */
 @Configuration(proxyBeanMethods = false)
@@ -69,12 +73,6 @@ public class GatewayConfiguration {
     // Register the block exception handler for Spring Cloud Gateway.
     return new SentinelGatewayBlockExceptionHandler(viewResolvers, serverCodecConfigurer);
   }
-
-//  @Bean
-//  @Order(-1)
-//  public GlobalFilter sentinelGatewayFilter() {
-//    return new SentinelGatewayFilter();
-//  }
 
   @PostConstruct
   public void doInit() {

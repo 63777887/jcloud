@@ -3,9 +3,11 @@ package com.jwk.canal;
 import lombok.Data;
 
 /**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
  * canal参数配置
- *
- * @author fanxuankai
  */
 @Data
 public class CanalProperties {

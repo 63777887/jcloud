@@ -18,6 +18,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 /**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
  * 重写 {@link AuthenticationProvider} 自定义登录校验策略
  */
 @Slf4j
@@ -64,6 +68,12 @@ public abstract class AbstractUserCustomAuthenticationProvider extends AbstractU
 		return token;
 	}
 
+	/**
+	 * 用户信息校验
+	 * @param code
+	 * @param userDetails
+	 * @return
+	 */
 	protected abstract boolean checkPrincipal(String code, UserDetails userDetails);
 
 

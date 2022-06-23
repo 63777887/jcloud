@@ -15,6 +15,13 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * Prometheus配置项
+ */
 public class JwkPrometheusConfiguration {
 
   private static Logger logger = LoggerFactory.getLogger(JwkPrometheusConfiguration.class);

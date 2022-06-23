@@ -6,7 +6,13 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 
-
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * UserDetails
+ */
 public class AdminUserDetails implements UserDetails {
 
   private SysUser sysUser;
@@ -21,7 +27,11 @@ public class AdminUserDetails implements UserDetails {
     this.resourceConfigAttributes = resourceConfigAttributes;
   }
 
-  //  用户的权限集
+
+  /**
+   * 用户的权限集
+   * @return
+   */
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     return resourceConfigAttributes;

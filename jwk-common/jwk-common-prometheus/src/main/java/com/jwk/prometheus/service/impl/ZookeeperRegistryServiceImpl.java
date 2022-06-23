@@ -20,6 +20,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * Zookeeper注册模式实现
+ */
 @Service
 public class ZookeeperRegistryServiceImpl implements RegistryService {
 
@@ -64,11 +71,11 @@ public class ZookeeperRegistryServiceImpl implements RegistryService {
     ZookeeperProperties zookeeper = jwkPrometheusProperties.getZookeeper();
 
     if  (null == zookeeper.getAddress()){
-      String zookeeper_url = System.getenv("ZOOKEEPER_URL");
-      if (null == zookeeper_url){
+      String zookeeperUrl = System.getenv("ZOOKEEPER_URL");
+      if (null == zookeeperUrl){
         throw new RuntimeException("prometheus zookeeper register url is empty...");
       }
-      zookeeper.setAddress(zookeeper_url);
+      zookeeper.setAddress(zookeeperUrl);
     }
 
     logger.info("config init value vrvActuatorProperties :{}", JSON.toJSON(jwkPrometheusProperties));
@@ -107,8 +114,7 @@ public class ZookeeperRegistryServiceImpl implements RegistryService {
                 logger.warn("listen register provider node deleted path {}", realPath);
                 // 等待5秒，检测节点是否存在，如果不存在，则注册
 //              Thread.sleep(5 * 1000);
-                Stat stat = null;
-                stat = curatorFramework.checkExists().forPath(realPath);
+                Stat stat = curatorFramework.checkExists().forPath(realPath);
                 if (stat != null) {
                   logger.info("listen register provider node already exists path {}", realPath);
                   break;

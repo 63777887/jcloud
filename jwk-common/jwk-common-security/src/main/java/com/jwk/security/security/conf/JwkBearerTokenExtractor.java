@@ -13,8 +13,11 @@ import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 
 /**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
  * 改造 {@link BearerTokenExtractor} 对公开权限的请求不进行校验
- *
  */
 public class JwkBearerTokenExtractor extends BearerTokenExtractor {
 

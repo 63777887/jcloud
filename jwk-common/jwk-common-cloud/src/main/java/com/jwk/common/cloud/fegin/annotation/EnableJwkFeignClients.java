@@ -8,6 +8,13 @@ import java.lang.annotation.Target;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
 
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ *
+ */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented

@@ -2,11 +2,18 @@ package com.jwk.common.core.utils;
 
 import com.alibaba.excel.util.StringUtils;
 import java.text.DecimalFormat;
-import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.CellValue;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
 
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ *
+ */
 public class PoiUtils {
 
   public static String getCellValueByCell(Cell cell) {
@@ -15,28 +22,28 @@ public class PoiUtils {
       return "";
     }
     String cellValue = "";
-    int cellType = cell.getCellType();
+    CellType cellType = cell.getCellType();
 
     switch (cellType) {
       //字符串类型
-      case Cell.CELL_TYPE_STRING:
+      case STRING:
         cellValue = cell.getStringCellValue().trim();
         cellValue = StringUtils.isEmpty(cellValue) ? "" : cellValue;
         break;
       //布尔类型
-      case Cell.CELL_TYPE_BOOLEAN:
+      case BOOLEAN:
         cellValue = String.valueOf(cell.getBooleanCellValue());
         break;
       //数值类型
-      case Cell.CELL_TYPE_NUMERIC:
+      case NUMERIC:
         //判断日期类型
-        if (HSSFDateUtil.isCellDateFormatted(cell)) {
+        if (org.apache.poi.ss.usermodel.DateUtil.isCellDateFormatted(cell)) {
           cellValue = DateUtil.formatDateToStringYYYYMMDDHHMMSS(cell.getDateCellValue());
         } else {  //否
           cellValue = new DecimalFormat("#.######").format(cell.getNumericCellValue());
         }
         break;
-      case Cell.CELL_TYPE_FORMULA:
+      case FORMULA:
         FormulaEvaluator evaluator = cell.getSheet().getWorkbook().getCreationHelper()
             .createFormulaEvaluator();
         evaluator.evaluateFormulaCell(cell);

@@ -15,6 +15,10 @@ import org.springframework.security.oauth2.provider.token.UserAuthenticationConv
 import org.springframework.util.StringUtils;
 
 /**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
  * 根据checktoken 的结果转化用户信息
  */
 public class JwkUserAuthenticationConverter implements UserAuthenticationConverter {

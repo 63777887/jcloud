@@ -17,6 +17,10 @@ import org.springframework.security.web.authentication.preauth.PreAuthenticatedA
 import org.springframework.util.Assert;
 
 /**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
  * 自定义身份认证返回格式 重写 {@link org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider}
  */
 public class JwkPreAuthenticatedAuthenticationProvider implements AuthenticationProvider,
@@ -30,7 +34,8 @@ public class JwkPreAuthenticatedAuthenticationProvider implements Authentication
 
 	private boolean throwExceptionWhenTokenRejected;
 
-	private int order = -1; // default: same as non-ordered
+	// default: same as non-ordered
+	private int order = -1;
 
 	/**
 	 * Check whether all required properties have been set.

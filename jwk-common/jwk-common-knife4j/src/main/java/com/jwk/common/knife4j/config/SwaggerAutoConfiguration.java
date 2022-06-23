@@ -35,12 +35,19 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * 自动配置类
+ */
 @EnableConfigurationProperties(JwkSwaggerProperties.class)
 @Configuration
 @EnableSwagger2
 @EnableKnife4j
 @Import(BeanValidatorPluginsConfiguration.class)
-public class SwaggerConfiguration {
+public class SwaggerAutoConfiguration {
 
   @Autowired
   JwkSwaggerProperties jwkSwaggerProperties;
@@ -75,8 +82,20 @@ public class SwaggerConfiguration {
         .build();
   }
 
-  // 解决springboot2.6.x之后，swagger不生效问题
-  // 注入这个bean之后，配置文件加上 spring.mvc.pathmatch.matching-strategy=ANT_PATH_MATCHER
+
+
+  /**
+   * 解决springboot2.6.x之后，swagger不生效问题
+   * 注入这个bean之后，配置文件加上 spring.mvc.pathmatch.matching-strategy=ANT_PATH_MATCHER
+   * @param webEndpointsSupplier
+   * @param servletEndpointsSupplier
+   * @param controllerEndpointsSupplier
+   * @param endpointMediaTypes
+   * @param corsProperties
+   * @param webEndpointProperties
+   * @param environment
+   * @return
+   */
   @Bean
   public WebMvcEndpointHandlerMapping webEndpointServletHandlerMapping(
       WebEndpointsSupplier webEndpointsSupplier, ServletEndpointsSupplier servletEndpointsSupplier,

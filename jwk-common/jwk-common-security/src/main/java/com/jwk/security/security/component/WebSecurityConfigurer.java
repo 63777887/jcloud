@@ -5,11 +5,11 @@ import com.jwk.security.security.conf.JwtAuthenticationFilter;
 import com.jwk.security.security.grant.PasswordAuthenticationProvider;
 import com.jwk.security.security.handler.JwkAuthenticationFailHandler;
 import com.jwk.security.security.handler.JwtForbiddenConfigHandler;
+import com.jwk.security.security.service.CheckRequestService;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,6 +22,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * Security配置
+ */
 @Primary
 @Order(1)
 public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
@@ -33,7 +40,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
   private AutowireCapableBeanFactory autowireCapableBeanFactory;
 
 	@Autowired
-  private OauthCheckRequestService oauthCheckRequestService;
+  private CheckRequestService checkRequestService;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -51,13 +58,12 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     http.exceptionHandling().authenticationEntryPoint(new JwkAuthenticationFailHandler())
         .accessDeniedHandler(new JwtForbiddenConfigHandler());
 
-    String noauthUrl = jwkAuthProperties.getNoauthUrl();
-    String[] noAuthUrlList = noauthUrl.split(",");
+    String[] noAuthUrlList = jwkAuthProperties.getNoAuthArray();
     http.authorizeRequests().antMatchers(noAuthUrlList).permitAll().anyRequest().authenticated();
 
     // 添加自定义的jwt过滤器
     JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter();
-    jwtAuthenticationFilter.setCheckRequestService(oauthCheckRequestService);
+    jwtAuthenticationFilter.setCheckRequestService(checkRequestService);
     // 注入属性
     autowireCapableBeanFactory.autowireBean(jwtAuthenticationFilter);
     // 如果使用addFilter 则会抛异常，没有指定order
@@ -80,6 +86,11 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 		web.ignoring().antMatchers("/css/**");
 	}
 
+	/**
+	 * auth配置
+	 * @param auth
+	 * @throws Exception
+	 */
 	@Override
 	// ！！！！ 死循环
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {

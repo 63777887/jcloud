@@ -16,9 +16,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 /**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
  * 校验用户token是否合法
  */
-public class OauthCheckRequestService implements CheckRequestService {
+public class OauthCheckRequestServiceImpl implements CheckRequestService {
 
   @Autowired
   UaaRemoteService uaaRemoteService;

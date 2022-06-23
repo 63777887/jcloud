@@ -2,8 +2,21 @@ package com.jwk.security.enums;
 
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * @author Jiwk
+ * @date 2022/6/11
+ * @version 0.1.0
+ * <p>
+ * 权限枚举
+ */
 public enum ApiStatusE {
+  /**
+   * 401: 用户未登陆或登录已过期
+   */
   SC_UNAUTHORIZED(HttpServletResponse.SC_UNAUTHORIZED, "用户未登陆或登录已过期"),
+  /**
+   * 403: 用户没有访问权限
+   */
   SC_FORBIDDEN(HttpServletResponse.SC_FORBIDDEN, "用户没有访问权限");
 
   ApiStatusE(Integer code, String vlaue) {
