@@ -1,5 +1,11 @@
 server:
-  port: 9100
+  port: 8097
+spring:
+  application:
+    name: jcloud-knife4j
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 
 # 网关地址
 gateway-uri: 127.0.0.1:8091

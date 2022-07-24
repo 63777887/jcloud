@@ -4,7 +4,7 @@ import com.jwk.api.api.UaaRemoteService;
 import com.jwk.api.api.UpmsRemoteService;
 import com.jwk.api.dto.UserInfo;
 import com.jwk.common.core.model.InnerResponse;
-import com.jwk.security.constants.JwkSecurityConstants;
+import com.jwk.common.security.constants.JwkSecurityConstants;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.endpoint.CheckTokenEndpoint;

@@ -1,4 +1,4 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.jwk.prometheus.JwkPrometheusAutoConfiguration
+  com.jwk.common.prometheus.JwkPrometheusAutoConfiguration
 org.springframework.boot.env.EnvironmentPostProcessor=\
-  com.jwk.prometheus.config.MeteorEnvironmentPostProcessor
+  com.jwk.common.prometheus.config.MeteorEnvironmentPostProcessor

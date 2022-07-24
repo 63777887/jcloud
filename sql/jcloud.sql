@@ -1,6 +1,10 @@
+DROP DATABASE IF EXISTS `jcloud`;
 
+CREATE DATABASE  `jcloud` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
-SET NAMES utf8mb4;
+USE jcloud;
+
+SET NAMES utf8;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------

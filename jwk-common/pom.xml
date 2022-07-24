@@ -6,7 +6,7 @@
   <parent>
     <artifactId>jcloud-parent</artifactId>
     <groupId>com.jwk</groupId>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
   </parent>
 
 
@@ -29,5 +29,6 @@
     <module>jwk-common-dynamic-datasource</module>
     <module>jwk-common-prometheus</module>
     <module>jwk-api</module>
+    <module>jwk-common-seata</module>
   </modules>
 </project>

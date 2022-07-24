@@ -67,7 +67,7 @@ public class GeneratorUtil {
     dsc.setDriverName("com.mysql.jdbc.Driver");
     dsc.setUsername("root");
     dsc.setPassword("Awert159");
-    dsc.setUrl("jdbc:mysql://47.241.180.241:3306/jcloud?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&rewriteBatchedStatements=true&useSSL=false&allowPublicKeyRetrieval=true");
+    dsc.setUrl("jdbc:mysql://127.0.0.1:3306/jcloud?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&rewriteBatchedStatements=true&useSSL=false&allowPublicKeyRetrieval=true");
     mpg.setDataSource(dsc);
 
 

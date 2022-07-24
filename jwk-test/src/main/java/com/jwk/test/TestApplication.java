@@ -1,7 +1,7 @@
 package com.jwk.test;
 
 import com.jwk.common.cloud.fegin.annotation.EnableJwkFeignClients;
-import com.jwk.security.security.annotation.EnableJwkResourceServer;
+import com.jwk.common.security.security.annotation.EnableJwkResourceServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;

@@ -1,13 +1,13 @@
 package com.jwk.uaa.config;
 
-import com.jwk.security.constants.JwkSecurityConstants;
-import com.jwk.security.security.component.JwkAuthProperties;
-import com.jwk.security.security.component.JwkPreAuthenticatedAuthenticationProvider;
-import com.jwk.security.security.component.JwkUserAuthenticationConverter;
-import com.jwk.security.security.component.JwkWebResponseExceptionTranslator;
-import com.jwk.security.security.dto.AdminUserDetails;
-import com.jwk.security.security.grant.ResourceOwnerPhoneTokenGranter;
-import com.jwk.security.security.service.JwkUserDetailsService;
+import com.jwk.common.security.constants.JwkSecurityConstants;
+import com.jwk.common.security.security.component.JwkAuthProperties;
+import com.jwk.common.security.security.component.JwkPreAuthenticatedAuthenticationProvider;
+import com.jwk.common.security.security.component.JwkUserAuthenticationConverter;
+import com.jwk.common.security.security.component.JwkWebResponseExceptionTranslator;
+import com.jwk.common.security.security.dto.AdminUserDetails;
+import com.jwk.common.security.security.grant.ResourceOwnerPhoneTokenGranter;
+import com.jwk.common.security.security.service.JwkUserDetailsService;
 import com.jwk.uaa.service.JwkClientDetailsService;
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -5,7 +5,7 @@
   <parent>
     <artifactId>jcloud-parent</artifactId>
     <groupId>com.jwk</groupId>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
@@ -23,10 +23,8 @@
     </dependency>
 
     <dependency>
-      <groupId>com.github.xiaoymin</groupId>
-      <artifactId>knife4j-spring-boot-starter</artifactId>
-      <!--在引用时请在maven中央仓库搜索3.X最新版本号-->
-      <version>${knife4j.version}</version>
+      <groupId>com.jwk</groupId>
+      <artifactId>jwk-common-knife4j</artifactId>
     </dependency>
   </dependencies>
 

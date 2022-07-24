@@ -8,14 +8,14 @@
 #        driver-class-name: com.mysql.cj.jdbc.Driver
 #        password: Awert159
 #        type: com.alibaba.druid.pool.DruidDataSource
-#        url: jdbc:mysql://47.241.180.241:3306/jwk-demo?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&rewriteBatchedStatements=true&useSSL=false
+#        url: jdbc:mysql://127.0.0.1:3306/jwk-demo?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&rewriteBatchedStatements=true&useSSL=false
 #        username: root
 #      m2:
 #          #        jdbc-url: jdbc:h2:mem:test
 #          driver-class-name: com.mysql.cj.jdbc.Driver
 #          password: Awert159
 #          type: com.alibaba.druid.pool.DruidDataSource
-#          url: jdbc:mysql://47.241.180.241:3306/jwk-demo?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&rewriteBatchedStatements=true&useSSL=false
+#          url: jdbc:mysql://127.0.0.1:3306/jwk-demo?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&rewriteBatchedStatements=true&useSSL=false
 #          username: root
 #    masterslave:
 #      name: ms
@@ -31,13 +31,13 @@ spring:
         driver-class-name: com.mysql.cj.jdbc.Driver
         password: Awert159
         type: com.alibaba.druid.pool.DruidDataSource
-        url: jdbc:mysql://47.241.180.241:3306/jwk-demo?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&rewriteBatchedStatements=true&useSSL=false
+        url: jdbc:mysql://127.0.0.1:3306/jwk-demo?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&rewriteBatchedStatements=true&useSSL=false
         username: root
       m2:
         driver-class-name: com.mysql.cj.jdbc.Driver
         password: Awert159
         type: com.alibaba.druid.pool.DruidDataSource
-        url: jdbc:mysql://47.241.180.241:3306/jwk-demo1?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&rewriteBatchedStatements=true&useSSL=false
+        url: jdbc:mysql://127.0.0.1:3306/jwk-demo1?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&rewriteBatchedStatements=true&useSSL=false
         username: root
       names: m1,m2
 
@@ -82,13 +82,13 @@ spring:
         master1:
           type: com.alibaba.druid.pool.DruidDataSource
           driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://47.241.180.241:3306/jwk-demo1?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&rewriteBatchedStatements=true&useSSL=false
+          url: jdbc:mysql://127.0.0.1:3306/jwk-demo1?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&rewriteBatchedStatements=true&useSSL=false
           username: root
           password: Awert159
         master:
           type: com.alibaba.druid.pool.DruidDataSource
           driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://47.241.180.241:3306/jwk-demo1?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&rewriteBatchedStatements=true&useSSL=false
+          url: jdbc:mysql://127.0.0.1:3306/jwk-demo1?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&rewriteBatchedStatements=true&useSSL=false
           username: root
           password: Awert159
 

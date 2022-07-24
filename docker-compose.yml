@@ -1,0 +1,100 @@
+version: '3'
+services:
+  jcloud-mysql:
+    build:
+      context: ./sql
+    environment:
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_ROOT_PASSWORD: Awert159
+    restart: always
+    container_name: jcloud-mysql
+    image: mysql
+    ports:
+      - 3306:3306
+  jcloud-upms:
+    build:
+      ##      context用当前根目录，因为 skywalking-agent 所有包都需要依赖，
+      ##      如果context到具体目录，没有权限获取到在上级目录的 skywalking-agent
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+        JAR_FILE: jwk-upms
+        PORT: 8096
+#        - SW_IP:
+    restart: always
+    ports:
+      - 8096:8096
+    container_name: jcloud-upms
+    hostname: jcloud-upms
+    image: jcloud-upms
+  jcloud-uaa:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+        JAR_FILE: jwk-uaa
+        PORT: 8093
+    #        - SW_IP:
+    restart: always
+    ports:
+      - 8093:8093
+    container_name: jcloud-uaa
+    hostname: jcloud-uaa
+    image: jcloud-uaa
+  jcloud-gateway:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+        JAR_FILE: jwk-gateway
+        PORT: 8098
+    #        - SW_IP:
+    restart: always
+    ports:
+      - 8098:8098
+    container_name: jcloud-gateway
+    hostname: jcloud-gateway
+    image: jcloud-gateway
+  jcloud-test:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+        JAR_FILE: jwk-test
+        PORT: 8091
+    #        - SW_IP:
+    restart: always
+    ports:
+      - 8091:8091
+    container_name: jcloud-test
+    hostname: jcloud-test
+    image: jcloud-test
+  jcloud-knife4j:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+        JAR_FILE: jwk-knife4j
+        PORT: 8097
+    #        - SW_IP:
+    restart: always
+    ports:
+      - 8097:8097
+    container_name: jcloud-knife4j
+    hostname: jcloud-knife4j
+    image: jcloud-knife4j
+  jcloud-admin:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+        JAR_FILE: jwk-admin
+        PORT: 8000
+    #        - SW_IP:
+    restart: always
+    ports:
+      - 8000:8000
+    container_name: jcloud-admin
+    hostname: jcloud-admin
+    image: jcloud-admin
+

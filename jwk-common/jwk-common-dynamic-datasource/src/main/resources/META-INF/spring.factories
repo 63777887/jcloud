@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.jwk.dynamicdb.JwkDynamicDbAutoConfiguration
+  com.jwk.common.dynamicdb.JwkDynamicDbAutoConfiguration

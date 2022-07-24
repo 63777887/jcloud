@@ -6,7 +6,7 @@
   <parent>
     <artifactId>jcloud-parent</artifactId>
     <groupId>com.jwk</groupId>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
   </parent>
   <artifactId>jwk-test</artifactId>
   <packaging>jar</packaging>
@@ -147,6 +147,10 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
       </plugin>
     </plugins>
   </build>
