@@ -3,7 +3,7 @@
 [![JCloud](https://img.shields.io/badge/JCloud-0.1.1-success.svg)]()
 [![Spring Cloud Alibaba](https://img.shields.io/badge/Spring%20Cloud-2021-blue.svg)](https://github.com/alibaba/spring-cloud-alibaba)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-2.7-blue.svg)](https://github.com/spring-projects/spring-boot)
-[![LICENSE](https://img.shields.io/github/license/63777887/jcloud)]
+![LICENSE](https://img.shields.io/github/license/63777887/jcloud)
 
 </div>
 
