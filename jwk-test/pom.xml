@@ -27,11 +27,14 @@
 <!--      <scope>test</scope>-->
 <!--    </dependency>-->
 
+<!--    <dependency>-->
+<!--      <groupId>com.jwk</groupId>-->
+<!--      <artifactId>jwk-common-prometheus</artifactId>-->
+<!--    </dependency>-->
     <dependency>
       <groupId>com.jwk</groupId>
-      <artifactId>jwk-common-prometheus</artifactId>
+      <artifactId>jwk-common-redis</artifactId>
     </dependency>
-
     <dependency>
       <groupId>com.jwk</groupId>
       <artifactId>jwk-common-security</artifactId>

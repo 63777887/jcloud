@@ -101,6 +101,11 @@
         <version>${jwk.common.version}</version>
       </dependency>
       <dependency>
+        <groupId>com.jwk</groupId>
+        <artifactId>jwk-common-redis</artifactId>
+        <version>${jwk.common.version}</version>
+      </dependency>
+      <dependency>
         <groupId>org.freemarker</groupId>
         <artifactId>freemarker</artifactId>
         <version>${freemarker.version}</version>

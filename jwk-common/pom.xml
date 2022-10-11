@@ -30,5 +30,6 @@
     <module>jwk-common-prometheus</module>
     <module>jwk-api</module>
     <module>jwk-common-seata</module>
+    <module>jwk-common-redis</module>
   </modules>
 </project>

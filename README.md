@@ -38,6 +38,7 @@ jCloud
      ├── jwk-common-security -- Security和Oauth基础
      ├── jwk-common-mybatis -- Mybatis Plus数据源包
      ├── jwk-common-dynam-datasource -- 动态数据源
+     ├── jwk-common-redis -- redis和多级缓存
      ├── jwk-common-seata -- 分布式事务
      ├── jwk-common-prometheus -- 普罗米修斯监控
      ├── jwk-common-knife4j -- 接口文档
