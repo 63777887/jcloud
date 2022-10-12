@@ -11,10 +11,10 @@ import org.springframework.boot.context.properties.NestedConfigurationProperty;
  * @date 2022/10/10
  * @version 0.1.1
  * <p>
- * 配置项
+ * 缓存配置项
  */
 @Data
-@ConfigurationProperties(prefix = "spring.cache.multi")
+@ConfigurationProperties(prefix = "jwk.cache.multi")
 public class CacheConfigProperties {
 
 	/**

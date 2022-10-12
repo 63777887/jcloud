@@ -1,11 +1,11 @@
 package com.jwk.common.redis.annotation;
 
+import com.jwk.common.redis.config.MultilevelCacheConfiguration;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import org.springframework.cache.annotation.CachingConfigurationSelector;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.Import;
@@ -23,6 +23,7 @@ import org.springframework.core.Ordered;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @EnableCaching
+@Import(MultilevelCacheConfiguration.class)
 public @interface EnableJwkCaching {
 
   /**
