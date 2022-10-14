@@ -19,8 +19,8 @@
 | 依赖                   | 版本         |
 | ---------------------- |------------|
 | Spring Boot            | 2.7.0      |
-| Spring Cloud           | 2021.0.2   |
-| Spring Cloud Alibaba   | 2021.0.1.0 |
+| Spring Cloud           | 2021.0.4   |
+| Spring Cloud Alibaba   | 2021.0.4.0 |
 | Spring Security Oauth2 | 2.1.2      |
 | Mybatis Plus           | 3.4.1      |
 | hutool                 | 5.7.3      |

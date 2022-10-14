@@ -3,7 +3,9 @@ package com.jwk.common.redis.config;
 import com.jwk.common.redis.properties.CacheConfigProperties;
 import com.jwk.common.redis.support.CacheMessageListener;
 import com.jwk.common.redis.support.RedisCaffeineCacheManager;
+import com.jwk.common.redis.support.RedisCaffeineCacheManagerCustomizer;
 import java.util.Objects;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -42,8 +44,12 @@ public class MultilevelCacheConfiguration {
 	@ConditionalOnMissingBean
 	@ConditionalOnBean(RedisTemplate.class)
 	public RedisCaffeineCacheManager cacheManager(CacheConfigProperties cacheConfigProperties,
-			@Qualifier("stringKeyRedisTemplate") RedisTemplate<Object, Object> stringKeyRedisTemplate) {
-		return new RedisCaffeineCacheManager(cacheConfigProperties, stringKeyRedisTemplate);
+			@Qualifier("stringKeyRedisTemplate") RedisTemplate<Object, Object> stringKeyRedisTemplate,
+			ObjectProvider<RedisCaffeineCacheManagerCustomizer> cacheManagerCustomizers) {
+		RedisCaffeineCacheManager cacheManager = new RedisCaffeineCacheManager(
+				cacheConfigProperties, stringKeyRedisTemplate);
+		cacheManagerCustomizers.orderedStream().forEach(customizer -> customizer.customize(cacheManager));
+		return cacheManager;
 	}
 
 	@Bean
@@ -68,9 +74,6 @@ public class MultilevelCacheConfiguration {
 				new ChannelTopic(cacheConfigProperties.getRedis().getTopic()));
 		return redisMessageListenerContainer;
 	}
-
-
-
 
 	/**
 	 *  redis键序列化使用StringRedisSerializer

@@ -17,8 +17,8 @@
     <java.version>1.8</java.version>
     <spring-boot.version>2.7.0</spring-boot.version>
     <spring-boot-admin-starter.version>2.6.7</spring-boot-admin-starter.version>
-    <cloud.version>2021.0.2</cloud.version>
-    <cloud-alibaba.version>2021.0.1.0</cloud-alibaba.version>
+    <cloud.version>2021.0.4</cloud.version>
+    <cloud-alibaba.version>2021.0.4.0</cloud-alibaba.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <fastjson.version>1.2.83</fastjson.version>
