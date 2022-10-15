@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author jiwk
@@ -20,16 +20,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/user")
 public class UserController {
 
-  @Autowired
-  private UserService userService;
+	@Autowired
+	private UserService userService;
 
-  /**
-   * 用户列表
-   */
-  @GetMapping(value = "/list")
-  public List<User> list() {
+	/**
+	 * 用户列表
+	 */
+	@GetMapping(value = "/list")
+	public List<User> list() {
 
-    return userService.list();
-  }
+		return userService.list();
+	}
 
 }

@@ -8,12 +8,15 @@ package com.jwk.api.constant;
  * 服务名管理
  */
 public interface ServerNameConstants {
-  /**
-   * UMPS模块
-   */
-  String SERVER_UMPS = "jwk-upms";
-  /**
-   * UAA模块
-   */
-  String SERVER_UAA = "jwk-uaa";
+
+	/**
+	 * UMPS模块
+	 */
+	String SERVER_UMPS = "jcloud-upms";
+
+	/**
+	 * UAA模块
+	 */
+	String SERVER_UAA = "jcloud-uaa";
+
 }

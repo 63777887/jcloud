@@ -18,25 +18,24 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration(proxyBeanMethods = false)
 public class JwkMybatisPlusAutoConfiguration implements WebMvcConfigurer {
 
-  /**
-   * 分页插件
-   * @return
-   */
-  @Bean
-  public MybatisPlusInterceptor mybatisPlusInterceptor() {
-    MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
-    interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
-    return interceptor;
-  }
+	/**
+	 * 分页插件
+	 * @return
+	 */
+	@Bean
+	public MybatisPlusInterceptor mybatisPlusInterceptor() {
+		MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+		interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
+		return interceptor;
+	}
 
-  /**
-   * 审计字段自动填充
-   * @return {@link MetaObjectHandler}
-   */
-  @Bean
-  public MybatisPlusMetaObjectHandler mybatisPlusMetaObjectHandler(){
-    return new MybatisPlusMetaObjectHandler();
-  }
-
+	/**
+	 * 审计字段自动填充
+	 * @return {@link MetaObjectHandler}
+	 */
+	@Bean
+	public MybatisPlusMetaObjectHandler mybatisPlusMetaObjectHandler() {
+		return new MybatisPlusMetaObjectHandler();
+	}
 
 }

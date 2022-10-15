@@ -49,70 +49,59 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Import(BeanValidatorPluginsConfiguration.class)
 public class SwaggerAutoConfiguration {
 
-  @Autowired
-  JwkSwaggerProperties jwkSwaggerProperties;
+	@Autowired
+	JwkSwaggerProperties jwkSwaggerProperties;
 
+	@Bean
+	public Docket createRestApi() {
+		Predicate<RequestHandler> restPredicate = RequestHandlerSelectors.withClassAnnotation(RestController.class);
+		Predicate<RequestHandler> classPredicate = RequestHandlerSelectors.withClassAnnotation(Controller.class);
+		Predicate<RequestHandler> methodPredicate = RequestHandlerSelectors.withMethodAnnotation(ResponseBody.class);
+		Predicate<RequestHandler> basePackagePredicate = RequestHandlerSelectors
+				.basePackage(jwkSwaggerProperties.getBasePackage());
+		restPredicate.or(classPredicate).or(methodPredicate).or(basePackagePredicate);
 
-  @Bean
-  public Docket createRestApi() {
-    Predicate<RequestHandler> restPredicate = RequestHandlerSelectors
-        .withClassAnnotation(RestController.class);
-    Predicate<RequestHandler> classPredicate = RequestHandlerSelectors
-        .withClassAnnotation(Controller.class);
-    Predicate<RequestHandler> methodPredicate = RequestHandlerSelectors
-        .withMethodAnnotation(ResponseBody.class);
-    Predicate<RequestHandler> basePackagePredicate = RequestHandlerSelectors
-        .basePackage(jwkSwaggerProperties.getBasePackage());
-    restPredicate.or(classPredicate).or(methodPredicate).or(basePackagePredicate);
+		return new Docket(DocumentationType.SWAGGER_2).groupName(jwkSwaggerProperties.getGroupName())
+				.apiInfo(this.apiInfo()).useDefaultResponseMessages(false).select().apis(restPredicate).build();
+	}
 
-    return new Docket(DocumentationType.SWAGGER_2)
-        .groupName(jwkSwaggerProperties.getGroupName())
-        .apiInfo(this.apiInfo())
-        .useDefaultResponseMessages(false)
-        .select()
-        .apis(restPredicate)
-        .build();
-  }
+	private ApiInfo apiInfo() {
+		return new ApiInfoBuilder().title(jwkSwaggerProperties.getTitle())
+				.description(jwkSwaggerProperties.getDescription()).version(jwkSwaggerProperties.getVersion()).build();
+	}
 
-  private ApiInfo apiInfo() {
-    return new ApiInfoBuilder()
-        .title(jwkSwaggerProperties.getTitle())
-        .description(jwkSwaggerProperties.getDescription())
-        .version(jwkSwaggerProperties.getVersion())
-        .build();
-  }
+	/**
+	 * 解决springboot2.6.x之后，swagger不生效问题 注入这个bean之后，配置文件加上
+	 * spring.mvc.pathmatch.matching-strategy=ANT_PATH_MATCHER
+	 * @param webEndpointsSupplier
+	 * @param servletEndpointsSupplier
+	 * @param controllerEndpointsSupplier
+	 * @param endpointMediaTypes
+	 * @param corsProperties
+	 * @param webEndpointProperties
+	 * @param environment
+	 * @return
+	 */
+	@Bean
+	public WebMvcEndpointHandlerMapping webEndpointServletHandlerMapping(WebEndpointsSupplier webEndpointsSupplier,
+			ServletEndpointsSupplier servletEndpointsSupplier, ControllerEndpointsSupplier controllerEndpointsSupplier,
+			EndpointMediaTypes endpointMediaTypes, CorsEndpointProperties corsProperties,
+			WebEndpointProperties webEndpointProperties, Environment environment) {
 
+		List<ExposableEndpoint<?>> allEndpoints = new ArrayList<>();
+		Collection<ExposableWebEndpoint> webEndpoints = webEndpointsSupplier.getEndpoints();
+		allEndpoints.addAll(webEndpoints);
+		allEndpoints.addAll(servletEndpointsSupplier.getEndpoints());
+		allEndpoints.addAll(controllerEndpointsSupplier.getEndpoints());
+		String basePath = webEndpointProperties.getBasePath();
+		EndpointMapping endpointMapping = new EndpointMapping(basePath);
+		boolean shouldRegisterLinksMapping = webEndpointProperties.getDiscovery().isEnabled()
+				&& (org.springframework.util.StringUtils.hasText(basePath)
+						|| ManagementPortType.get(environment).equals(ManagementPortType.DIFFERENT));
 
-
-  /**
-   * 解决springboot2.6.x之后，swagger不生效问题
-   * 注入这个bean之后，配置文件加上 spring.mvc.pathmatch.matching-strategy=ANT_PATH_MATCHER
-   * @param webEndpointsSupplier
-   * @param servletEndpointsSupplier
-   * @param controllerEndpointsSupplier
-   * @param endpointMediaTypes
-   * @param corsProperties
-   * @param webEndpointProperties
-   * @param environment
-   * @return
-   */
-  @Bean
-  public WebMvcEndpointHandlerMapping webEndpointServletHandlerMapping(
-      WebEndpointsSupplier webEndpointsSupplier, ServletEndpointsSupplier servletEndpointsSupplier,
-      ControllerEndpointsSupplier controllerEndpointsSupplier, EndpointMediaTypes endpointMediaTypes,
-      CorsEndpointProperties corsProperties, WebEndpointProperties webEndpointProperties, Environment environment) {
-
-    List<ExposableEndpoint<?>> allEndpoints = new ArrayList<>();
-    Collection<ExposableWebEndpoint> webEndpoints = webEndpointsSupplier.getEndpoints();
-    allEndpoints.addAll(webEndpoints);
-    allEndpoints.addAll(servletEndpointsSupplier.getEndpoints());
-    allEndpoints.addAll(controllerEndpointsSupplier.getEndpoints());
-    String basePath = webEndpointProperties.getBasePath();
-    EndpointMapping endpointMapping = new EndpointMapping(basePath);
-    boolean shouldRegisterLinksMapping = webEndpointProperties.getDiscovery().isEnabled() &&
-        (org.springframework.util.StringUtils.hasText(basePath) || ManagementPortType.get(environment).equals(ManagementPortType.DIFFERENT));
-
-    return new WebMvcEndpointHandlerMapping(endpointMapping, webEndpoints, endpointMediaTypes, corsProperties.toCorsConfiguration(), new EndpointLinksResolver(allEndpoints, basePath), shouldRegisterLinksMapping, null);
-  }
+		return new WebMvcEndpointHandlerMapping(endpointMapping, webEndpoints, endpointMediaTypes,
+				corsProperties.toCorsConfiguration(), new EndpointLinksResolver(allEndpoints, basePath),
+				shouldRegisterLinksMapping, null);
+	}
 
 }

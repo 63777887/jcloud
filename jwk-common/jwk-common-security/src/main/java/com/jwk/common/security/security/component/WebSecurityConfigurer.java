@@ -34,13 +34,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-  private JwkAuthProperties jwkAuthProperties;
+	private JwkAuthProperties jwkAuthProperties;
 
 	@Autowired
-  private AutowireCapableBeanFactory autowireCapableBeanFactory;
+	private AutowireCapableBeanFactory autowireCapableBeanFactory;
 
 	@Autowired
-  private CheckRequestService checkRequestService;
+	private CheckRequestService checkRequestService;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -48,31 +48,30 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 	@Override
 	@SneakyThrows
 	protected void configure(HttpSecurity http) {
-		http.csrf().disable()
-        .sessionManagement()
-        //  无状态模式
-        .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-    // 自定义权限拒绝处理类
-    // AuthenticationException指的是未登录状态下访问受保护资源
-    // AccessDeniedException指的是登陆了但是由于权限不足(比如普通用户访问管理员界面）。
-    http.exceptionHandling().authenticationEntryPoint(new JwkAuthenticationFailHandler())
-        .accessDeniedHandler(new JwtForbiddenConfigHandler());
+		http.csrf().disable().sessionManagement()
+				// 无状态模式
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		// 自定义权限拒绝处理类
+		// AuthenticationException指的是未登录状态下访问受保护资源
+		// AccessDeniedException指的是登陆了但是由于权限不足(比如普通用户访问管理员界面）。
+		http.exceptionHandling().authenticationEntryPoint(new JwkAuthenticationFailHandler())
+				.accessDeniedHandler(new JwtForbiddenConfigHandler());
 
-    String[] noAuthUrlList = jwkAuthProperties.getNoAuthArray();
-    http.authorizeRequests().antMatchers(noAuthUrlList).permitAll().anyRequest().authenticated();
+		String[] noAuthUrlList = jwkAuthProperties.getNoAuthArray();
+		http.authorizeRequests().antMatchers(noAuthUrlList).permitAll().anyRequest().authenticated();
 
-    // 添加自定义的jwt过滤器
-    JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter();
-    jwtAuthenticationFilter.setCheckRequestService(checkRequestService);
-    // 注入属性
-    autowireCapableBeanFactory.autowireBean(jwtAuthenticationFilter);
-    // 如果使用addFilter 则会抛异常，没有指定order
-    http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+		// 添加自定义的jwt过滤器
+		JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter();
+		jwtAuthenticationFilter.setCheckRequestService(checkRequestService);
+		// 注入属性
+		autowireCapableBeanFactory.autowireBean(jwtAuthenticationFilter);
+		// 如果使用addFilter 则会抛异常，没有指定order
+		http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-    //添加自定义的权限过滤器
-    DynamicResourceFilter dynamicResourceFilter = new DynamicResourceFilter();
-    autowireCapableBeanFactory.autowireBean(dynamicResourceFilter);
-    http.addFilterBefore(dynamicResourceFilter, FilterSecurityInterceptor.class);
+		// 添加自定义的权限过滤器
+		DynamicResourceFilter dynamicResourceFilter = new DynamicResourceFilter();
+		autowireCapableBeanFactory.autowireBean(dynamicResourceFilter);
+		http.addFilterBefore(dynamicResourceFilter, FilterSecurityInterceptor.class);
 	}
 
 	private PasswordAuthenticationProvider phoneAuthenticationProvider() {
@@ -111,28 +110,29 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 		return super.authenticationManagerBean();
 	}
 
-//	@Bean
-//	public AuthenticationFailureHandler authenticationFailureHandler() {
-//		return new FormAuthenticationFailureHandler();
-//	}
+	// @Bean
+	// public AuthenticationFailureHandler authenticationFailureHandler() {
+	// return new FormAuthenticationFailureHandler();
+	// }
 
-//	/**
-//	 * 支持SSO 退出
-//	 * @return LogoutSuccessHandler
-//	 */
-//	@Bean
-//	public LogoutSuccessHandler logoutSuccessHandler() {
-//		return new SsoLogoutSuccessHandler();
-//	}
+	// /**
+	// * 支持SSO 退出
+	// * @return LogoutSuccessHandler
+	// */
+	// @Bean
+	// public LogoutSuccessHandler logoutSuccessHandler() {
+	// return new SsoLogoutSuccessHandler();
+	// }
 
-//	/**
-//	 * https://spring.io/blog/2017/11/01/spring-security-5-0-0-rc1-released#password-storage-updated
-//	 * Encoded password does not look like BCrypt
-//	 * @return PasswordEncoder
-//	 */
-//	@Bean
-//	public PasswordEncoder passwordEncoder() {
-//		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-//	}
+	// /**
+	// *
+	// https://spring.io/blog/2017/11/01/spring-security-5-0-0-rc1-released#password-storage-updated
+	// * Encoded password does not look like BCrypt
+	// * @return PasswordEncoder
+	// */
+	// @Bean
+	// public PasswordEncoder passwordEncoder() {
+	// return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+	// }
 
 }

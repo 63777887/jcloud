@@ -178,15 +178,16 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
 	}
 
 	protected Duration getExpire(Object value) {
-	  String[] cache = this.name.split(this.delimiter, 2);
+		String[] cache = this.name.split(this.delimiter, 2);
 		Duration cacheNameExpire = expires.get(cache[0]);
-    if (cacheNameExpire == null && cache.length >1) {
-      try {
-        cacheNameExpire = Duration.ofMillis(Integer.parseInt(cache[1]));
-      } catch (NumberFormatException e) {
-        log.warn("cacheable has illegal expire time: {}, will use default settings",cache[1]);
-      }
-    }
+		if (cacheNameExpire == null && cache.length > 1) {
+			try {
+				cacheNameExpire = Duration.ofMillis(Integer.parseInt(cache[1]));
+			}
+			catch (NumberFormatException e) {
+				log.warn("cacheable has illegal expire time: {}, will use default settings", cache[1]);
+			}
+		}
 		if (cacheNameExpire == null) {
 			cacheNameExpire = defaultExpiration;
 		}

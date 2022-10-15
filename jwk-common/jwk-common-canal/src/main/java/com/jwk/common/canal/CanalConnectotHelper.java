@@ -9,19 +9,19 @@ package com.jwk.common.canal;
  */
 public interface CanalConnectotHelper {
 
-  /**
-   * 初始化方法
-   */
-  void init();
+	/**
+	 * 初始化方法
+	 */
+	void init();
 
-  /**
-   * 连接
-   */
-  void connect();
+	/**
+	 * 连接
+	 */
+	void connect();
 
-  /**
-   * 断开连接
-   */
-  void disconnect();
+	/**
+	 * 断开连接
+	 */
+	void disconnect();
 
 }

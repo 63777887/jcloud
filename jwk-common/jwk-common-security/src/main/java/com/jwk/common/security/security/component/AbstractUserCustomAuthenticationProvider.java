@@ -45,16 +45,17 @@ public abstract class AbstractUserCustomAuthenticationProvider extends AbstractU
 		Map<String, JwkUserDetailsService> userDetailsServiceMap = JwkSpringUtil
 				.getBeansOfType(JwkUserDetailsService.class);
 		Optional<JwkUserDetailsService> optional = userDetailsServiceMap.values().stream()
-				.filter(service -> service.support(clientId)).filter(service -> service.supportGrantType(grantType)).max(Comparator.comparingInt(Ordered::getOrder));
+				.filter(service -> service.support(clientId)).filter(service -> service.supportGrantType(grantType))
+				.max(Comparator.comparingInt(Ordered::getOrder));
 
 		if (!optional.isPresent()) {
 			throw new InternalAuthenticationServiceException("UserDetailsService error , not register");
 		}
 
-		// 账号	用户名/手机号等
+		// 账号 用户名/手机号等
 		String principal = authentication.getName();
 
-		// 这里的code指的是校验码	密码/code等
+		// 这里的code指的是校验码 密码/code等
 		String code = authentication.getCredentials().toString();
 
 		UserDetails userDetails = optional.get().loadUserByUsername(principal);
@@ -76,14 +77,14 @@ public abstract class AbstractUserCustomAuthenticationProvider extends AbstractU
 	 */
 	protected abstract boolean checkPrincipal(String code, UserDetails userDetails);
 
-
 	@Override
-	protected void additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
+	protected void additionalAuthenticationChecks(UserDetails userDetails,
+			UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
 		if (authentication.getCredentials() == null) {
 			this.logger.debug("Failed to authenticate since no credentials provided");
-			throw new BadCredentialsException(this.messages.getMessage("AbstractUserDetailsAuthenticationProvider.badCredentials", "Bad credentials"));
+			throw new BadCredentialsException(this.messages
+					.getMessage("AbstractUserDetailsAuthenticationProvider.badCredentials", "Bad credentials"));
 		}
 	}
-
 
 }

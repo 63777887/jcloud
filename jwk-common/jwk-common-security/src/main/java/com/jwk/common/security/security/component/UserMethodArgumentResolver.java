@@ -19,30 +19,33 @@ import org.springframework.web.method.support.ModelAndViewContainer;
  * 获取用户信息
  */
 public class UserMethodArgumentResolver implements HandlerMethodArgumentResolver {
-  private static final Logger logger = LoggerFactory.getLogger(UserMethodArgumentResolver.class);
 
-  public UserMethodArgumentResolver() {
-  }
+	private static final Logger logger = LoggerFactory.getLogger(UserMethodArgumentResolver.class);
 
-  @Override
-  public boolean supportsParameter(MethodParameter parameter) {
-    return parameter.hasParameterAnnotation(UserParam.class);
-  }
+	public UserMethodArgumentResolver() {
+	}
 
-  @Override
-  public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
+	@Override
+	public boolean supportsParameter(MethodParameter parameter) {
+		return parameter.hasParameterAnnotation(UserParam.class);
+	}
 
-    Class<?> paramType = parameter.getParameterType();
-    if (SysUser.class.isAssignableFrom(paramType)) {
-      SysUser sysUser = SecurityUtils.getUser();
-      if (null == sysUser){
-        logger.warn("用户认证过滤器 解析注解失败，SecurityContext不存在用户信息");
-        throw new RuntimeException("注解未获取到登录用户信息");
-      }
-      return sysUser;
-      }
-     else {
-      return null;
-    }
-  }
+	@Override
+	public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
+			NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
+
+		Class<?> paramType = parameter.getParameterType();
+		if (SysUser.class.isAssignableFrom(paramType)) {
+			SysUser sysUser = SecurityUtils.getUser();
+			if (null == sysUser) {
+				logger.warn("用户认证过滤器 解析注解失败，SecurityContext不存在用户信息");
+				throw new RuntimeException("注解未获取到登录用户信息");
+			}
+			return sysUser;
+		}
+		else {
+			return null;
+		}
+	}
+
 }

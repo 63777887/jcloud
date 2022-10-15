@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <artifactId>jcloud-parent</artifactId>
+    <groupId>com.jwk</groupId>
+    <version>0.1.1</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>jcloud-upms</artifactId>
+  <packaging>jar</packaging>
+
+  <description>jcloud 权限管理</description>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.jwk</groupId>
+      <artifactId>jwk-common-security</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.jwk</groupId>
+      <artifactId>jwk-common-seata</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.jwk</groupId>
+      <artifactId>jwk-common-cloud</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.jwk</groupId>
+      <artifactId>jwk-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.jwk</groupId>
+      <artifactId>jwk-common-mybatis</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.jwk</groupId>
+      <artifactId>jwk-common-knife4j</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.skywalking</groupId>
+      <artifactId>apm-toolkit-logback-1.x</artifactId>
+      <version>8.6.0</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

@@ -19,7 +19,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class IPaginator implements Serializable {
 
-  private Integer pageLimit;
-  private Integer pageNo;
-  private Integer totalCount;
+	private Integer pageLimit;
+
+	private Integer pageNo;
+
+	private Integer totalCount;
+
 }

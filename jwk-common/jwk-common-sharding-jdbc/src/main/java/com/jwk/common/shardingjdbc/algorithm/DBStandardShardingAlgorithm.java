@@ -10,25 +10,29 @@ import org.apache.shardingsphere.api.sharding.standard.PreciseShardingValue;
  * 精确分片
  */
 public class DBStandardShardingAlgorithm implements PreciseShardingAlgorithm<Long> {
-  public static final int TABLE_SIZE_PER_DB = 32;
 
-  public DBStandardShardingAlgorithm() {
-  }
+	public static final int TABLE_SIZE_PER_DB = 32;
 
-  @Override
-  public String doSharding(Collection<String> availableTargetNames, PreciseShardingValue<Long> shardingValue) {
-    int value = BigDecimal.valueOf((Long)shardingValue.getValue()).divide(BigDecimal.valueOf(100L)).remainder(BigDecimal.valueOf(128L)).divide(BigDecimal.valueOf(32L)).intValue();
-    Iterator var4 = availableTargetNames.iterator();
+	public DBStandardShardingAlgorithm() {
+	}
 
-    String targetName;
-    do {
-      if (!var4.hasNext()) {
-        return null;
-      }
+	@Override
+	public String doSharding(Collection<String> availableTargetNames, PreciseShardingValue<Long> shardingValue) {
+		int value = BigDecimal.valueOf((Long) shardingValue.getValue()).divide(BigDecimal.valueOf(100L))
+				.remainder(BigDecimal.valueOf(128L)).divide(BigDecimal.valueOf(32L)).intValue();
+		Iterator var4 = availableTargetNames.iterator();
 
-      targetName = (String)var4.next();
-    } while(!targetName.endsWith("_" + value));
+		String targetName;
+		do {
+			if (!var4.hasNext()) {
+				return null;
+			}
 
-    return targetName;
-  }
+			targetName = (String) var4.next();
+		}
+		while (!targetName.endsWith("_" + value));
+
+		return targetName;
+	}
+
 }

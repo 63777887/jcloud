@@ -23,50 +23,53 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class InnerResponse<T> implements Serializable {
 
-  private static final long serialVersionUID = 1078301560542522627L;
-  @JsonProperty("code")
-  @Setter
-  @Getter
-  private String code;
-  @JsonProperty("msg")
-  @Setter
-  @Getter
-  private String msg;
-  @JsonProperty("data")
-  @Setter
-  @Getter
-  private T data;
+	private static final long serialVersionUID = 1078301560542522627L;
 
-  public static <T> InnerResponse<T> success() {
-    return restResult(ResponseCode.SUCCESS_CODE, "", null);
-  }
+	@JsonProperty("code")
+	@Setter
+	@Getter
+	private String code;
 
-  public static <T> InnerResponse<T> success(T data) {
-    return restResult(ResponseCode.SUCCESS_CODE, null, data);
-  }
+	@JsonProperty("msg")
+	@Setter
+	@Getter
+	private String msg;
 
-  public static <T> InnerResponse<T> success(String msg,T data) {
-    return restResult(ResponseCode.SUCCESS_CODE, msg,data);
-  }
+	@JsonProperty("data")
+	@Setter
+	@Getter
+	private T data;
 
-  public static <T> InnerResponse<T> error() {
-    return restResult(ResponseCode.ERROR_CODE, null, null);
-  }
+	public static <T> InnerResponse<T> success() {
+		return restResult(ResponseCode.SUCCESS_CODE, "", null);
+	}
 
-  public static <T> InnerResponse<T> error(T data) {
-    return restResult(ResponseCode.ERROR_CODE, null, data);
-  }
+	public static <T> InnerResponse<T> success(T data) {
+		return restResult(ResponseCode.SUCCESS_CODE, null, data);
+	}
 
-  public static <T> InnerResponse<T> error(String msg,T data) {
-    return restResult(ResponseCode.ERROR_CODE, msg, data);
-  }
+	public static <T> InnerResponse<T> success(String msg, T data) {
+		return restResult(ResponseCode.SUCCESS_CODE, msg, data);
+	}
 
-  private static <T> InnerResponse<T> restResult(String code,String msg,T data) {
-    InnerResponse<T> apiResult = new InnerResponse<>();
-    apiResult.setCode(code);
-    apiResult.setData(data);
-    apiResult.setMsg(msg);
-    return apiResult;
-  }
+	public static <T> InnerResponse<T> error() {
+		return restResult(ResponseCode.ERROR_CODE, null, null);
+	}
+
+	public static <T> InnerResponse<T> error(T data) {
+		return restResult(ResponseCode.ERROR_CODE, null, data);
+	}
+
+	public static <T> InnerResponse<T> error(String msg, T data) {
+		return restResult(ResponseCode.ERROR_CODE, msg, data);
+	}
+
+	private static <T> InnerResponse<T> restResult(String code, String msg, T data) {
+		InnerResponse<T> apiResult = new InnerResponse<>();
+		apiResult.setCode(code);
+		apiResult.setData(data);
+		apiResult.setMsg(msg);
+		return apiResult;
+	}
 
 }

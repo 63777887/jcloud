@@ -18,17 +18,16 @@ import org.springframework.boot.context.properties.NestedConfigurationProperty;
 @ConfigurationProperties(prefix = "jwk.prometheus")
 public class JwkPrometheusProperties {
 
-    protected final static Logger logger  = LoggerFactory.getLogger(JwkPrometheusProperties.class);
+	protected final static Logger logger = LoggerFactory.getLogger(JwkPrometheusProperties.class);
 
-    /**
-     * 服务名
-     */
-    private String application;
+	/**
+	 * 服务名
+	 */
+	private String application;
 
-    private String registryMode = JwkPrometheusConstants.DEFAULT_REGISTER_MODE;
+	private String registryMode = JwkPrometheusConstants.DEFAULT_REGISTER_MODE;
 
-    @NestedConfigurationProperty
-    private ZookeeperProperties zookeeper;
-
+	@NestedConfigurationProperty
+	private ZookeeperProperties zookeeper;
 
 }

@@ -20,55 +20,56 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SysUser implements Serializable {
 
-  private static final long serialVersionUID = 7795247620181117742L;
-  /**
-   * id
-   */
-  private Long id;
+	private static final long serialVersionUID = 7795247620181117742L;
 
-  /**
-   * orgId
-   */
-  private Long orgId;
+	/**
+	 * id
+	 */
+	private Long id;
 
-  /**
-   * username
-   */
-  private String username;
+	/**
+	 * orgId
+	 */
+	private Long orgId;
 
-  /**
-   * password
-   */
-  private String password;
+	/**
+	 * username
+	 */
+	private String username;
 
-  /**
-   * phone
-   */
-  private String phone;
+	/**
+	 * password
+	 */
+	private String password;
 
-  /**
-   * email
-   */
-  private String email;
+	/**
+	 * phone
+	 */
+	private String phone;
 
-  /**
-   * icon
-   */
-  private String icon;
+	/**
+	 * email
+	 */
+	private String email;
 
-  /**
-   * enabled
-   */
-  private Byte status;
+	/**
+	 * icon
+	 */
+	private String icon;
 
-  /**
-   * createTime
-   */
-  private Long createTime;
+	/**
+	 * enabled
+	 */
+	private Byte status;
 
-  /**
-   * updateTime
-   */
-  private Long updateTime;
+	/**
+	 * createTime
+	 */
+	private Long createTime;
+
+	/**
+	 * updateTime
+	 */
+	private Long updateTime;
 
 }

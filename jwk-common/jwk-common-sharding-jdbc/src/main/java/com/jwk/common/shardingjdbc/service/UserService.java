@@ -1,12 +1,11 @@
 package com.jwk.common.shardingjdbc.service;
 
-
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.jwk.common.shardingjdbc.entity.User;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author jiwk

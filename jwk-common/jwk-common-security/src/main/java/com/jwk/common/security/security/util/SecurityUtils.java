@@ -17,41 +17,40 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 @UtilityClass
 public class SecurityUtils {
 
-  /**
-   * 获取Authentication
-   */
-  public Authentication getAuthentication() {
-    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    if (authentication instanceof OAuth2Authentication){
-      return ((OAuth2Authentication) authentication).getUserAuthentication();
-    }
-    return authentication;
-  }
+	/**
+	 * 获取Authentication
+	 */
+	public Authentication getAuthentication() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication instanceof OAuth2Authentication) {
+			return ((OAuth2Authentication) authentication).getUserAuthentication();
+		}
+		return authentication;
+	}
 
-  /**
-   * 获取用户
-   */
-  private SysUser getUser(Authentication authentication) {
-    Object principal = authentication.getDetails();
-    if (principal instanceof SysUser) {
-      return (SysUser) principal;
-    }
-    if (principal instanceof AdminUserDetails) {
-      return ((AdminUserDetails) principal).getSysUser();
-    }
-    return null;
-  }
+	/**
+	 * 获取用户
+	 */
+	private SysUser getUser(Authentication authentication) {
+		Object principal = authentication.getDetails();
+		if (principal instanceof SysUser) {
+			return (SysUser) principal;
+		}
+		if (principal instanceof AdminUserDetails) {
+			return ((AdminUserDetails) principal).getSysUser();
+		}
+		return null;
+	}
 
-  /**
-   * 获取用户
-   */
-  public SysUser getUser() {
-    Authentication authentication = getAuthentication();
-    if (authentication == null) {
-      return null;
-    }
-    return getUser(authentication);
-  }
-
+	/**
+	 * 获取用户
+	 */
+	public SysUser getUser() {
+		Authentication authentication = getAuthentication();
+		if (authentication == null) {
+			return null;
+		}
+		return getUser(authentication);
+	}
 
 }

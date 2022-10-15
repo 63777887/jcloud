@@ -16,18 +16,18 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class RocketMQPropUtils {
 
-  @Autowired
-  JwkRocketMQProperties jwkRocketMQProperties;
-  public static HashMap concurrentHashMap = new HashMap<>();
+	@Autowired
+	JwkRocketMQProperties jwkRocketMQProperties;
 
-  @PostConstruct
-  void init(){
-    concurrentHashMap = JSONObject
-        .parseObject(JSON.toJSONString(jwkRocketMQProperties), HashMap.class);
-  }
+	public static HashMap concurrentHashMap = new HashMap<>();
 
-  public static String getProperty(String var1){
-    return String.valueOf(concurrentHashMap.get(var1));
-  }
+	@PostConstruct
+	void init() {
+		concurrentHashMap = JSONObject.parseObject(JSON.toJSONString(jwkRocketMQProperties), HashMap.class);
+	}
+
+	public static String getProperty(String var1) {
+		return String.valueOf(concurrentHashMap.get(var1));
+	}
 
 }

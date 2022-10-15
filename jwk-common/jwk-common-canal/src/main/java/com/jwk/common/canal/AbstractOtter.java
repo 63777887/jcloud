@@ -25,74 +25,74 @@ import static com.alibaba.otter.canal.protocol.CanalEntry.EventType.*;
 @Slf4j
 public abstract class AbstractOtter implements Otter {
 
-    /**
-     * 过滤的事件类型
-     */
-    private static final List<CanalEntry.EventType> EVENT_TYPES = Arrays.asList(INSERT, DELETE, UPDATE, ERASE);
-    @Resource
-    private CanalProperties canalProperties;
+	/**
+	 * 过滤的事件类型
+	 */
+	private static final List<CanalEntry.EventType> EVENT_TYPES = Arrays.asList(INSERT, DELETE, UPDATE, ERASE);
 
-    private DefaultCanalConnectorHelper defaultCanalConnectorHelper;
-    private volatile boolean running;
+	@Resource
+	private CanalProperties canalProperties;
 
-    @Override
-    public void stop() {
-        this.running = false;
-    }
+	private DefaultCanalConnectorHelper defaultCanalConnectorHelper;
 
-    @Override
-    public void start() {
-        if (running) {
-            return;
-        }
-        running = true;
-        try {
-            while (running) {
-                Stopwatch sw = Stopwatch.createStarted();
-                // 获取指定数量的数据
-                Message message = null;
-                sw.stop();
-                message.setEntries(filter(message.getEntries()));
-                long batchId = message.getId();
-                if (batchId != -1) {
-                    if (canalProperties.isShowEventLog() && !message.getEntries().isEmpty()) {
-                        log.info("Get batchId: {} time: {}ms", batchId, sw.elapsed(TimeUnit.MILLISECONDS));
-                    }
-                    onMessage(message);
-                }
-                try {
-                    TimeUnit.MILLISECONDS.sleep(canalProperties.getIntervalMillis());
-                } catch (InterruptedException e) {
-                    log.error(e.getLocalizedMessage(), e);
-                }
-            }
-        } finally {
-            defaultCanalConnectorHelper.disconnect();
-            log.info("Stop get data");
-        }
-    }
+	private volatile boolean running;
 
-    /**
-     * 处理
-     *
-     * @param message 信息
-     */
-    protected abstract void onMessage(Message message);
+	@Override
+	public void stop() {
+		this.running = false;
+	}
 
-    /**
-     * 只消费增、删、改、删表事件，其它事件暂不支持且会被忽略
-     *
-     * @param entries CanalEntry.Entry
-     */
-    private List<CanalEntry.Entry> filter(List<CanalEntry.Entry> entries) {
-        if (CollectionUtils.isEmpty(entries)) {
-            return Collections.emptyList();
-        }
-        return entries.stream()
-                .filter(entry -> entry.getEntryType() != CanalEntry.EntryType.TRANSACTIONBEGIN)
-                .filter(entry -> entry.getEntryType() != CanalEntry.EntryType.TRANSACTIONEND)
-                .filter(entry -> EVENT_TYPES.contains(entry.getHeader().getEventType()))
-                .collect(Collectors.toList());
-    }
+	@Override
+	public void start() {
+		if (running) {
+			return;
+		}
+		running = true;
+		try {
+			while (running) {
+				Stopwatch sw = Stopwatch.createStarted();
+				// 获取指定数量的数据
+				Message message = null;
+				sw.stop();
+				message.setEntries(filter(message.getEntries()));
+				long batchId = message.getId();
+				if (batchId != -1) {
+					if (canalProperties.isShowEventLog() && !message.getEntries().isEmpty()) {
+						log.info("Get batchId: {} time: {}ms", batchId, sw.elapsed(TimeUnit.MILLISECONDS));
+					}
+					onMessage(message);
+				}
+				try {
+					TimeUnit.MILLISECONDS.sleep(canalProperties.getIntervalMillis());
+				}
+				catch (InterruptedException e) {
+					log.error(e.getLocalizedMessage(), e);
+				}
+			}
+		}
+		finally {
+			defaultCanalConnectorHelper.disconnect();
+			log.info("Stop get data");
+		}
+	}
+
+	/**
+	 * 处理
+	 * @param message 信息
+	 */
+	protected abstract void onMessage(Message message);
+
+	/**
+	 * 只消费增、删、改、删表事件，其它事件暂不支持且会被忽略
+	 * @param entries CanalEntry.Entry
+	 */
+	private List<CanalEntry.Entry> filter(List<CanalEntry.Entry> entries) {
+		if (CollectionUtils.isEmpty(entries)) {
+			return Collections.emptyList();
+		}
+		return entries.stream().filter(entry -> entry.getEntryType() != CanalEntry.EntryType.TRANSACTIONBEGIN)
+				.filter(entry -> entry.getEntryType() != CanalEntry.EntryType.TRANSACTIONEND)
+				.filter(entry -> EVENT_TYPES.contains(entry.getHeader().getEventType())).collect(Collectors.toList());
+	}
 
 }

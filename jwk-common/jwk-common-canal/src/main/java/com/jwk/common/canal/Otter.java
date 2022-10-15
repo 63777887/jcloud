@@ -9,14 +9,14 @@ package com.jwk.common.canal;
  */
 public interface Otter {
 
-    /**
-     * 开启
-     */
-    void start();
+	/**
+	 * 开启
+	 */
+	void start();
 
-    /**
-     * 停止
-     */
-    void stop();
+	/**
+	 * 停止
+	 */
+	void stop();
 
 }

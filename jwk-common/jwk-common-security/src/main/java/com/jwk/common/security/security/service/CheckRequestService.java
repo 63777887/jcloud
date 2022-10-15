@@ -11,13 +11,13 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
  */
 public interface CheckRequestService {
 
-  /**
-   * 校验token是否合法
-   * @param token
-   * @return
-   */
-  default UsernamePasswordAuthenticationToken checkToken(String token){
-   return null;
-  }
+	/**
+	 * 校验token是否合法
+	 * @param token
+	 * @return
+	 */
+	default UsernamePasswordAuthenticationToken checkToken(String token) {
+		return null;
+	}
 
 }

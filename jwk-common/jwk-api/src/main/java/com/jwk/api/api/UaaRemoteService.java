@@ -14,16 +14,15 @@ import org.springframework.web.bind.annotation.RequestParam;
  * <p>
  * Uaa接口
  */
-@FeignClient(name = ServerNameConstants.SERVER_UAA,contextId = "testService")
+@FeignClient(name = ServerNameConstants.SERVER_UAA, contextId = "testService")
 public interface UaaRemoteService {
 
-  /**
-   * 校验token
-   * @param token
-   * @return
-   */
-  @GetMapping("/inner/checkToken")
-  InnerResponse<UserInfo> checkToken(@RequestParam("token") String token);
-
+	/**
+	 * 校验token
+	 * @param token
+	 * @return
+	 */
+	@GetMapping("/inner/checkToken")
+	InnerResponse<UserInfo> checkToken(@RequestParam("token") String token);
 
 }

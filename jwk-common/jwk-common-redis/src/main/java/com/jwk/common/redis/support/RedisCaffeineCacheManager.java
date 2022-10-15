@@ -83,26 +83,26 @@ public class RedisCaffeineCacheManager implements CacheManager {
 		}
 		if (cacheConfigProperties.getCaffeine().getKeyStrength() != null) {
 			switch (cacheConfigProperties.getCaffeine().getKeyStrength()) {
-			case WEAK:
-				//Caffeine.weakKeys() 使用弱引用存储key。如果没有强引用这个key，则GC时允许回收该条目
-				cacheBuilder.weakKeys();
-				break;
-			case SOFT:
-				throw new UnsupportedOperationException("caffeine 不支持 key 软引用");
-			default:
+				case WEAK:
+					// Caffeine.weakKeys() 使用弱引用存储key。如果没有强引用这个key，则GC时允许回收该条目
+					cacheBuilder.weakKeys();
+					break;
+				case SOFT:
+					throw new UnsupportedOperationException("caffeine 不支持 key 软引用");
+				default:
 			}
 		}
 		if (cacheConfigProperties.getCaffeine().getValueStrength() != null) {
 			switch (cacheConfigProperties.getCaffeine().getValueStrength()) {
-			case WEAK:
-				//Caffeine.weakValues() 使用弱引用存储value。如果没有强引用这个value，则GC时允许回收该条目
-				cacheBuilder.weakValues();
-				break;
-			case SOFT:
-				//Caffeine.softValues() 使用软引用存储value, 如果没有强引用这个value，则GC内存不足时允许回收该条目
-				cacheBuilder.softValues();
-				break;
-			default:
+				case WEAK:
+					// Caffeine.weakValues() 使用弱引用存储value。如果没有强引用这个value，则GC时允许回收该条目
+					cacheBuilder.weakValues();
+					break;
+				case SOFT:
+					// Caffeine.softValues() 使用软引用存储value, 如果没有强引用这个value，则GC内存不足时允许回收该条目
+					cacheBuilder.softValues();
+					break;
+				default:
 			}
 		}
 		return cacheBuilder;

@@ -12,108 +12,116 @@ import lombok.Data;
 @Data
 public class CanalProperties {
 
-    public static final String PREFIX = "zeus.canal";
+	public static final String PREFIX = "zeus.canal";
 
-    /**
-     * 保证唯一性, 用于 binlog offset 防重
-     */
-    private String id;
+	/**
+	 * 保证唯一性, 用于 binlog offset 防重
+	 */
+	private String id;
 
-    /**
-     * 集群配置
-     */
-    private Cluster cluster;
+	/**
+	 * 集群配置
+	 */
+	private Cluster cluster;
 
-    /**
-     * 单节点配置
-     */
-    private SingleNode singleNode = new SingleNode();
-    /**
-     * 实例
-     */
-    private String instance = "example";
-    /**
-     * 过滤
-     */
-    private String filter = ".*\\..*";
-    /**
-     * 账号
-     */
-    private String username = "canal";
+	/**
+	 * 单节点配置
+	 */
+	private SingleNode singleNode = new SingleNode();
 
-    /**
-     * 密码
-     */
-    private String password = "canal";
+	/**
+	 * 实例
+	 */
+	private String instance = "example";
 
-    /**
-     * 拉取数据的间隔 ms
-     */
-    private long intervalMillis = 1_000;
+	/**
+	 * 过滤
+	 */
+	private String filter = ".*\\..*";
 
-    /**
-     * 拉取数据的数量
-     */
-    private int batchSize = 100;
+	/**
+	 * 账号
+	 */
+	private String username = "canal";
 
-    /**
-     * 打印事件日志
-     */
-    private boolean showEventLog;
+	/**
+	 * 密码
+	 */
+	private String password = "canal";
 
-    /**
-     * 打印 Entry 日志
-     */
-    private boolean showEntryLog;
+	/**
+	 * 拉取数据的间隔 ms
+	 */
+	private long intervalMillis = 1_000;
 
-    /**
-     * 打印数据明细日志
-     */
-    private boolean showRowChange;
+	/**
+	 * 拉取数据的数量
+	 */
+	private int batchSize = 100;
 
-    /**
-     * 格式化数据明细日志
-     */
-    private boolean formatRowChangeLog;
+	/**
+	 * 打印事件日志
+	 */
+	private boolean showEventLog;
 
-    /**
-     * 批次达到一定数量进行并行处理, 且确保顺序消费
-     */
-    private int performanceThreshold = 10_000;
+	/**
+	 * 打印 Entry 日志
+	 */
+	private boolean showEntryLog;
 
-    /**
-     * 跳过处理
-     */
-    private boolean skip;
+	/**
+	 * 打印数据明细日志
+	 */
+	private boolean showRowChange;
 
-    /**
-     * 全局逻辑删除字段
-     */
-    private String logicDeleteField = "deleted";
+	/**
+	 * 格式化数据明细日志
+	 */
+	private boolean formatRowChangeLog;
 
-    /**
-     * 激活逻辑删除
-     */
-    private boolean enableLogicDelete;
+	/**
+	 * 批次达到一定数量进行并行处理, 且确保顺序消费
+	 */
+	private int performanceThreshold = 10_000;
 
-    @Data
-    public static class Cluster {
-        /**
-         * zookeeper host:port
-         */
-        private String nodes = "localhost:2181,localhost:2182,localhost:2183";
-    }
+	/**
+	 * 跳过处理
+	 */
+	private boolean skip;
 
-    @Data
-    public static class SingleNode {
-        /**
-         * host
-         */
-        private String hostname = "localhost";
-        /**
-         * port
-         */
-        private int port = 11111;
-    }
+	/**
+	 * 全局逻辑删除字段
+	 */
+	private String logicDeleteField = "deleted";
+
+	/**
+	 * 激活逻辑删除
+	 */
+	private boolean enableLogicDelete;
+
+	@Data
+	public static class Cluster {
+
+		/**
+		 * zookeeper host:port
+		 */
+		private String nodes = "localhost:2181,localhost:2182,localhost:2183";
+
+	}
+
+	@Data
+	public static class SingleNode {
+
+		/**
+		 * host
+		 */
+		private String hostname = "localhost";
+
+		/**
+		 * port
+		 */
+		private int port = 11111;
+
+	}
 
 }

@@ -11,10 +11,11 @@ import org.springframework.amqp.core.Message;
  */
 public interface RabbiitMqMessageListener {
 
-  /**
-   * 接收处理消息
-   * @param message
-   * @return
-   */
-  boolean onMessage(Message message);
+	/**
+	 * 接收处理消息
+	 * @param message
+	 * @return
+	 */
+	boolean onMessage(Message message);
+
 }

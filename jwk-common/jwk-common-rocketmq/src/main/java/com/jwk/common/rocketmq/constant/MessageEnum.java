@@ -8,56 +8,60 @@ package com.jwk.common.rocketmq.constant;
  * 枚举类
  */
 public enum MessageEnum {
-  /**
-   *
-   */
-  COMMENT_LIKE_TOPIC("commentLikeItQueue", MessageTopic.COMMENT_LIKE_TOPIC, MessageTag.COMMENT_LIKE_TAG);
 
-  private String oldQueue;
-  private String newQueue;
-  private String tags;
+	/**
+	 *
+	 */
+	COMMENT_LIKE_TOPIC("commentLikeItQueue", MessageTopic.COMMENT_LIKE_TOPIC, MessageTag.COMMENT_LIKE_TAG);
 
-  private MessageEnum(String oldQueue, String newQueue, String tags) {
-    this.oldQueue = oldQueue;
-    this.newQueue = newQueue;
-    this.tags = tags;
-  }
+	private String oldQueue;
 
-  public String getOldQueue() {
-    return this.oldQueue;
-  }
+	private String newQueue;
 
-  public void setOldQueue(String oldQueue) {
-    this.oldQueue = oldQueue;
-  }
+	private String tags;
 
-  public String getNewQueue() {
-    return this.newQueue;
-  }
+	private MessageEnum(String oldQueue, String newQueue, String tags) {
+		this.oldQueue = oldQueue;
+		this.newQueue = newQueue;
+		this.tags = tags;
+	}
 
-  public void setNewQueue(String newQueue) {
-    this.newQueue = newQueue;
-  }
+	public String getOldQueue() {
+		return this.oldQueue;
+	}
 
-  public String getTags() {
-    return this.tags;
-  }
+	public void setOldQueue(String oldQueue) {
+		this.oldQueue = oldQueue;
+	}
 
-  public void setTags(String tags) {
-    this.tags = tags;
-  }
+	public String getNewQueue() {
+		return this.newQueue;
+	}
 
-  public static MessageEnum get(String oldQueue) {
-    MessageEnum[] var1 = values();
-    int var2 = var1.length;
+	public void setNewQueue(String newQueue) {
+		this.newQueue = newQueue;
+	}
 
-    for(int var3 = 0; var3 < var2; ++var3) {
-      MessageEnum messageEnum = var1[var3];
-      if (messageEnum.oldQueue.equals(oldQueue)) {
-        return messageEnum;
-      }
-    }
+	public String getTags() {
+		return this.tags;
+	}
 
-    return null;
-  }
+	public void setTags(String tags) {
+		this.tags = tags;
+	}
+
+	public static MessageEnum get(String oldQueue) {
+		MessageEnum[] var1 = values();
+		int var2 = var1.length;
+
+		for (int var3 = 0; var3 < var2; ++var3) {
+			MessageEnum messageEnum = var1[var3];
+			if (messageEnum.oldQueue.equals(oldQueue)) {
+				return messageEnum;
+			}
+		}
+
+		return null;
+	}
+
 }

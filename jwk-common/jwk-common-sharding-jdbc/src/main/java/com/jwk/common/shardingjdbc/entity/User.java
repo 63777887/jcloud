@@ -8,7 +8,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author jiwk
@@ -19,18 +19,17 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class User extends Model<User> {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private Long id;
+	private Long id;
 
-    private Integer age;
+	private Integer age;
 
-    private String name;
+	private String name;
 
-
-    @Override
-    protected Serializable pkVal() {
-        return this.id;
-    }
+	@Override
+	protected Serializable pkVal() {
+		return this.id;
+	}
 
 }

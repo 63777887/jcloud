@@ -10,56 +10,57 @@ import javax.servlet.http.HttpServletResponse;
  * 权限枚举
  */
 public enum ApiStatusE {
-  /**
-   * 401: 用户未登陆或登录已过期
-   */
-  SC_UNAUTHORIZED(HttpServletResponse.SC_UNAUTHORIZED, "用户未登陆或登录已过期"),
-  /**
-   * 403: 用户没有访问权限
-   */
-  SC_FORBIDDEN(HttpServletResponse.SC_FORBIDDEN, "用户没有访问权限");
 
-  ApiStatusE(Integer code, String vlaue) {
-    this.code = code;
-    this.value = vlaue;
-  }
+	/**
+	 * 401: 用户未登陆或登录已过期
+	 */
+	SC_UNAUTHORIZED(HttpServletResponse.SC_UNAUTHORIZED, "用户未登陆或登录已过期"),
+	/**
+	 * 403: 用户没有访问权限
+	 */
+	SC_FORBIDDEN(HttpServletResponse.SC_FORBIDDEN, "用户没有访问权限");
 
-  public static ApiStatusE getById(Integer id) {
-    if (id == null) {
-      return null;
-    }
-    for (ApiStatusE e : ApiStatusE.values()) {
-      if (e.getCode().equals(id)) {
-        return e;
-      }
-    }
-    return null;
-  }
+	ApiStatusE(Integer code, String vlaue) {
+		this.code = code;
+		this.value = vlaue;
+	}
 
-  /**
-   * 根据Code获取Value
-   *
-   * @param code 键
-   * @return 值
-   */
-  public static String getDescByCode(Integer code) {
-    for (ApiStatusE enums : ApiStatusE.values()) {
-      if (enums.code.equals(code)) {
-        return enums.value;
-      }
-    }
-    return "";
-  }
+	public static ApiStatusE getById(Integer id) {
+		if (id == null) {
+			return null;
+		}
+		for (ApiStatusE e : ApiStatusE.values()) {
+			if (e.getCode().equals(id)) {
+				return e;
+			}
+		}
+		return null;
+	}
 
-  private Integer code;
+	/**
+	 * 根据Code获取Value
+	 * @param code 键
+	 * @return 值
+	 */
+	public static String getDescByCode(Integer code) {
+		for (ApiStatusE enums : ApiStatusE.values()) {
+			if (enums.code.equals(code)) {
+				return enums.value;
+			}
+		}
+		return "";
+	}
 
-  private String value;
+	private Integer code;
 
-  public Integer getCode() {
-    return code;
-  }
+	private String value;
 
-  public String getValue() {
-    return value;
-  }
+	public Integer getCode() {
+		return code;
+	}
+
+	public String getValue() {
+		return value;
+	}
+
 }

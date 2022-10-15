@@ -14,18 +14,20 @@ import org.slf4j.LoggerFactory;
  * 监听消息抽象类
  */
 public abstract class AbstractMQ implements RocketMqMessageListener {
-  public static final Logger logger = LoggerFactory.getLogger(AbstractMQ.class);
 
-  /**
-   * 消息处理
-   * @param var1
-   * @param var2
-   * @return
-   */
-  public abstract boolean handle(List<MessageExt> var1, ConsumeConcurrentlyContext var2);
+	public static final Logger logger = LoggerFactory.getLogger(AbstractMQ.class);
 
-  @Override
-  public boolean onMessage(List<MessageExt> list, ConsumeConcurrentlyContext consumeConcurrentlyContext) {
-    return this.handle(list, consumeConcurrentlyContext);
-  }
+	/**
+	 * 消息处理
+	 * @param var1
+	 * @param var2
+	 * @return
+	 */
+	public abstract boolean handle(List<MessageExt> var1, ConsumeConcurrentlyContext var2);
+
+	@Override
+	public boolean onMessage(List<MessageExt> list, ConsumeConcurrentlyContext consumeConcurrentlyContext) {
+		return this.handle(list, consumeConcurrentlyContext);
+	}
+
 }

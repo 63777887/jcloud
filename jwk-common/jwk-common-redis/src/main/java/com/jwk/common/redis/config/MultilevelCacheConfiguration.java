@@ -76,7 +76,7 @@ public class MultilevelCacheConfiguration {
 	}
 
 	/**
-	 *  redis键序列化使用StringRedisSerializer
+	 * redis键序列化使用StringRedisSerializer
 	 */
 	private RedisSerializer<String> keySerializer() {
 		return new StringRedisSerializer();
@@ -88,6 +88,5 @@ public class MultilevelCacheConfiguration {
 	private RedisSerializer<Object> valueSerializer() {
 		return new GenericJackson2JsonRedisSerializer();
 	}
-
 
 }

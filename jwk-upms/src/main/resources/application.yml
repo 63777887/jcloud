@@ -1,7 +1,0 @@
-spring:
-    main:
-        allow-circular-references: true
-#        因为Springfox 使用的路径匹配是基于AntPathMatcher的，而Spring Boot 2.6.X使用的是PathPatternMatcher。
-    mvc:
-        pathmatch:
-            matching-strategy: ant_path_matcher

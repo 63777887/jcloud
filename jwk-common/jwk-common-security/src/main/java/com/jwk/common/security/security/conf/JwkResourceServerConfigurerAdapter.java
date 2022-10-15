@@ -31,9 +31,8 @@ import org.springframework.web.client.RestTemplate;
 @Slf4j
 public class JwkResourceServerConfigurerAdapter extends ResourceServerConfigurerAdapter {
 
-
-//	@Autowired
-//	protected RemoteTokenServices remoteTokenServices;
+	// @Autowired
+	// protected RemoteTokenServices remoteTokenServices;
 
 	@Autowired
 	private JwkAuthProperties jwkAuthProperties;
@@ -41,10 +40,8 @@ public class JwkResourceServerConfigurerAdapter extends ResourceServerConfigurer
 	@Autowired
 	private RestTemplate lbRestTemplate;
 
-
-  @Autowired
-  private ResourceServerProperties resourceServerProperties;
-
+	@Autowired
+	private ResourceServerProperties resourceServerProperties;
 
 	/**
 	 * 默认的配置，对外暴露
@@ -65,33 +62,32 @@ public class JwkResourceServerConfigurerAdapter extends ResourceServerConfigurer
 		Arrays.stream(noAuthUrlList).forEach(url -> registry.antMatchers(url).permitAll());
 		registry.anyRequest().authenticated().and().csrf().disable();
 
-
-//    // 添加自定义的jwt过滤器
-//    JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter();
-//    // 注入属性
-//    autowireCapableBeanFactory.autowireBean(jwtAuthenticationFilter);
-//    // 如果使用addFilter 则会抛异常，没有指定order
-//		httpSecurity.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-//
-    //添加自定义的权限过滤器
-//    DynamicResourceFilter dynamicResourceFilter = new DynamicResourceFilter();
-//    autowireCapableBeanFactory.autowireBean(dynamicResourceFilter);
-//		httpSecurity.addFilterBefore(dynamicResourceFilter, FilterSecurityInterceptor.class);
+		// // 添加自定义的jwt过滤器
+		// JwtAuthenticationFilter jwtAuthenticationFilter = new
+		// JwtAuthenticationFilter();
+		// // 注入属性
+		// autowireCapableBeanFactory.autowireBean(jwtAuthenticationFilter);
+		// // 如果使用addFilter 则会抛异常，没有指定order
+		// httpSecurity.addFilterBefore(jwtAuthenticationFilter,
+		// UsernamePasswordAuthenticationFilter.class);
+		//
+		// 添加自定义的权限过滤器
+		// DynamicResourceFilter dynamicResourceFilter = new DynamicResourceFilter();
+		// autowireCapableBeanFactory.autowireBean(dynamicResourceFilter);
+		// httpSecurity.addFilterBefore(dynamicResourceFilter,
+		// FilterSecurityInterceptor.class);
 	}
 
 	@Override
 	public void configure(ResourceServerSecurityConfigurer resources) {
 
-		resources.
-				authenticationEntryPoint(new JwkAuthenticationFailHandler()).
-				tokenExtractor(new JwkBearerTokenExtractor(jwkAuthProperties)).
-//				tokenStore(tokenStore()).
-				accessDeniedHandler(new JwtForbiddenConfigHandler()).
-				tokenServices(remoteTokenServices());
+		resources.authenticationEntryPoint(new JwkAuthenticationFailHandler())
+				.tokenExtractor(new JwkBearerTokenExtractor(jwkAuthProperties)).
+				// tokenStore(tokenStore()).
+				accessDeniedHandler(new JwtForbiddenConfigHandler()).tokenServices(remoteTokenServices());
 
-//
+		//
 	}
-
 
 	public RemoteTokenServices remoteTokenServices() {
 		DefaultAccessTokenConverter accessTokenConverter = new DefaultAccessTokenConverter();
@@ -107,7 +103,6 @@ public class JwkResourceServerConfigurerAdapter extends ResourceServerConfigurer
 		return remoteTokenServices;
 	}
 
-
 	/**
 	 * 创建令牌存储对象
 	 */
@@ -121,7 +116,7 @@ public class JwkResourceServerConfigurerAdapter extends ResourceServerConfigurer
 	/**
 	 * 创建JWT令牌转换器
 	 */
-	public JwtAccessTokenConverter jwtAccessTokenConverter(){
+	public JwtAccessTokenConverter jwtAccessTokenConverter() {
 		/**
 		 * 设置JWT令牌的签名key
 		 */
@@ -129,8 +124,5 @@ public class JwkResourceServerConfigurerAdapter extends ResourceServerConfigurer
 		converter.setSigningKey(jwkAuthProperties.getSecretKey());
 		return converter;
 	}
-
-
-
 
 }
