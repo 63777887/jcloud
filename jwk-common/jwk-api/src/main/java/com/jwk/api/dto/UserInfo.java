@@ -13,9 +13,8 @@ import lombok.Data;
 @Data
 public class UserInfo {
 
+	SysUserDto sysUser;
 
-  SysUserDto sysUser;
-
-  List<SysApiDto> sysApis;
+	List<SysApiDto> sysApis;
 
 }

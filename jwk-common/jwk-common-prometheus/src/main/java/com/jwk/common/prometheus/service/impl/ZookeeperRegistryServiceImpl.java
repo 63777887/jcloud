@@ -52,7 +52,6 @@ public class ZookeeperRegistryServiceImpl implements RegistryService {
 
     try {
       logger.info("register zk starting...");
-//      createZkNode(jwkPrometheusProperties);
       registerPrometheusMetrics(jwkPrometheusProperties);
     } catch (Exception e) {
       logger.error("register zk error.", e);

@@ -1,6 +1,5 @@
 package com.jwk.common.prometheus;
 
-
 import com.jwk.common.cloud.config.FeignAutoConfiguration;
 import com.jwk.common.prometheus.component.JwkPrometheusProperties;
 import com.jwk.common.prometheus.config.JwkPrometheusConfiguration;
@@ -26,23 +25,22 @@ import org.springframework.context.annotation.Scope;
  * 自动配置类
  */
 @EnableConfigurationProperties(JwkPrometheusProperties.class)
-@Import({JwkPrometheusConfiguration.class})
+@Import({ JwkPrometheusConfiguration.class })
 @AutoConfigureBefore(FeignAutoConfiguration.class)
 public class JwkPrometheusAutoConfiguration {
 
-  private static Logger logger = LoggerFactory.getLogger(JwkPrometheusAutoConfiguration.class);
+	private static Logger logger = LoggerFactory.getLogger(JwkPrometheusAutoConfiguration.class);
 
+	public JwkPrometheusAutoConfiguration(ApplicationContext applicationContext, MeterRegistry registry,
+			JwkPrometheusProperties jwkPrometheusProperties) {
+		JwkPrometheusFactory.init(applicationContext, registry, jwkPrometheusProperties);
+	}
 
-  public JwkPrometheusAutoConfiguration(ApplicationContext applicationContext,
-      MeterRegistry registry, JwkPrometheusProperties jwkPrometheusProperties) {
-    JwkPrometheusFactory.init(applicationContext,registry, jwkPrometheusProperties);
-  }
-
-  @Bean
-  @Scope("prototype")
-  @ConditionalOnProperty(name = "feign.sentinel.enabled")
-  public Feign.Builder feignSentinelBuilder() {
-    return PrometheusSentinelFeign.builder();
-  }
+	@Bean
+	@Scope("prototype")
+	@ConditionalOnProperty(name = "feign.sentinel.enabled")
+	public Feign.Builder feignSentinelBuilder() {
+		return PrometheusSentinelFeign.builder();
+	}
 
 }

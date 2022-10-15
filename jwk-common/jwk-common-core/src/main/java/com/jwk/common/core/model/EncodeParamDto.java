@@ -12,8 +12,8 @@ import lombok.Data;
 @Data
 public class EncodeParamDto {
 
-  private String key;
+	private String key;
 
-  private String value;
+	private String value;
 
 }

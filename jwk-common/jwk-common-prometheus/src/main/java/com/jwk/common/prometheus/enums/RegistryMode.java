@@ -1,8 +1,6 @@
 package com.jwk.common.prometheus.enums;
 
 
-import org.springframework.context.annotation.DependsOn;
-
 /**
  * @author Jiwk
  * @date 2022/6/11
@@ -10,7 +8,6 @@ import org.springframework.context.annotation.DependsOn;
  * <p>
  * 支持的注册模式
  */
-@DependsOn
 public enum RegistryMode {
 
   /**

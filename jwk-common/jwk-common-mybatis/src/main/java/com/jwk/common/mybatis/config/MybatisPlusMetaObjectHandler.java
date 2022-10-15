@@ -21,15 +21,15 @@ public class MybatisPlusMetaObjectHandler implements MetaObjectHandler {
 
 		fillValIfNullByName("createTime", now, metaObject, false);
 		fillValIfNullByName("updateTime", now, metaObject, false);
-//		fillValIfNullByName("createBy", getUserName(), metaObject, false);
-//		fillValIfNullByName("updateBy", getUserName(), metaObject, false);
+		// fillValIfNullByName("createBy", getUserName(), metaObject, false);
+		// fillValIfNullByName("updateBy", getUserName(), metaObject, false);
 	}
 
 	@Override
 	public void updateFill(MetaObject metaObject) {
 		log.debug("mybatis plus start update fill ....");
 		fillValIfNullByName("updateTime", LocalDateTime.now(), metaObject, true);
-//		fillValIfNullByName("updateBy", getUserName(), metaObject, true);
+		// fillValIfNullByName("updateBy", getUserName(), metaObject, true);
 	}
 
 	/**
@@ -57,16 +57,17 @@ public class MybatisPlusMetaObjectHandler implements MetaObjectHandler {
 		}
 	}
 
-//	/**
-//	 * 获取 spring security 当前的用户名
-//	 * @return 当前用户名
-//	 */
-//	private String getUserName() {
-//		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//		if (Optional.ofNullable(authentication).isPresent()) {
-//			return authentication.getName();
-//		}
-//		return null;
-//	}
+	// /**
+	// * 获取 spring security 当前的用户名
+	// * @return 当前用户名
+	// */
+	// private String getUserName() {
+	// Authentication authentication =
+	// SecurityContextHolder.getContext().getAuthentication();
+	// if (Optional.ofNullable(authentication).isPresent()) {
+	// return authentication.getName();
+	// }
+	// return null;
+	// }
 
 }

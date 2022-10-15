@@ -18,12 +18,13 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class UaaRemoteServiceFallBackServiceImpl implements UaaRemoteService {
 
-  @Setter
-  private Throwable cause;
+	@Setter
+	private Throwable cause;
 
-  @Override
-  public InnerResponse<UserInfo> checkToken(String token) {
-    log.error("feign checkToken fail:{}", token, cause);
-    return null;
-  }
+	@Override
+	public InnerResponse<UserInfo> checkToken(String token) {
+		log.error("feign checkToken fail:{}", token, cause);
+		return null;
+	}
+
 }

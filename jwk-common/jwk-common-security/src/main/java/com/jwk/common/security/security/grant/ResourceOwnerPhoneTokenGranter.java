@@ -32,16 +32,14 @@ public class ResourceOwnerPhoneTokenGranter extends AbstractTokenGranter {
 	private final AuthenticationManager authenticationManager;
 
 	public ResourceOwnerPhoneTokenGranter(AuthenticationManager authenticationManager,
-										  AuthorizationServerTokenServices tokenServices,
-										  ClientDetailsService clientDetailsService,
-										  OAuth2RequestFactory requestFactory) {
+			AuthorizationServerTokenServices tokenServices, ClientDetailsService clientDetailsService,
+			OAuth2RequestFactory requestFactory) {
 		this(authenticationManager, tokenServices, clientDetailsService, requestFactory, GRANT_TYPE);
 	}
 
 	protected ResourceOwnerPhoneTokenGranter(AuthenticationManager authenticationManager,
-											 AuthorizationServerTokenServices tokenServices,
-											 ClientDetailsService clientDetailsService,
-											 OAuth2RequestFactory requestFactory, String grantType) {
+			AuthorizationServerTokenServices tokenServices, ClientDetailsService clientDetailsService,
+			OAuth2RequestFactory requestFactory, String grantType) {
 		super(tokenServices, clientDetailsService, requestFactory, grantType);
 		this.authenticationManager = authenticationManager;
 	}
@@ -67,10 +65,12 @@ public class ResourceOwnerPhoneTokenGranter extends AbstractTokenGranter {
 		((AbstractAuthenticationToken) userAuth).setDetails(parameters);
 		try {
 			userAuth = authenticationManager.authenticate(userAuth);
-		} catch (AccountStatusException ase) {
-			//covers expired, locked, disabled cases (mentioned in section 5.2, draft 31)
+		}
+		catch (AccountStatusException ase) {
+			// covers expired, locked, disabled cases (mentioned in section 5.2, draft 31)
 			throw new InvalidGrantException(ase.getMessage());
-		} catch (BadCredentialsException e) {
+		}
+		catch (BadCredentialsException e) {
 			// If the phone/code are wrong the spec says we should send 400/invalid grant
 			throw new InvalidGrantException(e.getMessage());
 		}
@@ -81,4 +81,5 @@ public class ResourceOwnerPhoneTokenGranter extends AbstractTokenGranter {
 		OAuth2Request storedOAuth2Request = getRequestFactory().createOAuth2Request(client, tokenRequest);
 		return new OAuth2Authentication(storedOAuth2Request, userAuth);
 	}
+
 }

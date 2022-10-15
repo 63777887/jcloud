@@ -18,15 +18,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * 自动配置类
  */
 @EnableConfigurationProperties(JwkAuthProperties.class)
-@Import({DynamicAccessDecisionManager.class,DynamicMetadataSource.class})
+@Import({ DynamicAccessDecisionManager.class, DynamicMetadataSource.class })
 public class SecurityCoreAutoConfiguration {
 
-  @Bean
-  @ConditionalOnMissingBean
-  public PasswordEncoder passwordEncoder() {
-    return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-  }
-
-
+	@Bean
+	@ConditionalOnMissingBean
+	public PasswordEncoder passwordEncoder() {
+		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+	}
 
 }

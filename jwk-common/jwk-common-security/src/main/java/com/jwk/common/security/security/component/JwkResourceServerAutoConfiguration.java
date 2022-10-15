@@ -12,7 +12,6 @@ import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.web.client.DefaultResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 
-
 /**
  * @author Jiwk
  * @date 2022/6/11
@@ -21,7 +20,6 @@ import org.springframework.web.client.RestTemplate;
  * 资源服务器自动配置类
  */
 public class JwkResourceServerAutoConfiguration {
-
 
 	@Bean
 	@Primary

@@ -11,8 +11,8 @@ import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 
 /**
@@ -29,11 +29,7 @@ public class JwkPrometheusConfiguration {
 
   @Bean(initMethod = "start")
   @ConditionalOnMissingBean
-  @ConditionalOnExpression(
-      "#{'zookeeper'.equals(environment['jwk.prometheus.registryMode']) "
-          + "or ''.equals(environment['jwk.prometheus.registryMode'])"
-          + "or null==(environment['jwk.prometheus.registryMode'])}"
-  )
+  @ConditionalOnProperty(value = "jwk.prometheus.registryMode",havingValue = "zookeeper",matchIfMissing = true)
   public CuratorFramework curatorFramework(JwkPrometheusProperties jwkPrometheusProperties) {
     ZookeeperProperties zookeeperInfo = jwkPrometheusProperties.getZookeeper();
     if (StringUtils.isBlank(zookeeperInfo.getAddress())) {
@@ -52,11 +48,7 @@ public class JwkPrometheusConfiguration {
   }
 
   @Bean
-  @ConditionalOnExpression(
-      "#{'zookeeper'.equals(environment['jwk.prometheus.registryMode']) "
-          + "or ''.equals(environment['jwk.prometheus.registryMode'])"
-          + "or null==(environment['jwk.prometheus.registryMode'])}"
-  )
+  @ConditionalOnProperty(value = "jwk.prometheus.registryMode",havingValue = "zookeeper",matchIfMissing = true)
   public RegistryService zookeeperRegistryService() {
     return new ZookeeperRegistryServiceImpl();
   }

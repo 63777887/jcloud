@@ -8,9 +8,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 @Configuration
-@Import({UaaRemoteServiceFallbackFactory.class, UaaRemoteServiceFallBackServiceImpl.class,
-    UpmsRemoteServiceFallbackFactory.class, UpmsRemoteServiceFallBackServiceImpl.class})
+@Import({ UaaRemoteServiceFallbackFactory.class, UaaRemoteServiceFallBackServiceImpl.class,
+		UpmsRemoteServiceFallbackFactory.class, UpmsRemoteServiceFallBackServiceImpl.class })
 public class ApiAutoConfiguration {
-
 
 }

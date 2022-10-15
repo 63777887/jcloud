@@ -12,55 +12,54 @@ import lombok.Data;
 @Data
 public class SysUserDto {
 
-  /**
-   * id
-   */
-  private Long id;
+	/**
+	 * id
+	 */
+	private Long id;
 
-  /**
-   * orgId
-   */
-  private Long orgId;
+	/**
+	 * orgId
+	 */
+	private Long orgId;
 
-  /**
-   * username
-   */
-  private String username;
+	/**
+	 * username
+	 */
+	private String username;
 
-  /**
-   * password
-   */
-  private String password;
+	/**
+	 * password
+	 */
+	private String password;
 
-  /**
-   * phone
-   */
-  private String phone;
+	/**
+	 * phone
+	 */
+	private String phone;
 
-  /**
-   * email
-   */
-  private String email;
+	/**
+	 * email
+	 */
+	private String email;
 
-  /**
-   * icon
-   */
-  private String icon;
+	/**
+	 * icon
+	 */
+	private String icon;
 
-  /**
-   * enabled
-   */
-  private Byte status;
+	/**
+	 * enabled
+	 */
+	private Byte status;
 
-  /**
-   * createTime
-   */
-  private Long createTime;
+	/**
+	 * createTime
+	 */
+	private Long createTime;
 
-  /**
-   * updateTime
-   */
-  private Long updateTime;
-
+	/**
+	 * updateTime
+	 */
+	private Long updateTime;
 
 }

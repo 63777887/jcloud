@@ -28,16 +28,14 @@ public class PasswordAuthenticationProvider extends AbstractUserCustomAuthentica
 
 	@Override
 	protected UserDetails retrieveUser(String s,
-			UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken)
-			throws AuthenticationException {
+			UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken) throws AuthenticationException {
 		return null;
 	}
 
-
 	@Override
 	public boolean supports(Class<?> authentication) {
-		return authentication.isAssignableFrom(PasswordAuthenticationToken.class) ||
-				authentication.isAssignableFrom(UsernamePasswordAuthenticationToken.class);
+		return authentication.isAssignableFrom(PasswordAuthenticationToken.class)
+				|| authentication.isAssignableFrom(UsernamePasswordAuthenticationToken.class);
 	}
 
 }

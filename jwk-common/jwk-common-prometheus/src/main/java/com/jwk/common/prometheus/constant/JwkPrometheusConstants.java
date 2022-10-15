@@ -41,8 +41,8 @@ public interface JwkPrometheusConstants {
 	 */
 	String TIMER_DESC = "接口调用时间统计";
 
-
 	String P = "/";
 
 	String DEFAULT_REGISTER_MODE = "zookeeper";
+
 }

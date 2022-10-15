@@ -12,56 +12,56 @@ import lombok.Data;
 @Data
 public class SysApiDto {
 
-  /**
-   * id
-   */
-  private Long id;
+	/**
+	 * id
+	 */
+	private Long id;
 
-  /**
-   * apiPid
-   */
-  private Long parentId;
+	/**
+	 * apiPid
+	 */
+	private Long parentId;
 
-  /**
-   * apiName
-   */
-  private String apiDesc;
+	/**
+	 * apiName
+	 */
+	private String apiDesc;
 
-  /**
-   * url
-   */
-  private String url;
+	/**
+	 * url
+	 */
+	private String url;
 
-  /**
-   * level
-   */
-  private Integer level;
+	/**
+	 * level
+	 */
+	private Integer level;
 
-  /**
-   * status
-   */
-  private Byte status;
+	/**
+	 * status
+	 */
+	private Byte status;
 
-  /**
-   * createBy
-   */
-  private String createBy;
+	/**
+	 * createBy
+	 */
+	private String createBy;
 
-  /**
-   * createTime
-   */
-  private Long createTime;
+	/**
+	 * createTime
+	 */
+	private Long createTime;
 
-  /**
-   * updateBy
-   */
-  private String updateBy;
+	/**
+	 * updateBy
+	 */
+	private String updateBy;
 
-  /**
-   * updateTime
-   */
-  private Long updateTime;
+	/**
+	 * updateTime
+	 */
+	private Long updateTime;
 
-  private Long categoryId;
+	private Long categoryId;
 
 }

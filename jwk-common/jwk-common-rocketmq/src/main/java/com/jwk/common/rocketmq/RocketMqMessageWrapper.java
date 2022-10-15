@@ -15,21 +15,24 @@ import org.apache.rocketmq.common.message.MessageExt;
  */
 public class RocketMqMessageWrapper implements MessageListenerConcurrently {
 
-  private RocketMqMessageListener rocketMqMessageListener;
+	private RocketMqMessageListener rocketMqMessageListener;
 
-  public RocketMqMessageWrapper() {
-  }
+	public RocketMqMessageWrapper() {
+	}
 
-  public RocketMqMessageListener getRocketMqMessageListener() {
-    return this.rocketMqMessageListener;
-  }
+	public RocketMqMessageListener getRocketMqMessageListener() {
+		return this.rocketMqMessageListener;
+	}
 
-  public void setRocketMqMessageListener(RocketMqMessageListener rocketMqMessageListener) {
-    this.rocketMqMessageListener = rocketMqMessageListener;
-  }
+	public void setRocketMqMessageListener(RocketMqMessageListener rocketMqMessageListener) {
+		this.rocketMqMessageListener = rocketMqMessageListener;
+	}
 
-  @Override
-  public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> list, ConsumeConcurrentlyContext consumeConcurrentlyContext) {
-    return this.rocketMqMessageListener.onMessage(list, consumeConcurrentlyContext) ? ConsumeConcurrentlyStatus.CONSUME_SUCCESS : ConsumeConcurrentlyStatus.RECONSUME_LATER;
-  }
+	@Override
+	public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> list,
+			ConsumeConcurrentlyContext consumeConcurrentlyContext) {
+		return this.rocketMqMessageListener.onMessage(list, consumeConcurrentlyContext)
+				? ConsumeConcurrentlyStatus.CONSUME_SUCCESS : ConsumeConcurrentlyStatus.RECONSUME_LATER;
+	}
+
 }

@@ -17,11 +17,12 @@ import org.springframework.boot.context.properties.NestedConfigurationProperty;
  */
 @Data
 @ConfigurationProperties(prefix = JwkDynamicDataSourceProperties.PREFIX)
-@AutoConfigureBefore({DynamicDataSourceAutoConfiguration.class, SpringBootConfiguration.class})
+@AutoConfigureBefore({ DynamicDataSourceAutoConfiguration.class, SpringBootConfiguration.class })
 public class JwkDynamicDataSourceProperties {
 
-    public static final String PREFIX = "jwk.datasource";
-    @NestedConfigurationProperty
-    private DynamicDataSourceProperties dynamic;
+	public static final String PREFIX = "jwk.datasource";
+
+	@NestedConfigurationProperty
+	private DynamicDataSourceProperties dynamic;
 
 }

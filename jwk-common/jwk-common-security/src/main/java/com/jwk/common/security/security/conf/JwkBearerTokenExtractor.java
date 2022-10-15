@@ -1,6 +1,5 @@
 package com.jwk.common.security.security.conf;
 
-
 import com.jwk.common.security.security.component.JwkAuthProperties;
 import java.util.Arrays;
 import java.util.List;
@@ -26,9 +25,8 @@ public class JwkBearerTokenExtractor extends BearerTokenExtractor {
 
 	private final String ERROR = "/error";
 
-	public JwkBearerTokenExtractor(
-			JwkAuthProperties jwkAuthProperties) {
-		this.jwkAuthProperties=jwkAuthProperties;
+	public JwkBearerTokenExtractor(JwkAuthProperties jwkAuthProperties) {
+		this.jwkAuthProperties = jwkAuthProperties;
 		this.pathMatcher = new AntPathMatcher();
 	}
 
@@ -39,8 +37,7 @@ public class JwkBearerTokenExtractor extends BearerTokenExtractor {
 		List<String> noAuthUrls = Arrays.stream(noAuthUrlList).collect(Collectors.toList());
 		// 错误页面也不参与鉴权
 		noAuthUrls.add(ERROR);
-		boolean match = noAuthUrls.stream()
-				.anyMatch(url -> pathMatcher.match(url, request.getRequestURI()));
+		boolean match = noAuthUrls.stream().anyMatch(url -> pathMatcher.match(url, request.getRequestURI()));
 
 		return match ? null : super.extract(request);
 	}

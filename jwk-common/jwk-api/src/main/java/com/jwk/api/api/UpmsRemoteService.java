@@ -17,30 +17,34 @@ import org.springframework.web.bind.annotation.RequestParam;
  * <p>
  * Upms接口
  */
-@FeignClient(name = ServerNameConstants.SERVER_UMPS,contextId = "authService",
-    fallbackFactory = UpmsRemoteServiceFallbackFactory.class)
+@FeignClient(name = ServerNameConstants.SERVER_UMPS, contextId = "authService",
+		fallbackFactory = UpmsRemoteServiceFallbackFactory.class)
 public interface UpmsRemoteService {
 
-  /**
-   * 根据姓名找用户
-   * @param name
-   * @return
-   */
-  @GetMapping("/inner/admin/findUserByName")
-  InnerResponse<UserInfo> findUserByName(@RequestParam("name") String name);
+	/**
+	 * 根据姓名找用户
+	 * @param name
+	 * @return
+	 */
+	@GetMapping("/inner/admin/findUserByName")
+	InnerResponse<UserInfo> findUserByName(@RequestParam("name") String name);
 
-  /**
-   * 根据手机找用户
-   * @param phone
-   * @return
-   */
-  @GetMapping("/inner/admin/findUserByPhone")
-  InnerResponse<UserInfo> findUserByPhone(@RequestParam("phone") String phone);
+	/**
+	 * 根据手机找用户
+	 * @param phone
+	 * @return
+	 */
+	@GetMapping("/inner/admin/findUserByPhone")
+	InnerResponse<UserInfo> findUserByPhone(@RequestParam("phone") String phone);
 
-  /**
-   * 获取资源列表
-   * @return
-   */
-  @GetMapping("/inner/admin/resourceList")
-  InnerResponse<List<SysApiDto>> resourceList();
+	/**
+	 * 获取资源列表
+	 * @return
+	 */
+	@GetMapping("/inner/admin/resourceList")
+	InnerResponse<List<SysApiDto>> resourceList();
+
+	@GetMapping("/inner/admin/testSeata")
+	InnerResponse<Integer> testSeata();
+
 }

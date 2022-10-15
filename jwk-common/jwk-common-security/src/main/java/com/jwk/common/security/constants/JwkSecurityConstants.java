@@ -1,6 +1,5 @@
 package com.jwk.common.security.constants;
 
-
 /**
  * @author Jiwk
  * @date 2022/6/11
@@ -9,8 +8,6 @@ package com.jwk.common.security.constants;
  * 常量
  */
 public interface JwkSecurityConstants {
-
-
 
 	/**
 	 * 项目的license

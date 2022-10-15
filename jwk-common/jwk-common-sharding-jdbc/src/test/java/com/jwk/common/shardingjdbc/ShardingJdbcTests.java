@@ -16,32 +16,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 //@SpringBootTest(classes = ShardingJdbcApplication.class)
 class ShardingJdbcTests {
 
-  @Test
-  void contextLoads() {
-  }
-  @Autowired
-  UserService userService;
+	@Test
+	void contextLoads() {
+	}
 
-  @Test
-  void addUser() {
-    for (int i = 0; i < 10; i++) {
-      User user = new User();
-//      user.setId((long) i);
-      user.setAge(i + 10);
-      user.setName("用户" + i);
-      userService.save(user);
-    }
-  }
-  @Test
-  void getUsers(){
-    new ThreadPoolExecutor(2, 20, 0, TimeUnit.SECONDS, new ArrayBlockingQueue<>(1000),
-        Executors.defaultThreadFactory(),
-        new AbortPolicy());
-    Executors.newFixedThreadPool(10);
-    new ConcurrentHashMap<>();
-    new Hashtable<>();
-    new CountDownLatch(-1);
-  }
+	@Autowired
+	UserService userService;
 
+	@Test
+	void addUser() {
+		for (int i = 0; i < 10; i++) {
+			User user = new User();
+			// user.setId((long) i);
+			user.setAge(i + 10);
+			user.setName("用户" + i);
+			userService.save(user);
+		}
+	}
+
+	@Test
+	void getUsers() {
+		new ThreadPoolExecutor(2, 20, 0, TimeUnit.SECONDS, new ArrayBlockingQueue<>(1000),
+				Executors.defaultThreadFactory(), new AbortPolicy());
+		Executors.newFixedThreadPool(10);
+		new ConcurrentHashMap<>();
+		new Hashtable<>();
+		new CountDownLatch(-1);
+	}
 
 }

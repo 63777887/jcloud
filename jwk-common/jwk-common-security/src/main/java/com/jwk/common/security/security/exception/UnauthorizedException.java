@@ -3,7 +3,6 @@ package com.jwk.common.security.security.exception;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.springframework.http.HttpStatus;
 
-
 /**
  * @author Jiwk
  * @date 2022/6/11

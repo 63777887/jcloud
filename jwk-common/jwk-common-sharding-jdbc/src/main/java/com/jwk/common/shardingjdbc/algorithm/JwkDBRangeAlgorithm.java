@@ -9,10 +9,9 @@ import org.apache.shardingsphere.api.sharding.standard.RangeShardingValue;
  */
 public class JwkDBRangeAlgorithm implements RangeShardingAlgorithm<Long> {
 
+	@Override
+	public Collection<String> doSharding(Collection<String> collection, RangeShardingValue<Long> rangeShardingValue) {
+		return collection;
+	}
 
-  @Override
-  public Collection<String> doSharding(Collection<String> collection,
-      RangeShardingValue<Long> rangeShardingValue) {
-    return collection;
-  }
 }

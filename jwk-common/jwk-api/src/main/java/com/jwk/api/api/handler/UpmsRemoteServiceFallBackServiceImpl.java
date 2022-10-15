@@ -21,28 +21,34 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class UpmsRemoteServiceFallBackServiceImpl implements UpmsRemoteService {
 
-  @Setter
-  private Throwable cause;
+	@Setter
+	private Throwable cause;
 
-  @Override
-  public InnerResponse<UserInfo> findUserByName(String name) {
-    log.error("feign findUserByName fail:{}", name, cause);
-    return null;
-  }
+	@Override
+	public InnerResponse<UserInfo> findUserByName(String name) {
+		log.error("feign findUserByName fail:{}", name, cause);
+		return null;
+	}
 
-  @Override
-  public InnerResponse<UserInfo> findUserByPhone(String phone) {
-    log.error("feign findUserByPhone fail:{}", phone, cause);
-    return null;
-  }
+	@Override
+	public InnerResponse<UserInfo> findUserByPhone(String phone) {
+		log.error("feign findUserByPhone fail:{}", phone, cause);
+		return null;
+	}
 
-  @Override
-  public InnerResponse<List<SysApiDto>> resourceList() {
-    log.error("feign resourceList fail:", cause);
-    // 给一个默认没有的权限
-    SysApiDto sysApiDto = new SysApiDto();
-    sysApiDto.setUrl("FORBIDDEN");
-    sysApiDto.setApiDesc("没有权限");
-    return InnerResponse.success(Collections.singletonList(sysApiDto));
-  }
+	@Override
+	public InnerResponse<List<SysApiDto>> resourceList() {
+		log.error("feign resourceList fail:", cause);
+		// 给一个默认没有的权限
+		SysApiDto sysApiDto = new SysApiDto();
+		sysApiDto.setUrl("FORBIDDEN");
+		sysApiDto.setApiDesc("没有权限");
+		return InnerResponse.success(Collections.singletonList(sysApiDto));
+	}
+
+	@Override
+	public InnerResponse<Integer> testSeata() {
+		return null;
+	}
+
 }

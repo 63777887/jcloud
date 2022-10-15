@@ -16,57 +16,58 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 public class SysApi implements Serializable {
 
-  private static final long serialVersionUID = 8299027290985406921L;
-  /**
-   * id
-   */
-  private Long id;
+	private static final long serialVersionUID = 8299027290985406921L;
 
-  /**
-   * apiPid
-   */
-  private Long parentId;
+	/**
+	 * id
+	 */
+	private Long id;
 
-  /**
-   * apiName
-   */
-  private String apiDesc;
+	/**
+	 * apiPid
+	 */
+	private Long parentId;
 
-  /**
-   * url
-   */
-  private String url;
+	/**
+	 * apiName
+	 */
+	private String apiDesc;
 
-  /**
-   * level
-   */
-  private Integer level;
+	/**
+	 * url
+	 */
+	private String url;
 
-  /**
-   * status
-   */
-  private Byte status;
+	/**
+	 * level
+	 */
+	private Integer level;
 
-  /**
-   * createBy
-   */
-  private String createBy;
+	/**
+	 * status
+	 */
+	private Byte status;
 
-  /**
-   * createTime
-   */
-  private Long createTime;
+	/**
+	 * createBy
+	 */
+	private String createBy;
 
-  /**
-   * updateBy
-   */
-  private String updateBy;
+	/**
+	 * createTime
+	 */
+	private Long createTime;
 
-  /**
-   * updateTime
-   */
-  private Long updateTime;
+	/**
+	 * updateBy
+	 */
+	private String updateBy;
 
-  private Long categoryId;
-  
+	/**
+	 * updateTime
+	 */
+	private Long updateTime;
+
+	private Long categoryId;
+
 }
