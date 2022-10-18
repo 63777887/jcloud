@@ -7,7 +7,6 @@ import io.micrometer.core.instrument.binder.cache.CaffeineCacheMetrics;
 import lombok.NoArgsConstructor;
 import org.springframework.boot.actuate.metrics.cache.CacheMeterBinderProvider;
 
-
 /**
  * @author Jiwk
  * @date 2022/10/14

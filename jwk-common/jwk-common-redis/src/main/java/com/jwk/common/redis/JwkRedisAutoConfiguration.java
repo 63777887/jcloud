@@ -20,17 +20,18 @@ import org.springframework.context.annotation.Primary;
  * 自动注入类
  */
 @Configuration(proxyBeanMethods = false)
-@AutoConfigureBefore({RedisAutoConfiguration.class,})
-@EnableConfigurationProperties({CacheConfigProperties.class, RedisConfigProperties.class})
+@AutoConfigureBefore({ RedisAutoConfiguration.class, })
+@EnableConfigurationProperties({ CacheConfigProperties.class, RedisConfigProperties.class })
 public class JwkRedisAutoConfiguration {
 
-  @Bean
-  @Primary
-  public RedisProperties redisProperties(RedisProperties redisProperties,RedisConfigProperties redisConfigProperties){
-    CopyOptions copyOptions = new CopyOptions();
-    copyOptions.ignoreNullValue();
-    BeanUtil.copyProperties(redisConfigProperties.getRedis(),redisProperties);
-    return redisProperties;
-  }
+	@Bean
+	@Primary
+	public RedisProperties redisProperties(RedisProperties redisProperties,
+			RedisConfigProperties redisConfigProperties) {
+		CopyOptions copyOptions = new CopyOptions();
+		copyOptions.ignoreNullValue();
+		BeanUtil.copyProperties(redisConfigProperties.getRedis(), redisProperties);
+		return redisProperties;
+	}
 
 }

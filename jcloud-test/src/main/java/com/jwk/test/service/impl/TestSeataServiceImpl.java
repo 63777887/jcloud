@@ -27,7 +27,7 @@ public class TestSeataServiceImpl implements TestSeataService {
 	@Override
 	// @GlobalTransactional(rollbackFor = Exception.class)
 	public int testSeata() {
-		upmsRemoteService.testSeata();
+		// upmsRemoteService.testSeata();
 		int i = userMapper.addOrginId();
 		// int i1 = 3/0;
 		return i;

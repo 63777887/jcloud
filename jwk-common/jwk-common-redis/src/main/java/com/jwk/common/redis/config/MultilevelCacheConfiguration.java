@@ -46,8 +46,8 @@ public class MultilevelCacheConfiguration {
 	public RedisCaffeineCacheManager cacheManager(CacheConfigProperties cacheConfigProperties,
 			@Qualifier("stringKeyRedisTemplate") RedisTemplate<Object, Object> stringKeyRedisTemplate,
 			ObjectProvider<RedisCaffeineCacheManagerCustomizer> cacheManagerCustomizers) {
-		RedisCaffeineCacheManager cacheManager = new RedisCaffeineCacheManager(
-				cacheConfigProperties, stringKeyRedisTemplate);
+		RedisCaffeineCacheManager cacheManager = new RedisCaffeineCacheManager(cacheConfigProperties,
+				stringKeyRedisTemplate);
 		cacheManagerCustomizers.orderedStream().forEach(customizer -> customizer.customize(cacheManager));
 		return cacheManager;
 	}

@@ -7,7 +7,7 @@
   <parent>
     <artifactId>jwk-common</artifactId>
     <groupId>com.jwk</groupId>
-    <version>0.1.1</version>
+    <version>0.1.2</version>
   </parent>
 
   <artifactId>jwk-common-security</artifactId>
