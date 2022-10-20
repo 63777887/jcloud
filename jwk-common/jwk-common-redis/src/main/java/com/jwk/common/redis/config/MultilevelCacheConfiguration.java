@@ -1,22 +1,26 @@
 package com.jwk.common.redis.config;
 
 import com.jwk.common.redis.properties.CacheConfigProperties;
+import com.jwk.common.redis.properties.RedisConfigProperties;
 import com.jwk.common.redis.support.CacheMessageListener;
 import com.jwk.common.redis.support.RedisCaffeineCacheManager;
 import com.jwk.common.redis.support.RedisCaffeineCacheManagerCustomizer;
+import com.jwk.common.redis.utils.RedisUtil;
 import java.util.Objects;
+import lombok.extern.slf4j.Slf4j;
+import org.redisson.Redisson;
+import org.redisson.api.RedissonClient;
+import org.redisson.config.Config;
+import org.redisson.spring.data.connection.RedissonConnectionFactory;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
-import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializer;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
  * @author Jiwk
@@ -25,17 +29,32 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  * <p>
  * 多级缓存配置类
  */
+@Slf4j
 public class MultilevelCacheConfiguration {
 
+	@Bean(destroyMethod = "shutdown")
+	@ConditionalOnMissingBean
+	public RedissonClient redissonClient(RedisConfigProperties redisConfigProperties) {
+		Config config = RedisUtil.config(redisConfigProperties);
+		return Redisson.create(config);
+	}
+
+
 	@Bean
-	@ConditionalOnMissingBean(name = "stringKeyRedisTemplate")
-	public RedisTemplate<Object, Object> stringKeyRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
+	@ConditionalOnMissingBean
+	public RedissonConnectionFactory redissonConnectionFactory(RedissonClient redissonClient) {
+		return new RedissonConnectionFactory(redissonClient);
+	}
+
+	@Bean
+	@ConditionalOnMissingBean
+	public RedisTemplate<Object, Object> stringKeyRedisTemplate(RedissonConnectionFactory redisConnectionFactory) {
 		RedisTemplate<Object, Object> template = new RedisTemplate<>();
 		template.setConnectionFactory(redisConnectionFactory);
-		template.setKeySerializer(keySerializer());
-		template.setHashKeySerializer(keySerializer());
-		template.setValueSerializer(valueSerializer());
-		template.setHashValueSerializer(valueSerializer());
+		template.setKeySerializer(RedisUtil.keySerializer());
+		template.setHashKeySerializer(RedisUtil.keySerializer());
+		template.setValueSerializer(RedisUtil.valueSerializer());
+		template.setHashValueSerializer(RedisUtil.valueSerializer());
 		template.setEnableDefaultSerializer(false);
 		return template;
 	}
@@ -44,10 +63,9 @@ public class MultilevelCacheConfiguration {
 	@ConditionalOnMissingBean
 	@ConditionalOnBean(RedisTemplate.class)
 	public RedisCaffeineCacheManager cacheManager(CacheConfigProperties cacheConfigProperties,
-			@Qualifier("stringKeyRedisTemplate") RedisTemplate<Object, Object> stringKeyRedisTemplate,
+			RedisTemplate<Object, Object> redisTemplate,
 			ObjectProvider<RedisCaffeineCacheManagerCustomizer> cacheManagerCustomizers) {
-		RedisCaffeineCacheManager cacheManager = new RedisCaffeineCacheManager(cacheConfigProperties,
-				stringKeyRedisTemplate);
+		RedisCaffeineCacheManager cacheManager = new RedisCaffeineCacheManager(cacheConfigProperties, redisTemplate);
 		cacheManagerCustomizers.orderedStream().forEach(customizer -> customizer.customize(cacheManager));
 		return cacheManager;
 	}
@@ -55,10 +73,9 @@ public class MultilevelCacheConfiguration {
 	@Bean
 	@SuppressWarnings("unchecked")
 	@ConditionalOnMissingBean(name = "cacheMessageListener")
-	public CacheMessageListener cacheMessageListener(
-			@Qualifier("stringKeyRedisTemplate") RedisTemplate<Object, Object> stringKeyRedisTemplate,
+	public CacheMessageListener cacheMessageListener(RedisTemplate<Object, Object> redisTemplate,
 			RedisCaffeineCacheManager redisCaffeineCacheManager) {
-		return new CacheMessageListener((RedisSerializer<Object>) stringKeyRedisTemplate.getValueSerializer(),
+		return new CacheMessageListener((RedisSerializer<Object>) redisTemplate.getValueSerializer(),
 				redisCaffeineCacheManager);
 	}
 
@@ -73,20 +90,6 @@ public class MultilevelCacheConfiguration {
 		redisMessageListenerContainer.addMessageListener(cacheMessageListener,
 				new ChannelTopic(cacheConfigProperties.getRedis().getTopic()));
 		return redisMessageListenerContainer;
-	}
-
-	/**
-	 * redis键序列化使用StringRedisSerializer
-	 */
-	private RedisSerializer<String> keySerializer() {
-		return new StringRedisSerializer();
-	}
-
-	/**
-	 * redis值序列化使用json序列化器
-	 */
-	private RedisSerializer<Object> valueSerializer() {
-		return new GenericJackson2JsonRedisSerializer();
 	}
 
 }

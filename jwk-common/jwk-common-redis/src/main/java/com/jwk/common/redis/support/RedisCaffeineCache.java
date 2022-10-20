@@ -1,5 +1,6 @@
 package com.jwk.common.redis.support;
 
+import cn.hutool.core.util.StrUtil;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.jwk.common.redis.properties.CacheConfigProperties;
 import java.time.Duration;
@@ -14,7 +15,6 @@ import org.springframework.cache.support.AbstractValueAdaptingCache;
 import org.springframework.cache.support.NullValue;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 
 /**
  * @author Jiwk
@@ -174,7 +174,7 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
 
 	protected Object getKey(Object key) {
 		return this.name.concat(":").concat(
-				StringUtils.hasLength(cachePrefix) ? cachePrefix.concat(":").concat(key.toString()) : key.toString());
+				StrUtil.isNotBlank(cachePrefix) ? cachePrefix.concat(":").concat(key.toString()) : key.toString());
 	}
 
 	protected Duration getExpire(Object value) {
