@@ -59,18 +59,9 @@ public class TestController {
 		return sysUser;
 	}
 
-	// @Cacheable(value = "get#10000", key = "#key")
+	@Cacheable(value = "get#10000", key = "#key")
 	@GetMapping("/get")
 	public String get(String key) {
-		ExecutorService executorService = Executors.newSingleThreadExecutor();
-		executorService.submit(() -> {
-			try {
-				Thread.sleep(24 * 1000);
-			}
-			catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		});
 		return key;
 	}
 

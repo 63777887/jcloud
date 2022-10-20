@@ -2,6 +2,7 @@ package com.jwk.test;
 
 import com.jwk.common.cloud.fegin.annotation.EnableJwkFeignClients;
 //import com.jwk.common.redis.annotation.EnableJwkCaching;
+import com.jwk.common.redis.annotation.EnableJwkCaching;
 import com.jwk.common.security.security.annotation.EnableJwkResourceServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +17,7 @@ import org.springframework.core.env.ConfigurableEnvironment;
 @EnableDiscoveryClient
 @EnableJwkFeignClients
 @EnableJwkResourceServer
-// @EnableJwkCaching
+@EnableJwkCaching
 public class TestApplication {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(TestApplication.class);
