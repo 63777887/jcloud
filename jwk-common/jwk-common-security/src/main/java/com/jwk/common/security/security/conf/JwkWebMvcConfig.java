@@ -14,10 +14,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 public class JwkWebMvcConfig implements WebMvcConfigurer {
 
-
-  @Override
-  public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-    argumentResolvers.add(new UserMethodArgumentResolver());
-  }
+	@Override
+	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+		argumentResolvers.add(new UserMethodArgumentResolver());
+	}
 
 }

@@ -13,11 +13,12 @@ import org.apache.rocketmq.common.message.MessageExt;
  */
 public interface RocketMqMessageListener {
 
-  /**
-   * 接收处理消息
-   * @param var1
-   * @param var2
-   * @return
-   */
-  boolean onMessage(List<MessageExt> var1, ConsumeConcurrentlyContext var2);
+	/**
+	 * 接收处理消息
+	 * @param var1
+	 * @param var2
+	 * @return
+	 */
+	boolean onMessage(List<MessageExt> var1, ConsumeConcurrentlyContext var2);
+
 }

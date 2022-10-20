@@ -1,6 +1,6 @@
 <div align="center">
 
-[![JCloud](https://img.shields.io/badge/JCloud-0.1.1-success.svg)]()
+[![JCloud](https://img.shields.io/badge/JCloud-0.1.2-success.svg)]()
 [![Spring Cloud Alibaba](https://img.shields.io/badge/Spring%20Cloud-2021-blue.svg)](https://github.com/alibaba/spring-cloud-alibaba)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-2.7-blue.svg)](https://github.com/spring-projects/spring-boot)
 ![LICENSE](https://img.shields.io/github/license/63777887/jcloud)
@@ -19,8 +19,8 @@
 | 依赖                   | 版本         |
 | ---------------------- |------------|
 | Spring Boot            | 2.7.0      |
-| Spring Cloud           | 2021.0.2   |
-| Spring Cloud Alibaba   | 2021.0.1.0 |
+| Spring Cloud           | 2021.0.4   |
+| Spring Cloud Alibaba   | 2021.0.4.0 |
 | Spring Security Oauth2 | 2.1.2      |
 | Mybatis Plus           | 3.4.1      |
 | hutool                 | 5.7.3      |
@@ -38,6 +38,7 @@ jCloud
      ├── jwk-common-security -- Security和Oauth基础
      ├── jwk-common-mybatis -- Mybatis Plus数据源包
      ├── jwk-common-dynam-datasource -- 动态数据源
+     ├── jwk-common-redis -- redis和多级缓存
      ├── jwk-common-seata -- 分布式事务
      ├── jwk-common-prometheus -- 普罗米修斯监控
      ├── jwk-common-knife4j -- 接口文档

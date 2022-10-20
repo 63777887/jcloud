@@ -25,8 +25,6 @@ public class JwkUserAuthenticationConverter implements UserAuthenticationConvert
 
 	private static final String N_A = "N/A";
 
-
-
 	/**
 	 * Extract information about the user to be used in an access token (i.e. for resource
 	 * servers).
@@ -62,8 +60,8 @@ public class JwkUserAuthenticationConverter implements UserAuthenticationConvert
 			// 此处map加载的信息为生成tokenEnhancer时添加的信息
 			String username = (String) map.get(JwkSecurityConstants.DETAILS_USERNAME);
 			SysUser user = convertUser(map);
-			UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-					username, N_A, authorities);
+			UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username,
+					N_A, authorities);
 			AdminUserDetails userDetails = new AdminUserDetails(user, new ArrayList<>());
 			authenticationToken.setDetails(userDetails);
 			return authenticationToken;

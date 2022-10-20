@@ -14,7 +14,8 @@ import java.lang.annotation.Target;
  * 自动获取User信息
  */
 @Documented
-@Target({ElementType.PARAMETER})
+@Target({ ElementType.PARAMETER })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface UserParam {
+
 }

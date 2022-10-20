@@ -12,13 +12,12 @@ import org.springframework.security.core.userdetails.UserDetails;
  */
 public class PasswordAuthenticationToken extends JwkCustomAuthenticationToken {
 
-
 	public PasswordAuthenticationToken(String phone, String code) {
 		super(phone, code);
 	}
 
-	public PasswordAuthenticationToken(
-			UserDetails sysUser) {
+	public PasswordAuthenticationToken(UserDetails sysUser) {
 		super(sysUser);
 	}
+
 }

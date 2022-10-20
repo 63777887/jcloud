@@ -1,0 +1,28 @@
+server:
+  port: 8098
+
+spring:
+  application:
+    name: @artifactId@
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${NACOS_HOST}:8848
+      config:
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+      username: nacos
+      password: nacos
+  config:
+    import:
+#      - nacos:application-@profiles.active@.yml
+      - nacos:${spring.application.name}.yml
+
+
+#spring:
+#  cloud:
+#    nacos:
+#      config:
+#        extension-configs:
+#          - data-id: uhomecp-resource-service.properties
+#            group: DEFAULT_GROUP
+#            refresh: true

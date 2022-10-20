@@ -29,8 +29,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 @Retention(RetentionPolicy.RUNTIME)
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @Import({ JwkResourceServerAutoConfiguration.class, JwkSecurityBeanDefinitionRegistrar.class,
-		JwkResourceServerTokenRelayAutoConfiguration.class, JwkFeignClientConfiguration.class,
-		JwkWebMvcConfig.class})
+		JwkResourceServerTokenRelayAutoConfiguration.class, JwkFeignClientConfiguration.class, JwkWebMvcConfig.class })
 public @interface EnableJwkResourceServer {
 
 }

@@ -19,35 +19,31 @@ import org.springframework.context.ApplicationContext;
 @Data
 public final class JwkPrometheusFactory {
 
-    static Logger logger = LoggerFactory.getLogger(JwkPrometheusFactory.class);
+	static Logger logger = LoggerFactory.getLogger(JwkPrometheusFactory.class);
 
-    public static JwkPrometheusContext getContext() {
-        JwkPrometheusContext jwkPrometheusContext = JwkPrometheusContext.getInstance();
-        return jwkPrometheusContext;
-    }
+	public static JwkPrometheusContext getContext() {
+		JwkPrometheusContext jwkPrometheusContext = JwkPrometheusContext.getInstance();
+		return jwkPrometheusContext;
+	}
 
-    public static void init(ApplicationContext applicationContext, MeterRegistry registry,
-        JwkPrometheusProperties jwkPrometheusProperties) {
+	public static void init(ApplicationContext applicationContext, MeterRegistry registry,
+			JwkPrometheusProperties jwkPrometheusProperties) {
 
-        buildJwkPrometheusContext(applicationContext, jwkPrometheusProperties,registry);
-    }
+		buildJwkPrometheusContext(applicationContext, jwkPrometheusProperties, registry);
+	}
 
-
-    public static void buildJwkPrometheusContext(ApplicationContext applicationContext,
-        JwkPrometheusProperties jwkPrometheusProperties,
-        MeterRegistry registry) {
-        logger.info("jcloud prometheus context build start");
-        //默认注册配置为zk
-        if (StringUtils.isBlank(jwkPrometheusProperties.getRegistryMode())){
-            jwkPrometheusProperties.setRegistryMode(JwkPrometheusConstants.DEFAULT_REGISTER_MODE);
-        }
-        if (StringUtils.isBlank(jwkPrometheusProperties.getApplication())){
-            jwkPrometheusProperties.setApplication(applicationContext.getApplicationName());
-        }
-        getContext().setApplicationContext(applicationContext)
-            .setRegistry(registry)
-            .setJwkPrometheusProperties(jwkPrometheusProperties)
-            .registry();
-    }
+	public static void buildJwkPrometheusContext(ApplicationContext applicationContext,
+			JwkPrometheusProperties jwkPrometheusProperties, MeterRegistry registry) {
+		logger.info("jcloud prometheus context build start");
+		// 默认注册配置为zk
+		if (StringUtils.isBlank(jwkPrometheusProperties.getRegistryMode())) {
+			jwkPrometheusProperties.setRegistryMode(JwkPrometheusConstants.DEFAULT_REGISTER_MODE);
+		}
+		if (StringUtils.isBlank(jwkPrometheusProperties.getApplication())) {
+			jwkPrometheusProperties.setApplication(applicationContext.getApplicationName());
+		}
+		getContext().setApplicationContext(applicationContext).setRegistry(registry)
+				.setJwkPrometheusProperties(jwkPrometheusProperties).registry();
+	}
 
 }

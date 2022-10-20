@@ -8,7 +8,7 @@
 
   <groupId>com.jwk</groupId>
   <artifactId>jwk-common-bom</artifactId>
-  <version>0.1.1</version>
+  <version>0.1.2</version>
   <packaging>pom</packaging>
 
   <name>jwk-common-bom</name>
@@ -30,11 +30,17 @@
     <curator-x-discovery.version>5.2.0</curator-x-discovery.version>
     <micrometer-registry-prometheus.version>1.9.0</micrometer-registry-prometheus.version>
     <mybatisplus-spring-boot-starter.version>3.4.1</mybatisplus-spring-boot-starter.version>
+    <seata-spring-boot-starter.version>1.5.2</seata-spring-boot-starter.version>
   </properties>
 
   <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号-->
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>com.jwk</groupId>
+        <artifactId>jwk-common-seata</artifactId>
+        <version>${jwk.common.version}</version>
+      </dependency>
       <dependency>
         <groupId>com.jwk</groupId>
         <artifactId>jwk-common-core</artifactId>
@@ -98,6 +104,11 @@
       <dependency>
         <groupId>com.jwk</groupId>
         <artifactId>jwk-common-prometheus</artifactId>
+        <version>${jwk.common.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.jwk</groupId>
+        <artifactId>jwk-common-redis</artifactId>
         <version>${jwk.common.version}</version>
       </dependency>
       <dependency>
@@ -189,6 +200,16 @@
         <groupId>com.baomidou</groupId>
         <artifactId>mybatis-plus-boot-starter</artifactId>
         <version>${mybatisplus-spring-boot-starter.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.seata</groupId>
+        <artifactId>seata-serializer-kryo</artifactId>
+        <version>${seata-spring-boot-starter.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.seata</groupId>
+        <artifactId>seata-spring-boot-starter</artifactId>
+        <version>${seata-spring-boot-starter.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

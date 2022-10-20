@@ -10,17 +10,16 @@ import org.apache.shardingsphere.api.sharding.standard.PreciseShardingValue;
  */
 public class JwkDBPreciseAlgorithm implements PreciseShardingAlgorithm<Long> {
 
+	@Override
+	public String doSharding(Collection<String> dbNames, PreciseShardingValue<Long> preciseShardingValue) {
+		Long idValue = preciseShardingValue.getValue();
+		String id = preciseShardingValue.getColumnName();
+		BigInteger temp = BigInteger.valueOf(idValue).mod(BigInteger.valueOf(2)).add(BigInteger.ONE);
+		String dbName = "m" + temp.intValue();
+		if (dbNames.contains(dbName)) {
+			return dbName;
+		}
+		throw new UnsupportedOperationException("database " + dbName + " is not support, please check your config");
+	}
 
-  @Override
-  public String doSharding(Collection<String> dbNames,
-      PreciseShardingValue<Long> preciseShardingValue) {
-    Long idValue = preciseShardingValue.getValue();
-    String id = preciseShardingValue.getColumnName();
-    BigInteger temp = BigInteger.valueOf(idValue).mod(BigInteger.valueOf(2)).add(BigInteger.ONE);
-    String dbName = "m" + temp.intValue();
-    if (dbNames.contains(dbName)) {
-      return dbName;
-    }
-    throw new UnsupportedOperationException("database "+ dbName + " is not support, please check your config");
-  }
 }

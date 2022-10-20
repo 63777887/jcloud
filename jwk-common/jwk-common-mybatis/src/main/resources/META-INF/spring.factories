@@ -1,2 +1,2 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.jwk.common.mybatis.config.JwkMybatisPlusAutoConfiguration
+#org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+#  com.jwk.common.mybatis.config.JwkMybatisPlusAutoConfiguration

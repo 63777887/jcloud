@@ -5,10 +5,8 @@ import cn.hutool.core.util.ReUtil;
 import cn.hutool.core.util.StrUtil;
 import com.jwk.common.core.utils.JwkSpringUtil;
 import com.jwk.common.security.security.annotation.Inner;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+
+import java.util.*;
 import java.util.regex.Pattern;
 import lombok.Data;
 import org.springframework.beans.factory.InitializingBean;
@@ -30,67 +28,72 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 @Data
 public class JwkAuthProperties implements InitializingBean {
 
-    /**
-     * 免鉴权路径
-     */
-    private String noauthUrl = "";
-    /**
-     * tokenHeader
-     */
-    private String tokenHeader="Authorization";
-    /**
-     * tokenSchema
-     */
-    private String tokenSchema="Bearer";
-    /**
-     * tokenSecretKey
-     */
-    private String secretKey="jiwk";
-    /**
-     * tokenExpireTime
-     */
-    private Long expireSec=86400000L;
+	/**
+	 * 免鉴权路径
+	 */
+	private String noauthUrl = "";
 
-    private ApplicationContext applicationContext;
+	/**
+	 * tokenHeader
+	 */
+	private String tokenHeader = "Authorization";
 
-    private static final Pattern PATTERN = Pattern.compile("\\{(.*?)\\}");
+	/**
+	 * tokenSchema
+	 */
+	private String tokenSchema = "Bearer";
 
-    public String[] getNoAuthArray(){
-        String[] noAuthUrlList = noauthUrl.split(",");
-        return noAuthUrlList;
-    }
+	/**
+	 * tokenSecretKey
+	 */
+	private String secretKey = "jiwk";
 
-    @Override
-    public void afterPropertiesSet() {
-        List<String> noAuthList = new ArrayList<>();
-        RequestMappingHandlerMapping mapping = JwkSpringUtil.getBean("requestMappingHandlerMapping");
-        Map<RequestMappingInfo, HandlerMethod> map = mapping.getHandlerMethods();
+	/**
+	 * tokenExpireTime
+	 */
+	private Long expireSec = 86400000L;
 
-        map.keySet().forEach(info -> {
-            HandlerMethod handlerMethod = map.get(info);
+	private ApplicationContext applicationContext;
 
-            // 获取方法上边的注解 替代path variable 为 *
-            // /user/get/{id} -> /user/get/*
-            Inner method = AnnotationUtils.findAnnotation(handlerMethod.getMethod(), Inner.class);
-            Optional.ofNullable(method).ifPresent(inner -> info.getPatternsCondition().getPatterns()
-                .forEach(url -> noAuthList.add(ReUtil.replaceAll(url, PATTERN, "*"))));
+	private static final Pattern PATTERN = Pattern.compile("\\{(.*?)\\}");
 
-            // 获取类上边的注解, 替代path variable 为 *
-            Inner controller = AnnotationUtils.findAnnotation(handlerMethod.getBeanType(), Inner.class);
-            Optional.ofNullable(controller).ifPresent(inner -> info.getPatternsCondition().getPatterns()
-                .forEach(url -> noAuthList.add(ReUtil.replaceAll(url, PATTERN, "*"))));
-        });
+	public String[] getNoAuthArray() {
+		String[] noAuthUrlList = noauthUrl.split(",");
+		return noAuthUrlList;
+	}
 
-        // 默认开放接口
-        String defaultNoAuthUrl = "/swagger-resources/**,/v2/api-docs/**,/webjars/**,"
-            + "/doc.html,/**/*.css,/**/*.jpg/**/*.jpeg,/**/*.gif,/js/*.js,/**/*.png,/login.jsp,/favicon.ico";
+	@Override
+	public void afterPropertiesSet() {
+		List<String> noAuthList = new ArrayList<>();
+		RequestMappingHandlerMapping mapping = JwkSpringUtil.getBean("requestMappingHandlerMapping");
+		Map<RequestMappingInfo, HandlerMethod> map = mapping.getHandlerMethods();
 
-        if (StrUtil.isNotBlank(noauthUrl)){
-            defaultNoAuthUrl = defaultNoAuthUrl + "," + noauthUrl;
-        }
-        noauthUrl = defaultNoAuthUrl;
-        if (CollUtil.isNotEmpty(noAuthList)) {
-            noauthUrl += "," + String.join(",", noAuthList);
-        }
-    }
+		map.keySet().forEach(info -> {
+			HandlerMethod handlerMethod = map.get(info);
+
+			// 获取方法上边的注解 替代path variable 为 *
+			// /user/get/{id} -> /user/get/*
+			Inner method = AnnotationUtils.findAnnotation(handlerMethod.getMethod(), Inner.class);
+			Optional.ofNullable(method).ifPresent(inner -> Objects.requireNonNull(info.getPatternsCondition())
+					.getPatterns().forEach(url -> noAuthList.add(ReUtil.replaceAll(url, PATTERN, "*"))));
+
+			// 获取类上边的注解, 替代path variable 为 *
+			Inner controller = AnnotationUtils.findAnnotation(handlerMethod.getBeanType(), Inner.class);
+			Optional.ofNullable(controller).ifPresent(inner -> Objects.requireNonNull(info.getPatternsCondition())
+					.getPatterns().forEach(url -> noAuthList.add(ReUtil.replaceAll(url, PATTERN, "*"))));
+		});
+
+		// 默认开放接口
+		String defaultNoAuthUrl = "/swagger-resources/**,/v2/api-docs/**,/webjars/**,"
+				+ "/doc.html,/**/*.css,/**/*.jpg/**/*.jpeg,/**/*.gif,/js/*.js,/**/*.png,/login.jsp,/favicon.ico";
+
+		if (StrUtil.isNotBlank(noauthUrl)) {
+			defaultNoAuthUrl = defaultNoAuthUrl + "," + noauthUrl;
+		}
+		noauthUrl = defaultNoAuthUrl;
+		if (CollUtil.isNotEmpty(noAuthList)) {
+			noauthUrl += "," + String.join(",", noAuthList);
+		}
+	}
+
 }

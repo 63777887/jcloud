@@ -1,5 +1,6 @@
 seata:
   enabled: true
+  application-id: jcloud-seata-umps
   tx-service-group: jcloud_tx_group # 事务群组（可以每个应用独立取名，也可以使用相同的名字）
   client:
     rm-report-success-enable: true
@@ -24,11 +25,11 @@ seata:
         datasource-autoproxy: true
   service:
     vgroup-mapping:
-      pig_tx_group: default # TC 集群（必须与seata-server保持一致）
+      jcloud_tx_group: default # TC 集群（必须与seata-server保持一致）
     enable-degrade: false # 降级开关
     disable-global-transaction: false # 禁用全局事务（默认false）
     grouplist:
-      default: pig-seata:8091
+      default: seata-server:7091
   transport:
     shutdown:
       wait: 3
@@ -47,10 +48,16 @@ seata:
     compressor: none
     enable-client-batch-send-request: true # 客户端事务消息请求是否批量合并发送（默认true）
   registry:
-    file:
-      name: file.conf
-    type: file
+    type: nacos
+    nacos:
+      application: seata-server # seata 服务名
+      # nacos ip地址
+      server-addr: 47.241.180.241:8848
+      group: DEFAULT_GROUP
   config:
-    file:
-      name: file.conf
-    type: file
+    type: nacos
+    nacos:
+      # nacos ip地址
+      server-addr: 47.241.180.241:8848
+      group: DEFAULT_GROUP
+      data-id: seata-server.properties # 读取 nacos seata 配置

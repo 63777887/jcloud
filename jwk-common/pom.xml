@@ -6,7 +6,7 @@
   <parent>
     <artifactId>jcloud-parent</artifactId>
     <groupId>com.jwk</groupId>
-    <version>0.1.1</version>
+    <version>0.1.2</version>
   </parent>
 
 
@@ -30,5 +30,17 @@
     <module>jwk-common-prometheus</module>
     <module>jwk-api</module>
     <module>jwk-common-seata</module>
+    <module>jwk-common-redis</module>
   </modules>
+
+  <distributionManagement>
+    <repository>
+      <id>jwk-nexus</id>
+      <url>http://${nexus.host}/repository/${nexus.maven.releases}/</url>
+    </repository>
+    <snapshotRepository>
+      <id>jwk-nexus</id>
+      <url>http://${nexus.host}/repository/${nexus.maven.snapshots}/</url>
+    </snapshotRepository>
+  </distributionManagement>
 </project>

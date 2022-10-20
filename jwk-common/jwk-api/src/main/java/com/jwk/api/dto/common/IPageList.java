@@ -20,7 +20,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class IPageList<E> implements Serializable {
 
-  private IPaginator paginator;
+	private IPaginator paginator;
 
-  private List<E> resultList;
+	private List<E> resultList;
+
 }

@@ -1,6 +1,5 @@
 package com.jwk.common.security.security.service.impl;
 
-
 import com.jwk.api.api.UpmsRemoteService;
 import com.jwk.api.dto.UserInfo;
 import com.jwk.common.security.security.service.JwkUserDetailsService;
@@ -17,19 +16,19 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
  */
 public class JwkPhoneUserDetailsServiceImpl implements JwkUserDetailsService {
 
-  @Autowired
-  UpmsRemoteService upmsRemoteService;
+	@Autowired
+	UpmsRemoteService upmsRemoteService;
 
-  @Override
-  public UserDetails loadUserByUsername(String phone)
-      throws UsernameNotFoundException {
-//        加载基础用户信息
-    UserInfo userInfo = upmsRemoteService.findUserByPhone(phone).getData();
-    return getUerDetail(userInfo);
-  }
+	@Override
+	public UserDetails loadUserByUsername(String phone) throws UsernameNotFoundException {
+		// 加载基础用户信息
+		UserInfo userInfo = upmsRemoteService.findUserByPhone(phone).getData();
+		return getUerDetail(userInfo);
+	}
 
-  @Override
-  public boolean supportGrantType(String grantType) {
-    return "phone".equals(grantType);
-  }
+	@Override
+	public boolean supportGrantType(String grantType) {
+		return "phone".equals(grantType);
+	}
+
 }

@@ -14,11 +14,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class UpmsRemoteServiceFallbackFactory implements FallbackFactory<UpmsRemoteService> {
 
-  @Override
-  public UpmsRemoteService create(Throwable throwable) {
-    UpmsRemoteServiceFallBackServiceImpl upmsRemoteServiceFallBackServiceImpl = new UpmsRemoteServiceFallBackServiceImpl();
-    upmsRemoteServiceFallBackServiceImpl.setCause(throwable);
-    return upmsRemoteServiceFallBackServiceImpl;
-  }
+	@Override
+	public UpmsRemoteService create(Throwable throwable) {
+		UpmsRemoteServiceFallBackServiceImpl upmsRemoteServiceFallBackServiceImpl = new UpmsRemoteServiceFallBackServiceImpl();
+		upmsRemoteServiceFallBackServiceImpl.setCause(throwable);
+		return upmsRemoteServiceFallBackServiceImpl;
+	}
 
 }

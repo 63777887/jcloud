@@ -21,10 +21,10 @@ import org.springframework.util.Assert;
  * @date 2022/6/11
  * @version 0.1.0
  * <p>
- * 自定义身份认证返回格式 重写 {@link org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider}
+ * 自定义身份认证返回格式 重写
+ * {@link org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider}
  */
-public class JwkPreAuthenticatedAuthenticationProvider implements AuthenticationProvider,
-		InitializingBean, Ordered {
+public class JwkPreAuthenticatedAuthenticationProvider implements AuthenticationProvider, InitializingBean, Ordered {
 
 	private static final Log logger = LogFactory.getLog(JwkPreAuthenticatedAuthenticationProvider.class);
 

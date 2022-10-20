@@ -1,0 +1,2 @@
+com.jwk.common.redis.JwkRedisAutoConfiguration
+com.jwk.common.redis.config.CacheJackson2ObjectMapperBuilderCustomizer

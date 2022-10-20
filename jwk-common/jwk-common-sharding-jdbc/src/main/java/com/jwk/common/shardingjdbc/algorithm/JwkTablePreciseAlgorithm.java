@@ -10,16 +10,16 @@ import org.apache.shardingsphere.api.sharding.standard.PreciseShardingValue;
  */
 public class JwkTablePreciseAlgorithm implements PreciseShardingAlgorithm<Long> {
 
-  @Override
-  public String doSharding(Collection<String> tableNames,
-      PreciseShardingValue<Long> preciseShardingValue) {
-    Long idValue = preciseShardingValue.getValue();
-    String id = preciseShardingValue.getColumnName();
-    BigInteger temp = BigInteger.valueOf(idValue).mod(BigInteger.valueOf(2)).add(BigInteger.ONE);
-    String tableName = preciseShardingValue.getLogicTableName()+"_" + temp.intValue();
-    if (tableNames.contains(tableName)) {
-      return tableName;
-    }
-    throw new UnsupportedOperationException("route "+ tableName + " is not support, please check your config");
-  }
+	@Override
+	public String doSharding(Collection<String> tableNames, PreciseShardingValue<Long> preciseShardingValue) {
+		Long idValue = preciseShardingValue.getValue();
+		String id = preciseShardingValue.getColumnName();
+		BigInteger temp = BigInteger.valueOf(idValue).mod(BigInteger.valueOf(2)).add(BigInteger.ONE);
+		String tableName = preciseShardingValue.getLogicTableName() + "_" + temp.intValue();
+		if (tableNames.contains(tableName)) {
+			return tableName;
+		}
+		throw new UnsupportedOperationException("route " + tableName + " is not support, please check your config");
+	}
+
 }

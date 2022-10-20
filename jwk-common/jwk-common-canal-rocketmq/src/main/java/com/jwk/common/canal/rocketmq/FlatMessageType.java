@@ -8,28 +8,28 @@ package com.jwk.common.canal.rocketmq;
  *
  */
 public enum FlatMessageType {
-  /**
-   * UPDATE
-   */
-  UPDATE("UPDATE"),
-  /**
-   * INSERT
-   */
-  INSERT("INSERT"),
-  /**
-   * DELETE
-   */
-  DELETE("DELETE");
 
-  FlatMessageType(String name) {
-    this.name = name;
-  }
+	/**
+	 * UPDATE
+	 */
+	UPDATE("UPDATE"),
+	/**
+	 * INSERT
+	 */
+	INSERT("INSERT"),
+	/**
+	 * DELETE
+	 */
+	DELETE("DELETE");
 
+	FlatMessageType(String name) {
+		this.name = name;
+	}
 
-  private String name;
+	private String name;
 
+	public String getName() {
+		return name;
+	}
 
-  public String getName() {
-    return name;
-  }
 }

@@ -7,7 +7,7 @@
   <groupId>com.jwk</groupId>
   <artifactId>jcloud-parent</artifactId>
   <name>${project.artifactId}</name>
-  <version>0.1.1</version>
+  <version>0.1.2</version>
   <packaging>pom</packaging>
 
 
@@ -17,8 +17,8 @@
     <java.version>1.8</java.version>
     <spring-boot.version>2.7.0</spring-boot.version>
     <spring-boot-admin-starter.version>2.6.7</spring-boot-admin-starter.version>
-    <cloud.version>2021.0.2</cloud.version>
-    <cloud-alibaba.version>2021.0.1.0</cloud-alibaba.version>
+    <cloud.version>2021.0.4</cloud.version>
+    <cloud-alibaba.version>2021.0.4.0</cloud-alibaba.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <fastjson.version>1.2.83</fastjson.version>
@@ -29,6 +29,13 @@
     <knife4j.version>3.0.3</knife4j.version>
     <jasypt.version>2.1.0</jasypt.version>
     <jwk.common.version>${project.version}</jwk.common.version>
+    <spring.checkstyle.plugin>0.0.34</spring.checkstyle.plugin>
+    <mybatis-generator-maven-plugin>1.3.2</mybatis-generator-maven-plugin>
+    <mysql-connector-java.plugin>8.0.28</mysql-connector-java.plugin>
+    <dependency-check-maven.plugin>7.2.1</dependency-check-maven.plugin>
+    <nexus.host>1.13.159.90:8081</nexus.host>
+    <nexus.maven.releases>maven-releases</nexus.maven.releases>
+    <nexus.maven.snapshots>maven-snapshots</nexus.maven.snapshots>
   </properties>
 
 
@@ -72,152 +79,183 @@
   </dependencies>
 
 
-  <modules>
-    <module>jwk-gateway</module>
-    <module>jwk-test</module>
-    <module>jwk-knife4j</module>
-    <module>jwk-uaa</module>
-    <module>jwk-common</module>
-    <module>jwk-admin</module>
-    <module>jwk-upms</module>
-  </modules>
+    <modules>
+        <module>jcloud-gateway</module>
+        <module>jcloud-test</module>
+        <module>jcloud-knife4j</module>
+        <module>jcloud-uaa</module>
+        <module>jwk-common</module>
+        <module>jcloud-admin</module>
+        <module>jcloud-upms</module>
+    </modules>
 
-  <dependencyManagement>
-    <dependencies>
-      <!--jcloud 公共版本定义-->
-      <dependency>
-        <groupId>com.jwk</groupId>
-        <artifactId>jwk-common-bom</artifactId>
-        <version>${project.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <!-- spring cloud alibaba 依赖 -->
-      <dependency>
-        <groupId>com.alibaba.cloud</groupId>
-        <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-        <version>${cloud-alibaba.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <!-- spring cloud 依赖 -->
-      <dependency>
-        <groupId>org.springframework.cloud</groupId>
-        <artifactId>spring-cloud-dependencies</artifactId>
-        <version>${cloud.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-
-      <!--        工具类-->
-      <dependency>
-        <groupId>com.alibaba</groupId>
-        <artifactId>fastjson</artifactId>
-        <version>${fastjson.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>cn.hutool</groupId>
-        <artifactId>hutool-all</artifactId>
-        <version>${hutool-all.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.jsonwebtoken</groupId>
-        <artifactId>jjwt</artifactId>
-        <version>${jjwt.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.logging.log4j</groupId>
-        <artifactId>log4j-to-slf4j</artifactId>
-        <version>${log4j2.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.logging.log4j</groupId>
-        <artifactId>log4j-bom</artifactId>
-        <version>${log4j2.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <!-- spring boot 依赖 -->
-      <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-dependencies</artifactId>
-        <version>${spring-boot.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>de.codecentric</groupId>
-        <artifactId>spring-boot-admin-starter-server</artifactId>
-        <version>${spring-boot.version}</version>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
-
-
-  <build>
-    <finalName>${project.name}</finalName>
-    <sourceDirectory>src/main/java</sourceDirectory>
-    <resources>
-      <resource>
-        <directory>src/main/resources</directory>
-        <includes>
-          <include>**/*</include>
-        </includes>
-        <excludes>
-          <exclude>**/.git/</exclude>
-        </excludes>
-      </resource>
-    </resources>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-maven-plugin</artifactId>
-          <version>${spring-boot.version}</version>
-          <configuration>
-            <finalName>${project.build.finalName}</finalName>
-            <layers>
-              <enabled>true</enabled>
-            </layers>
-          </configuration>
-          <executions>
-            <execution>
-              <goals>
-                <goal>repackage</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
-        <plugin>
-          <groupId>org.mybatis.generator</groupId>
-          <artifactId>mybatis-generator-maven-plugin</artifactId>
-          <version>1.3.2</version>
-          <dependencies>
+    <dependencyManagement>
+        <dependencies>
+            <!--jcloud 公共版本定义-->
             <dependency>
-              <groupId>mysql</groupId>
-              <artifactId>mysql-connector-java</artifactId>
-              <version>8.0.28</version>
+                <groupId>com.jwk</groupId>
+                <artifactId>jwk-common-bom</artifactId>
+                <version>${project.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
-          </dependencies>
-          <configuration>
-            <overwrite>true</overwrite>
-          </configuration>
-        </plugin>
-        <!--      用于检测依赖cve漏洞-->
-        <plugin>
-          <groupId>org.owasp</groupId>
-          <artifactId>dependency-check-maven</artifactId>
-          <version>6.5.0</version>
-          <!-- 若添加 goal:check,则mvn verify|install|deploy 时会执行 -->
-          <executions>
-            <execution>
-              <goals>
-                <goal>check</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-  </build>
+            <!-- spring cloud alibaba 依赖 -->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- spring cloud 依赖 -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!--        工具类-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool-all.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jjwt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-to-slf4j</artifactId>
+                <version>${log4j2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-bom</artifactId>
+                <version>${log4j2.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- spring boot 依赖 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-server</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <finalName>${project.name}</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot.version}</version>
+                    <configuration>
+                        <finalName>${project.build.finalName}</finalName>
+                        <layers>
+                            <enabled>true</enabled>
+                        </layers>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.mybatis.generator</groupId>
+                    <artifactId>mybatis-generator-maven-plugin</artifactId>
+                    <version>${mybatis-generator-maven-plugin}</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>mysql</groupId>
+                            <artifactId>mysql-connector-java</artifactId>
+                            <version>${mysql-connector-java.plugin}</version>
+                        </dependency>
+                    </dependencies>
+                    <configuration>
+                        <overwrite>true</overwrite>
+                    </configuration>
+                </plugin>
+                <!--      用于检测依赖cve漏洞-->
+                <plugin>
+                    <groupId>org.owasp</groupId>
+                    <artifactId>dependency-check-maven</artifactId>
+                    <version>${dependency-check-maven.plugin}</version>
+<!--                    <configuration>-->
+<!--                      <autoUpdate>true</autoUpdate>-->
+<!--                    </configuration>-->
+
+                  <configuration>
+<!--                    自动更新-->
+                    <autoUpdate>true</autoUpdate>
+                    <format>ALL</format>
+                    <assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
+                    <nugetconfAnalyzerEnabled>false</nugetconfAnalyzerEnabled>
+                    <nuspecAnalyzerEnabled>false</nuspecAnalyzerEnabled>
+                    <retireJsUrl>
+                      https://cdn.jsdelivr.net/gh/Retirejs/retire.js@master/repository/jsrepository.json
+                    </retireJsUrl>
+                  </configuration>
+
+                    <!-- 若添加 goal:check,则mvn verify|install|deploy 时会执行 -->
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <!--
+                代码格式插件，默认使用spring 规则，可运行命令进行项目格式化：./mvnw spring-javaformat:apply 或 mvn spring-javaformat:apply，可在IDEA中安装插件以下插件进行自动格式化：
+                https://repo1.maven.org/maven2/io/spring/javaformat/spring-javaformat-intellij-idea-plugin
+            -->
+            <plugin>
+                <groupId>io.spring.javaformat</groupId>
+                <artifactId>spring-javaformat-maven-plugin</artifactId>
+                <version>${spring.checkstyle.plugin}</version>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <inherited>true</inherited>
+                        <goals>
+                            <goal>validate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>

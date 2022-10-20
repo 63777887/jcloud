@@ -23,7 +23,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
  */
 public interface JwkUserDetailsService extends UserDetailsService, Ordered {
 
-
 	/**
 	 * 是否支持此客户端校验
 	 * @param clientId 目标客户端
@@ -57,7 +56,7 @@ public interface JwkUserDetailsService extends UserDetailsService, Ordered {
 	 * @return
 	 */
 	default AdminUserDetails getUerDetail(UserInfo user) {
-		if (null == user){
+		if (null == user) {
 			throw new UsernameNotFoundException("用户不存在");
 		}
 		SysUserDto sysUserdto = user.getSysUser();
@@ -67,10 +66,9 @@ public interface JwkUserDetailsService extends UserDetailsService, Ordered {
 		List<SysApi> sysApis = sysApiDtos.stream().map(t -> Convert.convert(SysApi.class, t))
 				.collect(Collectors.toList());
 
-		List<ResourceConfigAttribute> configAttributes = sysApis.stream()
-				.map(ResourceConfigAttribute::new)
+		List<ResourceConfigAttribute> configAttributes = sysApis.stream().map(ResourceConfigAttribute::new)
 				.collect(Collectors.toList());
-		return new AdminUserDetails(sysUser,configAttributes);
+		return new AdminUserDetails(sysUser, configAttributes);
 	}
 
 }

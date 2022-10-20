@@ -10,37 +10,39 @@ import java.util.List;
  *
  */
 public class MessageInfo {
-  private String topic;
-  private List<String> messages;
 
-  public MessageInfo() {
-  }
+	private String topic;
 
-  public String getTopic() {
-    return this.topic;
-  }
+	private List<String> messages;
 
-  public List<String> getMessages() {
-    return this.messages;
-  }
+	public MessageInfo() {
+	}
 
-  public MessageInfo setTopic(final String topic) {
-    this.topic = topic;
-    return this;
-  }
+	public String getTopic() {
+		return this.topic;
+	}
 
-  public MessageInfo setMessages(final List<String> messages) {
-    this.messages = messages;
-    return this;
-  }
+	public List<String> getMessages() {
+		return this.messages;
+	}
 
+	public MessageInfo setTopic(final String topic) {
+		this.topic = topic;
+		return this;
+	}
 
-  protected boolean canEqual(final Object other) {
-    return other instanceof MessageInfo;
-  }
+	public MessageInfo setMessages(final List<String> messages) {
+		this.messages = messages;
+		return this;
+	}
 
-  @Override
-  public String toString() {
-    return "MessageInfo(topic=" + this.getTopic() + ", messages=" + this.getMessages() + ")";
-  }
+	protected boolean canEqual(final Object other) {
+		return other instanceof MessageInfo;
+	}
+
+	@Override
+	public String toString() {
+		return "MessageInfo(topic=" + this.getTopic() + ", messages=" + this.getMessages() + ")";
+	}
+
 }

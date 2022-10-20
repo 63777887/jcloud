@@ -12,17 +12,19 @@ import org.springframework.amqp.core.Message;
  * 接收消息抽象类
  */
 public abstract class AbstractMQ implements RabbiitMqMessageListener {
-  public static final Logger logger = LoggerFactory.getLogger(AbstractMQ.class);
 
-  /**
-   * 消息处理
-   * @param message
-   * @return
-   */
-  public abstract boolean handle(Message message);
+	public static final Logger logger = LoggerFactory.getLogger(AbstractMQ.class);
 
-  @Override
-  public boolean onMessage(Message message) {
-    return handle(message);
-  }
+	/**
+	 * 消息处理
+	 * @param message
+	 * @return
+	 */
+	public abstract boolean handle(Message message);
+
+	@Override
+	public boolean onMessage(Message message) {
+		return handle(message);
+	}
+
 }
