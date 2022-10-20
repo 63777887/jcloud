@@ -6,7 +6,7 @@
   <parent>
     <artifactId>jcloud-parent</artifactId>
     <groupId>com.jwk</groupId>
-    <version>0.1.1</version>
+    <version>0.1.2</version>
   </parent>
   <artifactId>jcloud-uaa</artifactId>
   <packaging>jar</packaging>

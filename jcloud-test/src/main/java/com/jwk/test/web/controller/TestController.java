@@ -10,8 +10,12 @@ import com.jwk.test.netty.TestServerChannel;
 import com.jwk.test.service.TestSeataService;
 import com.jwk.test.service.inner.TestService;
 import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import lombok.SneakyThrows;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
@@ -47,8 +51,8 @@ public class TestController {
 	// @Autowired
 	// private ResourceServerTokenServices tokenServices;
 
-//	@Autowired
-//	private RemoteTokenServices remoteTokenServices;
+	// @Autowired
+	// private RemoteTokenServices remoteTokenServices;
 
 	@GetMapping("/test2")
 	public SysUser test2(@UserParam SysUser sysUser) {

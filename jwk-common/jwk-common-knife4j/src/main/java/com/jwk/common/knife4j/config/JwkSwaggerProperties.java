@@ -28,6 +28,4 @@ public class JwkSwaggerProperties {
 
 	private String basePackage = "com.jwk";
 
-
-
 }

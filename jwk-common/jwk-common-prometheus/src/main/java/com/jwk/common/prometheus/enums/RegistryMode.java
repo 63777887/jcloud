@@ -1,6 +1,5 @@
 package com.jwk.common.prometheus.enums;
 
-
 /**
  * @author Jiwk
  * @date 2022/6/11
@@ -10,20 +9,19 @@ package com.jwk.common.prometheus.enums;
  */
 public enum RegistryMode {
 
-  /**
-   * ZOOKEEPER
-   */
-  ZOOKEEPER("zookeeper"),
-  DUBBO("dubbo");
+	/**
+	 * ZOOKEEPER
+	 */
+	ZOOKEEPER("zookeeper"), DUBBO("dubbo");
 
+	private final String name;
 
-  private final String name;
+	RegistryMode(String name) {
+		this.name = name;
+	}
 
-  RegistryMode(String name) {
-    this.name = name;
-  }
+	public String getName() {
+		return name;
+	}
 
-  public String getName() {
-    return name;
-  }
 }

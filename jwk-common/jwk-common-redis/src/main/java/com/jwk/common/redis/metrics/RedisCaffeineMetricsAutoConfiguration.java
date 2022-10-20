@@ -19,15 +19,14 @@ import org.springframework.context.annotation.Bean;
  * @date 2022/10/14
  */
 @AutoConfiguration(before = RedisAutoConfiguration.class,
-    after = { MetricsAutoConfiguration.class, CompositeMeterRegistryAutoConfiguration.class })
+		after = { MetricsAutoConfiguration.class, CompositeMeterRegistryAutoConfiguration.class })
 @ConditionalOnClass({ RedisClient.class, MicrometerCommandLatencyRecorder.class })
 @ConditionalOnBean(MeterRegistry.class)
 public class RedisCaffeineMetricsAutoConfiguration {
 
-  @Bean
-  public RedisCaffeineCacheMeterBinderProvider redisCaffeineCacheMeterBinderProvider() {
-    return new RedisCaffeineCacheMeterBinderProvider();
-  }
-
+	@Bean
+	public RedisCaffeineCacheMeterBinderProvider redisCaffeineCacheMeterBinderProvider() {
+		return new RedisCaffeineCacheMeterBinderProvider();
+	}
 
 }
