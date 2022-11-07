@@ -33,4 +33,4 @@ ENV SERVER_PORT=${PORT}
 # 容器执行的命令
 #ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar $PARAMS"]
 #ENTRYPOINT sleep 30; echo java $JAVA_OPTS -Dserver.port=$PORT -jar app.jar $PARAMS; java $JAVA_OPTS -Dserver.port= $PORT -jar app.jar $PARAMS
-CMD sleep 30; echo java $JAVA_OPTS -Dserver.port=${SERVER_PORT} -jar app.jar $PARAMS; java -jar app.jar $JAVA_OPTS -Dserver.port=${SERVER_PORT}
+CMD sleep 30; echo java $JAVA_OPTS -Dserver.port=${SERVER_PORT} -jar app.jar $PARAMS; java $JAVA_OPTS -Dserver.port=${SERVER_PORT} -jar app.jar $PARAMS

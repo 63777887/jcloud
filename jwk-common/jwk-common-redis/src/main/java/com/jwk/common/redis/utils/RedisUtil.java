@@ -12,7 +12,7 @@ import org.redisson.config.SentinelServersConfig;
 import org.redisson.config.SingleServerConfig;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties.Sentinel;
-import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
@@ -92,7 +92,7 @@ public class RedisUtil {
       SentinelServersConfig sentinelServers = config.useSentinelServers();
 
       // 地址
-      List<String> nodes = redisProperties.getCluster().getNodes();
+      List<String> nodes = redisProperties.getSentinel().getNodes();
       if (nodes != null && nodes.size() > 0) {
         nodes.stream().forEach(node -> {
           sentinelServers.addSentinelAddress("redis://" + node);
@@ -158,7 +158,7 @@ public class RedisUtil {
    * redis值序列化使用json序列化器
    */
   public RedisSerializer<Object> valueSerializer() {
-    return new GenericJackson2JsonRedisSerializer();
+    return new Jackson2JsonRedisSerializer(Object.class);
   }
 
 }

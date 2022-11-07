@@ -59,8 +59,8 @@ public class JwkRedisAutoConfiguration {
 
 	@Bean
 	@ConditionalOnMissingBean
-	public RedisTemplate<String, Object> redisTemplate(RedissonConnectionFactory redissonConnectionFactory) {
-		RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+	public RedisTemplate<Object, Object> redisTemplate(RedissonConnectionFactory redissonConnectionFactory) {
+		RedisTemplate<Object, Object> redisTemplate = new RedisTemplate<>();
 		redisTemplate.setConnectionFactory(redissonConnectionFactory);
 		redisTemplate.setKeySerializer(RedisUtil.keySerializer());
 		redisTemplate.setHashKeySerializer(RedisUtil.keySerializer());
