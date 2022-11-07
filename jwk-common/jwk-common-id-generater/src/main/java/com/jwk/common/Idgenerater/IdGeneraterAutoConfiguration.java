@@ -2,9 +2,11 @@ package com.jwk.common.Idgenerater;
 
 import com.jwk.common.Idgenerater.manager.IdGeneratorManage;
 import com.jwk.common.Idgenerater.manager.impl.RedisGeneratorManage;
+import com.jwk.common.Idgenerater.properties.IdGeneraterProperties;
 import com.jwk.common.Idgenerater.service.IdGeneratorService;
 import com.jwk.common.Idgenerater.service.impl.IdGeneratorServiceImpl;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -16,10 +18,11 @@ import org.springframework.context.annotation.Configuration;
  * @date 2022/11/2
  */
 @Configuration
+@EnableConfigurationProperties(IdGeneraterProperties.class)
 public class IdGeneraterAutoConfiguration {
 
   @Bean
-  public IdGeneratorService idGeneratorService(IdGeneratorManage idGeneratorManage){
+  public IdGeneratorService idGeneratorService(){
     IdGeneratorServiceImpl idGeneratorService = new IdGeneratorServiceImpl();
     return idGeneratorService;
   }

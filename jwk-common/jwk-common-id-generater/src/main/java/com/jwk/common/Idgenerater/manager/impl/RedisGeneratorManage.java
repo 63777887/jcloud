@@ -1,9 +1,9 @@
 package com.jwk.common.Idgenerater.manager.impl;
 
-import com.jwk.common.Idgenerater.constant.SlotConstant;
 import com.jwk.common.Idgenerater.exception.IdExceptionCodeE;
 import com.jwk.common.Idgenerater.exception.IdGeneratorException;
 import com.jwk.common.Idgenerater.manager.IdGeneratorManage;
+import com.jwk.common.Idgenerater.properties.IdGeneraterProperties;
 import com.jwk.common.redis.exception.RedisException;
 import com.jwk.common.redis.exception.RedisExceptionCodeE;
 import java.util.ArrayList;
@@ -29,9 +29,11 @@ public class RedisGeneratorManage implements IdGeneratorManage {
   @Autowired
   private RedissonClient redissonClient;
   @Autowired
-  private RedisTemplate<String,String> redisTemplate;
+  private RedisTemplate redisTemplate;
+  @Autowired
+  private IdGeneraterProperties idGeneraterProperties;
 
-  List initIdListCache = new ArrayList<String>();
+  List<String> initIdListCache = new ArrayList<>();
 
 
   /**
@@ -41,12 +43,11 @@ public class RedisGeneratorManage implements IdGeneratorManage {
    * @return
    */
   @Override
-  public long generate(int slotId) throws IdGeneratorException {
+  public long generate(int slotId) throws IdGeneratorException, RedisException {
     List<Long> ids = genIds(slotId, 1);
     return ids.size() > 0 ? ids.get(0) : -1;
   }
-  //以下三个ID使用微服务的统一ID生成方法生成，类型为int64，长度19位。
-  //1到10位共10个数字，使用时间戳，11到19位共9个数字，为递增数字，用0补全
+
   /**
    * 生成size个id
    *
@@ -56,8 +57,8 @@ public class RedisGeneratorManage implements IdGeneratorManage {
    * @throws IdGeneratorException
    */
   @Override
-  public List<Long> generate(int slotId, int size) throws IdGeneratorException {
-    if (size > SlotConstant.MAX_SIZE) {
+  public List<Long> generate(int slotId, int size) throws IdGeneratorException, RedisException {
+    if (size > idGeneraterProperties.maxSize) {
       IdGeneratorException exception = new IdGeneratorException(IdExceptionCodeE.SizeLimit);
       if (log.isErrorEnabled()) {
         log.error("generate error:{}", exception.toString());
@@ -68,12 +69,26 @@ public class RedisGeneratorManage implements IdGeneratorManage {
     return genIds(slotId, size);
   }
 
+  /**
+   * 路由规则
+   * @param type
+   * @return
+   * @throws IdGeneratorException
+   */
   @Override
-  public boolean support(String mode) {
-    return "redis".equals(mode);
+  public int slotId(long type) throws IdGeneratorException {
+    if (type > 0) {
+      return (int) (type % idGeneraterProperties.slotCount);
+    } else {
+      IdGeneratorException exception = new IdGeneratorException(IdExceptionCodeE.IllegalType);
+      if (log.isErrorEnabled()){
+        log.error("slotId error:{}", exception.toString());
+      }
+      throw exception;
+    }
   }
 
-  private List<Long> genIds(int slotId, int size) throws IdGeneratorException {
+  private List<Long> genIds(int slotId, int size) throws IdGeneratorException, RedisException {
     // 获取分布式锁
     String idLockKey = getIdLockKey(slotId);
     RLock lock = redissonClient.getLock(idLockKey);
@@ -86,7 +101,9 @@ public class RedisGeneratorManage implements IdGeneratorManage {
       try {
         tryLock = lock.tryLock(3, TimeUnit.SECONDS);
       } catch (InterruptedException e) {
-        log.error("获取锁失败，key为：{}", idLockKey);
+        if (log.isErrorEnabled()) {
+          log.error("获取锁失败，key为：{}", idLockKey);
+        }
         throw new RedisException(RedisExceptionCodeE.GetLockError);
       }
       if (tryLock) {
@@ -100,33 +117,30 @@ public class RedisGeneratorManage implements IdGeneratorManage {
 
         //是否需要初始化
         if (!initIdListCache.contains(idTypeKey)) {
-          redisTemplate.opsForValue().setIfAbsent(idTypeKey,
-              String.valueOf(SlotConstant.GENERAL_SLOT_INITIAL_VALUE));
+          redisTemplate.opsForValue().setIfAbsent(idTypeKey,idGeneraterProperties.slotInitialValue);
           initIdListCache.add(idTypeKey);
         }
 
         // redis:curId+size
         long currentCurId = redisTemplate.opsForValue().increment(idTypeKey, size);
 
-        // 大于最大值回拨
-        if (currentCurId >= SlotConstant.GENERAL_SLOT_MAX_VALUE) {
-          redisTemplate.opsForValue().set(idTypeKey,
-              String.valueOf(SlotConstant.GENERAL_SLOT_INITIAL_VALUE));
+        if (log.isDebugEnabled()) {
+          log.debug("currentCurId:{}", currentCurId);
         }
-        log.debug("currentCurId:{}", currentCurId);
 
         // 获取该槽位的起始值
-        long initValue = SlotConstant.GENERAL_SLOT_INITIAL_VALUE;
-        log.debug("initValue:{}", initValue);
+        long initValue = idGeneraterProperties.slotInitialValue;
+        if (log.isDebugEnabled()) {
+          log.debug("initValue:{}", initValue);
+        }
 
         // 小于起始值，认为redis值非法
         if (currentCurId <= initValue) {
 
             // 恢复初始值
-            currentCurId = SlotConstant.GENERAL_SLOT_INITIAL_VALUE;
-          redisTemplate.opsForValue().set(idTypeKey, String.valueOf(currentCurId));
+            currentCurId = initValue;
+          redisTemplate.opsForValue().set(idTypeKey, currentCurId);
         }
-        long timeMillis = System.currentTimeMillis();
 
         // 批量获取
         if (size > 1) {
@@ -147,11 +161,11 @@ public class RedisGeneratorManage implements IdGeneratorManage {
 
         return list;
       } else {
-        log.error("未获取到锁，key为：{}" + idLockKey);
+        if (log.isErrorEnabled()) {
+          log.error("未获取到锁，key为：{}" + idLockKey);
+        }
         throw new RedisException(RedisExceptionCodeE.GetLockFail);
       }
-    }catch (Exception e){
-      throw new IdGeneratorException("can not get id error",e);
     } finally {
       if (null != lock && lock.isLocked()
           && lock.isHeldByCurrentThread()) {

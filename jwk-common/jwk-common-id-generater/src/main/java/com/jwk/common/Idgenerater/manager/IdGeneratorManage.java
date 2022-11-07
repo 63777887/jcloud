@@ -30,4 +30,12 @@ public interface IdGeneratorManage {
 	 */
 	List<Long> generate(int slotId, int size) throws IdGeneratorException, RedisException;
 
+	/**
+	 * 路由规则
+	 * @param type
+	 * @return
+	 * @throws IdGeneratorException
+	 */
+	int slotId(long type) throws IdGeneratorException;
+
 }
