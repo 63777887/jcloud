@@ -14,9 +14,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 /**
+ * @author Jiwk
+ * @date 2022/11/8
+ * @version 0.1.3
+ * <p>
  * 为 jackson 添加序列化和反序列化 NullValue, CacheMessage 支持
- *
- * @author FlyInWind
  */
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnClass(Jackson2ObjectMapperBuilder.class)

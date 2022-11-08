@@ -7,27 +7,12 @@ import lombok.Data;
 /**
  * @author Jiwk
  * @date 2022/10/10
- * @version 0.1.1
+ * @version 0.1.3
  * <p>
  * Caffeine 相关配置
  */
 @Data
 public class CaffeineConfigProp {
-
-	/**
-	 * 访问后过期时间
-	 */
-	private Duration expireAfterAccess;
-
-	/**
-	 * 写入后过期时间
-	 */
-	private Duration expireAfterWrite;
-
-	/**
-	 * 写入后刷新时间
-	 */
-	private Duration refreshAfterWrite;
 
 	/**
 	 * 初始化大小

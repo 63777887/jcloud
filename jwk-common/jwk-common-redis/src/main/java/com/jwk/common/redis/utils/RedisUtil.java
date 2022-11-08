@@ -2,6 +2,7 @@ package com.jwk.common.redis.utils;
 
 import cn.hutool.core.util.StrUtil;
 import com.jwk.common.redis.properties.RedisConfigProperties;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
@@ -12,13 +13,13 @@ import org.redisson.config.SentinelServersConfig;
 import org.redisson.config.SingleServerConfig;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties.Sentinel;
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
  * @author Jiwk
- * @version 0.1.2
+ * @version 0.1.3
  * <p>
  * Redis工具类
  * @date 2022/10/20
@@ -42,6 +43,7 @@ public class RedisUtil {
 
   /**
    * redssionConfig 构建
+   *
    * @param redisConfigProperties
    * @return
    */
@@ -57,7 +59,7 @@ public class RedisUtil {
     config.setCodec(StringCodec.INSTANCE);
 
     RedisProperties redisProperties = redisConfigProperties.getRedis();
-    if (redisProperties.getCluster()!=null) {
+    if (redisProperties.getCluster() != null) {
 
       // 集群
       ClusterServersConfig clusterServers = config.useClusterServers();
@@ -85,7 +87,7 @@ public class RedisUtil {
       clusterServers.setSlaveConnectionMinimumIdleSize(slaveConnectionMinimumIdleSize);
       clusterServers.setSlaveConnectionPoolSize(slaveConnectionPoolSize);
       clusterServers.setScanInterval(scanInterval);
-    }else if (redisProperties.getSentinel()!=null){
+    } else if (redisProperties.getSentinel() != null) {
 
       Sentinel sentinel = redisProperties.getSentinel();
       // 哨兵
@@ -124,13 +126,13 @@ public class RedisUtil {
       sentinelServers.setSlaveConnectionMinimumIdleSize(slaveConnectionMinimumIdleSize);
       sentinelServers.setSlaveConnectionPoolSize(slaveConnectionPoolSize);
       sentinelServers.setScanInterval(scanInterval);
-    }else {
+    } else {
       // 单机模式
       SingleServerConfig singleServer = config.useSingleServer();
       // 地址
       String host = redisProperties.getHost();
 //      host = "localhost".equals(host)?"127.0.0.1":host;
-      singleServer.setAddress("redis://" + host+":"+redisProperties.getPort());
+      singleServer.setAddress("redis://" + host + ":" + redisProperties.getPort());
       // 密码
       String password = redisProperties.getPassword();
       String username = redisProperties.getUsername();
@@ -151,14 +153,18 @@ public class RedisUtil {
    * redis键序列化使用StringRedisSerializer
    */
   public RedisSerializer<String> keySerializer() {
-    return new StringRedisSerializer();
+    return new StringRedisSerializer(StandardCharsets.UTF_8);
   }
 
   /**
    * redis值序列化使用json序列化器
    */
   public RedisSerializer<Object> valueSerializer() {
-    return new Jackson2JsonRedisSerializer(Object.class);
+    return new GenericJackson2JsonRedisSerializer();
+  }
+
+  public String[] replaceName(String name, String delimiter) {
+    return name.split(delimiter, 3);
   }
 
 }

@@ -17,10 +17,11 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 /**
- * ID生成器（集群版）
- *
- * @author chenlong
- * @date 2022-06-06 14:46:44
+ * @author Jiwk
+ * @date 2022/11/8
+ * @version 0.1.3
+ * <p>
+ * id生成器
  */
 @Component
 @Slf4j
