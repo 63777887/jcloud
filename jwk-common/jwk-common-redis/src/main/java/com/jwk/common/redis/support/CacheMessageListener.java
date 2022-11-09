@@ -1,5 +1,7 @@
 package com.jwk.common.redis.support;
 
+import cn.hutool.core.util.ObjectUtil;
+import java.util.Objects;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,9 +28,14 @@ public class CacheMessageListener implements MessageListener {
 	@Override
 	public void onMessage(Message message, byte[] pattern) {
 		CacheMessage cacheMessage = (CacheMessage) redisSerializer.deserialize(message.getBody());
-		log.debug("receive a redis topic message, clear local cache, the cacheName is {}, the key is {}",
-				cacheMessage.getCacheName(), cacheMessage.getKey());
-		redisCaffeineCacheManager.clearLocal(cacheMessage.getCacheName(), cacheMessage.getKey());
+		if (log.isDebugEnabled()) {
+			log.debug("receive a redis topic message, clear local cache, the cacheName is {}, the key is {}，"
+							+ "the cacheServerId is {}",
+				cacheMessage.getCacheName(), cacheMessage.getKey(),cacheMessage.getCacheServerId());
+		}
+		if (!ObjectUtil.equals(cacheMessage.getCacheServerId(), redisCaffeineCacheManager.getCacheSeverId())) {
+			redisCaffeineCacheManager.clearLocal(cacheMessage.getCacheName(), cacheMessage.getKey());
+		}
 	}
 
 }

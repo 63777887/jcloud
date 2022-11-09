@@ -37,15 +37,17 @@ public class RedisCaffeineCacheManager implements CacheManager {
 
 	private CacheFactory cacheFactory;
 
+	private Object cacheSeverId;
+
 	public RedisCaffeineCacheManager(CacheConfigProperties cacheConfigProperties,
 			RedisTemplate<String, Object> stringKeyRedisTemplate,
 			CacheFactory cacheFactory) {
-		super();
 		this.cacheConfigProperties = cacheConfigProperties;
 		this.stringKeyRedisTemplate = stringKeyRedisTemplate;
 		this.dynamic = cacheConfigProperties.isDynamic();
 		this.cacheNames = cacheConfigProperties.getCacheNames();
 		this.cacheFactory = cacheFactory;
+		this.cacheSeverId = cacheConfigProperties.getServerId();
 	}
 
 	@Override
@@ -60,7 +62,9 @@ public class RedisCaffeineCacheManager implements CacheManager {
 
 		cache = cacheFactory.createCache(name);
 		Cache oldCache = cacheMap.putIfAbsent(name, cache);
-		log.debug("create cache instance, the cache name is : {}", name);
+		if (log.isDebugEnabled()) {
+			log.debug("create cache instance, the cache name is : {}", name);
+		}
 		return oldCache == null ? cache : oldCache;
 	}
 

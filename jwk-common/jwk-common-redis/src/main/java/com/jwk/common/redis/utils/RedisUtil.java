@@ -49,7 +49,9 @@ public class RedisUtil {
    */
   public Config config(RedisConfigProperties redisConfigProperties) {
 
-    log.debug("redisson init config start...RedisConfigProperties:{}", redisConfigProperties);
+    if (log.isDebugEnabled()) {
+      log.debug("redisson init config start...RedisConfigProperties:{}", redisConfigProperties);
+    }
 
     // redisson配置文件
     Config config = new Config();
@@ -143,7 +145,9 @@ public class RedisUtil {
         singleServer.setPassword(password);
       }
     }
-    log.debug("redisson init config end. Config:{}", config);
+    if (log.isDebugEnabled()) {
+      log.debug("redisson init config end. Config:{}", config);
+    }
 
     return config;
 

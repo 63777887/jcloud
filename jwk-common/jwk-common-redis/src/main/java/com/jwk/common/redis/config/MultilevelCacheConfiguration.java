@@ -1,7 +1,9 @@
 package com.jwk.common.redis.config;
 
 import com.jwk.common.redis.factory.CacheFactory;
+import com.jwk.common.redis.factory.CacheServerIdFactory;
 import com.jwk.common.redis.factory.impl.DefaultCacheFactory;
+import com.jwk.common.redis.factory.impl.RedisSeqCacheServerIdFactory;
 import com.jwk.common.redis.properties.CacheConfigProperties;
 import com.jwk.common.redis.properties.RedisConfigProperties;
 import com.jwk.common.redis.support.CacheMessageListener;
@@ -19,6 +21,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
@@ -67,7 +70,13 @@ public class MultilevelCacheConfiguration {
 	public RedisCaffeineCacheManager cacheManager(CacheConfigProperties cacheConfigProperties,
 			RedisTemplate<String, Object> redisTemplate,
 			ObjectProvider<RedisCaffeineCacheManagerCustomizer> cacheManagerCustomizers,
+			ObjectProvider<CacheServerIdFactory> cacheServerIdFactories,
 			CacheFactory cacheFactory) {
+		Object cacheServerId = cacheConfigProperties.getServerId();
+		if (cacheServerId == null || "".equals(cacheServerId)) {
+			cacheServerIdFactories
+					.ifAvailable(serverIdGenerator -> cacheConfigProperties.setServerId(serverIdGenerator.get()));
+		}
 		RedisCaffeineCacheManager cacheManager = new RedisCaffeineCacheManager(cacheConfigProperties, redisTemplate,
 				cacheFactory);
 		cacheManagerCustomizers.orderedStream().forEach(customizer -> customizer.customize(cacheManager));
@@ -97,10 +106,17 @@ public class MultilevelCacheConfiguration {
 	}
 
 	@Bean
-	@ConditionalOnMissingBean
+	@ConditionalOnMissingBean(CacheFactory.class)
 	public CacheFactory cacheFactory(CacheConfigProperties cacheConfigProperties,
 			RedisTemplate<String, Object> stringKeyRedisTemplate) {
 		return new DefaultCacheFactory(cacheConfigProperties,stringKeyRedisTemplate);
+	}
+
+	@Bean
+	@ConditionalOnMissingBean(CacheServerIdFactory.class)
+	public CacheServerIdFactory cacheServerIdFactory(CacheConfigProperties cacheConfigProperties,
+			RedisTemplate<String, Object> stringKeyRedisTemplate) {
+		return new RedisSeqCacheServerIdFactory(cacheConfigProperties,stringKeyRedisTemplate);
 	}
 
 }

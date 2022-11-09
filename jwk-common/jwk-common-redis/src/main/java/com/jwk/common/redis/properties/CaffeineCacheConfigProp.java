@@ -12,7 +12,7 @@ import lombok.Data;
  * Caffeine 相关配置
  */
 @Data
-public class CaffeineConfigProp {
+public class CaffeineCacheConfigProp {
 
 	/**
 	 * 初始化大小

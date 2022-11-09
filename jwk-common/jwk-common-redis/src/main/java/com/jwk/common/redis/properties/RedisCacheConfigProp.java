@@ -13,7 +13,7 @@ import lombok.Data;
  * Redis 相关配置
  */
 @Data
-public class RedisConfigProp {
+public class RedisCacheConfigProp {
 
 	/**
 	 * 全局过期时间，默认不过期
@@ -34,5 +34,10 @@ public class RedisConfigProp {
 	 * 缓存更新时通知其他节点的topic名称
 	 */
 	private String topic = "cache:redis:caffeine:topic";
+
+	/**
+	 * 生成当前节点id的key，当配置了jwk.cache.multi.server-id时，该配置不生效
+	 */
+	private String serverIdGeneratorKey = "cache:redis:caffeine:server-id";
 
 }

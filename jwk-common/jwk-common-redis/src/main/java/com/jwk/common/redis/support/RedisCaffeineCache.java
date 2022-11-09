@@ -4,7 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.jwk.common.redis.properties.CacheConfigProperties;
-import com.jwk.common.redis.properties.CaffeineConfigProp;
+import com.jwk.common.redis.properties.CaffeineCacheConfigProp;
 import com.jwk.common.redis.utils.RedisUtil;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
@@ -50,7 +50,9 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
 
 	private final Boolean usedCaffeineCache;
 
-	private final CaffeineConfigProp caffeineConfigProp;
+	private final CaffeineCacheConfigProp caffeineCacheConfigProp;
+
+	private final Object cacheServerId;
 
 	private final Map<String, ReentrantLock> keyLockMap = new ConcurrentHashMap<>();
 
@@ -63,9 +65,10 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
 		this.expires = cacheConfigProperties.getRedis().getExpires();
 		this.topic = cacheConfigProperties.getRedis().getTopic();
 		this.delimiter = cacheConfigProperties.getRedis().getDelimiter();
-		this.caffeineConfigProp = cacheConfigProperties.getCaffeine();
+		this.caffeineCacheConfigProp = cacheConfigProperties.getCaffeine();
 		this.caffeineCache = caffeineCache();
 		this.usedCaffeineCache = usedCaffeineCache;
+		this.cacheServerId = cacheConfigProperties.getServerId();
 	}
 
 	@Override
@@ -73,6 +76,13 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
 		return this;
 	}
 
+	/**
+	 * 获取缓存
+	 * @param key
+	 * @param valueLoader
+	 * @param <T>
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T> T get(Object key, Callable<T> valueLoader) {
@@ -82,7 +92,9 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
 		}
 
 		ReentrantLock lock = keyLockMap.computeIfAbsent(key.toString(), s -> {
-			log.trace("create lock for key : {}", s);
+			if (log.isDebugEnabled()) {
+				log.debug("create lock for key : {}", s);
+			}
 			return new ReentrantLock();
 		});
 
@@ -105,6 +117,11 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
 		}
 	}
 
+	/**
+	 * 添加缓存
+	 * @param key
+	 * @param value
+	 */
 	@Override
 	public void put(Object key, Object value) {
 		if (!super.isAllowNullValues() && value == null) {
@@ -133,19 +150,23 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
 		setRedisValue(key, value, expire);
 
 		if (this.usedCaffeineCache) {
-			push(new CacheMessage(this.name, key));
+			push(key);
 
 			setCaffeineValue(key, value);
 		}
 	}
 
+	/**
+	 * 清除缓存
+	 * @param key
+	 */
 	@Override
 	public void evict(Object key) {
 		// 先清除redis中缓存数据，然后清除caffeine中的缓存，避免短时间内如果先清除caffeine缓存后其他请求会再从redis里加载到caffeine中
 		stringKeyRedisTemplate.delete(getKey(key));
 
 		if (this.usedCaffeineCache) {
-			push(new CacheMessage(this.name, key));
+			push(key);
 
 			caffeineCache.invalidate(key);
 		}
@@ -161,12 +182,17 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
 		}
 
 		if (this.usedCaffeineCache) {
-			push(new CacheMessage(this.name, null));
+			push(null);
 
 			caffeineCache.invalidateAll();
 		}
 	}
 
+	/**
+	 * 获取缓存
+	 * @param key
+	 * @return
+	 */
 	@Override
 	protected Object lookup(Object key) {
 		Object cacheKey = getKey(key);
@@ -174,7 +200,9 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
 		if (usedCaffeineCache) {
 			value = getCaffeineValue(key);
 			if (value != null) {
-				log.debug("get cache from caffeine, the key is : {}", cacheKey);
+				if (log.isDebugEnabled()){
+					log.debug("get cache from caffeine, the key is : {}", cacheKey);
+				}
 				return value;
 			}
 		}
@@ -182,7 +210,9 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
 		value = getRedisValue(key);
 
 		if (value != null) {
-			log.debug("get cache from redis and put in caffeine, the key is : {}", cacheKey);
+			if (log.isDebugEnabled()) {
+				log.debug("get cache from redis and put in caffeine, the key is : {}", cacheKey);
+			}
 			setCaffeineValue(key, value);
 		}
 		return value;
@@ -202,7 +232,9 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
 				cacheNameExpire = DurationStyle.detectAndParse(cacheNameConfigs[1], ChronoUnit.SECONDS);
 			}
 			catch (NumberFormatException e) {
-				log.warn("cacheable has illegal expire time: {}, will use default settings", cacheNameConfigs[1]);
+				if (log.isWarnEnabled()) {
+					log.warn("cacheable has illegal expire time: {}, will use default settings", cacheNameConfigs[1]);
+				}
 			}
 		}
 		if (cacheNameExpire == null) {
@@ -213,10 +245,10 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
 
 	/**
 	 * 缓存变更时通知其他节点清理本地缓存
-	 * @param message
+	 * @param key
 	 */
-	protected void push(CacheMessage message) {
-		stringKeyRedisTemplate.convertAndSend(topic, message);
+	protected void push(Object key) {
+		stringKeyRedisTemplate.convertAndSend(topic, new CacheMessage(this.name,key,this.cacheServerId));
 	}
 
 	/**
@@ -224,7 +256,9 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
 	 * @param key
 	 */
 	public void clearLocal(Object key) {
-		log.debug("clear local cache, the key is : {}", key);
+		if (log.isDebugEnabled()) {
+			log.debug("clear local cache, the key is : {}", key);
+		}
 		if (key == null) {
 			caffeineCache.invalidateAll();
 		}
@@ -246,6 +280,10 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
 		return stringKeyRedisTemplate.opsForValue().get(getKey(key));
 	}
 
+	protected boolean setRedisValueIfAbsent(Object key,Object value) {
+		return stringKeyRedisTemplate.opsForValue().setIfAbsent(getKey(key),value);
+	}
+
 	protected void setCaffeineValue(Object key, Object value) {
 		caffeineCache.put(key, value);
 	}
@@ -262,14 +300,14 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
 	protected Caffeine<Object, Object> caffeineCacheBuilder() {
 		Caffeine<Object, Object> cacheBuilder = Caffeine.newBuilder();
 		doIfPresent(getExpire(), cacheBuilder::expireAfterWrite);
-		if (caffeineConfigProp.getInitialCapacity() > 0) {
-			cacheBuilder.initialCapacity(caffeineConfigProp.getInitialCapacity());
+		if (caffeineCacheConfigProp.getInitialCapacity() > 0) {
+			cacheBuilder.initialCapacity(caffeineCacheConfigProp.getInitialCapacity());
 		}
-		if (caffeineConfigProp.getMaximumSize() > 0) {
-			cacheBuilder.maximumSize(caffeineConfigProp.getMaximumSize());
+		if (caffeineCacheConfigProp.getMaximumSize() > 0) {
+			cacheBuilder.maximumSize(caffeineCacheConfigProp.getMaximumSize());
 		}
-		if (caffeineConfigProp.getKeyStrength() != null) {
-			switch (caffeineConfigProp.getKeyStrength()) {
+		if (caffeineCacheConfigProp.getKeyStrength() != null) {
+			switch (caffeineCacheConfigProp.getKeyStrength()) {
 				case WEAK:
 					// Caffeine.weakKeys() 使用弱引用存储key。如果没有强引用这个key，则GC时允许回收该条目
 					cacheBuilder.weakKeys();
@@ -279,8 +317,8 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
 				default:
 			}
 		}
-		if (caffeineConfigProp.getValueStrength() != null) {
-			switch (caffeineConfigProp.getValueStrength()) {
+		if (caffeineCacheConfigProp.getValueStrength() != null) {
+			switch (caffeineCacheConfigProp.getValueStrength()) {
 				case WEAK:
 					// Caffeine.weakValues() 使用弱引用存储value。如果没有强引用这个value，则GC时允许回收该条目
 					cacheBuilder.weakValues();
