@@ -1,5 +1,6 @@
 package com.jwk.common.redis.utils;
 
+import cn.hutool.core.text.StrPool;
 import cn.hutool.core.util.StrUtil;
 import com.jwk.common.redis.properties.RedisConfigProperties;
 import java.nio.charset.StandardCharsets;
@@ -134,7 +135,7 @@ public class RedisUtil {
       // 地址
       String host = redisProperties.getHost();
 //      host = "localhost".equals(host)?"127.0.0.1":host;
-      singleServer.setAddress("redis://" + host + ":" + redisProperties.getPort());
+      singleServer.setAddress("redis://" + host + StrPool.COLON + redisProperties.getPort());
       // 密码
       String password = redisProperties.getPassword();
       String username = redisProperties.getUsername();

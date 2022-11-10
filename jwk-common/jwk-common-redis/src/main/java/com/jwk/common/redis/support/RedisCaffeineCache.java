@@ -1,5 +1,6 @@
 package com.jwk.common.redis.support;
 
+import cn.hutool.core.text.StrPool;
 import cn.hutool.core.util.StrUtil;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
@@ -219,8 +220,8 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
 	}
 
 	protected String getKey(Object key) {
-		return this.name.concat(":").concat(
-				StrUtil.isNotBlank(cachePrefix) ? cachePrefix.concat(":").concat(key.toString()) : key.toString());
+		return this.name.concat(StrPool.COLON).concat(
+				StrUtil.isNotBlank(cachePrefix) ? cachePrefix.concat(StrPool.COLON).concat(key.toString()) : key.toString());
 	}
 
 	protected Duration getExpire() {

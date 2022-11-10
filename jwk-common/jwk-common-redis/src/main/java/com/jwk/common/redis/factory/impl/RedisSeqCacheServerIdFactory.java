@@ -2,10 +2,6 @@ package com.jwk.common.redis.factory.impl;
 
 import com.jwk.common.redis.factory.CacheServerIdFactory;
 import com.jwk.common.redis.properties.CacheConfigProperties;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.data.redis.core.RedisTemplate;
 
 
