@@ -1,7 +1,9 @@
-package com.jwk.common.prometheus.config;
+package com.jwk.common.prometheus.support;
 
 import com.jwk.common.core.utils.JwkSpringUtil;
-import com.jwk.common.prometheus.component.JwkPrometheusProperties;
+import com.jwk.common.prometheus.exception.PrometheusException;
+import com.jwk.common.prometheus.exception.PrometheusExceptionCodeE;
+import com.jwk.common.prometheus.properties.JwkPrometheusProperties;
 import com.jwk.common.prometheus.service.RegistryService;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
@@ -40,6 +42,9 @@ public class JwkPrometheusContext {
 
 	public static Map<String, Timer> timerCache = new ConcurrentHashMap<>();
 
+	private JwkPrometheusContext() {
+	}
+
 	public static JwkPrometheusContext getInstance() {
 		if (instance == null) {
 			synchronized (JwkPrometheusContext.class) {
@@ -51,8 +56,7 @@ public class JwkPrometheusContext {
 		return instance;
 	}
 
-	public void registry() {
-		try {
+	public void registry() throws PrometheusException {
 			synchronized (JwkPrometheusContext.class) {
 				Map<String, RegistryService> registryServiceMap = JwkSpringUtil.getBeansOfType(RegistryService.class);
 				String registryMode = jwkPrometheusProperties.getRegistryMode();
@@ -60,18 +64,15 @@ public class JwkPrometheusContext {
 					Optional<RegistryService> optional = registryServiceMap.values().stream()
 							.filter(service -> service.support().equals(registryMode)).findFirst();
 					if (!optional.isPresent()) {
-						throw new RuntimeException(
-								"RegistryService error , not registryService instance for " + registryMode);
+						if (logger.isErrorEnabled()) {
+							logger.error("RegistryService error , not registryService instance for {}", registryMode);
+						}
+						throw new PrometheusException(PrometheusExceptionCodeE.NoRegistryServiceInstance);
 					}
 					RegistryService registryService = optional.get();
 					registryService.registry();
 				}
 			}
-
-		}
-		catch (Throwable e) {
-			logger.error("jwk prometheus registry error{}", e.getMessage(), e);
-		}
 	}
 
 }

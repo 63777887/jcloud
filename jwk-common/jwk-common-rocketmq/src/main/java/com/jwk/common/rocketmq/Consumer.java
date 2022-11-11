@@ -36,7 +36,9 @@ public class Consumer {
 	private RocketMqMessageListener rocketMqMessageListener;
 
 	public void init() {
-		this.logger.debug("启动RocketMq监听...{}", this);
+		if (logger.isDebugEnabled()) {
+			logger.debug("启动RocketMq监听...{}", this);
+		}
 		DefaultMQPushConsumer consumer = new DefaultMQPushConsumer();
 		String property = RocketMQPropUtils.getProperty("platform");
 		if (StringUtils.isNotBlank(property)) {
@@ -58,7 +60,9 @@ public class Consumer {
 			rocketMqMessageWrapper.setRocketMqMessageListener(this.rocketMqMessageListener);
 			consumer.registerMessageListener(rocketMqMessageWrapper);
 			consumer.start();
-			this.logger.debug("启动RocketMq监听成功！");
+			if (logger.isDebugEnabled()) {
+				logger.debug("启动RocketMq监听成功！");
+			}
 		}
 		catch (Exception var4) {
 			var4.printStackTrace();

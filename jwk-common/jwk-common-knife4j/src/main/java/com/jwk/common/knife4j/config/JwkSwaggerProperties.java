@@ -16,16 +16,31 @@ import org.springframework.stereotype.Component;
 @Data
 public class JwkSwaggerProperties {
 
+	/**
+	 * 应用名
+	 */
 	@Value("${spring.application.name}")
 	private String title;
 
+	/**
+	 * 详情介绍
+	 */
 	private String description;
 
+	/**
+	 * 版本
+	 */
 	private String version = "1.0";
 
+	/**
+	 * 群组名
+	 */
 	@Value("${spring.application.name}")
 	private String groupName;
 
+	/**
+	 * 接口基础路径
+	 */
 	private String basePackage = "com.jwk";
 
 }

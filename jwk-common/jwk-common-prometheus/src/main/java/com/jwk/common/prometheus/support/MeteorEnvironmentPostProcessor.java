@@ -1,4 +1,4 @@
-package com.jwk.common.prometheus.config;
+package com.jwk.common.prometheus.support;
 
 import java.util.Map;
 import java.util.TreeMap;

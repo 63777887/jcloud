@@ -12,15 +12,15 @@ public enum RedisExceptionCodeE {
   /**
    * 当前锁已被他人获取
    */
-  LockIsExist(-1, "当前锁已被他人获取"),
+  LockIsExist(10101, "当前锁已被他人获取"),
   /**
    * 获取锁失败，产生异常
    */
-  GetLockError(-2, "获取锁失败"),
+  GetLockError(10102, "获取锁失败"),
   /**
    * 未获取到锁
    */
-  GetLockFail(-3, "未获取到锁");
+  GetLockFail(10103, "未获取到锁");
 
   RedisExceptionCodeE(Integer errCode, String errMsg) {
     this.errCode = errCode;

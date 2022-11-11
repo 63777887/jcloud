@@ -23,7 +23,9 @@ public class UrlBlockHandler implements BlockExceptionHandler {
 
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response, BlockException e) throws Exception {
-		log.error("sentinel 降级 资源名称{}", e.getRule().getResource(), e);
+		if (log.isErrorEnabled()) {
+			log.error("sentinel 降级 资源名称{}", e.getRule().getResource(), e);
+		}
 
 		response.setContentType(ContentType.JSON.toString());
 		response.setStatus(HttpStatus.TOO_MANY_REQUESTS.value());

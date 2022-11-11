@@ -36,7 +36,9 @@ public class RocketMQUtils {
 						producer.start();
 					}
 					catch (Exception var9) {
-						logger.error("初始化producer异常", var9);
+						if (logger.isErrorEnabled()) {
+							logger.error("初始化producer异常", var9);
+						}
 					}
 					finally {
 						;

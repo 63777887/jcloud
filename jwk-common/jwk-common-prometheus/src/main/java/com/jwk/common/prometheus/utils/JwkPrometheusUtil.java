@@ -4,7 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.jwk.common.core.utils.JwkSpringUtil;
-import com.jwk.common.prometheus.component.JwkPrometheusProperties;
+import com.jwk.common.prometheus.properties.JwkPrometheusProperties;
 import java.util.UUID;
 import org.springframework.core.env.Environment;
 

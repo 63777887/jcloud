@@ -2,9 +2,11 @@ package com.jwk.common.prometheus.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.jwk.common.prometheus.config.JwkPrometheusContext;
-import com.jwk.common.prometheus.component.JwkPrometheusProperties;
-import com.jwk.common.prometheus.component.ZookeeperProperties;
+import com.jwk.common.prometheus.support.JwkPrometheusContext;
+import com.jwk.common.prometheus.exception.PrometheusException;
+import com.jwk.common.prometheus.exception.PrometheusExceptionCodeE;
+import com.jwk.common.prometheus.properties.JwkPrometheusProperties;
+import com.jwk.common.prometheus.properties.ZookeeperProperties;
 import com.jwk.common.prometheus.constant.JwkPrometheusConstants;
 import com.jwk.common.prometheus.service.RegistryService;
 import com.jwk.common.prometheus.utils.JwkPrometheusUtil;
@@ -43,19 +45,23 @@ public class ZookeeperRegistryServiceImpl implements RegistryService {
 		ZookeeperProperties zookeeper = jwkPrometheusProperties.getZookeeper();
 
 		if (StringUtils.isBlank(zookeeper.getAddress())) {
-			throw new RuntimeException("jcloud prometheus address is undefined, please check config");
+			throw new IllegalArgumentException("jcloud prometheus address is undefined, please check config");
 		}
 
 		if (StringUtils.isBlank(zookeeper.getNamespace())) {
-			throw new RuntimeException("jcloud prometheus namespace is undefined, please check config");
+			throw new IllegalArgumentException("jcloud prometheus namespace is undefined, please check config");
 		}
 
 		try {
-			logger.info("register zk starting...");
+			if (logger.isDebugEnabled()) {
+				logger.debug("register zk starting...");
+			}
 			registerPrometheusMetrics(jwkPrometheusProperties);
 		}
 		catch (Exception e) {
-			logger.error("register zk error.", e);
+			if (logger.isErrorEnabled()){
+				logger.error("register zk error.", e);
+			}
 			throw new RuntimeException("register zk error", e);
 		}
 	}
@@ -73,12 +79,13 @@ public class ZookeeperRegistryServiceImpl implements RegistryService {
 		if (null == zookeeper.getAddress()) {
 			String zookeeperUrl = System.getenv("ZOOKEEPER_URL");
 			if (null == zookeeperUrl) {
-				throw new RuntimeException("prometheus zookeeper register url is empty...");
+				throw new IllegalArgumentException("prometheus zookeeper register url is empty...");
 			}
 			zookeeper.setAddress(zookeeperUrl);
 		}
-
-		logger.info("config init value vrvActuatorProperties :{}", JSON.toJSON(jwkPrometheusProperties));
+		if (logger.isDebugEnabled()) {
+			logger.debug("config init value vrvActuatorProperties :{}", JSON.toJSON(jwkPrometheusProperties));
+		}
 
 	}
 
@@ -89,7 +96,9 @@ public class ZookeeperRegistryServiceImpl implements RegistryService {
 			return stat != null;
 		}
 		catch (Exception e) {
-			logger.error("check zk node error...,path:{}", path, e);
+			if (logger.isErrorEnabled()) {
+				logger.error("check zk node error...,path:{}", path, e);
+			}
 		}
 		return false;
 	}
@@ -102,7 +111,9 @@ public class ZookeeperRegistryServiceImpl implements RegistryService {
 		if (!checkNodeExists(path)) {
 			String realPath = curatorFramework.create().creatingParentContainersIfNeeded()
 					.withMode(CreateMode.EPHEMERAL).forPath(path, data.toJSONString().getBytes(StandardCharsets.UTF_8));
-			logger.info("create zk node :{},data:{}", path, data);
+			if (logger.isDebugEnabled()) {
+				logger.info("create zk node :{},data:{}", path, data);
+			}
 
 			CuratorWatcher curatorWatcher = new CuratorWatcher() {
 				@Override
@@ -110,16 +121,22 @@ public class ZookeeperRegistryServiceImpl implements RegistryService {
 					try {
 						switch (event.getType()) {
 							case NodeDeleted:
-								logger.warn("listen register provider node deleted path {}", realPath);
+								if (logger.isWarnEnabled()) {
+									logger.warn("listen register provider node deleted path {}", realPath);
+								}
 								// 等待5秒，检测节点是否存在，如果不存在，则注册
 								// Thread.sleep(5 * 1000);
 								Stat stat = curatorFramework.checkExists().forPath(realPath);
 								if (stat != null) {
-									logger.info("listen register provider node already exists path {}", realPath);
+									if (logger.isDebugEnabled()) {
+										logger.info("listen register provider node already exists path {}", realPath);
+									}
 									break;
 								}
-								logger.warn("listen register provider node not exists path {}", realPath);
-								logger.warn("listen register provider node create model[EPHEMERAL] path {}", realPath);
+								if (logger.isWarnEnabled()) {
+									logger.warn("listen register provider node not exists path {}", realPath);
+									logger.warn("listen register provider node create model[EPHEMERAL] path {}", realPath);
+								}
 								curatorFramework.create().withMode(CreateMode.EPHEMERAL).forPath(realPath,
 										data.toJSONString().getBytes(StandardCharsets.UTF_8));
 								break;
@@ -128,7 +145,9 @@ public class ZookeeperRegistryServiceImpl implements RegistryService {
 						}
 					}
 					catch (Exception e) {
-						logger.error("listen register provider node error,{}", e.getMessage());
+						if (logger.isErrorEnabled()) {
+							logger.error("listen register provider node error,{}", e.getMessage());
+						}
 					}
 				}
 			};
@@ -140,16 +159,17 @@ public class ZookeeperRegistryServiceImpl implements RegistryService {
 				try {
 					curatorFramework.watchers().remove(curatorWatcher).forPath(realPath);
 					// curatorFramework.close();
-					logger.info("remove watchers...");
+					if (logger.isDebugEnabled()) {
+						logger.info("remove watchers...");
+					}
 				}
 				catch (Exception e) {
 					// logger.error("",e);
 				}
 			}));
 			return realPath;
-		}
-		else {
-			throw new RuntimeException("zk node is exist....");
+		} else {
+			throw new PrometheusException(PrometheusExceptionCodeE.NodeExist);
 		}
 
 	}

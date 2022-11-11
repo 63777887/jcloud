@@ -27,10 +27,10 @@ public class TestSeataServiceImpl implements TestSeataService {
 	@Override
 	// @GlobalTransactional(rollbackFor = Exception.class)
 	public int testSeata() {
-		// upmsRemoteService.testSeata();
-		int i = userMapper.addOrginId();
+		 upmsRemoteService.testSeata();
+//		int i = userMapper.addOrginId();
 		// int i1 = 3/0;
-		return i;
+		return 0;
 	}
 
 }

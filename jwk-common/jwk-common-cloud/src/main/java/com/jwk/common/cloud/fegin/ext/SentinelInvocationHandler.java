@@ -120,7 +120,9 @@ public class SentinelInvocationHandler implements InvocationHandler {
 					else {
 						// 若是业务统一类型 执行自动降级返回R
 						if (InnerResponse.class == method.getReturnType()) {
-							log.error("feign 服务间调用异常", ex);
+							if (log.isErrorEnabled()) {
+								log.error("feign 服务间调用异常", ex);
+							}
 							return InnerResponse.error().setMsg(ex.getLocalizedMessage());
 						}
 						else {

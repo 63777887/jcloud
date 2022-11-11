@@ -1,3 +1,2 @@
 com.jwk.common.cloud.config.FeignAutoConfiguration
-com.jwk.common.cloud.config.NacosConfiguration
 com.jwk.common.cloud.config.RestTemplateConfiguration

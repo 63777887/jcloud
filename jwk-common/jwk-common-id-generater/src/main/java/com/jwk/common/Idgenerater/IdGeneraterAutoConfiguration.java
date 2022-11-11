@@ -7,6 +7,7 @@ import com.jwk.common.Idgenerater.service.IdGeneratorService;
 import com.jwk.common.Idgenerater.service.impl.IdGeneratorServiceImpl;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -32,6 +33,19 @@ public class IdGeneraterAutoConfiguration {
   public IdGeneratorManage idGeneratorManage(){
     RedisGeneratorManage manage = new RedisGeneratorManage();
     return manage;
+  }
+
+  @Bean
+  public KeyGenerator keyGenerator() {
+    return (target, method, params) -> {
+      StringBuilder sb = new StringBuilder();
+      sb.append(target.getClass().getName());
+      sb.append(method.getName());
+      for (Object obj : params) {
+        sb.append(obj.toString());
+      }
+      return sb.toString();
+    };
   }
 
 }

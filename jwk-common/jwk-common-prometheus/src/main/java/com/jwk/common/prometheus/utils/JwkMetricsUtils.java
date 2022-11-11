@@ -1,10 +1,12 @@
 package com.jwk.common.prometheus.utils;
 
-import com.jwk.common.prometheus.config.JwkPrometheusContext;
+import com.jwk.common.prometheus.support.JwkPrometheusContext;
 import com.jwk.common.prometheus.constant.JwkPrometheusConstants;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.Timer;
+import java.lang.reflect.Method;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,18 +17,22 @@ import org.slf4j.LoggerFactory;
  * <p>
  * 提供自定义监控信息工具类
  */
-public class JwkMetricUtils {
+public class JwkMetricsUtils {
 
-	private static final Logger logger = LoggerFactory.getLogger(JwkMetricUtils.class);
+	private static final Logger logger = LoggerFactory.getLogger(JwkMetricsUtils.class);
 
 	public static Counter buildCounter(String name, String desc, String... tags) {
-		logger.info("counter metrics build init...  name:{} ,desc :{} ,tags :{}", name, desc, tags);
+		if (logger.isDebugEnabled()) {
+			logger.debug("counter metrics build init...  name:{} ,desc :{} ,tags :{}", name, desc, tags);
+		}
 		return Counter.builder(name).tags(tags).description(desc)
 				.register(JwkPrometheusContext.getInstance().getRegistry());
 	}
 
 	public static Timer buildTimer(String name, String desc, String... tags) {
-		logger.info("timer metrics build init...  name:{} ,desc :{} ,tags :{}", name, desc, tags);
+		if (logger.isDebugEnabled()) {
+			logger.info("timer metrics build init...  name:{} ,desc :{} ,tags :{}", name, desc, tags);
+		}
 		return Timer.builder(name).tags(tags).description(desc)
 				.register(JwkPrometheusContext.getInstance().getRegistry());
 	}
@@ -67,6 +73,13 @@ public class JwkMetricUtils {
 			timerCache.put(methodName, timer);
 		}
 		return timer;
+	}
+
+	public static void pushPrometheus(String methodName, long invokeBegin, Boolean isSuccess) {
+		long invokeEnd = System.currentTimeMillis();
+		getCounter(methodName, isSuccess).increment();
+		long invokeTime = invokeEnd - invokeBegin;
+		getTimer(methodName, isSuccess).record(invokeTime, TimeUnit.MILLISECONDS);
 	}
 
 }

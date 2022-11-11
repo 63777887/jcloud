@@ -16,20 +16,21 @@ public class MybatisPlusMetaObjectHandler implements MetaObjectHandler {
 
 	@Override
 	public void insertFill(MetaObject metaObject) {
-		log.debug("mybatis plus start insert fill ....");
+		if (log.isDebugEnabled()) {
+			log.debug("mybatis plus start insert fill ....");
+		}
 		LocalDateTime now = LocalDateTime.now();
 
 		fillValIfNullByName("createTime", now, metaObject, false);
 		fillValIfNullByName("updateTime", now, metaObject, false);
-		// fillValIfNullByName("createBy", getUserName(), metaObject, false);
-		// fillValIfNullByName("updateBy", getUserName(), metaObject, false);
 	}
 
 	@Override
 	public void updateFill(MetaObject metaObject) {
-		log.debug("mybatis plus start update fill ....");
+		if (log.isDebugEnabled()) {
+			log.debug("mybatis plus start update fill ....");
+		}
 		fillValIfNullByName("updateTime", LocalDateTime.now(), metaObject, true);
-		// fillValIfNullByName("updateBy", getUserName(), metaObject, true);
 	}
 
 	/**

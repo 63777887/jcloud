@@ -5,10 +5,11 @@ import com.jwk.common.redis.exception.RedisException;
 import java.util.List;
 
 /**
+ * @author Jiwk
+ * @date 2022/11/8
+ * @version 0.1.3
+ * <p>
  * id生成器
- * 
- * @author chenlong
- * @date 2022-06-10 10:16:58
  */
 public interface IdGeneratorManage {
 

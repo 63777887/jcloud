@@ -10,7 +10,7 @@ import com.alibaba.csp.sentinel.Tracer;
 import com.alibaba.csp.sentinel.context.ContextUtil;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.jwk.common.core.model.InnerResponse;
-import com.jwk.common.prometheus.utils.JwkMetricUtils;
+import com.jwk.common.prometheus.utils.JwkMetricsUtils;
 import feign.Feign;
 import feign.InvocationHandlerFactory;
 import feign.MethodMetadata;
@@ -93,7 +93,7 @@ public class PrometheusSentinelInvocationHandler implements InvocationHandler {
 			if (methodMetadata == null) {
 				invokeBegin = System.currentTimeMillis();
 				result = methodHandler.invoke(args);
-				pushPrometheus(method, invokeBegin, Boolean.TRUE);
+				JwkMetricsUtils.pushPrometheus(method.getName(), invokeBegin, Boolean.TRUE);
 			}
 			else {
 				// resourceName = GET:http://jwk-gateway/jwk-security/inner/test
@@ -105,10 +105,10 @@ public class PrometheusSentinelInvocationHandler implements InvocationHandler {
 					entry = SphU.entry(resourceName, EntryType.OUT, 1, args);
 					invokeBegin = System.currentTimeMillis();
 					result = methodHandler.invoke(args);
-					pushPrometheus(method, invokeBegin, Boolean.TRUE);
+					JwkMetricsUtils.pushPrometheus(method.getName(), invokeBegin, Boolean.TRUE);
 				}
 				catch (Throwable ex) {
-					pushPrometheus(method, invokeBegin, Boolean.FALSE);
+					JwkMetricsUtils.pushPrometheus(method.getName(), invokeBegin, Boolean.FALSE);
 					// fallback handle
 					if (!BlockException.isBlockException(ex)) {
 						Tracer.trace(ex);
@@ -179,14 +179,6 @@ public class PrometheusSentinelInvocationHandler implements InvocationHandler {
 			result.put(method, method);
 		}
 		return result;
-	}
-
-	private void pushPrometheus(Method method, long invokeBegin, Boolean isSuccess) {
-		long invokeEnd = System.currentTimeMillis();
-		String methodName = method.getName();
-		JwkMetricUtils.getCounter(methodName, isSuccess).increment();
-		long invokeTime = invokeEnd - invokeBegin;
-		JwkMetricUtils.getTimer(methodName, isSuccess).record(invokeTime, TimeUnit.MILLISECONDS);
 	}
 
 }

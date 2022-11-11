@@ -37,10 +37,15 @@ public class CacheConfigProperties {
 	 */
 	private String cachePrefix;
 
-	@NestedConfigurationProperty
-	private RedisConfigProp redis = new RedisConfigProp();
+	/**
+	 * 当前节点id。来自当前节点的缓存更新通知不会被处理
+	 */
+	private Object serverId;
 
 	@NestedConfigurationProperty
-	private CaffeineConfigProp caffeine = new CaffeineConfigProp();
+	private RedisCacheConfigProp redis = new RedisCacheConfigProp();
+
+	@NestedConfigurationProperty
+	private CaffeineCacheConfigProp caffeine = new CaffeineCacheConfigProp();
 
 }

@@ -2,6 +2,8 @@ package com.jwk.common.redis;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
+import com.jwk.common.redis.config.RateLimiterAutoConfiguration;
+import com.jwk.common.redis.config.RedisKeyExpiredEventConfiguration;
 import com.jwk.common.redis.properties.CacheConfigProperties;
 import com.jwk.common.redis.properties.RedisConfigProperties;
 import com.jwk.common.redis.utils.RedisUtil;
@@ -17,13 +19,16 @@ import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.listener.KeyExpirationEventMessageListener;
+import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 
 /**
  * @author Jiwk
  * @date 2022/10/10
- * @version 0.1.1
+ * @version 0.1.3
  * <p>
  * 自动注入类
  */
@@ -31,6 +36,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 @AutoConfigureBefore({ RedisAutoConfiguration.class, })
 @EnableConfigurationProperties({ CacheConfigProperties.class, RedisConfigProperties.class })
 @Slf4j
+@Import({RateLimiterAutoConfiguration.class, RedisKeyExpiredEventConfiguration.class})
 public class JwkRedisAutoConfiguration {
 
 	@Bean
@@ -59,8 +65,8 @@ public class JwkRedisAutoConfiguration {
 
 	@Bean
 	@ConditionalOnMissingBean
-	public RedisTemplate<Object, Object> redisTemplate(RedissonConnectionFactory redissonConnectionFactory) {
-		RedisTemplate<Object, Object> redisTemplate = new RedisTemplate<>();
+	public RedisTemplate<String, Object> redisTemplate(RedissonConnectionFactory redissonConnectionFactory) {
+		RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
 		redisTemplate.setConnectionFactory(redissonConnectionFactory);
 		redisTemplate.setKeySerializer(RedisUtil.keySerializer());
 		redisTemplate.setHashKeySerializer(RedisUtil.keySerializer());
@@ -68,6 +74,13 @@ public class JwkRedisAutoConfiguration {
 		redisTemplate.setHashValueSerializer(RedisUtil.valueSerializer());
 		redisTemplate.setEnableDefaultSerializer(false);
 		return redisTemplate;
+	}
+
+	@Bean
+	@ConditionalOnMissingBean
+	public KeyExpirationEventMessageListener keyExpirationEventMessageListener(
+			RedisMessageListenerContainer listenerContainer) {
+		return new KeyExpirationEventMessageListener(listenerContainer);
 	}
 
 }

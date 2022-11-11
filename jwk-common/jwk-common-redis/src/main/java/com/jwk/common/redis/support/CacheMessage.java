@@ -21,4 +21,6 @@ public class CacheMessage implements Serializable {
 
 	private Object key;
 
+	private Object cacheServerId;
+
 }
