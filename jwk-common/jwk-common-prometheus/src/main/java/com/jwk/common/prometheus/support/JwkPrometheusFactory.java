@@ -1,12 +1,14 @@
-package com.jwk.common.prometheus.config;
+package com.jwk.common.prometheus.support;
 
-import com.jwk.common.prometheus.component.JwkPrometheusProperties;
+import com.jwk.common.prometheus.exception.PrometheusException;
+import com.jwk.common.prometheus.properties.JwkPrometheusProperties;
 import com.jwk.common.prometheus.constant.JwkPrometheusConstants;
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanInstantiationException;
 import org.springframework.context.ApplicationContext;
 
 /**
@@ -29,12 +31,19 @@ public final class JwkPrometheusFactory {
 	public static void init(ApplicationContext applicationContext, MeterRegistry registry,
 			JwkPrometheusProperties jwkPrometheusProperties) {
 
-		buildJwkPrometheusContext(applicationContext, jwkPrometheusProperties, registry);
+		try {
+			buildJwkPrometheusContext(applicationContext, jwkPrometheusProperties, registry);
+		} catch (PrometheusException e) {
+			throw new BeanInstantiationException(JwkPrometheusContext.class,e.getMessage());
+		}
 	}
 
 	public static void buildJwkPrometheusContext(ApplicationContext applicationContext,
-			JwkPrometheusProperties jwkPrometheusProperties, MeterRegistry registry) {
-		logger.info("jcloud prometheus context build start");
+			JwkPrometheusProperties jwkPrometheusProperties, MeterRegistry registry)
+			throws PrometheusException {
+		if (logger.isDebugEnabled()) {
+			logger.debug("jcloud prometheus context build start");
+		}
 		// 默认注册配置为zk
 		if (StringUtils.isBlank(jwkPrometheusProperties.getRegistryMode())) {
 			jwkPrometheusProperties.setRegistryMode(JwkPrometheusConstants.DEFAULT_REGISTER_MODE);

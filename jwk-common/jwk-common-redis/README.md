@@ -18,7 +18,7 @@
 - 支持 # 号分隔 cachename 和 超时，支持 ms（毫秒），s（秒默认），m（分），h（小时），d（天）等单位。
 - 支持Caffeine作为一级缓存，提高缓存性能
 #### 1.1 开启增强的redis cache
-```yaml
+```java
 @EnableJwkCaching
 ```
 
@@ -33,6 +33,8 @@ public String get(String key){
     return key;
     }
 ```
+每次都会去访问redis
+![不使用caffeine一级缓存](../docs/images/redisCache.png)
 示例：使用caffeine一级缓存
 ```java
 @Cacheable(value = "get#6m#1",key = "#key")
@@ -41,6 +43,8 @@ public String get(String key){
 return key;
 }
 ```
+只会访问一次
+![不使用caffeine一级缓存](../docs/images/caffeineRedisCache.png)
 
 ### 2. 分布式限流
 #### 2.1 开启限流组件

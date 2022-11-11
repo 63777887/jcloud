@@ -97,10 +97,14 @@ public class RabbitMQAutoConfiguration {
 			@Override
 			public void confirm(CorrelationData correlationData, boolean ack, String cause) {
 				if (ack) {
-					log.info("发送消息到exchange成功");
+					if (log.isDebugEnabled()) {
+						log.debug("发送消息到exchange成功");
+					}
 				}
 				else {
-					log.error("发送消息到exchange失败" + cause);
+					if (log.isErrorEnabled()) {
+						log.error("发送消息到exchange失败" + cause);
+					}
 				}
 			}
 		});
@@ -110,7 +114,9 @@ public class RabbitMQAutoConfiguration {
 		rabbitTemplate.setReturnsCallback(new ReturnsCallback() {
 			@Override
 			public void returnedMessage(ReturnedMessage returned) {
-				log.error("匹配queue失败:{}", returned.toString());
+				if (log.isErrorEnabled()) {
+					log.error("匹配queue失败:{}", returned.toString());
+				}
 			}
 		});
 

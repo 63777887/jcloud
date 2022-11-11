@@ -1,4 +1,4 @@
-package com.jwk.common.prometheus.component;
+package com.jwk.common.prometheus.properties;
 
 import lombok.Data;
 

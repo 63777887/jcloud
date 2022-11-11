@@ -49,7 +49,9 @@ public class Consumer {
 	AmqpAdmin amqpAdmin;
 
 	public void init() {
-		this.logger.debug("启动RabbitMq监听...{}", this);
+		if (logger.isDebugEnabled()){
+			logger.debug("启动RabbitMq监听...{}", this);
+		}
 		Assert.isTrue(null != queue, "queue cannot be null !");
 		SimpleMessageListenerContainer container = new SimpleMessageListenerContainer(rabbitConfig.connectionFactory());
 		// 设置启动监听超时时间
@@ -80,13 +82,17 @@ public class Consumer {
 		container.setErrorHandler(new ErrorHandler() {
 			@Override
 			public void handleError(Throwable t) {
-				logger.error("RabbitMq监听出错：{}", t.toString());
+				if (logger.isErrorEnabled()) {
+					logger.error("RabbitMq监听出错：{}", t.toString());
+				}
 				throw new ServiceException(t);
 			}
 		});
 		extendMq();
 		container.start();
-		this.logger.debug("启动RabbitMq监听成功！");
+		if (logger.isDebugEnabled()) {
+			this.logger.debug("启动RabbitMq监听成功！");
+		}
 	}
 
 	private void extendMq() {

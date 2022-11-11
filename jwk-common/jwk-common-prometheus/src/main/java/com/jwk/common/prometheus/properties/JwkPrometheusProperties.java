@@ -1,4 +1,4 @@
-package com.jwk.common.prometheus.component;
+package com.jwk.common.prometheus.properties;
 
 import com.jwk.common.prometheus.constant.JwkPrometheusConstants;
 import lombok.Data;
@@ -25,6 +25,9 @@ public class JwkPrometheusProperties {
 	 */
 	private String application;
 
+	/**
+	 * 注册类型
+	 */
 	private String registryMode = JwkPrometheusConstants.DEFAULT_REGISTER_MODE;
 
 	@NestedConfigurationProperty

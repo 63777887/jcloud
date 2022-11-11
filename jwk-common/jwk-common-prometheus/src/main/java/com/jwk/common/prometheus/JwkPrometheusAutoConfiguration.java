@@ -1,9 +1,11 @@
 package com.jwk.common.prometheus;
 
 import com.jwk.common.cloud.config.FeignAutoConfiguration;
-import com.jwk.common.prometheus.component.JwkPrometheusProperties;
+import com.jwk.common.prometheus.metrics.PrometheusMetricsInterceptor;
+import com.jwk.common.prometheus.metrics.WebConfig;
+import com.jwk.common.prometheus.properties.JwkPrometheusProperties;
 import com.jwk.common.prometheus.config.JwkPrometheusConfiguration;
-import com.jwk.common.prometheus.config.JwkPrometheusFactory;
+import com.jwk.common.prometheus.support.JwkPrometheusFactory;
 import com.jwk.common.prometheus.ext.PrometheusSentinelFeign;
 import feign.Feign;
 import io.micrometer.core.instrument.MeterRegistry;
@@ -25,7 +27,7 @@ import org.springframework.context.annotation.Scope;
  * 自动配置类
  */
 @EnableConfigurationProperties(JwkPrometheusProperties.class)
-@Import({ JwkPrometheusConfiguration.class })
+@Import({ JwkPrometheusConfiguration.class, PrometheusMetricsInterceptor.class, WebConfig.class })
 @AutoConfigureBefore(FeignAutoConfiguration.class)
 public class JwkPrometheusAutoConfiguration {
 

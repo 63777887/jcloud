@@ -3,4 +3,4 @@
 #   https://github.com/spring-projects/spring-boot/issues/31252
 #   EnvironmentPostProcessor仍应通过spring.factories. 我们只打算更改自动配置导入，因为我们想删除SpringFactoriesLoader.loadFactoryNames
 org.springframework.boot.env.EnvironmentPostProcessor=\
-  com.jwk.common.prometheus.config.MeteorEnvironmentPostProcessor
+  com.jwk.common.prometheus.support.MeteorEnvironmentPostProcessor

@@ -36,10 +36,10 @@
           <groupId>com.jwk</groupId>
           <artifactId>jwk-common-mybatis</artifactId>
       </dependency>
-<!--    <dependency>-->
-<!--      <groupId>com.jwk</groupId>-->
-<!--      <artifactId>jwk-common-prometheus</artifactId>-->
-<!--    </dependency>-->
+    <dependency>
+      <groupId>com.jwk</groupId>
+      <artifactId>jwk-common-prometheus</artifactId>
+    </dependency>
 
     <dependency>
       <groupId>com.jwk</groupId>
