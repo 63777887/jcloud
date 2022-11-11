@@ -22,10 +22,7 @@
 @EnableJwkCaching
 ```
 
-
-
-
-示例： 不使用caffeine一级缓存
+#### 示例： 不使用caffeine一级缓存
 ```java
 @Cacheable(value = "get#6m",key = "#key")
 @GetMapping("/get")
@@ -33,9 +30,9 @@ public String get(String key){
     return key;
     }
 ```
-每次都会去访问redis
+##### 每次都会去访问redis
 ![不使用caffeine一级缓存](../docs/images/redisCache.png)
-示例：使用caffeine一级缓存
+#### 示例：使用caffeine一级缓存
 ```java
 @Cacheable(value = "get#6m#1",key = "#key")
 @GetMapping("/get")
@@ -43,7 +40,7 @@ public String get(String key){
 return key;
 }
 ```
-只会访问一次
+##### 只会访问一次
 ![不使用caffeine一级缓存](../docs/images/caffeineRedisCache.png)
 
 ### 2. 分布式限流
