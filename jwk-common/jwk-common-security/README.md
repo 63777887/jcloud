@@ -4,7 +4,7 @@
 - 通过模版简单扩展即可实现自定义鉴权方式
 - 提供``@EnableJwkResourceServer``注解简单实现资源服务，授权服务因需要一些定制项，用户需自己实现，可以参考 [jcloud-uaa](https://gitee.com/musi1996/jcloud/tree/master/jcloud-uaa) 服务
 - 提供了免鉴权注解``@Inner``，支持微服务间免鉴权和完全免鉴权两种免鉴权模式
-- 提供了简单的权限控制方案，只需设置 ``@PreAuthorize("@pms.hasPermission()``即可实现鉴权管理
+- 提供了简单的权限控制方案，只需设置 ``@PreAuthorize("@pms.hasPermission())``即可实现鉴权管理
 - 提供了token的redis存储，实现多节点下token的管理同步
 - 为保证服务解耦，将用户查询抽出，不依赖数据库，因此引入该框架还需 [jcloud-upms](https://gitee.com/musi1996/jcloud/tree/master/jcloud-upms) 服务，或自己实现认证逻辑，所需的实现接口在jwk-api中
 
@@ -81,7 +81,7 @@ public @interface Inner {
 ```
 ### 4. 权限管理
 - 默认所有的服务都不带权限校验，即只校验用户身份，不校验用户权限
-- 如需加上权限校验，只需在接口加上@PreAuthorize("@pms.hasPermission()
+- 如需加上权限校验，只需在接口加上@PreAuthorize("@pms.hasPermission())
 ```java
 	/**
 	 * 用户列表
