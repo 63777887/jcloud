@@ -59,7 +59,7 @@ public class ZookeeperRegistryServiceImpl implements RegistryService {
 			registerPrometheusMetrics(jwkPrometheusProperties);
 		}
 		catch (Exception e) {
-			if (logger.isErrorEnabled()){
+			if (logger.isErrorEnabled()) {
 				logger.error("register zk error.", e);
 			}
 			throw new RuntimeException("register zk error", e);
@@ -135,7 +135,8 @@ public class ZookeeperRegistryServiceImpl implements RegistryService {
 								}
 								if (logger.isWarnEnabled()) {
 									logger.warn("listen register provider node not exists path {}", realPath);
-									logger.warn("listen register provider node create model[EPHEMERAL] path {}", realPath);
+									logger.warn("listen register provider node create model[EPHEMERAL] path {}",
+											realPath);
 								}
 								curatorFramework.create().withMode(CreateMode.EPHEMERAL).forPath(realPath,
 										data.toJSONString().getBytes(StandardCharsets.UTF_8));
@@ -168,7 +169,8 @@ public class ZookeeperRegistryServiceImpl implements RegistryService {
 				}
 			}));
 			return realPath;
-		} else {
+		}
+		else {
 			throw new PrometheusException(PrometheusExceptionCodeE.NodeExist);
 		}
 

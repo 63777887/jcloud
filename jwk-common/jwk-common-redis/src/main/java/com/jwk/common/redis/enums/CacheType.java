@@ -11,53 +11,52 @@ import com.jwk.common.redis.exception.RedisExceptionCodeE;
  */
 public enum CacheType {
 
+	/** Redis缓存二级 */
+	RedisCache("2", "RedisCache"),
+	/** Caffeine一级缓存 */
+	RedisCaffeineCache("1", "RedisCaffeineCache");
 
-  /** Redis缓存二级 */
-  RedisCache("2", "RedisCache"),
-  /** Caffeine一级缓存 */
-  RedisCaffeineCache("1", "RedisCaffeineCache");
+	CacheType(String cacheType, String cacheName) {
+		this.cacheType = cacheType;
+		this.cacheName = cacheName;
+	}
 
-  CacheType(String cacheType, String cacheName) {
-    this.cacheType = cacheType;
-    this.cacheName = cacheName;
-  }
+	public static RedisExceptionCodeE getByErrCode(Integer errCode) {
+		if (errCode == null) {
+			return null;
+		}
+		for (RedisExceptionCodeE e : RedisExceptionCodeE.values()) {
+			if (e.getErrCode().equals(errCode)) {
+				return e;
+			}
+		}
+		return null;
+	}
 
-  public static RedisExceptionCodeE getByErrCode(Integer errCode) {
-    if (errCode == null) {
-      return null;
-    }
-    for (RedisExceptionCodeE e : RedisExceptionCodeE.values()) {
-      if (e.getErrCode().equals(errCode)) {
-        return e;
-      }
-    }
-    return null;
-  }
+	/**
+	 * 根据errCode获取errMsg
+	 * @param errCode 键
+	 * @return 值
+	 */
+	public static String getErrMsgByErrCode(String errCode) {
+		for (CacheType enums : CacheType.values()) {
+			if (enums.cacheType.equals(errCode)) {
+				return enums.cacheName;
+			}
+		}
+		return "";
+	}
 
-  /**
-   * 根据errCode获取errMsg
-   * @param errCode 键
-   * @return 值
-   */
-  public static String getErrMsgByErrCode(String errCode) {
-    for (CacheType enums : CacheType.values()) {
-      if (enums.cacheType.equals(errCode)) {
-        return enums.cacheName;
-      }
-    }
-    return "";
-  }
+	private String cacheType;
 
+	private String cacheName;
 
-  private String cacheType;
-  private String cacheName;
+	public String getCacheType() {
+		return cacheType;
+	}
 
-  public String getCacheType() {
-    return cacheType;
-  }
-
-  public String getCacheName() {
-    return cacheName;
-  }
+	public String getCacheName() {
+		return cacheName;
+	}
 
 }

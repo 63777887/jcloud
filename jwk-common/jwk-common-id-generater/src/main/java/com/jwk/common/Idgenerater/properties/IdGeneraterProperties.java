@@ -14,7 +14,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "jwk.id.gen")
 public class IdGeneraterProperties {
 
-
 	/**
 	 * 普通槽总数[0,16384)
 	 */
@@ -39,4 +38,5 @@ public class IdGeneraterProperties {
 	 * IDGenKey前缀
 	 */
 	public String keyPrefix = "IDGEN";
+
 }

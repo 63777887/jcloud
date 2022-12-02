@@ -16,3 +16,7 @@ spring:
     import:
 #      - nacos:application-@profiles.active@.yml
       - nacos:${spring.application.name}.yml
+jwk:
+  redis:
+    host: 127.0.0.1
+    port: 6379

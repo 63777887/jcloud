@@ -30,5 +30,4 @@ import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 @Configuration(proxyBeanMethods = false)
 public class RedisKeyExpiredEventConfiguration {
 
-
 }

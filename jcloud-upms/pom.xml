@@ -5,7 +5,7 @@
   <parent>
     <artifactId>jcloud-parent</artifactId>
     <groupId>com.jwk</groupId>
-    <version>0.1.2</version>
+    <version>0.1.4</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
@@ -19,22 +19,18 @@
       <groupId>com.jwk</groupId>
       <artifactId>jwk-common-security</artifactId>
     </dependency>
-    <dependency>
-      <groupId>com.jwk</groupId>
-      <artifactId>jwk-common-seata</artifactId>
-    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>com.jwk</groupId>-->
+<!--      <artifactId>jwk-common-seata</artifactId>-->
+<!--    </dependency>-->
     <dependency>
       <groupId>com.jwk</groupId>
       <artifactId>jwk-common-cloud</artifactId>
     </dependency>
-    <dependency>
-      <groupId>com.jwk</groupId>
-      <artifactId>jwk-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.jwk</groupId>
-      <artifactId>jwk-common-mybatis</artifactId>
-    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>com.jwk</groupId>-->
+<!--      <artifactId>jwk-api</artifactId>-->
+<!--    </dependency>-->
     <dependency>
       <groupId>com.jwk</groupId>
       <artifactId>jwk-common-knife4j</artifactId>

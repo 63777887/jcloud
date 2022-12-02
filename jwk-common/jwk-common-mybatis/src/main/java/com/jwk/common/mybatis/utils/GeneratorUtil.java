@@ -25,7 +25,7 @@ public class GeneratorUtil {
 		// 全局配置
 		GlobalConfig gc = new GlobalConfig();
 		gc.setAuthor("jiwk");
-		gc.setOutputDir("/Users/jiweikuan/learnProjects/demo/src/main/java/");
+		gc.setOutputDir("/Users/jiweikuan/learnProjects/jcloud/jcloud-upms/src/main/java/");
 		// 是否覆盖同名文件，默认是false
 		gc.setFileOverride(true);
 		// 不需要ActiveRecord特性的请改为false
@@ -129,7 +129,7 @@ public class GeneratorUtil {
 		// 5、策略配置
 		StrategyConfig strategy = new StrategyConfig();
 		// 对那一张表生成代码
-		strategy.setInclude(new String[] { "sys_user" });
+		strategy.setInclude(new String[] { "sys_oauth_client" });
 		// 数据库表映射到实体的命名策略
 		strategy.setNaming(NamingStrategy.underline_to_camel);
 		// 生成实体时去掉表前缀

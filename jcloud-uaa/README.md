@@ -1,0 +1,1 @@
+http://localhost:8093/oauth2/authorize?scope=server&client_id=jiwkClient&client_secret=Awert159&response_type=code&redirect_uri=http://www.baidu.com

@@ -6,7 +6,7 @@
   <parent>
     <artifactId>jcloud-parent</artifactId>
     <groupId>com.jwk</groupId>
-    <version>0.1.2</version>
+    <version>0.1.4</version>
   </parent>
   <artifactId>jcloud-test</artifactId>
   <packaging>jar</packaging>
@@ -36,10 +36,10 @@
           <groupId>com.jwk</groupId>
           <artifactId>jwk-common-mybatis</artifactId>
       </dependency>
-    <dependency>
-      <groupId>com.jwk</groupId>
-      <artifactId>jwk-common-prometheus</artifactId>
-    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>com.jwk</groupId>-->
+<!--      <artifactId>jwk-common-prometheus</artifactId>-->
+<!--    </dependency>-->
 
     <dependency>
       <groupId>com.jwk</groupId>

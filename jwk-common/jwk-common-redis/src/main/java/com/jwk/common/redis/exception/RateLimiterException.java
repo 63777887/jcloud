@@ -10,9 +10,13 @@ import lombok.Getter;
  */
 @Getter
 public class RateLimiterException extends RuntimeException {
+
 	private final String key;
+
 	private final long max;
+
 	private final long ttl;
+
 	private final TimeUnit timeUnit;
 
 	public RateLimiterException(String key, long max, long ttl, TimeUnit timeUnit) {
@@ -22,4 +26,5 @@ public class RateLimiterException extends RuntimeException {
 		this.ttl = ttl;
 		this.timeUnit = timeUnit;
 	}
+
 }

@@ -27,162 +27,164 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class RedisGeneratorManage implements IdGeneratorManage {
 
-  @Autowired
-  private RedissonClient redissonClient;
-  @Autowired
-  private RedisTemplate redisTemplate;
-  @Autowired
-  private IdGeneraterProperties idGeneraterProperties;
+	@Autowired
+	private RedissonClient redissonClient;
 
-  List<String> initIdListCache = new ArrayList<>();
+	@Autowired
+	private RedisTemplate redisTemplate;
 
+	@Autowired
+	private IdGeneraterProperties idGeneraterProperties;
 
-  /**
-   * 生成1个id
-   *
-   * @param slotId
-   * @return
-   */
-  @Override
-  public long generate(int slotId) throws IdGeneratorException, RedisException {
-    List<Long> ids = genIds(slotId, 1);
-    return ids.size() > 0 ? ids.get(0) : -1;
-  }
+	List<String> initIdListCache = new ArrayList<>();
 
-  /**
-   * 生成size个id
-   *
-   * @param slotId
-   * @param size
-   * @return
-   * @throws IdGeneratorException
-   */
-  @Override
-  public List<Long> generate(int slotId, int size) throws IdGeneratorException, RedisException {
-    if (size > idGeneraterProperties.maxSize) {
-      IdGeneratorException exception = new IdGeneratorException(IdExceptionCodeE.SizeLimit);
-      if (log.isErrorEnabled()) {
-        log.error("generate error:{}", exception.toString());
-      }
-      throw exception;
-    }
+	/**
+	 * 生成1个id
+	 * @param slotId
+	 * @return
+	 */
+	@Override
+	public long generate(int slotId) throws IdGeneratorException, RedisException {
+		List<Long> ids = genIds(slotId, 1);
+		return ids.size() > 0 ? ids.get(0) : -1;
+	}
 
-    return genIds(slotId, size);
-  }
+	/**
+	 * 生成size个id
+	 * @param slotId
+	 * @param size
+	 * @return
+	 * @throws IdGeneratorException
+	 */
+	@Override
+	public List<Long> generate(int slotId, int size) throws IdGeneratorException, RedisException {
+		if (size > idGeneraterProperties.maxSize) {
+			IdGeneratorException exception = new IdGeneratorException(IdExceptionCodeE.SizeLimit);
+			if (log.isErrorEnabled()) {
+				log.error("generate error:{}", exception.toString());
+			}
+			throw exception;
+		}
 
-  /**
-   * 路由规则
-   * @param type
-   * @return
-   * @throws IdGeneratorException
-   */
-  @Override
-  public int slotId(long type) throws IdGeneratorException {
-    if (type > 0) {
-      return (int) (type % idGeneraterProperties.slotCount);
-    } else {
-      IdGeneratorException exception = new IdGeneratorException(IdExceptionCodeE.IllegalType);
-      if (log.isErrorEnabled()){
-        log.error("slotId error:{}", exception.toString());
-      }
-      throw exception;
-    }
-  }
+		return genIds(slotId, size);
+	}
 
-  private List<Long> genIds(int slotId, int size) throws IdGeneratorException, RedisException {
-    // 获取分布式锁
-    String idLockKey = getIdLockKey(slotId);
-    RLock lock = redissonClient.getLock(idLockKey);
-    try {
-      // 加锁
-      if (lock.isLocked()) {
-        throw new RedisException(RedisExceptionCodeE.LockIsExist);
-      }
-      boolean tryLock;
-      try {
-        tryLock = lock.tryLock(3, TimeUnit.SECONDS);
-      } catch (InterruptedException e) {
-        if (log.isErrorEnabled()) {
-          log.error("获取锁失败，key为：{}", idLockKey);
-        }
-        throw new RedisException(RedisExceptionCodeE.GetLockError);
-      }
-      if (tryLock) {
-        // 返回结果
-        List<Long> list = new ArrayList<Long>();
+	/**
+	 * 路由规则
+	 * @param type
+	 * @return
+	 * @throws IdGeneratorException
+	 */
+	@Override
+	public int slotId(long type) throws IdGeneratorException {
+		if (type > 0) {
+			return (int) (type % idGeneraterProperties.slotCount);
+		}
+		else {
+			IdGeneratorException exception = new IdGeneratorException(IdExceptionCodeE.IllegalType);
+			if (log.isErrorEnabled()) {
+				log.error("slotId error:{}", exception.toString());
+			}
+			throw exception;
+		}
+	}
 
-        if (size <= 0) {
-          return list;
-        }
-        String idTypeKey = getIdTypeKey(slotId);
+	private List<Long> genIds(int slotId, int size) throws IdGeneratorException, RedisException {
+		// 获取分布式锁
+		String idLockKey = getIdLockKey(slotId);
+		RLock lock = redissonClient.getLock(idLockKey);
+		try {
+			// 加锁
+			if (lock.isLocked()) {
+				throw new RedisException(RedisExceptionCodeE.LockIsExist);
+			}
+			boolean tryLock;
+			try {
+				tryLock = lock.tryLock(3, TimeUnit.SECONDS);
+			}
+			catch (InterruptedException e) {
+				if (log.isErrorEnabled()) {
+					log.error("获取锁失败，key为：{}", idLockKey);
+				}
+				throw new RedisException(RedisExceptionCodeE.GetLockError);
+			}
+			if (tryLock) {
+				// 返回结果
+				List<Long> list = new ArrayList<Long>();
 
-        //是否需要初始化
-        if (!initIdListCache.contains(idTypeKey)) {
-          redisTemplate.opsForValue().setIfAbsent(idTypeKey,idGeneraterProperties.slotInitialValue);
-          initIdListCache.add(idTypeKey);
-        }
+				if (size <= 0) {
+					return list;
+				}
+				String idTypeKey = getIdTypeKey(slotId);
 
-        // redis:curId+size
-        long currentCurId = redisTemplate.opsForValue().increment(idTypeKey, size);
+				// 是否需要初始化
+				if (!initIdListCache.contains(idTypeKey)) {
+					redisTemplate.opsForValue().setIfAbsent(idTypeKey, idGeneraterProperties.slotInitialValue);
+					initIdListCache.add(idTypeKey);
+				}
 
-        if (log.isDebugEnabled()) {
-          log.debug("currentCurId:{}", currentCurId);
-        }
+				// redis:curId+size
+				long currentCurId = redisTemplate.opsForValue().increment(idTypeKey, size);
 
-        // 获取该槽位的起始值
-        long initValue = idGeneraterProperties.slotInitialValue;
-        if (log.isDebugEnabled()) {
-          log.debug("initValue:{}", initValue);
-        }
+				if (log.isDebugEnabled()) {
+					log.debug("currentCurId:{}", currentCurId);
+				}
 
-        // 小于起始值，认为redis值非法
-        if (currentCurId <= initValue) {
+				// 获取该槽位的起始值
+				long initValue = idGeneraterProperties.slotInitialValue;
+				if (log.isDebugEnabled()) {
+					log.debug("initValue:{}", initValue);
+				}
 
-            // 恢复初始值
-            currentCurId = initValue;
-          redisTemplate.opsForValue().set(idTypeKey, currentCurId);
-        }
+				// 小于起始值，认为redis值非法
+				if (currentCurId <= initValue) {
 
-        // 批量获取
-        if (size > 1) {
+					// 恢复初始值
+					currentCurId = initValue;
+					redisTemplate.opsForValue().set(idTypeKey, currentCurId);
+				}
 
-          // 先前的curId
-          long oldCurId = currentCurId - size;
+				// 批量获取
+				if (size > 1) {
 
-          // 组装返回值
-          for (long id = oldCurId + 1; id <= currentCurId; id++) {
-            list.add(id);
-          }
+					// 先前的curId
+					long oldCurId = currentCurId - size;
 
-        } else {
-          // 组装返回值
-          list.add(currentCurId);
+					// 组装返回值
+					for (long id = oldCurId + 1; id <= currentCurId; id++) {
+						list.add(id);
+					}
 
-        }
+				}
+				else {
+					// 组装返回值
+					list.add(currentCurId);
 
-        return list;
-      } else {
-        if (log.isErrorEnabled()) {
-          log.error("未获取到锁，key为：{}" + idLockKey);
-        }
-        throw new RedisException(RedisExceptionCodeE.GetLockFail);
-      }
-    } finally {
-      if (null != lock && lock.isLocked()
-          && lock.isHeldByCurrentThread()) {
-        lock.unlock();
-      }
-    }
+				}
 
-  }
+				return list;
+			}
+			else {
+				if (log.isErrorEnabled()) {
+					log.error("未获取到锁，key为：{}" + idLockKey);
+				}
+				throw new RedisException(RedisExceptionCodeE.GetLockFail);
+			}
+		}
+		finally {
+			if (null != lock && lock.isLocked() && lock.isHeldByCurrentThread()) {
+				lock.unlock();
+			}
+		}
 
-  private String getIdLockKey(int slotId) {
-    return "IDGEN_LOCK:" + slotId;
-  }
+	}
 
-  private String getIdTypeKey(int slotId) {
-    return "IDGEN:"+slotId;
-  }
+	private String getIdLockKey(int slotId) {
+		return "IDGEN_LOCK:" + slotId;
+	}
+
+	private String getIdTypeKey(int slotId) {
+		return "IDGEN:" + slotId;
+	}
 
 }
-

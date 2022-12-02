@@ -21,22 +21,25 @@ import org.springframework.lang.Nullable;
  * 缓存 spEl 提高性能
  */
 public class ExpressionEvaluator extends CachedExpressionEvaluator {
+
 	private final Map<ExpressionKey, Expression> expressionCache = new ConcurrentHashMap<>(64);
+
 	private final Map<AnnotatedElementKey, Method> methodCache = new ConcurrentHashMap<>(64);
 
 	/**
 	 * Create an {@link EvaluationContext}.
-	 *
-	 * @param method      the method
-	 * @param args        the method arguments
-	 * @param target      the target object
+	 * @param method the method
+	 * @param args the method arguments
+	 * @param target the target object
 	 * @param targetClass the target class
 	 * @return the evaluation context
 	 */
-	public EvaluationContext createContext(Method method, Object[] args, Object target, Class<?> targetClass, @Nullable BeanFactory beanFactory) {
+	public EvaluationContext createContext(Method method, Object[] args, Object target, Class<?> targetClass,
+			@Nullable BeanFactory beanFactory) {
 		Method targetMethod = getTargetMethod(targetClass, method);
 		ExpressionRootObject rootObject = new ExpressionRootObject(method, args, target, targetClass, targetMethod);
-		MethodBasedEvaluationContext evaluationContext = new MethodBasedEvaluationContext(rootObject, targetMethod, args, getParameterNameDiscoverer());
+		MethodBasedEvaluationContext evaluationContext = new MethodBasedEvaluationContext(rootObject, targetMethod,
+				args, getParameterNameDiscoverer());
 		if (beanFactory != null) {
 			evaluationContext.setBeanResolver(new BeanFactoryResolver(beanFactory));
 		}
@@ -45,16 +48,17 @@ public class ExpressionEvaluator extends CachedExpressionEvaluator {
 
 	/**
 	 * Create an {@link EvaluationContext}.
-	 *
-	 * @param method      the method
-	 * @param args        the method arguments
-	 * @param rootObject  rootObject
+	 * @param method the method
+	 * @param args the method arguments
+	 * @param rootObject rootObject
 	 * @param targetClass the target class
 	 * @return the evaluation context
 	 */
-	public EvaluationContext createContext(Method method, Object[] args, Class<?> targetClass, Object rootObject, @Nullable BeanFactory beanFactory) {
+	public EvaluationContext createContext(Method method, Object[] args, Class<?> targetClass, Object rootObject,
+			@Nullable BeanFactory beanFactory) {
 		Method targetMethod = getTargetMethod(targetClass, method);
-		MethodBasedEvaluationContext evaluationContext = new MethodBasedEvaluationContext(rootObject, targetMethod, args, getParameterNameDiscoverer());
+		MethodBasedEvaluationContext evaluationContext = new MethodBasedEvaluationContext(rootObject, targetMethod,
+				args, getParameterNameDiscoverer());
 		if (beanFactory != null) {
 			evaluationContext.setBeanResolver(new BeanFactoryResolver(beanFactory));
 		}
@@ -67,7 +71,8 @@ public class ExpressionEvaluator extends CachedExpressionEvaluator {
 	}
 
 	@Nullable
-	public <T> T eval(String expression, AnnotatedElementKey methodKey, EvaluationContext evalContext, @Nullable Class<T> valueType) {
+	public <T> T eval(String expression, AnnotatedElementKey methodKey, EvaluationContext evalContext,
+			@Nullable Class<T> valueType) {
 		return getExpression(this.expressionCache, methodKey, expression).getValue(evalContext, valueType);
 	}
 
@@ -92,4 +97,5 @@ public class ExpressionEvaluator extends CachedExpressionEvaluator {
 		this.expressionCache.clear();
 		this.methodCache.clear();
 	}
+
 }

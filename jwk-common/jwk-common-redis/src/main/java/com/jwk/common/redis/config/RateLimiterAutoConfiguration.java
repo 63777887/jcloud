@@ -24,27 +24,27 @@ import org.springframework.scripting.support.ResourceScriptSource;
  * 基于 redis 的限流自动配置
  */
 @Configuration(proxyBeanMethods = false)
-@EnableConfigurationProperties(RedisRateLimiterProperties.class )
-@ConditionalOnProperty(name = "jwk.rate-limiter.redis.enable",havingValue = "true")
+@EnableConfigurationProperties(RedisRateLimiterProperties.class)
+@ConditionalOnProperty(name = "jwk.rate-limiter.redis.enable", havingValue = "true")
 public class RateLimiterAutoConfiguration {
 
 	@SuppressWarnings("unchecked")
-	private RedisScript<Long> redisRateLimiterScript(
-			RedisRateLimiterProperties redisRateLimiterProperties) {
+	private RedisScript<Long> redisRateLimiterScript(RedisRateLimiterProperties redisRateLimiterProperties) {
 		DefaultRedisScript redisScript = new DefaultRedisScript<>();
-		redisScript.setScriptSource(new ResourceScriptSource(
-				new ClassPathResource(redisRateLimiterProperties.getScriptPath())));
+		redisScript.setScriptSource(
+				new ResourceScriptSource(new ClassPathResource(redisRateLimiterProperties.getScriptPath())));
 		redisScript.setResultType(Long.class);
 		return redisScript;
 	}
 
 	@Bean
 	@ConditionalOnMissingBean
-	public RedisRateLimiterClient redisRateLimiter(@Qualifier("stringKeyRedisTemplate") RedisTemplate<String,Object> redisTemplate,
-												   Environment environment,
+	public RedisRateLimiterClient redisRateLimiter(
+			@Qualifier("stringKeyRedisTemplate") RedisTemplate<String, Object> redisTemplate, Environment environment,
 			RedisRateLimiterProperties redisRateLimiterProperties) {
 		RedisScript<Long> redisRateLimiterScript = redisRateLimiterScript(redisRateLimiterProperties);
-		return new RedisRateLimiterClient(redisTemplate, redisRateLimiterScript, environment,redisRateLimiterProperties);
+		return new RedisRateLimiterClient(redisTemplate, redisRateLimiterScript, environment,
+				redisRateLimiterProperties);
 	}
 
 	@Bean
@@ -52,4 +52,5 @@ public class RateLimiterAutoConfiguration {
 	public RedisRateLimiterAspect redisRateLimiterAspect(RedisRateLimiterClient rateLimiterClient) {
 		return new RedisRateLimiterAspect(rateLimiterClient);
 	}
+
 }

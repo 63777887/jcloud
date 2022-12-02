@@ -14,9 +14,12 @@ spring:
       password: nacos
   config:
     import:
-#      - nacos:application-@profiles.active@.yml
+      #      - nacos:application-@profiles.active@.yml
       - nacos:${spring.application.name}.yml
-
+jwk:
+  redis:
+    host: 127.0.0.1
+    port: 6379
 
 #spring:
 #  cloud:

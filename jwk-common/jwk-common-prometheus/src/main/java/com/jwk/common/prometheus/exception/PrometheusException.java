@@ -13,34 +13,35 @@ import lombok.Getter;
 @JsonSerialize(using = PrometheusExceptionSerializer.class)
 public class PrometheusException extends Exception {
 
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  @Getter
-  private Integer errorCode;
+	@Getter
+	private Integer errorCode;
 
-  public PrometheusException(String msg) {
-    super(msg);
-  }
+	public PrometheusException(String msg) {
+		super(msg);
+	}
 
-  public PrometheusException(Integer errorCode,String msg) {
-    super(msg);
-    this.errorCode = errorCode;
-  }
-  public PrometheusException(Throwable cause) {
-    super(cause);
-  }
+	public PrometheusException(Integer errorCode, String msg) {
+		super(msg);
+		this.errorCode = errorCode;
+	}
 
-  public PrometheusException(String message, Throwable cause) {
-    super(message, cause);
-  }
+	public PrometheusException(Throwable cause) {
+		super(cause);
+	}
 
-  public PrometheusException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-    super(message, cause, enableSuppression, writableStackTrace);
-  }
+	public PrometheusException(String message, Throwable cause) {
+		super(message, cause);
+	}
 
-  public PrometheusException(PrometheusExceptionCodeE prometheusExceptionCodeE) {
-    super(prometheusExceptionCodeE.getErrMsg());
-    this.errorCode = prometheusExceptionCodeE.getErrCode();
-  }
+	public PrometheusException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+		super(message, cause, enableSuppression, writableStackTrace);
+	}
+
+	public PrometheusException(PrometheusExceptionCodeE prometheusExceptionCodeE) {
+		super(prometheusExceptionCodeE.getErrMsg());
+		this.errorCode = prometheusExceptionCodeE.getErrCode();
+	}
 
 }

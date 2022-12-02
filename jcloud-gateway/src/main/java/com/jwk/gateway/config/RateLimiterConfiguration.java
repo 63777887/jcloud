@@ -16,12 +16,6 @@ import reactor.core.publisher.Mono;
 @Configuration(proxyBeanMethods = false)
 public class RateLimiterConfiguration {
 
-	/*
-	 * spring: cloud: gateway: routes: - id: requestratelimiter_route uri: lb://pigx-upms
-	 * order: 10000 predicates: - Path=/admin/** filters: - name: RequestRateLimiter args:
-	 * redis-rate-limiter.replenishRate: 1 # 令牌桶的容积 redis-rate-limiter.burstCapacity: 3 #
-	 * 流速 每秒 key-resolver: "#{@remoteAddrKeyResolver}" #SPEL表达式去的对应的bean - StripPrefix=1
-	 */
 	/**
 	 * Remote addr key resolver key resolver.
 	 *
