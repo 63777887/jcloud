@@ -40,8 +40,7 @@ public class RedisCaffeineCacheManager implements CacheManager {
 	private Object cacheSeverId;
 
 	public RedisCaffeineCacheManager(CacheConfigProperties cacheConfigProperties,
-			RedisTemplate<String, Object> stringKeyRedisTemplate,
-			CacheFactory cacheFactory) {
+			RedisTemplate<String, Object> stringKeyRedisTemplate, CacheFactory cacheFactory) {
 		this.cacheConfigProperties = cacheConfigProperties;
 		this.stringKeyRedisTemplate = stringKeyRedisTemplate;
 		this.dynamic = cacheConfigProperties.isDynamic();

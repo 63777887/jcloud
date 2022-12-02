@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public class ExpressionRootObject {
+
 	private final Method method;
 
 	private final Object[] args;
@@ -23,4 +24,5 @@ public class ExpressionRootObject {
 	private final Class<?> targetClass;
 
 	private final Method targetMethod;
+
 }

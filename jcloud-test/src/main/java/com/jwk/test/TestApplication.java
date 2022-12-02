@@ -1,14 +1,12 @@
 package com.jwk.test;
 
 import com.jwk.common.cloud.fegin.annotation.EnableJwkFeignClients;
-//import com.jwk.common.redis.annotation.EnableJwkCaching;
 import com.jwk.common.redis.annotation.EnableJwkCaching;
-import com.jwk.common.security.security.annotation.EnableJwkResourceServer;
+import com.jwk.common.security.annotation.EnableJwkResourceServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.ConfigurableEnvironment;

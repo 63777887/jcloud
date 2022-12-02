@@ -1,7 +1,8 @@
 package com.jwk.upms;
 
 import com.jwk.common.cloud.fegin.annotation.EnableJwkFeignClients;
-import com.jwk.common.security.security.annotation.EnableJwkResourceServer;
+import com.jwk.common.redis.annotation.EnableJwkCaching;
+import com.jwk.common.security.annotation.EnableJwkResourceServer;
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +24,7 @@ import org.springframework.core.env.ConfigurableEnvironment;
 @EnableJwkFeignClients
 @EnableJwkResourceServer
 @MapperScan("com.jwk.upms.web.dao")
+@EnableJwkCaching
 public class UpmsApplication {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(UpmsApplication.class);

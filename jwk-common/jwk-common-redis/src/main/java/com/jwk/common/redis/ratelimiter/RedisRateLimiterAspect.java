@@ -29,14 +29,17 @@ import org.springframework.util.Assert;
 @Aspect
 @RequiredArgsConstructor
 public class RedisRateLimiterAspect implements ApplicationContextAware {
+
 	/**
 	 * 表达式处理
 	 */
 	private final ExpressionEvaluator evaluator = new ExpressionEvaluator();
+
 	/**
 	 * redis 限流服务
 	 */
 	private final RedisRateLimiterClient rateLimiterClient;
+
 	private ApplicationContext applicationContext;
 
 	/**
@@ -53,7 +56,8 @@ public class RedisRateLimiterAspect implements ApplicationContextAware {
 		if (StrUtil.isNotBlank(limitParam)) {
 			String evalAsText = evalLimitParam(point, limitParam);
 			rateKey = limitKey + CharPool.COLON + evalAsText;
-		} else {
+		}
+		else {
 			rateKey = limitKey;
 		}
 		long max = limiter.max();
@@ -64,8 +68,7 @@ public class RedisRateLimiterAspect implements ApplicationContextAware {
 
 	/**
 	 * 计算参数表达式
-	 *
-	 * @param point      ProceedingJoinPoint
+	 * @param point ProceedingJoinPoint
 	 * @param limitParam limitParam
 	 * @return 结果
 	 */
@@ -84,4 +87,5 @@ public class RedisRateLimiterAspect implements ApplicationContextAware {
 	public void setApplicationContext(@NonNull ApplicationContext applicationContext) throws BeansException {
 		this.applicationContext = applicationContext;
 	}
+
 }

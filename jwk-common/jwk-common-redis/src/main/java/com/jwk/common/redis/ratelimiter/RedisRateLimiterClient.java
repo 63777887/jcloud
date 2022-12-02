@@ -19,29 +19,34 @@ import org.springframework.data.redis.core.script.RedisScript;
  */
 @RequiredArgsConstructor
 public class RedisRateLimiterClient implements RateLimiterClient {
+
 	/**
 	 * redis 限流 key 前缀
 	 */
 	private final String REDIS_KEY_PREFIX;
+
 	/**
 	 * 失败的默认返回值
 	 */
 	private final long FAIL_CODE = 0;
+
 	/**
 	 * redisTemplate
 	 */
-	private final RedisTemplate<String,Object> redisTemplate;
+	private final RedisTemplate<String, Object> redisTemplate;
+
 	/**
 	 * redisScript
 	 */
 	private final RedisScript<Long> script;
+
 	/**
 	 * env
 	 */
 	private final Environment environment;
 
-	public RedisRateLimiterClient(RedisTemplate<String, Object> redisTemplate,
-			RedisScript<Long> script, Environment environment, RedisRateLimiterProperties redisRateLimiterProperties) {
+	public RedisRateLimiterClient(RedisTemplate<String, Object> redisTemplate, RedisScript<Long> script,
+			Environment environment, RedisRateLimiterProperties redisRateLimiterProperties) {
 		this.REDIS_KEY_PREFIX = redisRateLimiterProperties.getKeyPrefix();
 		this.redisTemplate = redisTemplate;
 		this.script = script;
@@ -51,8 +56,8 @@ public class RedisRateLimiterClient implements RateLimiterClient {
 	@Override
 	public boolean isAllowed(String key, long max, long ttl, TimeUnit timeUnit) {
 		// redis key
-		String redisKeyBuilder = REDIS_KEY_PREFIX + CharPool.COLON +
-			getApplicationName(environment) + CharPool.COLON + key;
+		String redisKeyBuilder = REDIS_KEY_PREFIX + CharPool.COLON + getApplicationName(environment) + CharPool.COLON
+				+ key;
 		List<String> keys = Collections.singletonList(redisKeyBuilder);
 		// 毫秒，考虑主从策略和脚本回放机制，这个time由客户端获取传入
 		long now = System.currentTimeMillis();

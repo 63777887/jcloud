@@ -41,7 +41,7 @@ return key;
 }
 ```
 ##### 只会访问一次
-![不使用caffeine一级缓存](../docs/images/caffeineRedisCache.png)
+![不使用caffeine一级缓存](../../docs/images/common-redis/caffeineRedisCache.png)
 
 ### 2. 分布式限流
 #### 2.1 开启限流组件

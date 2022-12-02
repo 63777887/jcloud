@@ -17,34 +17,32 @@ import org.springframework.data.redis.core.RedisTemplate;
  */
 public class DefaultCacheFactory implements CacheFactory {
 
+	private CacheConfigProperties cacheConfigProperties;
 
-  private CacheConfigProperties cacheConfigProperties;
+	private RedisTemplate<String, Object> stringKeyRedisTemplate;
 
-  private RedisTemplate<String, Object> stringKeyRedisTemplate;
+	public DefaultCacheFactory(CacheConfigProperties cacheConfigProperties,
+			RedisTemplate<String, Object> stringKeyRedisTemplate) {
+		this.cacheConfigProperties = cacheConfigProperties;
+		this.stringKeyRedisTemplate = stringKeyRedisTemplate;
+	}
 
-  public DefaultCacheFactory(
-      CacheConfigProperties cacheConfigProperties,
-      RedisTemplate<String, Object> stringKeyRedisTemplate) {
-    this.cacheConfigProperties = cacheConfigProperties;
-    this.stringKeyRedisTemplate = stringKeyRedisTemplate;
-  }
-
-  /**
-   * 创建缓存
-   * @param name
-   * @return
-   */
-  @Override
-  public RedisCaffeineCache createCache(String name) {
-    boolean usedCaffeineCache = false;
-    String[] redisConfigs = RedisUtil.replaceName(name, cacheConfigProperties.getRedis().getDelimiter());
-    if (redisConfigs.length>2){
-      String cacheType = redisConfigs[2];
-      if (!StrUtil.isBlank(cacheType) && CacheType.RedisCaffeineCache.getCacheType().equals(cacheType)){
-        usedCaffeineCache = true;
-      }
-    }
-    return new RedisCaffeineCache(name, stringKeyRedisTemplate, cacheConfigProperties,usedCaffeineCache);
-  }
+	/**
+	 * 创建缓存
+	 * @param name
+	 * @return
+	 */
+	@Override
+	public RedisCaffeineCache createCache(String name) {
+		boolean usedCaffeineCache = false;
+		String[] redisConfigs = RedisUtil.replaceName(name, cacheConfigProperties.getRedis().getDelimiter());
+		if (redisConfigs.length > 2) {
+			String cacheType = redisConfigs[2];
+			if (!StrUtil.isBlank(cacheType) && CacheType.RedisCaffeineCache.getCacheType().equals(cacheType)) {
+				usedCaffeineCache = true;
+			}
+		}
+		return new RedisCaffeineCache(name, stringKeyRedisTemplate, cacheConfigProperties, usedCaffeineCache);
+	}
 
 }

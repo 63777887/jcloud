@@ -7,7 +7,7 @@
   <groupId>com.jwk</groupId>
   <artifactId>jcloud-parent</artifactId>
   <name>${project.artifactId}</name>
-  <version>0.1.2</version>
+  <version>0.1.4</version>
   <packaging>pom</packaging>
 
 
@@ -22,13 +22,14 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <fastjson.version>1.2.83</fastjson.version>
-    <hutool-all.version>5.7.3</hutool-all.version>
+    <hutool-all.version>5.8.9</hutool-all.version>
     <lombok.version>1.18.12</lombok.version>
     <jjwt.version>0.9.1</jjwt.version>
     <log4j2.version>2.17.1</log4j2.version>
     <knife4j.version>3.0.3</knife4j.version>
     <jasypt.version>2.1.0</jasypt.version>
     <jwk.common.version>${project.version}</jwk.common.version>
+    <spring.authorization.version>0.3.1</spring.authorization.version>
     <spring.checkstyle.plugin>0.0.34</spring.checkstyle.plugin>
     <mybatis-generator-maven-plugin>1.3.2</mybatis-generator-maven-plugin>
     <mysql-connector-java.plugin>8.0.28</mysql-connector-java.plugin>
@@ -166,6 +167,9 @@
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
+              <includes>
+                <include>**/*</include>
+              </includes>
             </resource>
         </resources>
         <pluginManagement>

@@ -15,7 +15,6 @@ public interface RateLimiterClient {
 
 	/**
 	 * 服务是否被限流
-	 *
 	 * @param key 自定义的key，请保证唯一
 	 * @param max 支持的最大请求
 	 * @param ttl 时间,单位默认为秒（seconds）
@@ -27,10 +26,9 @@ public interface RateLimiterClient {
 
 	/**
 	 * 服务是否被限流
-	 *
-	 * @param key      自定义的key，请保证唯一
-	 * @param max      支持的最大请求
-	 * @param ttl      时间
+	 * @param key 自定义的key，请保证唯一
+	 * @param max 支持的最大请求
+	 * @param ttl 时间
 	 * @param timeUnit 时间单位
 	 * @return 是否允许
 	 */
@@ -38,10 +36,9 @@ public interface RateLimiterClient {
 
 	/**
 	 * 服务限流，被限制时抛出 RateLimiterException 异常，需要自行处理异常
-	 *
-	 * @param key      自定义的key，请保证唯一
-	 * @param max      支持的最大请求
-	 * @param ttl      时间
+	 * @param key 自定义的key，请保证唯一
+	 * @param max 支持的最大请求
+	 * @param ttl 时间
 	 * @param supplier Supplier 函数式
 	 * @param <T> 泛型
 	 * @return 函数执行结果
@@ -52,21 +49,20 @@ public interface RateLimiterClient {
 
 	/**
 	 * 服务限流，被限制时抛出 RateLimiterException 异常，需要自行处理异常
-	 *
 	 * @param <T> 泛型
-	 * @param key      自定义的key，请保证唯一
-	 * @param max      支持的最大请求
-	 * @param ttl      时间
+	 * @param key 自定义的key，请保证唯一
+	 * @param max 支持的最大请求
+	 * @param ttl 时间
 	 * @param timeUnit 时间单位
 	 * @param supplier Supplier 函数式
 	 * @return 函数执行结果
 	 */
-	default <T> T allow(String key, long max, long ttl, TimeUnit timeUnit, Supplier<T> supplier)
-			throws Throwable {
+	default <T> T allow(String key, long max, long ttl, TimeUnit timeUnit, Supplier<T> supplier) throws Throwable {
 		boolean isAllowed = this.isAllowed(key, max, ttl, timeUnit);
 		if (isAllowed) {
-				return supplier.get();
+			return supplier.get();
 		}
 		throw new RateLimiterException(key, max, ttl, timeUnit);
 	}
+
 }

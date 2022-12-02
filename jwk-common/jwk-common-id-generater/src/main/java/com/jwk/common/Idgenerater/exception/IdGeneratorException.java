@@ -13,34 +13,36 @@ import lombok.Getter;
 @JsonSerialize(using = IdExceptionSerializer.class)
 public class IdGeneratorException extends Exception {
 
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  @Getter
-  private Integer errorCode;
+	@Getter
+	private Integer errorCode;
 
-  public IdGeneratorException(String msg) {
-    super(msg);
-  }
+	public IdGeneratorException(String msg) {
+		super(msg);
+	}
 
-  public IdGeneratorException(Integer errorCode,String msg) {
-    super(msg);
-    this.errorCode = errorCode;
-  }
-  public IdGeneratorException(Throwable cause) {
-    super(cause);
-  }
+	public IdGeneratorException(Integer errorCode, String msg) {
+		super(msg);
+		this.errorCode = errorCode;
+	}
 
-  public IdGeneratorException(String message, Throwable cause) {
-    super(message, cause);
-  }
+	public IdGeneratorException(Throwable cause) {
+		super(cause);
+	}
 
-  public IdGeneratorException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-    super(message, cause, enableSuppression, writableStackTrace);
-  }
+	public IdGeneratorException(String message, Throwable cause) {
+		super(message, cause);
+	}
 
-  public IdGeneratorException(IdExceptionCodeE idExceptionCodeE) {
-    super(idExceptionCodeE.getErrMsg());
-    this.errorCode = idExceptionCodeE.getErrCode();
-  }
+	public IdGeneratorException(String message, Throwable cause, boolean enableSuppression,
+			boolean writableStackTrace) {
+		super(message, cause, enableSuppression, writableStackTrace);
+	}
+
+	public IdGeneratorException(IdExceptionCodeE idExceptionCodeE) {
+		super(idExceptionCodeE.getErrMsg());
+		this.errorCode = idExceptionCodeE.getErrCode();
+	}
 
 }

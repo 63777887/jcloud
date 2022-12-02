@@ -49,7 +49,7 @@ public class Consumer {
 	AmqpAdmin amqpAdmin;
 
 	public void init() {
-		if (logger.isDebugEnabled()){
+		if (logger.isDebugEnabled()) {
 			logger.debug("启动RabbitMq监听...{}", this);
 		}
 		Assert.isTrue(null != queue, "queue cannot be null !");

@@ -6,7 +6,6 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 import com.jwk.common.core.model.RestResponse;
-import com.jwk.common.core.model.RestResponse.RestResponseBuilder;
 import java.util.*;
 
 /**
@@ -16,11 +15,11 @@ import java.util.*;
 public class CustomerBlockHandler {
 
 	public static RestResponse handlerException(BlockException exception) {
-		return RestResponseBuilder.createFailBuilder("按客戶自定义,global handlerException----1").buidler();
+		return RestResponse.success("按客戶自定义,global handlerException----1");
 	}
 
 	public static RestResponse handlerException2(BlockException exception) {
-		return RestResponseBuilder.createFailBuilder("按客戶自定义,global handlerException----2").buidler();
+		return RestResponse.success("按客戶自定义,global handlerException----2");
 	}
 
 	public static void main(String[] args) {

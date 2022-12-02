@@ -49,4 +49,4 @@ public class JwkSwaggerProperties {
 ```
 ### 开箱即用
 直接访问服务的 /doc.html 路径
-![knife4j效果图](../docs/images/knife4j.png)
+![knife4j效果图](../../docs/images/common-knife4j/knife4j.png)

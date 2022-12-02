@@ -33,14 +33,14 @@ public final class JwkPrometheusFactory {
 
 		try {
 			buildJwkPrometheusContext(applicationContext, jwkPrometheusProperties, registry);
-		} catch (PrometheusException e) {
-			throw new BeanInstantiationException(JwkPrometheusContext.class,e.getMessage());
+		}
+		catch (PrometheusException e) {
+			throw new BeanInstantiationException(JwkPrometheusContext.class, e.getMessage());
 		}
 	}
 
 	public static void buildJwkPrometheusContext(ApplicationContext applicationContext,
-			JwkPrometheusProperties jwkPrometheusProperties, MeterRegistry registry)
-			throws PrometheusException {
+			JwkPrometheusProperties jwkPrometheusProperties, MeterRegistry registry) throws PrometheusException {
 		if (logger.isDebugEnabled()) {
 			logger.debug("jcloud prometheus context build start");
 		}

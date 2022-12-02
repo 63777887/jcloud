@@ -2,8 +2,10 @@ package com.jwk.api.api.handler;
 
 import com.jwk.api.api.UpmsRemoteService;
 import com.jwk.api.dto.SysApiDto;
+import com.jwk.api.dto.SysOauthClientDto;
 import com.jwk.api.dto.UserInfo;
 import com.jwk.common.core.model.InnerResponse;
+import com.jwk.common.core.model.RestResponse;
 import java.util.Collections;
 import java.util.List;
 import lombok.Setter;
@@ -37,13 +39,19 @@ public class UpmsRemoteServiceFallBackServiceImpl implements UpmsRemoteService {
 	}
 
 	@Override
-	public InnerResponse<List<SysApiDto>> resourceList() {
-		log.error("feign resourceList fail:", cause);
-		// 给一个默认没有的权限
-		SysApiDto sysApiDto = new SysApiDto();
-		sysApiDto.setUrl("FORBIDDEN");
-		sysApiDto.setApiDesc("没有权限");
-		return InnerResponse.success(Collections.singletonList(sysApiDto));
+	public InnerResponse<UserInfo> findUserByEmail(String email) {
+		return null;
+	}
+
+	@Override
+	public InnerResponse<List<SysApiDto>> loadUserAuthoritiesByRole(String roleCode) {
+		return InnerResponse.success(Collections.singletonList(new SysApiDto()));
+	}
+
+	@Override
+	public InnerResponse<SysOauthClientDto> getClientDetailsById(String clientId) {
+		log.error("feign getClientDetailsById fail:", cause);
+		return InnerResponse.success(new SysOauthClientDto());
 	}
 
 	@Override

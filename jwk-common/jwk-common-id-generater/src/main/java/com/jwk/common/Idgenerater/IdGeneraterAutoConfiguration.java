@@ -22,30 +22,30 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties(IdGeneraterProperties.class)
 public class IdGeneraterAutoConfiguration {
 
-  @Bean
-  public IdGeneratorService idGeneratorService(){
-    IdGeneratorServiceImpl idGeneratorService = new IdGeneratorServiceImpl();
-    return idGeneratorService;
-  }
+	@Bean
+	public IdGeneratorService idGeneratorService() {
+		IdGeneratorServiceImpl idGeneratorService = new IdGeneratorServiceImpl();
+		return idGeneratorService;
+	}
 
-  @Bean
-  @ConditionalOnMissingBean
-  public IdGeneratorManage idGeneratorManage(){
-    RedisGeneratorManage manage = new RedisGeneratorManage();
-    return manage;
-  }
+	@Bean
+	@ConditionalOnMissingBean
+	public IdGeneratorManage idGeneratorManage() {
+		RedisGeneratorManage manage = new RedisGeneratorManage();
+		return manage;
+	}
 
-  @Bean
-  public KeyGenerator keyGenerator() {
-    return (target, method, params) -> {
-      StringBuilder sb = new StringBuilder();
-      sb.append(target.getClass().getName());
-      sb.append(method.getName());
-      for (Object obj : params) {
-        sb.append(obj.toString());
-      }
-      return sb.toString();
-    };
-  }
+	@Bean
+	public KeyGenerator keyGenerator() {
+		return (target, method, params) -> {
+			StringBuilder sb = new StringBuilder();
+			sb.append(target.getClass().getName());
+			sb.append(method.getName());
+			for (Object obj : params) {
+				sb.append(obj.toString());
+			}
+			return sb.toString();
+		};
+	}
 
 }

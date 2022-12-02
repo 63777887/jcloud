@@ -7,7 +7,7 @@
   <parent>
     <artifactId>jwk-common</artifactId>
     <groupId>com.jwk</groupId>
-    <version>0.1.2</version>
+    <version>0.1.4</version>
   </parent>
 
   <artifactId>jwk-common-security</artifactId>
@@ -25,6 +25,11 @@
       <groupId>com.jwk</groupId>
       <artifactId>jwk-common-cloud</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.jwk</groupId>
+      <artifactId>jwk-common-redis</artifactId>
+      <version>0.1.4</version>
+    </dependency>
 
     <dependency>
       <groupId>com.jwk</groupId>
@@ -32,17 +37,17 @@
     </dependency>
     <!--        登陆鉴权-->
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-security</artifactId>
-    </dependency>
-    <dependency>
       <groupId>io.jsonwebtoken</groupId>
       <artifactId>jjwt</artifactId>
     </dependency>
-
     <dependency>
-      <groupId>org.springframework.security.oauth.boot</groupId>
-      <artifactId>spring-security-oauth2-autoconfigure</artifactId>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-oauth2-jose</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-oauth2-authorization-server</artifactId>
+      <version>${spring.authorization.version}</version>
     </dependency>
   </dependencies>
 

@@ -1,7 +1,7 @@
 package com.jwk.common.core.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.jwk.common.core.constant.ResponseCode;
+import com.jwk.common.core.constant.ResponseConstants;
 import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -41,27 +41,27 @@ public class InnerResponse<T> implements Serializable {
 	private T data;
 
 	public static <T> InnerResponse<T> success() {
-		return restResult(ResponseCode.SUCCESS_CODE, "", null);
+		return restResult(ResponseConstants.SUCCESS_CODE, "", null);
 	}
 
 	public static <T> InnerResponse<T> success(T data) {
-		return restResult(ResponseCode.SUCCESS_CODE, null, data);
+		return restResult(ResponseConstants.SUCCESS_CODE, null, data);
 	}
 
 	public static <T> InnerResponse<T> success(String msg, T data) {
-		return restResult(ResponseCode.SUCCESS_CODE, msg, data);
+		return restResult(ResponseConstants.SUCCESS_CODE, msg, data);
 	}
 
 	public static <T> InnerResponse<T> error() {
-		return restResult(ResponseCode.ERROR_CODE, null, null);
+		return restResult(ResponseConstants.ERROR_CODE, null, null);
 	}
 
 	public static <T> InnerResponse<T> error(T data) {
-		return restResult(ResponseCode.ERROR_CODE, null, data);
+		return restResult(ResponseConstants.ERROR_CODE, null, data);
 	}
 
 	public static <T> InnerResponse<T> error(String msg, T data) {
-		return restResult(ResponseCode.ERROR_CODE, msg, data);
+		return restResult(ResponseConstants.ERROR_CODE, msg, data);
 	}
 
 	private static <T> InnerResponse<T> restResult(String code, String msg, T data) {

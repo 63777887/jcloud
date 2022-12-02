@@ -41,10 +41,11 @@ public class IdGeneratorServiceImpl implements IdGeneratorService {
 		long id = idGeneratorManage.generate(slotId);
 		if (isCorrect(slotId, id)) {
 			if (log.isDebugEnabled()) {
-				log.debug("id: {}",id);
+				log.debug("id: {}", id);
 			}
 			return id;
-		} else {
+		}
+		else {
 			IdGeneratorException exception = new IdGeneratorException(IdExceptionCodeE.NoUserFulId);
 			if (log.isErrorEnabled()) {
 				log.error("getId error:{}", exception.toString());
@@ -68,10 +69,11 @@ public class IdGeneratorServiceImpl implements IdGeneratorService {
 			// 从小到大排序
 			ids = ids.stream().distinct().sorted().collect(Collectors.toList());
 			if (log.isDebugEnabled()) {
-				log.debug("ids: {}",ids);
+				log.debug("ids: {}", ids);
 			}
 			return ids;
-		} else {
+		}
+		else {
 			IdGeneratorException exception = new IdGeneratorException(IdExceptionCodeE.NoUserFulId);
 			if (log.isErrorEnabled()) {
 				log.error("listIds error:{}", exception.toString());
@@ -90,7 +92,8 @@ public class IdGeneratorServiceImpl implements IdGeneratorService {
 
 		if (slotId < 0) {
 			return false;
-		} else {
+		}
+		else {
 			// 普通槽位起始值
 			return id > idGeneraterProperties.slotInitialValue;
 		}
@@ -105,4 +108,5 @@ public class IdGeneratorServiceImpl implements IdGeneratorService {
 
 		return true;
 	}
+
 }

@@ -57,7 +57,8 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
 
 	private final Map<String, ReentrantLock> keyLockMap = new ConcurrentHashMap<>();
 
-	public RedisCaffeineCache(String name, RedisTemplate<String, Object> stringKeyRedisTemplate, CacheConfigProperties cacheConfigProperties,Boolean usedCaffeineCache) {
+	public RedisCaffeineCache(String name, RedisTemplate<String, Object> stringKeyRedisTemplate,
+			CacheConfigProperties cacheConfigProperties, Boolean usedCaffeineCache) {
 		super(cacheConfigProperties.isCacheNullValues());
 		this.name = name;
 		this.stringKeyRedisTemplate = stringKeyRedisTemplate;
@@ -201,7 +202,7 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
 		if (usedCaffeineCache) {
 			value = getCaffeineValue(key);
 			if (value != null) {
-				if (log.isDebugEnabled()){
+				if (log.isDebugEnabled()) {
 					log.debug("get cache from caffeine, the key is : {}", cacheKey);
 				}
 				return value;
@@ -220,13 +221,13 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
 	}
 
 	protected String getKey(Object key) {
-		return this.name.concat(StrPool.COLON).concat(
-				StrUtil.isNotBlank(cachePrefix) ? cachePrefix.concat(StrPool.COLON).concat(key.toString()) : key.toString());
+		return this.name.concat(StrPool.COLON).concat(StrUtil.isNotBlank(cachePrefix)
+				? cachePrefix.concat(StrPool.COLON).concat(key.toString()) : key.toString());
 	}
 
 	protected Duration getExpire() {
 		String[] cacheNameConfigs = RedisUtil.replaceName(this.name, this.delimiter);
-		Duration cacheNameExpire =expires.get(cacheNameConfigs.length > 1 ? cacheNameConfigs[0] : this.name);
+		Duration cacheNameExpire = expires.get(cacheNameConfigs.length > 1 ? cacheNameConfigs[0] : this.name);
 		if (cacheNameExpire == null && cacheNameConfigs.length > 1) {
 			try {
 				// 支持时间单位例如：60m，第二个参数是默认单位
@@ -249,7 +250,7 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
 	 * @param key
 	 */
 	protected void push(Object key) {
-		stringKeyRedisTemplate.convertAndSend(topic, new CacheMessage(this.name,key,this.cacheServerId));
+		stringKeyRedisTemplate.convertAndSend(topic, new CacheMessage(this.name, key, this.cacheServerId));
 	}
 
 	/**
@@ -281,8 +282,8 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
 		return stringKeyRedisTemplate.opsForValue().get(getKey(key));
 	}
 
-	protected boolean setRedisValueIfAbsent(Object key,Object value) {
-		return stringKeyRedisTemplate.opsForValue().setIfAbsent(getKey(key),value);
+	protected boolean setRedisValueIfAbsent(Object key, Object value) {
+		return stringKeyRedisTemplate.opsForValue().setIfAbsent(getKey(key), value);
 	}
 
 	protected void setCaffeineValue(Object key, Object value) {
@@ -292,7 +293,6 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
 	protected Object getCaffeineValue(Object key) {
 		return caffeineCache.getIfPresent(key);
 	}
-
 
 	protected com.github.benmanes.caffeine.cache.Cache<Object, Object> caffeineCache() {
 		return caffeineCacheBuilder().build();
@@ -339,4 +339,5 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
 			consumer.accept(duration);
 		}
 	}
+
 }

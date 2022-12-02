@@ -1,204 +1,79 @@
 package com.jwk.common.core.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreType;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.jwk.common.core.utils.JacksonUtil;
+import com.jwk.common.core.constant.ResponseConstants;
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.Accessors;
 
 /**
  * @author Jiwk
  * @date 2022/6/11
  * @version 0.1.0
  * <p>
- * 请求返回值
+ * Fegin接口返回值
  */
-@Deprecated
-public class RestResponse implements Serializable {
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Accessors(chain = true)
+public class RestResponse<T> implements Serializable {
 
-	public static final String REST_RESPONSE_SUCCESS_CODE = "0";
-
-	public static final String REST_RESPONSE_FIAL_CODE = "-1";
-
-	public static final String REST_SERVER_RESPONSE_FIAL_CODE = "1";
-
-	public static final String REST_TEMPLATE_RESPONSE_FIAL_CODE = "2";
+	private static final long serialVersionUID = 1078301560542522627L;
 
 	@JsonProperty("code")
+	@Setter
+	@Getter
 	private String code;
 
 	@JsonProperty("msg")
+	@Setter
+	@Getter
 	private String msg;
 
 	@JsonProperty("data")
-	private Object result;
+	@Setter
+	@Getter
+	private T data;
 
-	private RestResponse() {
+	public static <T> RestResponse<T> success() {
+		return restResult(ResponseConstants.SUCCESS_CODE, ResponseConstants.SUCCESS_MSG, null);
 	}
 
-	private RestResponse(String code) {
-		this.code = code;
+	public static <T> RestResponse<T> success(T data) {
+		return restResult(ResponseConstants.SUCCESS_CODE, ResponseConstants.SUCCESS_MSG, data);
 	}
 
-	private RestResponse(String code, String msg) {
-		this.code = code;
-		this.msg = msg;
+	public static <T> RestResponse<T> success(String msg, T data) {
+		return restResult(ResponseConstants.SUCCESS_CODE, msg, data);
 	}
 
-	public String getCode() {
-		return this.code;
+	public static <T> RestResponse<T> error() {
+		return restResult(ResponseConstants.ERROR_CODE, ResponseConstants.ERROR_MSG, null);
 	}
 
-	public void setCode(String code) {
-		this.code = code;
+	public static <T> RestResponse<T> error(T data) {
+		return restResult(ResponseConstants.ERROR_CODE, ResponseConstants.ERROR_MSG, data);
 	}
 
-	public String getMsg() {
-		return this.msg;
+	public static <T> RestResponse<T> error(String msg, T data) {
+		return restResult(ResponseConstants.ERROR_CODE, msg, data);
 	}
 
-	public void setMsg(String msg) {
-		this.msg = msg;
+	public static <T> RestResponse<T> error(String code, String msg, T data) {
+		return restResult(code, msg, data);
 	}
 
-	public Object getResult() {
-		return this.result;
-	}
-
-	public void setResult(Object result) {
-		this.result = result;
-	}
-
-	@JsonIgnore
-	public boolean isSuccess() {
-		return REST_RESPONSE_SUCCESS_CODE.equals(this.code);
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder("RestResponse{");
-		sb.append("code='").append(this.code).append('\'');
-		sb.append(", msg='").append(this.msg).append('\'');
-		sb.append(", result=").append(this.result);
-		sb.append('}');
-		return sb.toString();
-	}
-
-	@JsonIgnoreType
-	public static class RestResponseBuilder {
-
-		private final RestResponse response;
-
-		private RestResponseBuilder(String code) {
-			this.response = new RestResponse(code);
-		}
-
-		private RestResponseBuilder(String code, String message) {
-			this.response = new RestResponse(code);
-			this.setMessage(message);
-			this.setResult((Object) "");
-		}
-
-		public static RestResponse.RestResponseBuilder createSuccessBuilder() {
-			return createBuilder(REST_RESPONSE_SUCCESS_CODE);
-		}
-
-		public static RestResponse.RestResponseBuilder createSuccessBuilder(String message) {
-			return createBuilder(REST_RESPONSE_SUCCESS_CODE, message);
-		}
-
-		public static RestResponse.RestResponseBuilder createFailBuilder() {
-			return createBuilder(REST_RESPONSE_FIAL_CODE);
-		}
-
-		public static RestResponse.RestResponseBuilder createFailBuilder(String message) {
-			return createBuilder(REST_RESPONSE_FIAL_CODE, message);
-		}
-
-		public static RestResponse.RestResponseBuilder createFailForServerBuilder(String message) {
-			return createBuilder(REST_SERVER_RESPONSE_FIAL_CODE, message);
-		}
-
-		public static RestResponse.RestResponseBuilder createFailForTemplateBuilder(String message) {
-			return createBuilder(REST_TEMPLATE_RESPONSE_FIAL_CODE, message);
-		}
-
-		public static RestResponse.RestResponseBuilder createBuilder(String code) {
-			return createBuilder(code, "");
-		}
-
-		public static RestResponse.RestResponseBuilder createBuilder(String code, String message) {
-			return new RestResponse.RestResponseBuilder(code, message);
-		}
-
-		public RestResponse.RestResponseBuilder setMessage(String message) {
-			if (null == message) {
-				this.response.setMsg("");
-			}
-			else {
-				this.response.setMsg(message);
-			}
-
-			return this;
-		}
-
-		public <T> RestResponse.RestResponseBuilder setResult(List<T> result) {
-			if (null != result) {
-				this.response.setResult(result);
-			}
-
-			return this;
-		}
-
-		public <T> RestResponse.RestResponseBuilder setResult(T result) {
-			this.response.setResult(result);
-			return this;
-		}
-
-		public <T> RestResponse.RestResponseBuilder setResult(Collection<T> result) {
-			this.response.setResult(result);
-			return this;
-		}
-
-		public <KEY, VALUE> RestResponse.RestResponseBuilder setResult(Map<KEY, VALUE> result) {
-			this.response.setResult(result);
-			return this;
-		}
-
-		public <P, R> RestResponse.RestResponseBuilder setResult(P paginator, R[] resultList) {
-			if (null != paginator && null != resultList) {
-				Map<String, Object> pageData = new HashMap();
-				pageData.put("paginator", paginator);
-				pageData.put("resultList", resultList);
-				this.response.setResult(pageData);
-			}
-
-			return this;
-		}
-
-		// public <T> RestResponse.RestResponseBuilder setResult(PageList<T> result) {
-		// if (null != result) {
-		// Map<String, Object> pageData = new HashMap();
-		// pageData.put("resultList", result);
-		// pageData.put("paginator", new Paginator(result.getPaginator()));
-		// this.response.setResult(pageData);
-		// }
-		//
-		// return this;
-		// }
-
-		public RestResponse buidler() {
-			return this.response;
-		}
-
-		public String toJson() {
-			return JacksonUtil.objectToJackson(this.response);
-		}
-
+	private static <T> RestResponse<T> restResult(String code, String msg, T data) {
+		RestResponse<T> apiResult = new RestResponse<>();
+		apiResult.setCode(code);
+		apiResult.setData(data);
+		apiResult.setMsg(msg);
+		return apiResult;
 	}
 
 }

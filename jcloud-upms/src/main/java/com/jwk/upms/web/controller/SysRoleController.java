@@ -28,7 +28,7 @@ public class SysRoleController {
 	@GetMapping(value = "/list")
 	public RestResponse list() {
 
-		return RestResponse.RestResponseBuilder.createSuccessBuilder().setResult(sysRoleService.list()).buidler();
+		return RestResponse.success(sysRoleService.list());
 	}
 
 }

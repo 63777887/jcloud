@@ -57,22 +57,22 @@ public class JwkPrometheusContext {
 	}
 
 	public void registry() throws PrometheusException {
-			synchronized (JwkPrometheusContext.class) {
-				Map<String, RegistryService> registryServiceMap = JwkSpringUtil.getBeansOfType(RegistryService.class);
-				String registryMode = jwkPrometheusProperties.getRegistryMode();
-				if (null != registryMode) {
-					Optional<RegistryService> optional = registryServiceMap.values().stream()
-							.filter(service -> service.support().equals(registryMode)).findFirst();
-					if (!optional.isPresent()) {
-						if (logger.isErrorEnabled()) {
-							logger.error("RegistryService error , not registryService instance for {}", registryMode);
-						}
-						throw new PrometheusException(PrometheusExceptionCodeE.NoRegistryServiceInstance);
+		synchronized (JwkPrometheusContext.class) {
+			Map<String, RegistryService> registryServiceMap = JwkSpringUtil.getBeansOfType(RegistryService.class);
+			String registryMode = jwkPrometheusProperties.getRegistryMode();
+			if (null != registryMode) {
+				Optional<RegistryService> optional = registryServiceMap.values().stream()
+						.filter(service -> service.support().equals(registryMode)).findFirst();
+				if (!optional.isPresent()) {
+					if (logger.isErrorEnabled()) {
+						logger.error("RegistryService error , not registryService instance for {}", registryMode);
 					}
-					RegistryService registryService = optional.get();
-					registryService.registry();
+					throw new PrometheusException(PrometheusExceptionCodeE.NoRegistryServiceInstance);
 				}
+				RegistryService registryService = optional.get();
+				registryService.registry();
 			}
+		}
 	}
 
 }

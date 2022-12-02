@@ -19,7 +19,6 @@ public interface JwkPrometheusConstants {
 	 */
 	String JCLOUD_SERVER_FEIGN_METHOD_TIMER = "feign_method_timer";
 
-
 	String APPLICATION = "application";
 
 	/**

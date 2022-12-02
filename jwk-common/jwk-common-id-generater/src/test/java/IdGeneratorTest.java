@@ -18,23 +18,24 @@ import org.springframework.boot.test.context.SpringBootTest;
  * @date 2022/11/3
  */
 @ExtendWith(MockitoExtension.class)
-@SpringBootTest(classes = {IdGeneraterAutoConfiguration.class, JwkRedisAutoConfiguration.class,
-    RedisAutoConfiguration.class})
+@SpringBootTest(
+		classes = { IdGeneraterAutoConfiguration.class, JwkRedisAutoConfiguration.class, RedisAutoConfiguration.class })
 public class IdGeneratorTest {
 
-  @Resource
-  IdGeneratorServiceImpl idGeneratorService;
+	@Resource
+	IdGeneratorServiceImpl idGeneratorService;
 
-  @Test
-  void testRedisTemplate() throws IdGeneratorException, RedisException {
-    long startTime = System.currentTimeMillis();
-    for (int i = 0; i < 1; i++) {
-      idGeneratorService.getId(1);
-    }
-    long endTime = System.currentTimeMillis();
-    System.out.println(endTime-startTime);
-  }
+	@Test
+	void testRedisTemplate() throws IdGeneratorException, RedisException {
+		long startTime = System.currentTimeMillis();
+		for (int i = 0; i < 1; i++) {
+			idGeneratorService.getId(1);
+		}
+		long endTime = System.currentTimeMillis();
+		System.out.println(endTime - startTime);
+	}
 
-//  lock：   20785 100000
-//  unlock： 3426  100000
+	// lock： 20785 100000
+	// unlock： 3426 100000
+
 }

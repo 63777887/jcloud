@@ -1,7 +1,9 @@
 package com.jwk.api.dto;
 
 import java.util.List;
+import java.util.regex.Pattern;
 import lombok.Data;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  * @author Jiwk

@@ -11,11 +11,11 @@ import com.jwk.common.redis.support.RedisCaffeineCache;
  */
 public interface CacheFactory {
 
-  /**
-   * 创建缓存
-   * @param name
-   * @return
-   */
-  RedisCaffeineCache createCache(String name);
+	/**
+	 * 创建缓存
+	 * @param name
+	 * @return
+	 */
+	RedisCaffeineCache createCache(String name);
 
 }
