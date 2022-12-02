@@ -31,7 +31,7 @@ public String get(String key){
     }
 ```
 ##### 每次都会去访问redis
-![不使用caffeine一级缓存](../docs/images/redisCache.png)
+![不使用caffeine一级缓存](../../docs/images/common-redis/redisCache.png)
 #### 示例：使用caffeine一级缓存
 ```java
 @Cacheable(value = "get#6m#1",key = "#key")
