@@ -96,7 +96,6 @@ CREATE TABLE `sys_oauth_client` (
                                     `scope` varchar(256) CHARACTER SET utf8mb3 COLLATE utf8_general_ci DEFAULT NULL COMMENT '域',
                                     `authorized_grant_types` varchar(256) CHARACTER SET utf8mb3 COLLATE utf8_general_ci DEFAULT NULL COMMENT '认证类型',
                                     `web_server_redirect_uri` varchar(256) CHARACTER SET utf8mb3 COLLATE utf8_general_ci DEFAULT NULL COMMENT '重定向地址',
-                                    `authorities` varchar(256) CHARACTER SET utf8mb3 COLLATE utf8_general_ci DEFAULT NULL COMMENT '角色列表',
                                     `access_token_validity` int DEFAULT NULL COMMENT 'token 有效期',
                                     `refresh_token_validity` int DEFAULT NULL COMMENT '刷新令牌有效期',
                                     `additional_information` varchar(4096) CHARACTER SET utf8mb3 COLLATE utf8_general_ci DEFAULT NULL COMMENT '令牌扩展字段JSON',
@@ -112,7 +111,7 @@ CREATE TABLE `sys_oauth_client` (
 -- Records of sys_oauth_client
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_oauth_client` VALUES ('jiwkClient', '测试客户端', NULL, '{bcrypt}$2a$10$SptM6/TuOvM68SLbY/ewHuOHVqI9mF1QlBIDXIvkJDOWd3RufCjZC', 'server', 'authorization_code,password,phone,refresh_token,code,client_credentials,email', 'http://www.baidu.com', NULL, 864000, 864000, NULL, NULL, '2022-11-22 19:40:50', NULL, 'jiwk', NULL);
+INSERT INTO `sys_oauth_client` VALUES ('jiwkClient', '测试客户端', NULL, '{bcrypt}$2a$10$SptM6/TuOvM68SLbY/ewHuOHVqI9mF1QlBIDXIvkJDOWd3RufCjZC', 'server', 'authorization_code,password,phone,refresh_token,code,client_credentials,email', 'http://www.baidu.com', 864000, 864000, NULL, NULL, '2022-11-22 19:40:50', NULL, 'jiwk', NULL);
 COMMIT;
 
 -- ----------------------------

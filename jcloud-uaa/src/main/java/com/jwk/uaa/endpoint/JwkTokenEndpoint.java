@@ -1,17 +1,21 @@
 package com.jwk.uaa.endpoint;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.text.CharPool;
 import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.jwk.api.api.UpmsRemoteService;
-import com.jwk.api.dto.SysOauthClientDto;
 import com.jwk.common.core.model.RestResponse;
 import com.jwk.common.security.annotation.Inner;
 import com.jwk.common.security.constants.OAuth2ErrorCodeConstant;
+import com.jwk.common.security.exception.ScopeException;
+import com.jwk.common.security.support.feign.api.UpmsRemoteService;
 import com.jwk.common.security.support.handler.JwkAuthenticationFailureEventHandler;
 import com.jwk.common.security.util.SecurityUtils;
+import com.jwk.upms.base.dto.SysOauthClientDto;
+import com.jwk.upms.base.entity.SysRole;
 import java.security.Principal;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +28,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServletServerHttpResponse;
-import org.springframework.security.authentication.event.LogoutSuccessEvent;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2TokenType;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenResponse;
@@ -34,13 +37,9 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.resource.InvalidBearerTokenException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -81,26 +80,27 @@ public class JwkTokenEndpoint {
 		return modelAndView;
 	}
 
-	@GetMapping("/confirm_access")
-	public ModelAndView confirm(Principal principal, ModelAndView modelAndView,
-			@RequestParam(OAuth2ParameterNames.CLIENT_ID) String clientId,
-			@RequestParam(OAuth2ParameterNames.SCOPE) String scope,
-			@RequestParam(OAuth2ParameterNames.STATE) String state) {
-//		SysOauthClientDetails clientDetails = RetOps
-//				.of(clientDetailsService.getClientDetailsById(clientId, SecurityConstants.FROM_IN)).getData()
-//				.orElseThrow(() -> new OAuthClientException("clientId 不合法"));
-		SysOauthClientDto clientDetails = upmsRemoteService.getClientDetailsById(clientId).getData();
-		Set<String> authorizedScopes = StringUtils.commaDelimitedListToSet(clientDetails.getScope());
-//		Set<String> authorizedScopes = StringUtils.commaDelimitedListToSet(scope);
-		modelAndView.addObject("clientId", clientId);
-		modelAndView.addObject("state", state);
-		modelAndView.addObject("scopes", withDescription(authorizedScopes));
-		modelAndView.addObject("principalName", principal.getName());
-		modelAndView.addObject("clientName", clientDetails.getClientName());
-		modelAndView.addObject("redirectUri", clientDetails.getWebServerRedirectUri());
-		modelAndView.setViewName("consent");
-		return modelAndView;
-	}
+  @GetMapping("/confirm_access")
+  public ModelAndView confirm(Principal principal, ModelAndView modelAndView,
+      @RequestParam(OAuth2ParameterNames.CLIENT_ID) String clientId,
+      @RequestParam(OAuth2ParameterNames.SCOPE) String scope,
+      @RequestParam(OAuth2ParameterNames.STATE) String state) {
+    SysOauthClientDto clientDetails = upmsRemoteService.getClientDetailsById(clientId).getData();
+    Set<String> authorizedScopes = StrUtil.isNotBlank(scope) ? new HashSet<>(StrUtil.split(scope, CharPool.SPACE))
+            : new HashSet<>(StrUtil.split(clientDetails.getScope(), CharPool.COMMA));
+    List<SysRole> scopeList = clientDetails.getScopeList();
+    if (CollUtil.isEmpty(authorizedScopes) || CollUtil.isEmpty(scopeList)) {
+      throw new ScopeException(OAuth2ErrorCodeConstant.SCOPE_IS_EMPTY);
+    }
+    modelAndView.addObject("clientId", clientId);
+    modelAndView.addObject("state", state);
+    modelAndView.addObject("scopes", withDescription(authorizedScopes,scopeList));
+    modelAndView.addObject("principalName", principal.getName());
+    modelAndView.addObject("clientName", clientDetails.getClientName());
+    modelAndView.addObject("redirectUri", clientDetails.getWebServerRedirectUri());
+    modelAndView.setViewName("consent");
+    return modelAndView;
+  }
 
 
 	/**
@@ -185,46 +185,30 @@ public class JwkTokenEndpoint {
 		return RestResponse.success();
 	}
 
-	private static Set<ScopeWithDescription> withDescription(Set<String> scopes) {
-		Set<ScopeWithDescription> scopeWithDescriptions = new LinkedHashSet<>();
-		for (String scope : scopes) {
-			scopeWithDescriptions.add(new ScopeWithDescription(scope));
+  private static Set<ScopeWithDescription> withDescription(Set<String> scopes,
+      List<SysRole> scopeList) {
+    Set<ScopeWithDescription> scopeWithDescriptions = new LinkedHashSet<>();
+    for (String scope : scopes) {
+      for (SysRole sysRole : scopeList) {
+       if (scope.equals(sysRole.getCode())){
+         scopeWithDescriptions.add(new ScopeWithDescription(scope,sysRole.getRoleName(),sysRole.getRoleDesc()));
+       }
+      }
+    }
+    return scopeWithDescriptions;
+  }
 
-		}
-		return scopeWithDescriptions;
-	}
 
+  public static class ScopeWithDescription {
+    public final String scope;
+    public final String scopeName;
+    public final String description;
 
-	public static class ScopeWithDescription {
-		private static final String DEFAULT_DESCRIPTION = "我们无法提供有关此权限的信息";
-		private static final Map<String, String> scopeDescriptions = new HashMap<>();
-
-		static {
-			scopeDescriptions.put(
-					"profile",
-					"验证您的身份"
-			);
-			scopeDescriptions.put(
-					"message.read",
-					"了解您可以访问哪些权限"
-			);
-			scopeDescriptions.put(
-					"message.write",
-					"代表您行事"
-			);
-			scopeDescriptions.put(
-					"server",
-					"系统属性"
-			);
-		}
-
-		public final String scope;
-		public final String description;
-
-		ScopeWithDescription(String scope) {
-			this.scope = scope;
-			this.description = scopeDescriptions.getOrDefault(scope, DEFAULT_DESCRIPTION);
-		}
-	}
+    ScopeWithDescription(String scope, String scopeName, String scopeDesc) {
+      this.scope = scope;
+      this.scopeName = scopeName;
+      this.description = scopeDesc;
+    }
+  }
 
 }

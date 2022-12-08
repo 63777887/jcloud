@@ -1,9 +1,9 @@
 package com.jwk.uaa.grant.email;
 
-import com.jwk.api.api.UpmsRemoteService;
-import com.jwk.api.dto.UserInfo;
+import com.jwk.common.security.support.feign.api.UpmsRemoteService;
 import com.jwk.common.security.support.service.JwkUserDetailsService;
 import com.jwk.uaa.constant.JwkOAuth2ParameterNames;
+import com.jwk.upms.base.dto.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

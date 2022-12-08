@@ -3,16 +3,17 @@ package com.jwk.common.security.support.component;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.extra.spring.SpringUtil;
-import com.jwk.api.api.UpmsRemoteService;
-import com.jwk.api.dto.SysApiDto;
 import com.jwk.common.security.dto.AdminUserDetails;
 import com.jwk.common.security.dto.ResourceConfigAttribute;
-import com.jwk.common.security.dto.SysApi;
+import com.jwk.common.security.support.feign.api.UpmsRemoteService;
 import com.jwk.common.security.support.service.JwkUserDetailsService;
+import com.jwk.upms.base.entity.SysApi;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -93,10 +94,19 @@ public class JwkCustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector
 			// 获取scope和user的权限交集，即为当前用户可访问的权限
 			List<ResourceConfigAttribute> userAuthoritys = userDetails.getAuthorities().stream()
 					.map(t -> (ResourceConfigAttribute) t).collect(Collectors.toList());
-			List<ResourceConfigAttribute> realAuthoritys = (List<ResourceConfigAttribute>) CollUtil.intersection(scopeAuthorities, userAuthoritys);
+			// 获取申请的权限
+			List<Long> scopeRoleIds = scopeAuthorities.stream().map(scopeAuthority -> scopeAuthority.getSysApi().getId()).collect(Collectors.toList());
+			// 获取用户的权限
+			List<Long> userRoleIds = userAuthoritys.stream().map(scopeAuthority -> scopeAuthority.getSysApi().getId()).collect(Collectors.toList());
+			// 取用户权限和申请权限的交集
+			List<Long> roleIds = (List<Long>)CollUtil.intersection(scopeRoleIds, userRoleIds);
+			// 构建token的权限集
+			List<ResourceConfigAttribute> realAuthorities = scopeAuthorities.stream().filter(realAuthority -> {
+				return roleIds.contains(realAuthority.getSysApi().getId());
+			}).collect(Collectors.toList());
 			AdminUserDetails adminUserDetails = (AdminUserDetails) userDetails;
 
-			userDetails = new AdminUserDetails(adminUserDetails.getSysUser(),realAuthoritys);
+			userDetails = new AdminUserDetails(adminUserDetails.getSysUser(),realAuthorities);
 		} catch (UsernameNotFoundException notFoundException) {
 			if (log.isWarnEnabled()) {
 				log.warn("用户不存在 {}", notFoundException.getLocalizedMessage());
@@ -117,12 +127,13 @@ public class JwkCustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector
 		Object scope = oldAuthorization.getAttribute(
 				"org.springframework.security.oauth2.server.authorization.OAuth2Authorization.AUTHORIZED_SCOPE");
 		if (BeanUtil.isNotEmpty(scope)) {
-			List<SysApiDto> sysApiDtos = upmsRemoteService.loadUserAuthoritiesByRole(((LinkedHashSet)scope).stream().findFirst().get().toString())
+
+			List<SysApi> sysApiDtos = upmsRemoteService.loadUserAuthoritiesByRole((new ArrayList<>(
+					((HashSet<String>) scope))))
 					.getData();
 			if (CollUtil.isNotEmpty(sysApiDtos)){
 				scopeAuthorities = sysApiDtos.stream().map(sysApiDto -> {
-					SysApi sysApi = BeanUtil.copyProperties(sysApiDto, SysApi.class);
-					return new ResourceConfigAttribute(sysApi);
+					return new ResourceConfigAttribute(sysApiDto);
 				}).collect(Collectors.toList());
 			}
 		}

@@ -2,7 +2,7 @@ package com.jwk.upms.web.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jwk.upms.web.dao.SysRoleApiMapper;
-import com.jwk.upms.web.entity.SysRoleApi;
+import com.jwk.upms.base.entity.SysRoleApi;
 import com.jwk.upms.web.service.SysRoleApiService;
 import org.springframework.stereotype.Service;
 

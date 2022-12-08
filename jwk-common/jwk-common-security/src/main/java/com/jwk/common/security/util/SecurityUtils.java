@@ -2,7 +2,7 @@ package com.jwk.common.security.util;
 
 import cn.hutool.core.map.MapUtil;
 import com.jwk.common.security.dto.AdminUserDetails;
-import com.jwk.common.security.dto.SysUser;
+import com.jwk.upms.base.entity.SysUser;
 import java.io.IOException;
 import java.time.temporal.ChronoUnit;
 import java.util.Map;

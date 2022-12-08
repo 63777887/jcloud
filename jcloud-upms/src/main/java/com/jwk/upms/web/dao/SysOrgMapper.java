@@ -1,7 +1,7 @@
 package com.jwk.upms.web.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.jwk.upms.web.entity.SysOrg;
+import com.jwk.upms.base.entity.SysOrg;
 
 /**
  * <p>

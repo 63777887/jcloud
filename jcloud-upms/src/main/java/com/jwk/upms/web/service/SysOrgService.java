@@ -1,7 +1,7 @@
 package com.jwk.upms.web.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.jwk.upms.web.entity.SysOrg;
+import com.jwk.upms.base.entity.SysOrg;
 
 /**
  * <p>

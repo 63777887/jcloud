@@ -1,11 +1,8 @@
 package com.jwk.upms.web.service;
 
-import com.jwk.api.dto.SysApiDto;
-import com.jwk.api.dto.UserInfo;
-import com.jwk.common.core.model.InnerResponse;
+import com.jwk.upms.base.dto.UserInfo;
+import com.jwk.upms.base.entity.SysApi;
 import java.util.List;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author Jiwk
@@ -30,7 +27,7 @@ public interface AuthService {
    * 获取资源列表
    * @return
    */
-  List<SysApiDto> resourceList();
+  List<SysApi> resourceList();
 
   Integer testSeata();
 

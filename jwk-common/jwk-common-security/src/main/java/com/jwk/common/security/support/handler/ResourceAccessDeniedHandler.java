@@ -29,7 +29,7 @@ public class ResourceAccessDeniedHandler implements AccessDeniedHandler {
 
   @Override
   public void handle(HttpServletRequest request, HttpServletResponse response,
-      AccessDeniedException accessDeniedException) throws IOException, ServletException {
+      AccessDeniedException accessDeniedException) throws IOException {
       response.setCharacterEncoding(JwkSecurityConstants.UTF8);
       response.setContentType(MediaType.APPLICATION_CBOR_VALUE);
       RestResponse<String> result = new RestResponse<>();

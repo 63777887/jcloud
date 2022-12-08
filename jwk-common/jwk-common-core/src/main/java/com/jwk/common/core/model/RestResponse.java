@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
  * @date 2022/6/11
  * @version 0.1.0
  * <p>
- * Fegin接口返回值
+ * 接口返回值
  */
 @ToString
 @NoArgsConstructor

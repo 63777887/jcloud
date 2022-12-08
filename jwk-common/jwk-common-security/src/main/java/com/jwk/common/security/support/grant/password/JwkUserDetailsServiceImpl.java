@@ -1,13 +1,9 @@
 package com.jwk.common.security.support.grant.password;
 
-import com.jwk.api.api.UpmsRemoteService;
-import com.jwk.api.dto.UserInfo;
-import com.jwk.common.core.constant.JwkSecurityConstants;
-import com.jwk.common.security.dto.AdminUserDetails;
+import com.jwk.common.security.support.feign.api.UpmsRemoteService;
 import com.jwk.common.security.support.service.JwkUserDetailsService;
+import com.jwk.upms.base.dto.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.Cache;
-import org.springframework.cache.CacheManager;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 

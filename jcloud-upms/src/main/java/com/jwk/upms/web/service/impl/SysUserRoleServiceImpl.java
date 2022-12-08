@@ -2,7 +2,7 @@ package com.jwk.upms.web.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jwk.upms.web.dao.SysUserRoleMapper;
-import com.jwk.upms.web.entity.SysUserRole;
+import com.jwk.upms.base.entity.SysUserRole;
 import com.jwk.upms.web.service.SysUserRoleService;
 import org.springframework.stereotype.Service;
 

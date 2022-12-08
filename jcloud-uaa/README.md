@@ -7,7 +7,7 @@
 ## 使用
 配置nacos注册地址，nacos提供对应的配置文件，参考nacos_config.sql
 ### 1.授权码模式
-#### 1.1 访问 http://localhost:8093/oauth2/authorize?scope=server&client_id=jiwkClient&client_secret=Awert159&response_type=code&redirect_uri=http://www.baidu.com
+#### 1.1 访问 http://localhost:8093/oauth2/authorize?scope=server,CSJS&client_id=jiwkClient&client_secret=Awert159&response_type=code&redirect_uri=http://www.baidu.com
 由于没有登录，会跳转到登录页面
 ![登录页面](../docs/images/jcloud-uaa/login.png)
 #### 1.2 登录成功跳转到确认授权页面

@@ -1,5 +1,6 @@
 package com.jwk.common.security.dto;
 
+import com.jwk.upms.base.entity.SysUser;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;

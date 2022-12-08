@@ -2,11 +2,9 @@ package com.jwk.common.security.support.grant.password;
 
 import com.jwk.common.security.support.base.OAuth2ResourceOwnerBaseAuthenticationProvider;
 import java.util.Map;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2ErrorCodes;

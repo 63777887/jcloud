@@ -2,16 +2,13 @@ package com.jwk.common.security.support.service;
 
 import cn.hutool.core.util.BooleanUtil;
 import cn.hutool.core.util.StrUtil;
-import com.jwk.api.api.UpmsRemoteService;
-import com.jwk.api.dto.SysOauthClientDto;
-import com.jwk.common.core.constant.JwkSecurityConstants;
+import com.jwk.common.security.support.feign.api.UpmsRemoteService;
+import com.jwk.upms.base.dto.SysOauthClientDto;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;

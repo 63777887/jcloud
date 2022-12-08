@@ -1,7 +1,9 @@
 package com.jwk.upms.web.service;
 
-import com.jwk.upms.web.entity.SysOauthClient;
+import com.jwk.upms.base.dto.SysOauthClientDto;
+import com.jwk.upms.base.entity.SysOauthClient;
 import com.baomidou.mybatisplus.extension.service.IService;
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface SysOauthClientService extends IService<SysOauthClient> {
 
+  SysOauthClientDto getClientDetailsById(String clientId);
 }

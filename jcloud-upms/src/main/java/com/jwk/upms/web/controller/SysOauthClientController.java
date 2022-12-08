@@ -3,8 +3,9 @@ package com.jwk.upms.web.controller;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.jwk.common.core.model.RestResponse;
 import com.jwk.common.security.annotation.Inner;
+import com.jwk.upms.base.dto.SysOauthClientDto;
+import com.jwk.upms.base.entity.SysOauthClient;
 import com.jwk.upms.web.service.SysOauthClientService;
-import com.jwk.upms.web.entity.SysOauthClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,10 +31,8 @@ public class SysOauthClientController {
 	 */
 	@GetMapping(value = "/getClientDetailsById/{clientId}")
 	@Inner
-	public RestResponse getClientDetailsById(@PathVariable String clientId) {
-
-		return RestResponse.success(sysOauthClientService.getOne(
-				Wrappers.<SysOauthClient>lambdaQuery().eq(SysOauthClient::getClientId, clientId), false));
+	public RestResponse<SysOauthClientDto> getClientDetailsById(@PathVariable String clientId) {
+		return RestResponse.success(sysOauthClientService.getClientDetailsById(clientId));
 	}
 
 }

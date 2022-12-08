@@ -5,6 +5,7 @@ import com.jwk.common.core.utils.JwkSpringUtil;
 import com.jwk.common.security.support.component.CustomeOAuth2TokenCustomizer;
 import com.jwk.common.security.support.component.JwkDaoAuthenticationProvider;
 import com.jwk.common.security.support.component.JwkOAuth2AccessTokenGenerator;
+import com.jwk.common.security.support.component.JwkOAuth2AuthorizationCodeRequestAuthenticationConverter;
 import com.jwk.common.security.support.grant.password.PasswordAuthenticationProvider;
 import com.jwk.common.security.support.grant.password.PasswordTokenGranter;
 import com.jwk.common.security.support.handler.JwkAuthenticationFailureEventHandler;
@@ -31,7 +32,6 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Refr
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 import org.springframework.security.oauth2.server.authorization.web.authentication.DelegatingAuthenticationConverter;
 import org.springframework.security.oauth2.server.authorization.web.authentication.OAuth2AuthorizationCodeAuthenticationConverter;
-import org.springframework.security.oauth2.server.authorization.web.authentication.OAuth2AuthorizationCodeRequestAuthenticationConverter;
 import org.springframework.security.oauth2.server.authorization.web.authentication.OAuth2ClientCredentialsAuthenticationConverter;
 import org.springframework.security.oauth2.server.authorization.web.authentication.OAuth2RefreshTokenAuthenticationConverter;
 import org.springframework.security.web.DefaultSecurityFilterChain;
@@ -82,6 +82,7 @@ public class AuthorizationServerConfiguration {
         .authorizationEndpoint(authorizationEndpoint -> {
           // 授权码端点个性化confirm页面
           authorizationEndpoint.consentPage(JwkOAuth2Urls.CUSTOM_CONSENT_PAGE_URI);
+          authorizationEndpoint.authorizationRequestConverter(new JwkOAuth2AuthorizationCodeRequestAuthenticationConverter());
             }
         ));
 
@@ -126,6 +127,7 @@ public class AuthorizationServerConfiguration {
    * @return DelegatingAuthenticationConverter
    */
   private AuthenticationConverter accessTokenRequestConverter() {
+    JwkOAuth2AuthorizationCodeRequestAuthenticationConverter jwkOAuth2AuthorizationCodeRequestAuthenticationConverter = new JwkOAuth2AuthorizationCodeRequestAuthenticationConverter();
     return new DelegatingAuthenticationConverter(Arrays.asList(
         // 手机号码模式
         new PhoneAuthenticationGranter(),
@@ -140,7 +142,7 @@ public class AuthorizationServerConfiguration {
         // 授权码模式  ——授权码模式获取token
         new OAuth2AuthorizationCodeAuthenticationConverter(),
         // 授权码模式（确认模式）   ——授权码模式获取code
-        new OAuth2AuthorizationCodeRequestAuthenticationConverter()));
+        jwkOAuth2AuthorizationCodeRequestAuthenticationConverter));
   }
 
   /**

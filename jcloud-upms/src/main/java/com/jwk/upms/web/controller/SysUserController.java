@@ -1,9 +1,9 @@
 package com.jwk.upms.web.controller;
 
-import com.jwk.api.dto.UserInfo;
 import com.jwk.common.core.model.InnerResponse;
 import com.jwk.common.core.model.RestResponse;
 import com.jwk.common.security.annotation.Inner;
+import com.jwk.upms.base.dto.UserInfo;
 import com.jwk.upms.web.service.AuthService;
 import com.jwk.upms.web.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;

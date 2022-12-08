@@ -2,17 +2,15 @@ package com.jwk.upms.web.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.convert.Convert;
-import com.jwk.api.dto.RegisterReq;
-import com.jwk.api.dto.SysApiDto;
-import com.jwk.api.dto.SysUserDto;
-import com.jwk.api.dto.UserInfo;
 import com.jwk.common.core.enums.StatusE;
 import com.jwk.common.core.exception.ServiceException;
 import com.jwk.common.core.utils.DateHelper;
-import com.jwk.upms.web.entity.SysApi;
-import com.jwk.upms.web.entity.SysRoleApi;
-import com.jwk.upms.web.entity.SysUser;
-import com.jwk.upms.web.entity.SysUserRole;
+import com.jwk.upms.base.dto.RegisterReq;
+import com.jwk.upms.base.dto.UserInfo;
+import com.jwk.upms.base.entity.SysApi;
+import com.jwk.upms.base.entity.SysRoleApi;
+import com.jwk.upms.base.entity.SysUser;
+import com.jwk.upms.base.entity.SysUserRole;
 import com.jwk.upms.web.service.AuthService;
 import com.jwk.upms.web.service.SysApiService;
 import com.jwk.upms.web.service.SysRoleApiService;
@@ -99,11 +97,8 @@ public class AuthServiceImpl implements AuthService {
 		}
 
 		UserInfo userInfo = new UserInfo();
-		SysUserDto userDto = Convert.convert(SysUserDto.class, user);
-		List<SysApiDto> sysApiDtos = sysApis.stream().map(t -> Convert.convert(SysApiDto.class, t))
-				.collect(Collectors.toList());
-		userInfo.setSysUser(userDto);
-		userInfo.setSysApis(sysApiDtos);
+		userInfo.setSysUser(user);
+		userInfo.setSysApis(sysApis);
 		return userInfo;
 	}
 
@@ -114,9 +109,9 @@ public class AuthServiceImpl implements AuthService {
 	}
 
 	@Override
-	public List<SysApiDto> resourceList() {
+	public List<SysApi> resourceList() {
 		List<SysApi> list = sysApiService.lambdaQuery().eq(SysApi::getStatus, StatusE.Normal.getId()).list();
-		return list.stream().map(t -> Convert.convert(SysApiDto.class, t)).collect(Collectors.toList());
+		return list.stream().map(t -> Convert.convert(SysApi.class, t)).collect(Collectors.toList());
 	}
 
 	@Override

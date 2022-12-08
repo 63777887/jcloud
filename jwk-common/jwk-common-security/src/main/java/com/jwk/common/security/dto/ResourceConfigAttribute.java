@@ -1,5 +1,6 @@
 package com.jwk.common.security.dto;
 
+import com.jwk.upms.base.entity.SysApi;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.core.GrantedAuthority;
 

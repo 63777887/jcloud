@@ -19,6 +19,11 @@
   <dependencies>
     <dependency>
       <groupId>com.jwk</groupId>
+      <artifactId>jcloud-upms-base</artifactId>
+      <version>0.1.4</version>
+    </dependency>
+    <dependency>
+      <groupId>com.jwk</groupId>
       <artifactId>jwk-common-core</artifactId>
     </dependency>
     <dependency>
@@ -29,11 +34,6 @@
       <groupId>com.jwk</groupId>
       <artifactId>jwk-common-redis</artifactId>
       <version>0.1.4</version>
-    </dependency>
-
-    <dependency>
-      <groupId>com.jwk</groupId>
-      <artifactId>jwk-api</artifactId>
     </dependency>
     <!--        登陆鉴权-->
     <dependency>
@@ -48,6 +48,10 @@
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-oauth2-authorization-server</artifactId>
       <version>${spring.authorization.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-thymeleaf</artifactId>
     </dependency>
   </dependencies>
 
