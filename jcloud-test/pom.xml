@@ -55,7 +55,7 @@
     </dependency>
     <dependency>
       <groupId>com.jwk</groupId>
-      <artifactId>jwk-api</artifactId>
+      <artifactId>jcloud-upms-base</artifactId>
     </dependency>
 <!--    <dependency>-->
 <!--      <groupId>com.jwk</groupId>-->

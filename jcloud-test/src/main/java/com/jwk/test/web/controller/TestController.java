@@ -7,6 +7,7 @@ import com.jwk.common.security.annotation.UserParam;
 import com.jwk.test.netty.TestServerChannel;
 import com.jwk.test.service.TestSeataService;
 import com.jwk.test.service.inner.TestService;
+import com.jwk.upms.base.entity.SysUser;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

@@ -28,7 +28,6 @@
     <module>jwk-common-sharding-jdbc</module>
     <module>jwk-common-dynamic-datasource</module>
     <module>jwk-common-prometheus</module>
-    <module>jwk-api</module>
     <module>jwk-common-seata</module>
     <module>jwk-common-redis</module>
     <module>jwk-common-id-generater</module>

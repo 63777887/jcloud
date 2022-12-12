@@ -1,12 +1,10 @@
 package com.jwk.test.service.impl;
 
-import com.jwk.api.api.UpmsRemoteService;
+import com.jwk.common.security.support.feign.api.UpmsRemoteService;
 import com.jwk.test.mapper.UserMapper;
 import com.jwk.test.service.TestSeataService;
-//import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Jiwk
