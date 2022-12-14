@@ -18,6 +18,7 @@ import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2RefreshToken;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenResponse;
 import org.springframework.security.oauth2.core.http.converter.OAuth2AccessTokenResponseHttpMessageConverter;
+import org.springframework.security.oauth2.core.oidc.OidcScopes;
 import org.springframework.security.oauth2.server.authorization.authentication.OAuth2AccessTokenAuthenticationToken;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.util.CollectionUtils;
@@ -71,6 +72,9 @@ public class JwkAuthenticationSuccessEventHandler implements AuthenticationSucce
 				.tokenType(accessToken.getTokenType()).scopes(accessToken.getScopes());
 		if (accessToken.getIssuedAt() != null && accessToken.getExpiresAt() != null) {
 			builder.expiresIn(ChronoUnit.SECONDS.between(accessToken.getIssuedAt(), accessToken.getExpiresAt()));
+		}
+		if (accessToken.getScopes().contains(OidcScopes.OPENID)){
+			builder.expiresIn(JwkSecurityConstants.ID_TOKEN_EXPIRE_AT);
 		}
 		if (refreshToken != null) {
 			builder.refreshToken(refreshToken.getTokenValue());

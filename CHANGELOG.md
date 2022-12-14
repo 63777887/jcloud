@@ -2,7 +2,7 @@
 
 ### v0.1.4 - 2022-12-2
 - :sparkles: jwk-common-security 由oauth2改成spring authorization server授权模式
-- :sparkles: jcloud-uaa 扩展了手机号授权模式和邮箱授权模式
+- :sparkles: jcloud-uaa 扩展了密码授权模式，手机号授权模式和邮箱授权模式
 - :memo: 完善 jwk-common-security 使用文档。
 - :card_file_box: 更新数据库表结构和数据
 

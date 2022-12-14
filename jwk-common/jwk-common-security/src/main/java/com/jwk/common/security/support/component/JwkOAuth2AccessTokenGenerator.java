@@ -1,5 +1,6 @@
 package com.jwk.common.security.support.component;
 
+import com.jwk.common.core.constant.JwkSecurityConstants;
 import java.time.Instant;
 import java.util.Base64;
 import java.util.Collections;
@@ -12,9 +13,11 @@ import org.springframework.security.crypto.keygen.Base64StringKeyGenerator;
 import org.springframework.security.crypto.keygen.StringKeyGenerator;
 import org.springframework.security.oauth2.core.ClaimAccessor;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
+import org.springframework.security.oauth2.core.OAuth2AccessToken.TokenType;
 import org.springframework.security.oauth2.core.OAuth2TokenFormat;
 import org.springframework.security.oauth2.core.OAuth2TokenType;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
+import org.springframework.security.oauth2.core.oidc.OidcScopes;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenClaimsContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenClaimsSet;
@@ -30,7 +33,7 @@ import org.springframework.util.StringUtils;
  * @date 2022/11/14
  * @version 0.1.4
  * <p>
- * 自定义token生成策略
+ * 自定义AccessToken生成策略
  * 重写{@link org.springframework.security.oauth2.server.authorization.token.OAuth2AccessTokenGenerator}
  */
 public final class JwkOAuth2AccessTokenGenerator implements OAuth2TokenGenerator<OAuth2AccessToken> {
@@ -46,6 +49,9 @@ public final class JwkOAuth2AccessTokenGenerator implements OAuth2TokenGenerator
 		if (!OAuth2TokenType.ACCESS_TOKEN.equals(context.getTokenType()) || !OAuth2TokenFormat.REFERENCE
 				.equals(context.getRegisteredClient().getTokenSettings().getAccessTokenFormat())) {
 			return null;
+		}
+		if (context.getAuthorizedScopes().contains(OidcScopes.OPENID)){
+			return new OAuth2AccessToken(TokenType.BEARER, JwkSecurityConstants.OIDC_TOKEN_DEFAULT_VALUE,Instant.now(),null);
 		}
 
 		String issuer = null;
@@ -71,6 +77,9 @@ public final class JwkOAuth2AccessTokenGenerator implements OAuth2TokenGenerator
 				.id(UUID.randomUUID().toString());
 		if (!CollectionUtils.isEmpty(context.getAuthorizedScopes())) {
 			claimsBuilder.claim(OAuth2ParameterNames.SCOPE, context.getAuthorizedScopes());
+			if (context.getAuthorizedScopes().contains(OidcScopes.OPENID)){
+				claimsBuilder.expiresAt(Instant.ofEpochSecond(30*60));
+			}
 		}
 		// @formatter:on
 

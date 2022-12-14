@@ -2,33 +2,58 @@ package com.jwk.uaa.config;
 
 import com.jwk.common.core.constant.JwkSecurityConstants;
 import com.jwk.common.core.utils.JwkSpringUtil;
+import com.jwk.common.security.dto.AdminUserDetails;
 import com.jwk.common.security.support.component.CustomeOAuth2TokenCustomizer;
 import com.jwk.common.security.support.component.JwkDaoAuthenticationProvider;
 import com.jwk.common.security.support.component.JwkOAuth2AccessTokenGenerator;
 import com.jwk.common.security.support.component.JwkOAuth2AuthorizationCodeRequestAuthenticationConverter;
+import com.jwk.common.security.support.component.JwkOAuth2RefreshTokenGenerator;
+import com.jwk.common.security.support.component.JwkOidcTokenGenerator;
 import com.jwk.common.security.support.grant.password.PasswordAuthenticationProvider;
 import com.jwk.common.security.support.grant.password.PasswordTokenGranter;
 import com.jwk.common.security.support.handler.JwkAuthenticationFailureEventHandler;
 import com.jwk.common.security.support.handler.JwkAuthenticationSuccessEventHandler;
 import com.jwk.common.security.support.properties.JwkAuthProperties;
 import com.jwk.uaa.constant.JwkOAuth2Urls;
+import com.jwk.uaa.constant.JwkOIDCConstant;
 import com.jwk.uaa.grant.email.EmailAuthenticationGranter;
 import com.jwk.uaa.grant.email.EmailAuthenticationProvider;
 import com.jwk.uaa.grant.phone.PhoneAuthenticationGranter;
 import com.jwk.uaa.grant.phone.PhoneAuthenticationProvider;
+import com.nimbusds.jose.JOSEException;
+import com.nimbusds.jose.jwk.JWKSet;
+import com.nimbusds.jose.jwk.RSAKey;
+import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
+import com.nimbusds.jose.jwk.source.JWKSource;
+import com.nimbusds.jose.proc.SecurityContext;
+import java.io.IOException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
+import java.security.interfaces.RSAPublicKey;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.OAuth2AuthorizationServerConfigurer;
+import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.config.ProviderSettings;
 import org.springframework.security.oauth2.server.authorization.token.DelegatingOAuth2TokenGenerator;
-import org.springframework.security.oauth2.server.authorization.token.OAuth2RefreshTokenGenerator;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 import org.springframework.security.oauth2.server.authorization.web.authentication.DelegatingAuthenticationConverter;
 import org.springframework.security.oauth2.server.authorization.web.authentication.OAuth2AuthorizationCodeAuthenticationConverter;
@@ -86,6 +111,23 @@ public class AuthorizationServerConfiguration {
             }
         ));
 
+    // oidc端点
+    authorizationServerConfigurer
+        .oidc(oidc -> {
+              oidc.userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint.userInfoMapper(oidcUserInfoAuthenticationContext -> {
+                UsernamePasswordAuthenticationToken authenticationToken = oidcUserInfoAuthenticationContext
+                    .getAuthorization().getAttribute("java.security.Principal");
+                Map<String, Object> claims  = new HashMap<>();
+                AdminUserDetails userDetails = (AdminUserDetails) authenticationToken.getPrincipal();
+
+                claims.put(JwkOIDCConstant.ICON, userDetails.getSysUser().getIcon());
+                claims.put(JwkOIDCConstant.USERNAME, userDetails.getSysUser().getUsername());
+                claims.put(JwkOIDCConstant.PHONE, userDetails.getSysUser().getPhone());
+                return new OidcUserInfo(claims);
+              }));
+            }
+        );
+
     //拿到endpoint需要的端点
     RequestMatcher endpointsMatcher = authorizationServerConfigurer.getEndpointsMatcher();
     //配置过滤链拦截的端点（过滤链默认是任意端点，可以通过这个设置，只有匹配中这写端点，才会进入这个过滤链）
@@ -113,12 +155,60 @@ public class AuthorizationServerConfiguration {
    */
   @Bean
   public OAuth2TokenGenerator oAuth2TokenGenerator() {
+    // AccessToken
     JwkOAuth2AccessTokenGenerator accessTokenGenerator = new JwkOAuth2AccessTokenGenerator();
     // 注入Token 增加关联用户信息
     accessTokenGenerator.setAccessTokenCustomizer(new CustomeOAuth2TokenCustomizer());
-    //new一个token生成器委托器，其中包含自定义accesstoken生成器和refreshtoken生成器
+    // id-token
+    JwkOidcTokenGenerator jwtGenerator = new JwkOidcTokenGenerator(new NimbusJwtEncoder(jwkSource()));
+//    jwtGenerator.setJwtCustomizer(new CustomeOAuth2TokenCustomizer());
+    //new一个token生成器委托器，其中包含自定义accesstoken生成器，id-token和refreshtoken生成器
     return new DelegatingOAuth2TokenGenerator(accessTokenGenerator,
-        new OAuth2RefreshTokenGenerator());
+        new JwkOAuth2RefreshTokenGenerator(),jwtGenerator);
+  }
+
+  @Bean
+  @SneakyThrows
+  public JWKSource<SecurityContext> jwkSource() {
+    RSAKey rsaJwks = getKey();
+    JWKSet jwkSet = new JWKSet(Collections.singletonList(rsaJwks));
+    return new ImmutableJWKSet<>(jwkSet);
+  }
+
+
+  @Bean
+  @SneakyThrows
+  public JwtDecoder jwtDecoder() {
+//    CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
+//    ClassPathResource resource = new ClassPathResource("static/jose/pub.cer");
+//    Certificate certificate = certificateFactory.generateCertificate(resource.getInputStream());
+//    RSAPublicKey rsaPublicKey = (RSAPublicKey) certificate.getPublicKey();
+    RSAKey rsaJwks = getKey();
+    RSAPublicKey rsaPublicKey = rsaJwks.toRSAPublicKey();
+    return NimbusJwtDecoder.withPublicKey(rsaPublicKey)
+        .build();
+  }
+
+  /**
+   * 读取ssl密钥，为jwkSource提供服务。
+   * @return
+   * @throws KeyStoreException
+   * @throws IOException
+   * @throws NoSuchAlgorithmException
+   * @throws CertificateException
+   * @throws JOSEException
+   */
+  private RSAKey getKey()
+      throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException, JOSEException {
+    KeyStore jks = KeyStore.getInstance(JwkOIDCConstant.KEY_STORE_TYPE);
+    // 对应keytool命令中的 alias
+    String alias = JwkOIDCConstant.KEY_STORE_ALIAS;
+    // 对应keytool命令中的 storepass
+    String storePass = JwkOIDCConstant.KEY_STORE_STORE_PASS;
+    char[] pin = storePass.toCharArray();
+    // 借用Spring 读取资源的方法获取密钥文件流
+    jks.load(new ClassPathResource(JwkOIDCConstant.KEY_STORE_PATH).getInputStream(), pin);
+    return RSAKey.load(jks, alias, pin);
   }
 
   /**

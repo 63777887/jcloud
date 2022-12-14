@@ -2,7 +2,7 @@ package com.jwk.common.security.support.feign.api;
 
 import com.jwk.common.core.constant.JwkSecurityConstants;
 import com.jwk.common.core.model.InnerResponse;
-import com.jwk.common.security.constants.ServerNameConstants;
+import com.jwk.common.core.constant.ServerNameConstants;
 import com.jwk.upms.base.dto.SysOauthClientDto;
 import com.jwk.upms.base.dto.UserInfo;
 import com.jwk.upms.base.entity.SysApi;

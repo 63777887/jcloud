@@ -54,6 +54,15 @@ public interface JwkSecurityConstants {
 	 */
 	String DETAILS_USER = "user_info";
 
+	/**
+	 * 错误url
+	 */
 	String ACCESS_TOKEN_REQUEST_ERROR_URI = "https://datatracker.ietf.org/doc/html/rfc6749#section-5.2";
 
+	/**
+	 * ID_TOKEN过期时间
+	 */
+	Integer ID_TOKEN_EXPIRE_AT = 30*60;
+
+	String OIDC_TOKEN_DEFAULT_VALUE = "none token";
 }

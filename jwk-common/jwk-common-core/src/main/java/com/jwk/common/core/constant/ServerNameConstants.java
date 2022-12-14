@@ -1,4 +1,4 @@
-package com.jwk.common.security.constants;
+package com.jwk.common.core.constant;
 
 /**
  * @author Jiwk
