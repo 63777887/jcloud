@@ -48,7 +48,7 @@ public class JwkOAuthRequestInterceptor implements RequestInterceptor {
 			return;
 		}
 		template.header(HttpHeaders.AUTHORIZATION,
-				String.format("%s%s", OAuth2AccessToken.TokenType.BEARER.getValue(), token));
+				String.format("%s %s", OAuth2AccessToken.TokenType.BEARER.getValue(), token));
 
 	}
 

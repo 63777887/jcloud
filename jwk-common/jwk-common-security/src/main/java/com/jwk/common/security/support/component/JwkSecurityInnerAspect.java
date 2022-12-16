@@ -12,6 +12,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.access.AccessDeniedException;
 
 /**
@@ -37,7 +38,9 @@ public class JwkSecurityInnerAspect implements Ordered {
 			inner = AnnotationUtils.findAnnotation(clazz, Inner.class);
 		}
 		String header = request.getHeader(JwkSecurityConstants.FROM);
-		if (inner.needFrom() && !StrUtil.equals(JwkSecurityConstants.FROM_IN, header)) {
+		String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
+		if (inner.needFrom() && !StrUtil.equals(JwkSecurityConstants.FROM_IN, header)
+		&& StrUtil.isBlank(authorization)) {
 			if (log.isWarnEnabled()) {
 				log.warn("访问接口 {} 没有权限", point.getSignature().getName());
 			}

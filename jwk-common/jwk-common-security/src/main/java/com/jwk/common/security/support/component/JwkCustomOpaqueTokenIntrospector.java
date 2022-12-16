@@ -10,15 +10,13 @@ import com.jwk.common.security.support.service.JwkUserDetailsService;
 import com.jwk.upms.base.entity.SysApi;
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -129,7 +127,7 @@ public class JwkCustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector
 		if (BeanUtil.isNotEmpty(scope)) {
 
 			List<SysApi> sysApiDtos = upmsRemoteService.loadUserAuthoritiesByRole((new ArrayList<>(
-					((HashSet<String>) scope))))
+					((Set<String>) scope))))
 					.getData();
 			if (CollUtil.isNotEmpty(sysApiDtos)){
 				scopeAuthorities = sysApiDtos.stream().map(sysApiDto -> {

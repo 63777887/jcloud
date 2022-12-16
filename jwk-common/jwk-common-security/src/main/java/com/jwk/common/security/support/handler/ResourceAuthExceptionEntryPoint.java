@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jwk.common.core.constant.ResponseConstants;
 import com.jwk.common.core.model.RestResponse;
 import com.jwk.common.core.constant.JwkSecurityConstants;
+import com.jwk.common.security.constants.OAuth2ErrorCodeConstant;
 import java.io.PrintWriter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -46,7 +47,7 @@ public class ResourceAuthExceptionEntryPoint implements AuthenticationEntryPoint
 		if (authException instanceof InvalidBearerTokenException
 				|| authException instanceof InsufficientAuthenticationException) {
 			response.setStatus(HttpStatus.FAILED_DEPENDENCY.value());
-			result.setMsg(authException.getMessage());
+			result.setMsg(OAuth2ErrorCodeConstant.INVALID_BEARER_TOKEN);
 		}
 		PrintWriter printWriter = response.getWriter();
 		printWriter.append(objectMapper.writeValueAsString(result));

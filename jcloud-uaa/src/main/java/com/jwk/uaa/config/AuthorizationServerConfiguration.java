@@ -47,6 +47,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.OAuth2AuthorizationServerConfigurer;
+import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
@@ -127,7 +128,7 @@ public class AuthorizationServerConfiguration {
               }));
             }
         );
-
+    http.oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
     //拿到endpoint需要的端点
     RequestMatcher endpointsMatcher = authorizationServerConfigurer.getEndpointsMatcher();
     //配置过滤链拦截的端点（过滤链默认是任意端点，可以通过这个设置，只有匹配中这写端点，才会进入这个过滤链）
@@ -217,7 +218,6 @@ public class AuthorizationServerConfiguration {
    * @return DelegatingAuthenticationConverter
    */
   private AuthenticationConverter accessTokenRequestConverter() {
-    JwkOAuth2AuthorizationCodeRequestAuthenticationConverter jwkOAuth2AuthorizationCodeRequestAuthenticationConverter = new JwkOAuth2AuthorizationCodeRequestAuthenticationConverter();
     return new DelegatingAuthenticationConverter(Arrays.asList(
         // 手机号码模式
         new PhoneAuthenticationGranter(),
@@ -232,7 +232,7 @@ public class AuthorizationServerConfiguration {
         // 授权码模式  ——授权码模式获取token
         new OAuth2AuthorizationCodeAuthenticationConverter(),
         // 授权码模式（确认模式）   ——授权码模式获取code
-        jwkOAuth2AuthorizationCodeRequestAuthenticationConverter));
+        new JwkOAuth2AuthorizationCodeRequestAuthenticationConverter()));
   }
 
   /**

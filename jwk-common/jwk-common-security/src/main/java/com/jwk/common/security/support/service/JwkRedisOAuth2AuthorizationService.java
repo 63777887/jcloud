@@ -134,7 +134,7 @@ public class JwkRedisOAuth2AuthorizationService implements OAuth2AuthorizationSe
 	}
 
 	private String buildKey(String type, String id) {
-		return String.format("%s::%s::%s", AUTHORIZATION, type, id);
+		return String.format("%s:%s:%s", AUTHORIZATION, type, id);
 	}
 
 	private static boolean isState(OAuth2Authorization authorization) {

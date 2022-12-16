@@ -38,6 +38,8 @@ public class JwkAuthProperties implements InitializingBean {
 	 */
 	private String noauthUrl = "";
 
+	public static String innerUrl = "";
+
 	/**
 	 * 默认密码
 	 */
@@ -51,13 +53,17 @@ public class JwkAuthProperties implements InitializingBean {
 	private static final Pattern PATTERN = Pattern.compile("\\{(.*?)\\}");
 
 	public String[] getNoAuthArray() {
-		String[] noAuthUrlList = noauthUrl.split(",");
-		return noAuthUrlList;
+		return noauthUrl.split(",");
+	}
+
+	public String[] getInnerAuthArray() {
+		return innerUrl.split(",");
 	}
 
 	@Override
 	public void afterPropertiesSet() {
-		List<String> noAuthList = new ArrayList<>();
+		List<String> noAuthUrlList = new ArrayList<>();
+		List<String> innerUrlList = new ArrayList<>();
 		RequestMappingHandlerMapping mapping = JwkSpringUtil.getBean("requestMappingHandlerMapping");
 		Map<RequestMappingInfo, HandlerMethod> map = mapping.getHandlerMethods();
 
@@ -67,25 +73,42 @@ public class JwkAuthProperties implements InitializingBean {
 			// 获取方法上边的注解 替代path variable 为 *
 			// /user/get/{id} -> /user/get/*
 			Inner method = AnnotationUtils.findAnnotation(handlerMethod.getMethod(), Inner.class);
-			Optional.ofNullable(method).ifPresent(inner -> info.getPatternsCondition().getPatterns()
-					.forEach(url -> noAuthList.add(ReUtil.replaceAll(url, PATTERN, "*"))));
+
+				Optional.ofNullable(method).ifPresent(inner -> {
+					info.getPatternsCondition().getPatterns()
+								.forEach(url -> noAuthUrlList.add(ReUtil.replaceAll(url, PATTERN, "*")));
+					if (method.needFrom()) {
+						info.getPatternsCondition().getPatterns()
+								.forEach(url -> innerUrlList.add(ReUtil.replaceAll(url, PATTERN, "*")));
+					}
+				});
 
 			// 获取类上边的注解, 替代path variable 为 *
 			Inner controller = AnnotationUtils.findAnnotation(handlerMethod.getBeanType(), Inner.class);
-			Optional.ofNullable(controller).ifPresent(inner -> info.getPatternsCondition().getPatterns()
-					.forEach(url -> noAuthList.add(ReUtil.replaceAll(url, PATTERN, "*"))));
+
+				Optional.ofNullable(controller).ifPresent(inner -> {
+					info.getPatternsCondition().getPatterns()
+							.forEach(url -> noAuthUrlList.add(ReUtil.replaceAll(url, PATTERN, "*")));
+					if (controller.needFrom()) {
+						info.getPatternsCondition().getPatterns()
+								.forEach(url -> innerUrlList.add(ReUtil.replaceAll(url, PATTERN, "*")));
+					}
+				});
 		});
 
 		// 默认开放接口
 		String defaultNoAuthUrl = "/token/*,/swagger-resources/**,/v3/api-docs/**,/v2/api-docs/**"
-				+ "/doc.html";
+				+ ",/doc.html";
 
 		if (StrUtil.isNotBlank(noauthUrl)) {
 			defaultNoAuthUrl = defaultNoAuthUrl + "," + noauthUrl;
 		}
 		noauthUrl = defaultNoAuthUrl;
-		if (CollUtil.isNotEmpty(noAuthList)) {
-			noauthUrl += "," + String.join(",", noAuthList);
+		if (CollUtil.isNotEmpty(noAuthUrlList)) {
+			noauthUrl += "," + String.join(",", noAuthUrlList);
+		}
+		if (CollUtil.isNotEmpty(innerUrlList)){
+			innerUrl = String.join(",",innerUrlList);
 		}
 	}
 

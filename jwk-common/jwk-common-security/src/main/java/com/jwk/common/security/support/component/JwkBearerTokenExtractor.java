@@ -1,6 +1,7 @@
 package com.jwk.common.security.support.component;
 
 import cn.hutool.core.util.StrUtil;
+import com.jwk.common.core.constant.JwkSecurityConstants;
 import com.jwk.common.security.support.properties.JwkAuthProperties;
 import java.util.Arrays;
 import java.util.regex.Matcher;
@@ -53,9 +54,14 @@ public class JwkBearerTokenExtractor implements BearerTokenResolver {
 		//校验请求路径，校验是否是白名单直接返回null
 		boolean match = Arrays.stream(jwkAuthProperties.getNoAuthArray())
 				.anyMatch(url -> pathMatcher.match(url, request.getRequestURI()));
-
-		if (match) {
-			return null;
+		boolean innerMatch = Arrays.stream(jwkAuthProperties.getInnerAuthArray())
+				.anyMatch(url -> pathMatcher.match(url, request.getRequestURI()));
+		if (!innerMatch && match) {
+			// 免鉴权
+				return null;
+		}else if (innerMatch && JwkSecurityConstants.FROM_IN.equals(request.getHeader(JwkSecurityConstants.FROM))){
+		// 需要FROM参数免鉴权
+				return null;
 		}
 		//校验hearder里的accesstoken格式是否匹配，并返回token
 		final String authorizationHeaderToken = resolveFromAuthorizationHeader(request);
