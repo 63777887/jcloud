@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.security.Principal;
 import java.security.cert.CertificateException;
 import java.security.interfaces.RSAPublicKey;
 import java.util.Arrays;
@@ -117,7 +118,7 @@ public class AuthorizationServerConfiguration {
         .oidc(oidc -> {
               oidc.userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint.userInfoMapper(oidcUserInfoAuthenticationContext -> {
                 UsernamePasswordAuthenticationToken authenticationToken = oidcUserInfoAuthenticationContext
-                    .getAuthorization().getAttribute("java.security.Principal");
+                    .getAuthorization().getAttribute(Principal.class.getName());
                 Map<String, Object> claims  = new HashMap<>();
                 AdminUserDetails userDetails = (AdminUserDetails) authenticationToken.getPrincipal();
 

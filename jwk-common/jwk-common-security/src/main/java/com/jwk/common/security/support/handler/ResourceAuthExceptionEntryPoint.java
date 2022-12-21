@@ -16,6 +16,7 @@ import org.springframework.security.authentication.InsufficientAuthenticationExc
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.server.resource.InvalidBearerTokenException;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 
 /**
  * @author Jiwk
@@ -49,6 +50,9 @@ public class ResourceAuthExceptionEntryPoint implements AuthenticationEntryPoint
 			response.setStatus(HttpStatus.FAILED_DEPENDENCY.value());
 			result.setMsg(OAuth2ErrorCodeConstant.INVALID_BEARER_TOKEN);
 		}
+		// 不带Form头信息认证失败时，删除请求缓存，否则会一直认证失败（可能会引起HTTP会话泛洪攻击）
+		// 可以不删除请求缓存，通过网关拒绝Form认证方式
+		new HttpSessionRequestCache().removeRequest(request,response);
 		PrintWriter printWriter = response.getWriter();
 		printWriter.append(objectMapper.writeValueAsString(result));
 	}

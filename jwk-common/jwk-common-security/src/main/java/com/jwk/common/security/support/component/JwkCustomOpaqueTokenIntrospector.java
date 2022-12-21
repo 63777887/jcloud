@@ -3,6 +3,7 @@ package com.jwk.common.security.support.component;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.extra.spring.SpringUtil;
+import com.jwk.common.security.constants.OAuth2ErrorCodeConstant;
 import com.jwk.common.security.dto.AdminUserDetails;
 import com.jwk.common.security.dto.ResourceConfigAttribute;
 import com.jwk.common.security.support.feign.api.UpmsRemoteService;
@@ -27,6 +28,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 import org.springframework.security.oauth2.core.OAuth2TokenType;
+import org.springframework.security.oauth2.core.oidc.OidcScopes;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.resource.InvalidBearerTokenException;
@@ -122,12 +124,17 @@ public class JwkCustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector
 	private List<ResourceConfigAttribute> getScopeAuthorities(OAuth2Authorization oldAuthorization) {
 		List<ResourceConfigAttribute> scopeAuthorities = new ArrayList<>();
 		UpmsRemoteService upmsRemoteService = SpringUtil.getBean(UpmsRemoteService.class);
-		Object scope = oldAuthorization.getAttribute(
-				"org.springframework.security.oauth2.server.authorization.OAuth2Authorization.AUTHORIZED_SCOPE");
+		Object scope = oldAuthorization.getAttribute(OAuth2Authorization.AUTHORIZED_SCOPE_ATTRIBUTE_NAME);
 		if (BeanUtil.isNotEmpty(scope)) {
-
+			Set<String> scopeSet = (Set<String>) scope;
+			if (scopeSet.contains(OidcScopes.OPENID)){
+				if (log.isErrorEnabled()) {
+					log.error("invalid scopes, scopes can not contains openid");
+				}
+				throw new InvalidBearerTokenException(OAuth2ErrorCodeConstant.INVALID_BEARER_TOKEN);
+			}
 			List<SysApi> sysApiDtos = upmsRemoteService.loadUserAuthoritiesByRole((new ArrayList<>(
-					((Set<String>) scope))))
+					(scopeSet))))
 					.getData();
 			if (CollUtil.isNotEmpty(sysApiDtos)){
 				scopeAuthorities = sysApiDtos.stream().map(sysApiDto -> {
