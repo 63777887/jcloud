@@ -5,3 +5,4 @@ com.jwk.common.security.support.component.JwkSecurityInnerAspect
 com.jwk.common.security.support.service.JwkRedisOAuth2AuthorizationService
 com.jwk.common.security.support.service.JwkRedisOAuth2AuthorizationConsentService
 com.jwk.common.security.support.component.JwkSecurityInnerAspect
+com.jwk.common.security.config.JwkWebMvcConfig

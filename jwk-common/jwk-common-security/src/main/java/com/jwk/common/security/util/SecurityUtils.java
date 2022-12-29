@@ -43,7 +43,7 @@ public class SecurityUtils {
 	 * 获取用户
 	 */
 	private SysUser getUser(Authentication authentication) {
-		Object principal = authentication.getDetails();
+		Object principal = authentication.getPrincipal();
 		if (principal instanceof SysUser) {
 			return (SysUser) principal;
 		}
