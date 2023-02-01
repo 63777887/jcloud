@@ -24,8 +24,7 @@ public final class JwkPrometheusFactory {
 	static Logger logger = LoggerFactory.getLogger(JwkPrometheusFactory.class);
 
 	public static JwkPrometheusContext getContext() {
-		JwkPrometheusContext jwkPrometheusContext = JwkPrometheusContext.getInstance();
-		return jwkPrometheusContext;
+		return JwkPrometheusContext.getInstance();
 	}
 
 	public static void init(ApplicationContext applicationContext, MeterRegistry registry,

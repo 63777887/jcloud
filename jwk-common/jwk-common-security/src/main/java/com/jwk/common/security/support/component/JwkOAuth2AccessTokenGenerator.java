@@ -1,19 +1,25 @@
 package com.jwk.common.security.support.component;
 
+import cn.hutool.core.collection.CollUtil;
 import com.jwk.common.core.constant.JwkSecurityConstants;
+import com.jwk.common.core.utils.WebUtils;
+import com.jwk.common.security.constants.OAuth2ErrorCodeConstant;
+import com.jwk.common.security.exception.ScopeException;
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
-
 import org.springframework.lang.Nullable;
 import org.springframework.security.crypto.keygen.Base64StringKeyGenerator;
 import org.springframework.security.crypto.keygen.StringKeyGenerator;
 import org.springframework.security.oauth2.core.ClaimAccessor;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2AccessToken.TokenType;
+import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
+import org.springframework.security.oauth2.core.OAuth2ErrorCodes;
 import org.springframework.security.oauth2.core.OAuth2TokenFormat;
 import org.springframework.security.oauth2.core.OAuth2TokenType;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
@@ -46,6 +52,18 @@ public final class JwkOAuth2AccessTokenGenerator implements OAuth2TokenGenerator
 	@Nullable
 	@Override
 	public OAuth2AccessToken generate(OAuth2TokenContext context) {
+
+		// 根据申请code时的权限和申请token时的权限对比
+		if (WebUtils.getRequest().get().getParameter(OAuth2ParameterNames.SCOPE) == null) {
+			throw new ScopeException(OAuth2ErrorCodeConstant.SCOPE_IS_EMPTY);
+		}
+		Set<String> requestScopes = CollUtil.newHashSet(
+				Arrays.asList(StringUtils.delimitedListToStringArray(
+						WebUtils.getRequest().get().getParameter(OAuth2ParameterNames.SCOPE), ",")));
+		if (!CollUtil.containsAll(context.getAuthorizedScopes(),requestScopes)) {
+			throw new OAuth2AuthenticationException(OAuth2ErrorCodes.INVALID_SCOPE);
+		}
+
 		if (!OAuth2TokenType.ACCESS_TOKEN.equals(context.getTokenType()) || !OAuth2TokenFormat.REFERENCE
 				.equals(context.getRegisteredClient().getTokenSettings().getAccessTokenFormat())) {
 			return null;

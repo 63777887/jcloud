@@ -1,13 +1,16 @@
 package com.jwk.common.security.support.component;
 
 import com.jwk.common.core.constant.JwkSecurityConstants;
+import com.jwk.common.security.exception.ScopeException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Collections;
 import org.springframework.lang.Nullable;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
+import org.springframework.security.oauth2.core.OAuth2ErrorCodes;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.security.oauth2.core.oidc.IdTokenClaimNames;
+import org.springframework.security.oauth2.core.oidc.OidcScopes;
 import org.springframework.security.oauth2.core.oidc.endpoint.OidcParameterNames;
 import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
 import org.springframework.security.oauth2.jwt.JwsHeader;
@@ -51,6 +54,9 @@ public final class JwkOidcTokenGenerator implements OAuth2TokenGenerator<Jwt> {
 		if (context.getTokenType() == null ||
 				(!OidcParameterNames.ID_TOKEN.equals(context.getTokenType().getValue()))) {
 			return null;
+		}
+		if (!context.getAuthorizedScopes().contains(OidcScopes.OPENID)){
+			throw new ScopeException(OAuth2ErrorCodes.INVALID_SCOPE);
 		}
 
 		String issuer = null;
