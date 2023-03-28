@@ -4,10 +4,9 @@ import java.util.List;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
- *
+ * @date 2022/6/11
  */
 public class MessageInfo {
 
@@ -22,13 +21,13 @@ public class MessageInfo {
 		return this.topic;
 	}
 
-	public List<String> getMessages() {
-		return this.messages;
-	}
-
 	public MessageInfo setTopic(final String topic) {
 		this.topic = topic;
 		return this;
+	}
+
+	public List<String> getMessages() {
+		return this.messages;
 	}
 
 	public MessageInfo setMessages(final List<String> messages) {

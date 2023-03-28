@@ -9,10 +9,10 @@ import org.springframework.core.env.ConfigurableEnvironment;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * 启动类
+ * @date 2022/6/11
  */
 @SpringBootApplication
 public class Knife4jApplication {

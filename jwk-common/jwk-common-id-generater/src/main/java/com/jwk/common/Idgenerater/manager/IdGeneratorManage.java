@@ -6,10 +6,10 @@ import java.util.List;
 
 /**
  * @author Jiwk
- * @date 2022/11/8
  * @version 0.1.3
  * <p>
  * id生成器
+ * @date 2022/11/8
  */
 public interface IdGeneratorManage {
 

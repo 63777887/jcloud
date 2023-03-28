@@ -6,10 +6,10 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * Umps服务降级
+ * @date 2022/6/11
  */
 @Component
 public class UpmsRemoteServiceFallbackFactory implements FallbackFactory<UpmsRemoteService> {

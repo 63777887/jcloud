@@ -17,9 +17,9 @@ import org.springframework.data.redis.core.RedisTemplate;
  */
 public class DefaultCacheFactory implements CacheFactory {
 
-	private CacheConfigProperties cacheConfigProperties;
+	private final CacheConfigProperties cacheConfigProperties;
 
-	private RedisTemplate<String, Object> stringKeyRedisTemplate;
+	private final RedisTemplate<String, Object> stringKeyRedisTemplate;
 
 	public DefaultCacheFactory(CacheConfigProperties cacheConfigProperties,
 			RedisTemplate<String, Object> stringKeyRedisTemplate) {

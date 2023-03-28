@@ -11,10 +11,18 @@ import com.jwk.common.redis.exception.RedisExceptionCodeE;
  */
 public enum CacheType {
 
-	/** Redis缓存二级 */
+	/**
+	 * Redis缓存二级
+	 */
 	RedisCache("2", "RedisCache"),
-	/** Caffeine一级缓存 */
+	/**
+	 * Caffeine一级缓存
+	 */
 	RedisCaffeineCache("1", "RedisCaffeineCache");
+
+	private final String cacheType;
+
+	private final String cacheName;
 
 	CacheType(String cacheType, String cacheName) {
 		this.cacheType = cacheType;
@@ -46,10 +54,6 @@ public enum CacheType {
 		}
 		return "";
 	}
-
-	private String cacheType;
-
-	private String cacheName;
 
 	public String getCacheType() {
 		return cacheType;

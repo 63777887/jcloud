@@ -36,10 +36,10 @@ import org.springframework.security.oauth2.server.resource.introspection.OpaqueT
 
 /**
  * @author Jiwk
- * @date 2022/11/14
  * @version 0.1.4
  * <p>
  * 令牌认证
+ * @date 2022/11/14
  */
 @Slf4j
 @RequiredArgsConstructor
@@ -48,11 +48,9 @@ public class JwkCustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector
 	private final OAuth2AuthorizationService authorizationService;
 
 	/**
-	 * Introspect and verify the given token, returning its attributes. Returning a Map is indicative that the token is valid.
-	 * Params:
-	 * token – the token to introspect
-	 * Returns:
-	 * the token's attributes
+	 * Introspect and verify the given token, returning its attributes. Returning a Map is
+	 * indicative that the token is valid. Params: token – the token to introspect
+	 * Returns: the token's attributes
 	 */
 	@Override
 	public OAuth2AuthenticatedPrincipal introspect(String token) {
@@ -95,19 +93,22 @@ public class JwkCustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector
 			List<ResourceConfigAttribute> userAuthoritys = userDetails.getAuthorities().stream()
 					.map(t -> (ResourceConfigAttribute) t).collect(Collectors.toList());
 			// 获取申请的权限
-			List<Long> scopeRoleIds = scopeAuthorities.stream().map(scopeAuthority -> scopeAuthority.getSysApi().getId()).collect(Collectors.toList());
+			List<Long> scopeRoleIds = scopeAuthorities.stream()
+					.map(scopeAuthority -> scopeAuthority.getSysApi().getId()).collect(Collectors.toList());
 			// 获取用户的权限
-			List<Long> userRoleIds = userAuthoritys.stream().map(scopeAuthority -> scopeAuthority.getSysApi().getId()).collect(Collectors.toList());
+			List<Long> userRoleIds = userAuthoritys.stream().map(scopeAuthority -> scopeAuthority.getSysApi().getId())
+					.collect(Collectors.toList());
 			// 取用户权限和申请权限的交集
-			List<Long> roleIds = (List<Long>)CollUtil.intersection(scopeRoleIds, userRoleIds);
+			List<Long> roleIds = (List<Long>) CollUtil.intersection(scopeRoleIds, userRoleIds);
 			// 构建token的权限集
 			List<ResourceConfigAttribute> realAuthorities = scopeAuthorities.stream().filter(realAuthority -> {
 				return roleIds.contains(realAuthority.getSysApi().getId());
 			}).collect(Collectors.toList());
 			AdminUserDetails adminUserDetails = (AdminUserDetails) userDetails;
 
-			userDetails = new AdminUserDetails(adminUserDetails.getSysUser(),realAuthorities);
-		} catch (UsernameNotFoundException notFoundException) {
+			userDetails = new AdminUserDetails(adminUserDetails.getSysUser(), realAuthorities);
+		}
+		catch (UsernameNotFoundException notFoundException) {
 			if (log.isWarnEnabled()) {
 				log.warn("用户不存在 {}", notFoundException.getLocalizedMessage());
 			}
@@ -127,16 +128,15 @@ public class JwkCustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector
 		Object scope = oldAuthorization.getAttribute(OAuth2Authorization.AUTHORIZED_SCOPE_ATTRIBUTE_NAME);
 		if (BeanUtil.isNotEmpty(scope)) {
 			Set<String> scopeSet = (Set<String>) scope;
-			if (scopeSet.contains(OidcScopes.OPENID)){
+			if (scopeSet.contains(OidcScopes.OPENID)) {
 				if (log.isErrorEnabled()) {
 					log.error("invalid scopes, scopes can not contains openid");
 				}
 				throw new InvalidBearerTokenException(OAuth2ErrorCodeConstant.INVALID_BEARER_TOKEN);
 			}
-			List<SysApi> sysApiDtos = upmsRemoteService.loadUserAuthoritiesByRole((new ArrayList<>(
-					(scopeSet))))
+			List<SysApi> sysApiDtos = upmsRemoteService.loadUserAuthoritiesByRole((new ArrayList<>((scopeSet))))
 					.getData();
-			if (CollUtil.isNotEmpty(sysApiDtos)){
+			if (CollUtil.isNotEmpty(sysApiDtos)) {
 				scopeAuthorities = sysApiDtos.stream().map(sysApiDto -> {
 					return new ResourceConfigAttribute(sysApiDto);
 				}).collect(Collectors.toList());

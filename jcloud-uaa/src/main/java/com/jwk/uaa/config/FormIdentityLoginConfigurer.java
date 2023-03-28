@@ -9,10 +9,10 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 
 /**
  * @author Jiwk
- * @date 2022/11/24
  * @version 0.1.4
  * <p>
  * 登录登出控制
+ * @date 2022/11/24
  */
 @Slf4j
 public final class FormIdentityLoginConfigurer

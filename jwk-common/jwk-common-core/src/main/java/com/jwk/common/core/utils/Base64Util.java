@@ -1,17 +1,16 @@
 package com.jwk.common.core.utils;
 
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import lombok.experimental.UtilityClass;
 import org.springframework.util.Base64Utils;
 
-import java.nio.charset.Charset;
-
 /**
  * @author Jiwk
- * @date 2022/11/14
  * @version 0.1.4
  * <p>
  * Base64工具
+ * @date 2022/11/14
  */
 @UtilityClass
 public class Base64Util extends Base64Utils {

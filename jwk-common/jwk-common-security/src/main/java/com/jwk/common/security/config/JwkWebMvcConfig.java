@@ -7,10 +7,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * WebMvcConfigurer配置
+ * @date 2022/6/11
  */
 public class JwkWebMvcConfig implements WebMvcConfigurer {
 

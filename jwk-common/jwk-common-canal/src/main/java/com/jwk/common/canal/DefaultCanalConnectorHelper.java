@@ -11,10 +11,10 @@ import org.springframework.util.StringUtils;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * Canal 链接帮助类
+ * @date 2022/6/11
  */
 @Slf4j
 public class DefaultCanalConnectorHelper implements CanalConnectotHelper {

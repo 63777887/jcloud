@@ -17,12 +17,13 @@ import org.springframework.util.StringUtils;
 
 /**
  * @author Jiwk
- * @date 2022/11/24
  * @version 0.1.4
  * <p>
  * 短信登录转换器
+ * @date 2022/11/24
  */
-public class PhoneAuthenticationGranter extends OAuth2ResourceOwnerBaseAuthenticationConverter<PhoneAuthenticationToken> {
+public class PhoneAuthenticationGranter
+		extends OAuth2ResourceOwnerBaseAuthenticationConverter<PhoneAuthenticationToken> {
 
 	/**
 	 * 是否支持此convert

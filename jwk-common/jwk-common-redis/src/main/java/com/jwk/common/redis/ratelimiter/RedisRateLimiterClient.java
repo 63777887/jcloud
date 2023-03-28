@@ -12,10 +12,10 @@ import org.springframework.data.redis.core.script.RedisScript;
 
 /**
  * @author Jiwk
- * @date 2022/11/10
  * @version 0.1.3
  * <p>
  * redis 限流服务
+ * @date 2022/11/10
  */
 @RequiredArgsConstructor
 public class RedisRateLimiterClient implements RateLimiterClient {
@@ -53,6 +53,10 @@ public class RedisRateLimiterClient implements RateLimiterClient {
 		this.environment = environment;
 	}
 
+	private static String getApplicationName(Environment environment) {
+		return environment.getProperty("spring.application.name", "");
+	}
+
 	@Override
 	public boolean isAllowed(String key, long max, long ttl, TimeUnit timeUnit) {
 		// redis key
@@ -71,10 +75,6 @@ public class RedisRateLimiterClient implements RateLimiterClient {
 		}
 		// 判断返回成功
 		return result != FAIL_CODE;
-	}
-
-	private static String getApplicationName(Environment environment) {
-		return environment.getProperty("spring.application.name", "");
 	}
 
 }

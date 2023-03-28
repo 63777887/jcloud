@@ -2,10 +2,10 @@ package com.jwk.common.core.enums;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * 导出类型
+ * @date 2022/6/11
  */
 public enum ExportResourcesTypeReqE {
 
@@ -13,6 +13,10 @@ public enum ExportResourcesTypeReqE {
 	 * 资源清单
 	 */
 	resourceList(1, "导出资源清单");
+
+	private final Integer id;
+
+	private final String name;
 
 	ExportResourcesTypeReqE(Integer id, String name) {
 		this.id = id;
@@ -44,10 +48,6 @@ public enum ExportResourcesTypeReqE {
 		}
 		return "";
 	}
-
-	private Integer id;
-
-	private String name;
 
 	public Integer getId() {
 		return id;

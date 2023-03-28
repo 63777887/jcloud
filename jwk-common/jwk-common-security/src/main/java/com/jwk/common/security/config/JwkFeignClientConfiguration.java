@@ -3,15 +3,14 @@ package com.jwk.common.security.config;
 import com.jwk.common.security.support.feign.JwkOAuthRequestInterceptor;
 import feign.RequestInterceptor;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Import;
 import org.springframework.security.oauth2.server.resource.web.BearerTokenResolver;
 
 /**
  * @author Jiwk
- * @date 2022/11/24
  * @version 0.1.4
  * <p>
  * feign 客户端配置
+ * @date 2022/11/24
  */
 public class JwkFeignClientConfiguration {
 

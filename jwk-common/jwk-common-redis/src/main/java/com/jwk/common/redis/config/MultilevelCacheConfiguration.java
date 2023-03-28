@@ -20,7 +20,6 @@ import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
@@ -29,10 +28,10 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 
 /**
  * @author Jiwk
- * @date 2022/10/10
  * @version 0.1.3
  * <p>
  * 多级缓存配置类
+ * @date 2022/10/10
  */
 @Slf4j
 public class MultilevelCacheConfiguration {

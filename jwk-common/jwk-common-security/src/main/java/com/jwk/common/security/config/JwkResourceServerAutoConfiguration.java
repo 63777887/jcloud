@@ -1,33 +1,33 @@
 package com.jwk.common.security.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jwk.common.security.support.component.JwkCustomOpaqueTokenIntrospector;
-import com.jwk.common.security.support.properties.JwkAuthProperties;
 import com.jwk.common.security.support.component.JwkBearerTokenExtractor;
+import com.jwk.common.security.support.component.JwkCustomOpaqueTokenIntrospector;
 import com.jwk.common.security.support.component.PermissionService;
 import com.jwk.common.security.support.handler.ResourceAccessDeniedHandler;
 import com.jwk.common.security.support.handler.ResourceAuthExceptionEntryPoint;
+import com.jwk.common.security.support.properties.JwkAuthProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector;
 
 /**
  * @author Jiwk
- * @date 2022/11/14
  * @version 0.1.4
  * <p>
  * 资源服务器配置
+ * @date 2022/11/14
  */
 public class JwkResourceServerAutoConfiguration {
 
-	 /**
+	/**
 	 * 鉴权具体的实现逻辑
 	 * @return （#pms.xxx）
 	 */
-	 @Bean("pms")
-	 public PermissionService permissionService() {
-	 return new PermissionService();
-	 }
+	@Bean("pms")
+	public PermissionService permissionService() {
+		return new PermissionService();
+	}
 
 	/**
 	 * 从请求中获取令牌

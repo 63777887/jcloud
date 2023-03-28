@@ -42,18 +42,42 @@ import org.springframework.util.StringUtils;
 
 /**
  * @author Jiwk
- * @date 2022/12/7
  * @version 0.1.4
  * <p>
- *  支持多个scope用,分割
+ * 支持多个scope用,分割
  * {@link org.springframework.security.oauth2.server.authorization.web.authentication.OAuth2AuthorizationCodeRequestAuthenticationConverter}
+ * @date 2022/12/7
  */
 public final class JwkOAuth2AuthorizationCodeRequestAuthenticationConverter implements AuthenticationConverter {
+
 	private static final String DEFAULT_ERROR_URI = "https://datatracker.ietf.org/doc/html/rfc6749#section-4.1.2.1";
+
 	private static final String PKCE_ERROR_URI = "https://datatracker.ietf.org/doc/html/rfc7636#section-4.4.1";
-	private static final Authentication ANONYMOUS_AUTHENTICATION = new AnonymousAuthenticationToken(
-			"anonymous", "anonymousUser", AuthorityUtils.createAuthorityList("ROLE_ANONYMOUS"));
+
+	private static final Authentication ANONYMOUS_AUTHENTICATION = new AnonymousAuthenticationToken("anonymous",
+			"anonymousUser", AuthorityUtils.createAuthorityList("ROLE_ANONYMOUS"));
+
 	private static final RequestMatcher OIDC_REQUEST_MATCHER = createOidcRequestMatcher();
+
+	private static RequestMatcher createOidcRequestMatcher() {
+		RequestMatcher postMethodMatcher = request -> "POST".equals(request.getMethod());
+		RequestMatcher responseTypeParameterMatcher = request -> request
+				.getParameter(OAuth2ParameterNames.RESPONSE_TYPE) != null;
+		RequestMatcher openidScopeMatcher = request -> {
+			String scope = request.getParameter(OAuth2ParameterNames.SCOPE);
+			return StringUtils.hasText(scope) && scope.contains(OidcScopes.OPENID);
+		};
+		return new AndRequestMatcher(postMethodMatcher, responseTypeParameterMatcher, openidScopeMatcher);
+	}
+
+	private static void throwError(String errorCode, String parameterName) {
+		throwError(errorCode, parameterName, DEFAULT_ERROR_URI);
+	}
+
+	private static void throwError(String errorCode, String parameterName, String errorUri) {
+		OAuth2Error error = new OAuth2Error(errorCode, "OAuth 2.0 Parameter: " + parameterName, errorUri);
+		throw new OAuth2AuthorizationCodeRequestAuthenticationException(error, null);
+	}
 
 	@Override
 	public Authentication convert(HttpServletRequest request) {
@@ -65,10 +89,10 @@ public final class JwkOAuth2AuthorizationCodeRequestAuthenticationConverter impl
 
 			// response_type (REQUIRED)
 			String responseType = request.getParameter(OAuth2ParameterNames.RESPONSE_TYPE);
-			if (!StringUtils.hasText(responseType) ||
-					parameters.get(OAuth2ParameterNames.RESPONSE_TYPE).size() != 1) {
+			if (!StringUtils.hasText(responseType) || parameters.get(OAuth2ParameterNames.RESPONSE_TYPE).size() != 1) {
 				throwError(OAuth2ErrorCodes.INVALID_REQUEST, OAuth2ParameterNames.RESPONSE_TYPE);
-			} else if (!responseType.equals(OAuth2AuthorizationResponseType.CODE.getValue())) {
+			}
+			else if (!responseType.equals(OAuth2AuthorizationResponseType.CODE.getValue())) {
 				throwError(OAuth2ErrorCodes.UNSUPPORTED_RESPONSE_TYPE, OAuth2ParameterNames.RESPONSE_TYPE);
 			}
 		}
@@ -77,8 +101,7 @@ public final class JwkOAuth2AuthorizationCodeRequestAuthenticationConverter impl
 
 		// client_id (REQUIRED)
 		String clientId = parameters.getFirst(OAuth2ParameterNames.CLIENT_ID);
-		if (!StringUtils.hasText(clientId) ||
-				parameters.get(OAuth2ParameterNames.CLIENT_ID).size() != 1) {
+		if (!StringUtils.hasText(clientId) || parameters.get(OAuth2ParameterNames.CLIENT_ID).size() != 1) {
 			throwError(OAuth2ErrorCodes.INVALID_REQUEST, OAuth2ParameterNames.CLIENT_ID);
 		}
 
@@ -89,8 +112,7 @@ public final class JwkOAuth2AuthorizationCodeRequestAuthenticationConverter impl
 
 		// redirect_uri (OPTIONAL)
 		String redirectUri = parameters.getFirst(OAuth2ParameterNames.REDIRECT_URI);
-		if (StringUtils.hasText(redirectUri) &&
-				parameters.get(OAuth2ParameterNames.REDIRECT_URI).size() != 1) {
+		if (StringUtils.hasText(redirectUri) && parameters.get(OAuth2ParameterNames.REDIRECT_URI).size() != 1) {
 			throwError(OAuth2ErrorCodes.INVALID_REQUEST, OAuth2ParameterNames.REDIRECT_URI);
 		}
 
@@ -98,86 +120,53 @@ public final class JwkOAuth2AuthorizationCodeRequestAuthenticationConverter impl
 		Set<String> scopes = null;
 
 		String scope = parameters.getFirst(OAuth2ParameterNames.SCOPE);
-		if (StringUtils.hasText(scope) &&
-				parameters.get(OAuth2ParameterNames.SCOPE).size() != 1) {
+		if (StringUtils.hasText(scope) && parameters.get(OAuth2ParameterNames.SCOPE).size() != 1) {
 			throwError(OAuth2ErrorCodes.INVALID_REQUEST, OAuth2ParameterNames.SCOPE);
 		}
 		if (StringUtils.hasText(scope)) {
-			scopes = new HashSet<>(
-					Arrays.asList(StringUtils.delimitedListToStringArray(scope, ",")));
+			scopes = new HashSet<>(Arrays.asList(StringUtils.delimitedListToStringArray(scope, ",")));
 		}
-
 
 		// state
 		// RECOMMENDED for Authorization Request
 		String state = parameters.getFirst(OAuth2ParameterNames.STATE);
 		if (authorizationRequest) {
-			if (StringUtils.hasText(state) &&
-					parameters.get(OAuth2ParameterNames.STATE).size() != 1) {
+			if (StringUtils.hasText(state) && parameters.get(OAuth2ParameterNames.STATE).size() != 1) {
 				throwError(OAuth2ErrorCodes.INVALID_REQUEST, OAuth2ParameterNames.STATE);
 			}
-		} else {
+		}
+		else {
 			// REQUIRED for Authorization Consent Request
-			if (!StringUtils.hasText(state) ||
-					parameters.get(OAuth2ParameterNames.STATE).size() != 1) {
+			if (!StringUtils.hasText(state) || parameters.get(OAuth2ParameterNames.STATE).size() != 1) {
 				throwError(OAuth2ErrorCodes.INVALID_REQUEST, OAuth2ParameterNames.STATE);
 			}
 		}
 
 		// code_challenge (REQUIRED for public clients) - RFC 7636 (PKCE)
 		String codeChallenge = parameters.getFirst(PkceParameterNames.CODE_CHALLENGE);
-		if (StringUtils.hasText(codeChallenge) &&
-				parameters.get(PkceParameterNames.CODE_CHALLENGE).size() != 1) {
+		if (StringUtils.hasText(codeChallenge) && parameters.get(PkceParameterNames.CODE_CHALLENGE).size() != 1) {
 			throwError(OAuth2ErrorCodes.INVALID_REQUEST, PkceParameterNames.CODE_CHALLENGE, PKCE_ERROR_URI);
 		}
 
 		// code_challenge_method (OPTIONAL for public clients) - RFC 7636 (PKCE)
 		String codeChallengeMethod = parameters.getFirst(PkceParameterNames.CODE_CHALLENGE_METHOD);
-		if (StringUtils.hasText(codeChallengeMethod) &&
-				parameters.get(PkceParameterNames.CODE_CHALLENGE_METHOD).size() != 1) {
+		if (StringUtils.hasText(codeChallengeMethod)
+				&& parameters.get(PkceParameterNames.CODE_CHALLENGE_METHOD).size() != 1) {
 			throwError(OAuth2ErrorCodes.INVALID_REQUEST, PkceParameterNames.CODE_CHALLENGE_METHOD, PKCE_ERROR_URI);
 		}
 
 		Map<String, Object> additionalParameters = new HashMap<>();
 		parameters.forEach((key, value) -> {
-			if (!key.equals(OAuth2ParameterNames.RESPONSE_TYPE) &&
-					!key.equals(OAuth2ParameterNames.CLIENT_ID) &&
-					!key.equals(OAuth2ParameterNames.REDIRECT_URI) &&
-					!key.equals(OAuth2ParameterNames.SCOPE) &&
-					!key.equals(OAuth2ParameterNames.STATE)) {
+			if (!key.equals(OAuth2ParameterNames.RESPONSE_TYPE) && !key.equals(OAuth2ParameterNames.CLIENT_ID)
+					&& !key.equals(OAuth2ParameterNames.REDIRECT_URI) && !key.equals(OAuth2ParameterNames.SCOPE)
+					&& !key.equals(OAuth2ParameterNames.STATE)) {
 				additionalParameters.put(key, value.get(0));
 			}
 		});
 
 		return OAuth2AuthorizationCodeRequestAuthenticationToken.with(clientId, principal)
-				.authorizationUri(authorizationUri)
-				.redirectUri(redirectUri)
-				.scopes(scopes)
-				.state(state)
-				.additionalParameters(additionalParameters)
-				.consent(!authorizationRequest)
-				.build();
-	}
-
-	private static RequestMatcher createOidcRequestMatcher() {
-		RequestMatcher postMethodMatcher = request -> "POST".equals(request.getMethod());
-		RequestMatcher responseTypeParameterMatcher = request ->
-				request.getParameter(OAuth2ParameterNames.RESPONSE_TYPE) != null;
-		RequestMatcher openidScopeMatcher = request -> {
-			String scope = request.getParameter(OAuth2ParameterNames.SCOPE);
-			return StringUtils.hasText(scope) && scope.contains(OidcScopes.OPENID);
-		};
-		return new AndRequestMatcher(
-				postMethodMatcher, responseTypeParameterMatcher, openidScopeMatcher);
-	}
-
-	private static void throwError(String errorCode, String parameterName) {
-		throwError(errorCode, parameterName, DEFAULT_ERROR_URI);
-	}
-
-	private static void throwError(String errorCode, String parameterName, String errorUri) {
-		OAuth2Error error = new OAuth2Error(errorCode, "OAuth 2.0 Parameter: " + parameterName, errorUri);
-		throw new OAuth2AuthorizationCodeRequestAuthenticationException(error, null);
+				.authorizationUri(authorizationUri).redirectUri(redirectUri).scopes(scopes).state(state)
+				.additionalParameters(additionalParameters).consent(!authorizationRequest).build();
 	}
 
 }

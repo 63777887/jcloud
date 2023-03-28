@@ -13,20 +13,17 @@ import org.springframework.util.Assert;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
- *
+ * @date 2022/6/11
  */
 public abstract class AbstractCanalMessageConsumer extends AbstractRocektMQTest {
 
 	protected final static Logger logger = LoggerFactory.getLogger(AbstractCanalMessageConsumer.class);
 
-	protected CanalMQConnector connector;
-
 	protected static volatile boolean running = false;
 
-	private Thread thread = null;
+	protected CanalMQConnector connector;
 
 	// ExecutorService executorService = Executors.newSingleThreadExecutor();
 	ExecutorService executorService = new ThreadPoolExecutor(1, 1, 0L, TimeUnit.MILLISECONDS,
@@ -36,6 +33,8 @@ public abstract class AbstractCanalMessageConsumer extends AbstractRocektMQTest 
 					return new Thread(r, "canal-rocketmq-callbackThreadPool-" + r.hashCode());
 				}
 			});
+
+	private Thread thread = null;
 
 	private Thread.UncaughtExceptionHandler handler = (t, e) -> logger.error("parse events has an error", e);
 

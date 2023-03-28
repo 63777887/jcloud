@@ -21,16 +21,15 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.openfeign.FallbackFactory;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * 支持自动降级注入 重写 {@link com.jwk.common.cloud.fegin.ext.SentinelInvocationHandler}
+ * @date 2022/6/11
  */
 @Slf4j
 public class PrometheusSentinelInvocationHandler implements InvocationHandler {
@@ -61,6 +60,15 @@ public class PrometheusSentinelInvocationHandler implements InvocationHandler {
 			Map<Method, InvocationHandlerFactory.MethodHandler> dispatch) {
 		this.target = checkNotNull(target, "target");
 		this.dispatch = checkNotNull(dispatch, "dispatch");
+	}
+
+	static Map<Method, Method> toFallbackMethod(Map<Method, InvocationHandlerFactory.MethodHandler> dispatch) {
+		Map<Method, Method> result = new LinkedHashMap<>();
+		for (Method method : dispatch.keySet()) {
+			method.setAccessible(true);
+			result.put(method, method);
+		}
+		return result;
 	}
 
 	@Override
@@ -170,15 +178,6 @@ public class PrometheusSentinelInvocationHandler implements InvocationHandler {
 	@Override
 	public String toString() {
 		return target.toString();
-	}
-
-	static Map<Method, Method> toFallbackMethod(Map<Method, InvocationHandlerFactory.MethodHandler> dispatch) {
-		Map<Method, Method> result = new LinkedHashMap<>();
-		for (Method method : dispatch.keySet()) {
-			method.setAccessible(true);
-			result.put(method, method);
-		}
-		return result;
 	}
 
 }

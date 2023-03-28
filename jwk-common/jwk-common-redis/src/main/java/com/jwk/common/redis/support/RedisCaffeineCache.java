@@ -24,10 +24,10 @@ import org.springframework.util.CollectionUtils;
 
 /**
  * @author Jiwk
- * @date 2022/10/11
  * @version 0.1.3
  * <p>
  * {@link AbstractValueAdaptingCache} 缓存的数据操作
+ * @date 2022/10/11
  */
 @Slf4j
 @Getter
@@ -71,6 +71,12 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
 		this.caffeineCache = caffeineCache();
 		this.usedCaffeineCache = usedCaffeineCache;
 		this.cacheServerId = cacheConfigProperties.getServerId();
+	}
+
+	protected static void doIfPresent(Duration duration, Consumer<Duration> consumer) {
+		if (duration != null && !duration.isNegative()) {
+			consumer.accept(duration);
+		}
 	}
 
 	@Override
@@ -332,12 +338,6 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
 			}
 		}
 		return cacheBuilder;
-	}
-
-	protected static void doIfPresent(Duration duration, Consumer<Duration> consumer) {
-		if (duration != null && !duration.isNegative()) {
-			consumer.accept(duration);
-		}
 	}
 
 }

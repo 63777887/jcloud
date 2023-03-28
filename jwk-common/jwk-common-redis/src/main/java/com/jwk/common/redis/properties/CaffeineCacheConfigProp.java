@@ -1,15 +1,14 @@
 package com.jwk.common.redis.properties;
 
 import com.jwk.common.redis.enums.CaffeineStrength;
-import java.time.Duration;
 import lombok.Data;
 
 /**
  * @author Jiwk
- * @date 2022/10/10
  * @version 0.1.3
  * <p>
  * Caffeine 相关配置
+ * @date 2022/10/10
  */
 @Data
 public class CaffeineCacheConfigProp {

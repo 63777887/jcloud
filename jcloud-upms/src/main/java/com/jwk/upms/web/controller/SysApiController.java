@@ -1,6 +1,5 @@
 package com.jwk.upms.web.controller;
 
-import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.convert.Convert;
 import com.jwk.common.core.model.RestResponse;
@@ -32,13 +31,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class SysApiController {
 
 	@Autowired
-	private SysApiService sysApiService;
-
-	@Autowired
 	SysRoleService sysRoleService;
 
 	@Autowired
 	SysRoleApiService sysRoleApiService;
+
+	@Autowired
+	private SysApiService sysApiService;
 
 	/**
 	 * 接口列表
@@ -57,7 +56,7 @@ public class SysApiController {
 	public RestResponse loadUserAuthoritiesByRole(@RequestParam("roleCodeList") List<String> roleCodeList) {
 		// 加载用户角色列表
 		List<SysRole> sysRoleList = sysRoleService.lambdaQuery().in(SysRole::getCode, roleCodeList).list();
-		if (CollUtil.isEmpty(sysRoleList)){
+		if (CollUtil.isEmpty(sysRoleList)) {
 			return RestResponse.success();
 		}
 		List<Long> sysRoleIds = sysRoleList.stream().map(SysRole::getId).collect(Collectors.toList());

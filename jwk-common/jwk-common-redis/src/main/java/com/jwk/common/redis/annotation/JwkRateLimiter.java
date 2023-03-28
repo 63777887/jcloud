@@ -9,10 +9,10 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @author Jiwk
- * @date 2022/11/10
  * @version 0.1.3
  * <p>
  * 分布式 限流注解，默认速率为 600/ms
+ * @date 2022/11/10
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)

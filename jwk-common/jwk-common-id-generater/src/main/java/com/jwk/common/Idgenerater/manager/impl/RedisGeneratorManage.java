@@ -18,14 +18,16 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author Jiwk
- * @date 2022/11/8
  * @version 0.1.3
  * <p>
  * id生成器
+ * @date 2022/11/8
  */
 @Component
 @Slf4j
 public class RedisGeneratorManage implements IdGeneratorManage {
+
+	List<String> initIdListCache = new ArrayList<>();
 
 	@Autowired
 	private RedissonClient redissonClient;
@@ -35,8 +37,6 @@ public class RedisGeneratorManage implements IdGeneratorManage {
 
 	@Autowired
 	private IdGeneraterProperties idGeneraterProperties;
-
-	List<String> initIdListCache = new ArrayList<>();
 
 	/**
 	 * 生成1个id

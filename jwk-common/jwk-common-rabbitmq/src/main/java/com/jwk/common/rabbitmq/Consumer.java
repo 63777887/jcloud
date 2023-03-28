@@ -19,16 +19,19 @@ import org.springframework.util.ErrorHandler;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * 消费者
+ * @date 2022/6/11
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
 public class Consumer {
+
+	@Resource
+	AmqpAdmin amqpAdmin;
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -44,9 +47,6 @@ public class Consumer {
 
 	@Resource
 	private RabbitMQAutoConfiguration rabbitConfig;
-
-	@Resource
-	AmqpAdmin amqpAdmin;
 
 	public void init() {
 		if (logger.isDebugEnabled()) {

@@ -23,10 +23,10 @@ import org.springframework.util.StringUtils;
 
 /**
  * @author Jiwk
- * @date 2022/11/24
  * @version 0.1.4
  * <p>
  * 查询客户端相关信息实现
+ * @date 2022/11/24
  */
 @RequiredArgsConstructor
 public class JwkRemoteRegisteredClientRepository implements RegisteredClientRepository {
@@ -87,9 +87,9 @@ public class JwkRemoteRegisteredClientRepository implements RegisteredClientRepo
 
 		SysOauthClientDto clientDetails = upmsRemoteService.getClientDetailsById(clientId).getData();
 
-		if (clientDetails==null){
-			OAuth2Error error = new OAuth2Error(OAuth2ErrorCodes.INVALID_CLIENT,
-					"Unknown client. clientId:"+clientId, ERROR_URI);
+		if (clientDetails == null) {
+			OAuth2Error error = new OAuth2Error(OAuth2ErrorCodes.INVALID_CLIENT, "Unknown client. clientId:" + clientId,
+					ERROR_URI);
 			throw new OAuth2AuthenticationException(error);
 		}
 
@@ -121,4 +121,5 @@ public class JwkRemoteRegisteredClientRepository implements RegisteredClientRepo
 						.requireAuthorizationConsent(!BooleanUtil.toBoolean(clientDetails.getAutoapprove())).build())
 				.build();
 	}
+
 }

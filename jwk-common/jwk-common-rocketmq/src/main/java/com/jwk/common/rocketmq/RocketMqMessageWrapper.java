@@ -8,10 +8,10 @@ import org.apache.rocketmq.common.message.MessageExt;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * 并发消费监听器
+ * @date 2022/6/11
  */
 public class RocketMqMessageWrapper implements MessageListenerConcurrently {
 

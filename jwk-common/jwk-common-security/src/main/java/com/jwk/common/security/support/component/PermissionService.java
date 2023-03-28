@@ -10,10 +10,10 @@ import org.springframework.util.StringUtils;
 
 /**
  * @author Jiwk
- * @date 2022/11/24
  * @version 0.1.4
  * <p>
  * 权限认证方案
+ * @date 2022/11/24
  */
 public class PermissionService {
 
@@ -37,7 +37,7 @@ public class PermissionService {
 		// 比较是否匹配
 		AntPathMatcher antPathMatcher = new AntPathMatcher();
 		return authorities.stream().map(GrantedAuthority::getAuthority).filter(StringUtils::hasText)
-				.anyMatch(x -> antPathMatcher.match(x,requestURI));
+				.anyMatch(x -> antPathMatcher.match(x, requestURI));
 	}
 
 }

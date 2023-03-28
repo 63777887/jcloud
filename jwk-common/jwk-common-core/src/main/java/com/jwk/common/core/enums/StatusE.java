@@ -2,10 +2,10 @@ package com.jwk.common.core.enums;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * 状态
+ * @date 2022/6/11
  */
 public enum StatusE {
 
@@ -17,6 +17,10 @@ public enum StatusE {
 	 * 正常
 	 */
 	Normal(1, "正常");
+
+	private final Integer id;
+
+	private final String name;
 
 	StatusE(Integer id, String name) {
 		this.id = id;
@@ -48,10 +52,6 @@ public enum StatusE {
 		}
 		return "";
 	}
-
-	private Integer id;
-
-	private String name;
 
 	public Integer getId() {
 		return id;

@@ -126,7 +126,7 @@ public class GeneratorUtil {
 		// 5、策略配置
 		StrategyConfig strategy = new StrategyConfig();
 		// 对那一张表生成代码
-		strategy.setInclude(new String[] { "user" });
+		strategy.setInclude("user");
 		// 数据库表映射到实体的命名策略
 		strategy.setNaming(NamingStrategy.underline_to_camel);
 		// 生成实体时去掉表前缀

@@ -7,10 +7,10 @@ import lombok.Data;
 
 /**
  * @author Jiwk
- * @date 2022/10/10
  * @version 0.1.3
  * <p>
  * Redis 相关配置
+ * @date 2022/10/10
  */
 @Data
 public class RedisCacheConfigProp {

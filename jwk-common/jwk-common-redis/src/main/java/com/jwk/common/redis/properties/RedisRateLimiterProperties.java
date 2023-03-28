@@ -5,10 +5,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * @author Jiwk
- * @date 2022/11/10
  * @version 0.1.3
  * <p>
  * redis 限流限流配置
+ * @date 2022/11/10
  */
 @Data
 @ConfigurationProperties(prefix = "jwk.rate-limiter.redis")

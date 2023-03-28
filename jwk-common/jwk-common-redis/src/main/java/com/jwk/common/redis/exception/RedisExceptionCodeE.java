@@ -22,6 +22,10 @@ public enum RedisExceptionCodeE {
 	 */
 	GetLockFail(10103, "未获取到锁");
 
+	private final Integer errCode;
+
+	private final String errMsg;
+
 	RedisExceptionCodeE(Integer errCode, String errMsg) {
 		this.errCode = errCode;
 		this.errMsg = errMsg;
@@ -52,10 +56,6 @@ public enum RedisExceptionCodeE {
 		}
 		return "";
 	}
-
-	private Integer errCode;
-
-	private String errMsg;
 
 	public Integer getErrCode() {
 		return errCode;

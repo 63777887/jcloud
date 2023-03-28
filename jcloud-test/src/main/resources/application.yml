@@ -1,0 +1,177 @@
+#server:
+#  port: 8091
+#
+#spring:
+#  application:
+#    name: @artifactId@
+#  cloud:
+#    nacos:
+#      discovery:
+#        server-addr: ${NACOS_HOST}:8848
+#      config:
+#        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+#      username: nacos
+#      password: nacos
+#  config:
+#    import:
+#      #      - nacos:application-@profiles.active@.yml
+#      - nacos:jcloud-test.yml
+#
+##
+##spring:
+##  mvc:
+##    pathmatch:
+##      #因为Springfox 使用的路径匹配是基于AntPathMatcher的，而Spring Boot 2.6.X +使用的是PathPatternMatcher。
+##      matching-strategy: ant_path_matcher
+##  config:
+##    import:
+##      - optional:nacos:seata-client-test.yml
+##  cloud:
+##    sentinel:
+##      datasource:
+##        ds1:
+##          nacos:
+##            data-id: jwk-sentinel
+##            data-type: json
+##            group-id: DEFAULT_GROUP
+##            rule-type: flow
+##            server-addr: 127.0.0.1:8848
+##      # 懒加载
+##      eager: true
+##      enabled: true
+##      transport:
+##        # 指定控制台和客户端交互的端口。默认是8719
+##        # port: 8094
+##        #指定sentinel控制台
+##        dashboard: 127.0.0.1:8080
+##        # 指定客户端ip
+##        # clientIp: 192.168.0.107
+##  datasource:
+##    driver-class-name: com.mysql.cj.jdbc.Driver
+##    druid:
+##      #连接池初始化大小
+##      initial-size: 5
+##      #最大连接数
+##      max-active: 20
+##      #最小空闲连接数
+##      min-idle: 10
+##      stat-view-servlet:
+##        #访问监控网页的登录用户名和密码
+##        login-password: druid
+##        login-username: druid
+##      web-stat-filter:
+##        #不统计这些请求数据
+##        exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
+##    # mysql配置
+##    url: jdbc:mysql://127.0.0.1:3306/jcloud?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&rewriteBatchedStatements=true&useSSL=false&allowPublicKeyRetrieval=true
+##    username: ENC(VDQ+iMuzXNSH2IcdJZJmsg==)
+##    password: ENC(01URcvcwZUZ8msNQEceP4Cgxf2JEypmt)
+##  main:
+##    #开启允许重复注册，或者在@FeignClient指定contextId，
+##    # 如@FeignClient(name = "jwk-gateway", path = "/jwk-security",contextId = "jwk-gateway")
+##    allow-bean-definition-overriding: true
+##    allow-circular-references: true
+##  rabbitmq:
+##    addresses: 127.0.0.1
+##    password: guest
+##    username: guest
+##    virtual-host: /
+##    # publisher-confirm-type: correlated
+##    # publisher-returns: true
+##  redis:
+##    host: 127.0.0.1
+##
+##  servlet:
+##    multipart:
+##      #开启文件上传
+##      enabled: true
+##      #限制文件上传大小为10M
+##      max-file-size: 100MB
+##  # thymeleaf配置
+##  thymeleaf:
+##    cache: false
+##    suffix: .html
+##
+##
+##
+##jwk:
+##  swagger:
+##    description: Test服务
+##    group-name: ${spring.application.name}
+##    title: ${spring.application.name}
+##  auth:
+##    default-password: 1234567
+##    #token过期时间,单位毫秒
+##    expire-sec: 86400000
+##    # 免鉴权URL
+##    noauth-url: /admin/**,/inner/**,/login,/oauth/**,/api,/jwk/**,/actuator/**,/token/test
+###  prometheus:
+###    zookeeper:
+###      address: 127.0.0.1:2181
+###      namespace: /jwk/prometheus
+###    application: ${spring.application.name}
+###    registry-mode: zookeeper
+##  redis:
+##    lettuce:
+##      cluster:
+##        refresh:
+##          period: 60s
+##          #            jwk.redis.timeout=60s
+##          ##拓扑刷新
+##          #jwk.redis.lettuce.cluster.refresh.period=60s
+##          #jwk.redis.lettuce.cluster.refresh.adaptive=true
+##          adaptive: true
+##      pool:
+##        enabled: true
+##        max-active: 120
+##        min-idle: 6
+##        max-idle: 60
+##knife4j:
+##  # Knife4j相关属性配置(具体配置可参考：https://xiaoym.gitee.io/knife4j/documentation/enhance.html)
+##  # 是否开启Knife4j增强模式
+##  enable: true
+##  setting:
+##    # 是否开启动态参数调试功能
+##    enableDynamicParameter: true
+##    # 是否显示Footer
+##    enableFooter: false
+##    # 前端UI的个性化配置
+##    enableSwaggerModels: true
+##    # 是否显示OpenAPI规范
+##    enableOpenApi: false
+##    enableVersion: true
+##    swaggerModelName: 响应实体对象
+##
+##mybatis-plus:
+##  configuration:
+##    # SQL查询超时时间(单位：秒)
+##    default-statement-timeout: 15
+##    # 开启驼峰命名法,数据库表与实体类属性的驼峰命名自动转换
+##    map-underscore-to-camel-case: true
+##  global-config:
+##    # 关闭图标打印
+##    banner: false
+##    #dao层xml路径
+##  mapper-locations: classpath*:com/jwk/down/web/dao/*.xml
+##  # config-location: classpath:mybatis-config.xml
+##feign:
+##  client:
+##    config:
+##      default:
+##        connect-timeout: 120000
+##        read-timeout: 120000
+##  sentinel:
+##    enabled: true
+##
+###启动时添加加密salt -Djasypt.encryptor.password=123456
+##jasypt:
+##  encryptor:
+##    password: 123456
+##
+##management:
+##  endpoints:
+##    health:
+##      show-details: always
+##    web:
+##      exposure:
+##        include: '*'

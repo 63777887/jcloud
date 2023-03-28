@@ -14,10 +14,10 @@ import org.springframework.core.env.ConfigurableEnvironment;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * 启动类
+ * @date 2022/6/11
  */
 @SpringBootApplication
 @EnableDiscoveryClient
@@ -35,4 +35,5 @@ public class UpmsApplication {
 		String port = environment.getProperty("server.port");
 		LOGGER.info("接口聚合文档地址：{}{}{}{}", "http://127.0.0.1:", port, "/", "doc.html");
 	}
+
 }

@@ -88,7 +88,6 @@
         <module>jwk-common</module>
         <module>jcloud-admin</module>
         <module>jcloud-upms</module>
-      <module>jcloud-upms-base</module>
     </modules>
 
     <dependencyManagement>

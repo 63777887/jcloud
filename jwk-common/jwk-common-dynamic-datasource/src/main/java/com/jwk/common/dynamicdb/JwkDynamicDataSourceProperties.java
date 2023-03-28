@@ -10,10 +10,10 @@ import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * 配置文件
+ * @date 2022/6/11
  */
 @Data
 @ConfigurationProperties(prefix = JwkDynamicDataSourceProperties.PREFIX)

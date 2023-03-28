@@ -1,14 +1,13 @@
 package com.jwk.common.rabbitmq;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * 常量表
+ * @date 2022/6/11
  */
 @ConfigurationProperties(prefix = "jwk.rabbitmq")
 public class RabbitmqProperties {

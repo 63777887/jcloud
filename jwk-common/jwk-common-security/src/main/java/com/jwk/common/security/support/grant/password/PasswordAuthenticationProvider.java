@@ -16,10 +16,10 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * 密码认证Provider
+ * @date 2022/6/11
  */
 @Slf4j
 public class PasswordAuthenticationProvider

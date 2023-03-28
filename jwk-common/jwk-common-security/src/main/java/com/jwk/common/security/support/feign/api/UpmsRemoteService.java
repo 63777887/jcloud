@@ -1,8 +1,8 @@
 package com.jwk.common.security.support.feign.api;
 
 import com.jwk.common.core.constant.JwkSecurityConstants;
-import com.jwk.common.core.model.InnerResponse;
 import com.jwk.common.core.constant.ServerNameConstants;
+import com.jwk.common.core.model.InnerResponse;
 import com.jwk.upms.base.dto.SysOauthClientDto;
 import com.jwk.upms.base.dto.UserInfo;
 import com.jwk.upms.base.entity.SysApi;
@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * Upms接口
+ * @date 2022/6/11
  */
 @FeignClient(name = ServerNameConstants.SERVER_UMPS, contextId = "authService")
 public interface UpmsRemoteService {
@@ -60,7 +60,6 @@ public interface UpmsRemoteService {
 	 */
 	@GetMapping(value = "/oauthClient/getClientDetailsById/{clientId}", headers = JwkSecurityConstants.HEADER_FROM_IN)
 	InnerResponse<SysOauthClientDto> getClientDetailsById(@PathVariable("clientId") String clientId);
-
 
 	@GetMapping("/inner/admin/testSeata")
 	InnerResponse<Integer> testSeata();

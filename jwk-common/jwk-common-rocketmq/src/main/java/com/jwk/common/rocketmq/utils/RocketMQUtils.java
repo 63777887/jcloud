@@ -1,5 +1,6 @@
 package com.jwk.common.rocketmq.utils;
 
+import java.nio.charset.StandardCharsets;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
 import org.apache.rocketmq.client.producer.SendResult;
@@ -9,12 +10,14 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * RocketMQ操作工具类
+ * @date 2022/6/11
  */
 public class RocketMQUtils {
+
+	public static Logger logger = LoggerFactory.getLogger(RocketMQUtils.class);
 
 	private static String namesrvAddr;
 
@@ -22,7 +25,9 @@ public class RocketMQUtils {
 
 	private static volatile DefaultMQProducer producer;
 
-	public static Logger logger = LoggerFactory.getLogger(RocketMQUtils.class);
+	static {
+		System.setProperty("rocketmq.client.logRoot", "/log/rocketmq");
+	}
 
 	private static DefaultMQProducer init(String namesrvAddr, String producerGroup) {
 		if (null == producer) {
@@ -41,7 +46,6 @@ public class RocketMQUtils {
 						}
 					}
 					finally {
-						;
 					}
 				}
 			}
@@ -57,13 +61,13 @@ public class RocketMQUtils {
 	}
 
 	public static SendResult send(String topic, String tag, String content) throws Exception {
-		return send(topic, tag, content, (String) null);
+		return send(topic, tag, content, null);
 	}
 
 	public static SendResult send(String topic, String tag, String content, String namesrvAddress,
 			String producerGroupAddress) throws Exception {
 		producer = init(namesrvAddress, producerGroupAddress);
-		SendResult sendResult = call(topic, tag, content, (String) null);
+		SendResult sendResult = call(topic, tag, content, null);
 		return sendResult;
 	}
 
@@ -83,13 +87,9 @@ public class RocketMQUtils {
 			msg.setKeys(keys);
 		}
 
-		msg.setBody(messageBody.getBytes("UTF-8"));
+		msg.setBody(messageBody.getBytes(StandardCharsets.UTF_8));
 		send = producer.send(msg);
 		return send;
-	}
-
-	static {
-		System.setProperty("rocketmq.client.logRoot", "/log/rocketmq");
 	}
 
 }

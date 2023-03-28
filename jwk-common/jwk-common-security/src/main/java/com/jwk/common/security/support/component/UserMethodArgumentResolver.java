@@ -13,10 +13,10 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * 获取用户信息
+ * @date 2022/6/11
  */
 public class UserMethodArgumentResolver implements HandlerMethodArgumentResolver {
 

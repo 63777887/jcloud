@@ -19,7 +19,7 @@ public final class TableStandardShardingAlgorithm implements PreciseShardingAlgo
 
 	@Override
 	public String doSharding(Collection<String> availableTargetNames, PreciseShardingValue<Long> shardingValue) {
-		int value = BigDecimal.valueOf((Long) shardingValue.getValue()).divide(BigDecimal.valueOf(100L))
+		int value = BigDecimal.valueOf(shardingValue.getValue()).divide(BigDecimal.valueOf(100L))
 				.remainder(BigDecimal.valueOf(128L)).intValue();
 		StringBuilder sb = new StringBuilder(shardingValue.getLogicTableName());
 		sb.append("_").append(value);

@@ -9,12 +9,12 @@ import org.springframework.boot.actuate.metrics.cache.CacheMeterBinderProvider;
 
 /**
  * @author Jiwk
- * @date 2022/10/14
  * @version 0.1.1
  * <p>
  * RedisCaffeineCache meter
  * {@link org.springframework.boot.actuate.metrics.cache.CaffeineCacheMeterBinderProvider}
  * {@link org.springframework.boot.actuate.metrics.cache.RedisCacheMeterBinderProvider}
+ * @date 2022/10/14
  */
 @NoArgsConstructor
 public class RedisCaffeineCacheMeterBinderProvider implements CacheMeterBinderProvider<RedisCaffeineCache> {

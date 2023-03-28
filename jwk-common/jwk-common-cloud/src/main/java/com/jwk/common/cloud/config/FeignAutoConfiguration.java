@@ -16,10 +16,10 @@ import org.springframework.context.annotation.Scope;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * sentinel 配置
+ * @date 2022/6/11
  */
 @Configuration(proxyBeanMethods = false)
 @AutoConfigureBefore(SentinelFeignAutoConfiguration.class)

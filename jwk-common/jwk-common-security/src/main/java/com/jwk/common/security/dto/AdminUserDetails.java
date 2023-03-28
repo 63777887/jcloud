@@ -11,16 +11,16 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * 自定义UserDetails
+ * @date 2022/6/11
  */
 public class AdminUserDetails implements UserDetails, OAuth2AuthenticatedPrincipal {
 
-	private SysUser sysUser;
+	private final SysUser sysUser;
 
-	private List<ResourceConfigAttribute> authorities;
+	private final List<ResourceConfigAttribute> authorities;
 
 	private Map<String, Object> attributes;
 
@@ -33,7 +33,7 @@ public class AdminUserDetails implements UserDetails, OAuth2AuthenticatedPrincip
 			String principalName) {
 		this.authorities = authorities;
 		this.attributes = attributes;
-		this.sysUser=new SysUser();
+		this.sysUser = new SysUser();
 		this.sysUser.setUsername(principalName);
 	}
 

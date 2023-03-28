@@ -12,11 +12,11 @@ import org.springframework.http.HttpStatus;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * sentinel统一降级限流策略
  * {@link com.alibaba.csp.sentinel.adapter.spring.webmvc.callback.DefaultBlockExceptionHandler}
+ * @date 2022/6/11
  */
 @Slf4j
 public class UrlBlockHandler implements BlockExceptionHandler {

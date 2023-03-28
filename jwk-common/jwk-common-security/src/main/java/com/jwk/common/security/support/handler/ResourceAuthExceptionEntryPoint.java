@@ -1,9 +1,9 @@
 package com.jwk.common.security.support.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jwk.common.core.constant.JwkSecurityConstants;
 import com.jwk.common.core.constant.ResponseConstants;
 import com.jwk.common.core.model.RestResponse;
-import com.jwk.common.core.constant.JwkSecurityConstants;
 import com.jwk.common.security.constants.OAuth2ErrorCodeConstant;
 import java.io.PrintWriter;
 import javax.servlet.http.HttpServletRequest;
@@ -20,10 +20,10 @@ import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 
 /**
  * @author Jiwk
- * @date 2022/11/13
  * @version 0.1.3
  * <p>
  * 客户端认证异常处理 AuthenticationException 不同细化异常处理
+ * @date 2022/11/13
  */
 @RequiredArgsConstructor
 public class ResourceAuthExceptionEntryPoint implements AuthenticationEntryPoint {
@@ -52,7 +52,7 @@ public class ResourceAuthExceptionEntryPoint implements AuthenticationEntryPoint
 		}
 		// 不带Form头信息认证失败时，删除请求缓存，否则会一直认证失败（可能会引起HTTP会话泛洪攻击）
 		// 可以不删除请求缓存，通过网关拒绝Form认证方式
-		new HttpSessionRequestCache().removeRequest(request,response);
+		new HttpSessionRequestCache().removeRequest(request, response);
 		PrintWriter printWriter = response.getWriter();
 		printWriter.append(objectMapper.writeValueAsString(result));
 	}

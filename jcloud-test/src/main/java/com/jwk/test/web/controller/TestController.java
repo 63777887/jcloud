@@ -75,4 +75,16 @@ public class TestController {
 		return "导出成功";
 	}
 
+	@GetMapping("/testMultiCache")
+	@Cacheable(value = "get#6m#1", key = "#key")
+	public String testMultiCache(String key) {
+		return key;
+	}
+
+	@GetMapping("/testRedisCache")
+	@Cacheable(value = "get#6m", key = "#key")
+	public String testRedisCache(String key) {
+		return key;
+	}
+
 }

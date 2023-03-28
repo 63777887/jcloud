@@ -37,10 +37,10 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * 自动配置类
+ * @date 2022/6/11
  */
 @EnableConfigurationProperties(JwkSwaggerProperties.class)
 @Configuration

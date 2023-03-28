@@ -15,10 +15,10 @@ import org.springframework.data.redis.core.RedisTemplate;
 
 /**
  * @author Jiwk
- * @date 2022/10/11
  * @version 0.1.3
  * <p>
  * {@link CacheManager} 实现自定义缓存
+ * @date 2022/10/11
  */
 @Slf4j
 @Getter

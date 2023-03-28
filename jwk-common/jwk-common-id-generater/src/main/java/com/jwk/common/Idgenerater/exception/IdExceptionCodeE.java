@@ -22,6 +22,10 @@ public enum IdExceptionCodeE {
 	 */
 	SizeLimit(-3, "批量获取id时，size超过最大限制"), NoServiceImpl(-4, "没有对应的实现类");
 
+	private final Integer errCode;
+
+	private final String errMsg;
+
 	IdExceptionCodeE(Integer errCode, String errMsg) {
 		this.errCode = errCode;
 		this.errMsg = errMsg;
@@ -52,10 +56,6 @@ public enum IdExceptionCodeE {
 		}
 		return "";
 	}
-
-	private Integer errCode;
-
-	private String errMsg;
 
 	public Integer getErrCode() {
 		return errCode;

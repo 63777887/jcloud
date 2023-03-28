@@ -5,10 +5,10 @@ import org.springframework.security.oauth2.core.OAuth2Error;
 
 /**
  * @author Jiwk
- * @date 2022/11/24
  * @version 0.1.4
  * <p>
  * ScopeException 异常信息
+ * @date 2022/11/24
  */
 public class ScopeException extends OAuth2AuthenticationException {
 

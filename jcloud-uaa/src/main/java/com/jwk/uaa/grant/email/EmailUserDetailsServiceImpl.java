@@ -11,10 +11,10 @@ import org.springframework.stereotype.Service;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * 邮箱密码用户登陆service
+ * @date 2022/6/11
  */
 @Service
 public class EmailUserDetailsServiceImpl implements JwkUserDetailsService {
@@ -33,4 +33,5 @@ public class EmailUserDetailsServiceImpl implements JwkUserDetailsService {
 	public boolean supportGrantType(String grantType) {
 		return JwkOAuth2ParameterNames.EMAIL.equals(grantType);
 	}
+
 }

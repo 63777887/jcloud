@@ -2,10 +2,10 @@ package com.jwk.common.rocketmq.constant;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * 枚举类
+ * @date 2022/6/11
  */
 public enum MessageEnum {
 
@@ -20,10 +20,24 @@ public enum MessageEnum {
 
 	private String tags;
 
-	private MessageEnum(String oldQueue, String newQueue, String tags) {
+	MessageEnum(String oldQueue, String newQueue, String tags) {
 		this.oldQueue = oldQueue;
 		this.newQueue = newQueue;
 		this.tags = tags;
+	}
+
+	public static MessageEnum get(String oldQueue) {
+		MessageEnum[] var1 = values();
+		int var2 = var1.length;
+
+		for (int var3 = 0; var3 < var2; ++var3) {
+			MessageEnum messageEnum = var1[var3];
+			if (messageEnum.oldQueue.equals(oldQueue)) {
+				return messageEnum;
+			}
+		}
+
+		return null;
 	}
 
 	public String getOldQueue() {
@@ -48,20 +62,6 @@ public enum MessageEnum {
 
 	public void setTags(String tags) {
 		this.tags = tags;
-	}
-
-	public static MessageEnum get(String oldQueue) {
-		MessageEnum[] var1 = values();
-		int var2 = var1.length;
-
-		for (int var3 = 0; var3 < var2; ++var3) {
-			MessageEnum messageEnum = var1[var3];
-			if (messageEnum.oldQueue.equals(oldQueue)) {
-				return messageEnum;
-			}
-		}
-
-		return null;
 	}
 
 }

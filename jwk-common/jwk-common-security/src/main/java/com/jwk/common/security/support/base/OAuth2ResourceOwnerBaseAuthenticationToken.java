@@ -14,10 +14,10 @@ import org.springframework.util.Assert;
 
 /**
  * @author Jiwk
- * @date 2022/11/24
  * @version 0.1.4
  * <p>
  * 自定义授权模式
+ * @date 2022/11/24
  */
 public abstract class OAuth2ResourceOwnerBaseAuthenticationToken extends AbstractAuthenticationToken {
 

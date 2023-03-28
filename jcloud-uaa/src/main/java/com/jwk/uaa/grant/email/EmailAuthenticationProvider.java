@@ -17,10 +17,10 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * 邮箱认证Provider
+ * @date 2022/6/11
  */
 @Slf4j
 public class EmailAuthenticationProvider
@@ -51,8 +51,8 @@ public class EmailAuthenticationProvider
 	@Override
 	public void checkClient(RegisteredClient registeredClient) {
 		assert registeredClient != null;
-		if (!registeredClient.getAuthorizationGrantTypes().
-				contains(new AuthorizationGrantType(JwkOAuth2ParameterNames.EMAIL))) {
+		if (!registeredClient.getAuthorizationGrantTypes()
+				.contains(new AuthorizationGrantType(JwkOAuth2ParameterNames.EMAIL))) {
 			throw new OAuth2AuthenticationException(OAuth2ErrorCodes.UNAUTHORIZED_CLIENT);
 		}
 	}

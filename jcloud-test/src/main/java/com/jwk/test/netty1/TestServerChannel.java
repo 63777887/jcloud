@@ -5,18 +5,14 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
-import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.util.concurrent.GlobalEventExecutor;
-import java.time.LocalDateTime;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class TestServerChannel extends SimpleChannelInboundHandler<Long> {
 
 	public static ChannelGroup channelGroup = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
+
+	private static final AtomicInteger sum = new AtomicInteger(0);
 
 	@Override
 	public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
@@ -45,8 +41,6 @@ public class TestServerChannel extends SimpleChannelInboundHandler<Long> {
 	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
 		System.out.println("不活跃连接:" + ctx.channel().remoteAddress());
 	}
-
-	private static AtomicInteger sum = new AtomicInteger(0);
 
 	@Override
 	protected void channelRead0(ChannelHandlerContext channelHandlerContext, Long msg) throws Exception {

@@ -2,10 +2,10 @@ package com.jwk.common.redis.support;
 
 /**
  * @author Jiwk
- * @date 2022/10/14
  * @version 0.1.1
  * <p>
  * 修改 {@link RedisCaffeineCacheManager} 的回调
+ * @date 2022/10/14
  */
 @FunctionalInterface
 public interface RedisCaffeineCacheManagerCustomizer {

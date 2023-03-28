@@ -4,10 +4,10 @@ import lombok.Data;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * canal参数配置
+ * @date 2022/6/11
  */
 @Data
 public class CanalProperties {

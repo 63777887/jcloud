@@ -11,10 +11,9 @@ import org.springframework.util.CollectionUtils;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
- *
+ * @date 2022/6/11
  */
 public class CanalMessageConsumer extends AbstractCanalMessageConsumer {
 
@@ -77,7 +76,6 @@ public class CanalMessageConsumer extends AbstractCanalMessageConsumer {
 
 	/**
 	 * 只消费增、删、改、删表事件，其它事件暂不支持且会被忽略
-	 *
 	 */
 	public <T> List<T> filter(List<T> entries) {
 

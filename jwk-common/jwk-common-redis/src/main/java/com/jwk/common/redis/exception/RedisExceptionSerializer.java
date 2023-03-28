@@ -7,10 +7,10 @@ import lombok.SneakyThrows;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * Redis 异常格式化
+ * @date 2022/6/11
  */
 public class RedisExceptionSerializer extends StdSerializer<RedisException> {
 

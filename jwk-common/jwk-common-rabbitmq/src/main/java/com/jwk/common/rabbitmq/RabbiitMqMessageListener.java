@@ -4,10 +4,10 @@ import org.springframework.amqp.core.Message;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * 监听器
+ * @date 2022/6/11
  */
 public interface RabbiitMqMessageListener {
 

@@ -19,14 +19,14 @@ import org.springframework.context.annotation.Bean;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * Prometheus配置项
+ * @date 2022/6/11
  */
 public class JwkPrometheusConfiguration {
 
-	private static Logger logger = LoggerFactory.getLogger(JwkPrometheusConfiguration.class);
+	private static final Logger logger = LoggerFactory.getLogger(JwkPrometheusConfiguration.class);
 
 	@Bean(initMethod = "start")
 	@ConditionalOnMissingBean

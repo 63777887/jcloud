@@ -9,10 +9,10 @@ import org.springframework.amqp.rabbit.listener.api.ChannelAwareMessageListener;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * 消息监听处理
+ * @date 2022/6/11
  */
 @Slf4j
 @Data

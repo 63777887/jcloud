@@ -25,10 +25,10 @@ import org.springframework.cloud.openfeign.FallbackFactory;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * 支持自动降级注入 重写 {@link com.alibaba.cloud.sentinel.feign.SentinelInvocationHandler}
+ * @date 2022/6/11
  */
 @Slf4j
 public class SentinelInvocationHandler implements InvocationHandler {
@@ -58,6 +58,15 @@ public class SentinelInvocationHandler implements InvocationHandler {
 	SentinelInvocationHandler(Target<?> target, Map<Method, InvocationHandlerFactory.MethodHandler> dispatch) {
 		this.target = checkNotNull(target, "target");
 		this.dispatch = checkNotNull(dispatch, "dispatch");
+	}
+
+	static Map<Method, Method> toFallbackMethod(Map<Method, InvocationHandlerFactory.MethodHandler> dispatch) {
+		Map<Method, Method> result = new LinkedHashMap<>();
+		for (Method method : dispatch.keySet()) {
+			method.setAccessible(true);
+			result.put(method, method);
+		}
+		return result;
 	}
 
 	@Override
@@ -163,15 +172,6 @@ public class SentinelInvocationHandler implements InvocationHandler {
 	@Override
 	public String toString() {
 		return target.toString();
-	}
-
-	static Map<Method, Method> toFallbackMethod(Map<Method, InvocationHandlerFactory.MethodHandler> dispatch) {
-		Map<Method, Method> result = new LinkedHashMap<>();
-		for (Method method : dispatch.keySet()) {
-			method.setAccessible(true);
-			result.put(method, method);
-		}
-		return result;
 	}
 
 }

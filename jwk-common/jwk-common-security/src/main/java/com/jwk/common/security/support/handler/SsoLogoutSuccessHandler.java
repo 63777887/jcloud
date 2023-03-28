@@ -10,10 +10,10 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
 
 /**
  * @author Jiwk
- * @date 2022/11/24
  * @version 0.1.4
  * <p>
  * 退出功能 ，根据客户端传入跳转
+ * @date 2022/11/24
  */
 public class SsoLogoutSuccessHandler implements LogoutSuccessHandler {
 

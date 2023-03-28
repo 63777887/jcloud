@@ -8,10 +8,10 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
 
 /**
  * @author Jiwk
- * @date 2022/11/24
  * @version 0.1.4
  * <p>
  * 增强token，加入user信息
+ * @date 2022/11/24
  */
 public class CustomeOAuth2TokenCustomizer implements OAuth2TokenCustomizer<OAuth2TokenClaimsContext> {
 

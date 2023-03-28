@@ -2,10 +2,10 @@ package com.jwk.common.core.constant;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * 常量
+ * @date 2022/6/11
  */
 public interface JwkSecurityConstants {
 
@@ -62,7 +62,8 @@ public interface JwkSecurityConstants {
 	/**
 	 * ID_TOKEN过期时间
 	 */
-	Integer ID_TOKEN_EXPIRE_AT = 30*60;
+	Integer ID_TOKEN_EXPIRE_AT = 30 * 60;
 
 	String OIDC_TOKEN_DEFAULT_VALUE = "none token";
+
 }

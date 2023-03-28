@@ -6,10 +6,10 @@ import lombok.Data;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * excel导出表头
+ * @date 2022/6/11
  */
 @Data
 public class ExcelHeadReq implements Serializable {

@@ -19,6 +19,11 @@ public class TestServer {
 		this.port = port;
 	}
 
+	public static void main(String[] args) throws InterruptedException {
+		new TestServer(9999).run();
+		// new TestServer(8888).run();
+	}
+
 	@PostConstruct
 	public void run() throws InterruptedException {
 		NioEventLoopGroup bossGroup = new NioEventLoopGroup(1);
@@ -41,11 +46,6 @@ public class TestServer {
 		// 监听关闭
 		bind.channel().closeFuture().sync();
 
-	}
-
-	public static void main(String[] args) throws InterruptedException {
-		new TestServer(9999).run();
-		// new TestServer(8888).run();
 	}
 
 }

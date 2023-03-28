@@ -18,23 +18,23 @@ import org.springframework.context.annotation.Bean;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * 自动配置类
+ * @date 2022/6/11
  */
 
 @Slf4j
 @EnableConfigurationProperties(RabbitmqProperties.class)
 public class RabbitMQAutoConfiguration {
 
+	@Resource
+	private RabbitmqProperties rabbitmqProperties;
+
 	@Bean
 	public MessageConverter myMessageConverter() {
 		return new Jackson2JsonMessageConverter();
 	}
-
-	@Resource
-	private RabbitmqProperties rabbitmqProperties;
 
 	@Bean
 	public ConnectionFactory connectionFactory() {

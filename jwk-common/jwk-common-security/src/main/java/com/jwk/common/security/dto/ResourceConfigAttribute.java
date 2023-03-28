@@ -6,10 +6,10 @@ import org.springframework.security.core.GrantedAuthority;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * 封装资源，自定义资源类
+ * @date 2022/6/11
  */
 public class ResourceConfigAttribute implements ConfigAttribute, GrantedAuthority {
 

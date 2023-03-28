@@ -19,10 +19,10 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
  * @author Jiwk
- * @date 2022/11/13
  * @version 0.1.4
  * <p>
  * 重新 OAuth2FeignRequestInterceptor 递解决feign 传递token 为空问题
+ * @date 2022/11/13
  */
 @Slf4j
 @RequiredArgsConstructor

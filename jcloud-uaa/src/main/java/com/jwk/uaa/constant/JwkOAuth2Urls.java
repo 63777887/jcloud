@@ -9,24 +9,24 @@ package com.jwk.uaa.constant;
  */
 public interface JwkOAuth2Urls {
 
-  /**
-   * 个性化confirm页面
-   */
-  String CUSTOM_CONSENT_PAGE_URI = "/token/confirm_access";
+	/**
+	 * 个性化confirm页面
+	 */
+	String CUSTOM_CONSENT_PAGE_URI = "/token/confirm_access";
 
-  /**
-   * 个性化login页面
-   */
-  String LOGIN_PAGE = "/token/login";
+	/**
+	 * 个性化login页面
+	 */
+	String LOGIN_PAGE = "/token/login";
 
-  /**
-   * 登录成功默认跳转页面
-   */
-  String DEFAULT_SUCCESS_URL = "/";
+	/**
+	 * 登录成功默认跳转页面
+	 */
+	String DEFAULT_SUCCESS_URL = "/";
 
-  /**
-   * 登录请求地址
-   */
-  String LOGIN_PROCESSING_URL = "/token/form";
+	/**
+	 * 登录请求地址
+	 */
+	String LOGIN_PROCESSING_URL = "/token/form";
 
 }

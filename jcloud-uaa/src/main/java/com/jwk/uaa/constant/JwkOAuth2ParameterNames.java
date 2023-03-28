@@ -9,28 +9,27 @@ package com.jwk.uaa.constant;
  */
 public interface JwkOAuth2ParameterNames {
 
-  /**
-   * {@code email} - used in Access Token Request.
-   */
-  String EMAIL_PARAMETER_NAME = "email";
+	/**
+	 * {@code email} - used in Access Token Request.
+	 */
+	String EMAIL_PARAMETER_NAME = "email";
 
-  /**
-   * {@code email} - used in Access Token Request.
-   */
-  String EMAIL = "email";
+	/**
+	 * {@code email} - used in Access Token Request.
+	 */
+	String EMAIL = "email";
 
+	/**
+	 * 短信登录 参数名称
+	 */
+	/**
+	 * {@code email} - used in Access Token Request.
+	 */
+	String PHONE_PARAMETER_NAME = "phone";
 
-  /**
-   * 短信登录 参数名称
-   */
-  /**
-   * {@code email} - used in Access Token Request.
-   */
-  String PHONE_PARAMETER_NAME = "phone";
-
-  /**
-   * 短信登录Granter
-   */
-  String PHONE = "phone";
+	/**
+	 * 短信登录Granter
+	 */
+	String PHONE = "phone";
 
 }

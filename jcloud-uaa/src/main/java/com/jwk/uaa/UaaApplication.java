@@ -12,10 +12,10 @@ import org.springframework.core.env.ConfigurableEnvironment;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * 启动类
+ * @date 2022/6/11
  */
 @SpringBootApplication
 @EnableDiscoveryClient
@@ -24,7 +24,6 @@ import org.springframework.core.env.ConfigurableEnvironment;
 public class UaaApplication {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(UaaApplication.class);
-
 
 	public static void main(String[] args) {
 		ConfigurableApplicationContext applicationContext = SpringApplication.run(UaaApplication.class, args);

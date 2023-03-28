@@ -1,8 +1,8 @@
 package com.jwk.common.security.support.component;
 
 import cn.hutool.core.util.StrUtil;
-import com.jwk.common.security.annotation.Inner;
 import com.jwk.common.core.constant.JwkSecurityConstants;
+import com.jwk.common.security.annotation.Inner;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -17,10 +17,10 @@ import org.springframework.security.access.AccessDeniedException;
 
 /**
  * @author Jiwk
- * @date 2022/11/24
  * @version 0.1.4
  * <p>
  * Inner注解免鉴权处理
+ * @date 2022/11/24
  */
 @Slf4j
 @Aspect
@@ -40,7 +40,7 @@ public class JwkSecurityInnerAspect implements Ordered {
 		String header = request.getHeader(JwkSecurityConstants.FROM);
 		String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
 		if (inner.needFrom() && !StrUtil.equals(JwkSecurityConstants.FROM_IN, header)
-		&& StrUtil.isBlank(authorization)) {
+				&& StrUtil.isBlank(authorization)) {
 			if (log.isWarnEnabled()) {
 				log.warn("访问接口 {} 没有权限", point.getSignature().getName());
 			}

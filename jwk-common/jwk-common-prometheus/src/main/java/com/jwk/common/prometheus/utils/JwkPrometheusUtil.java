@@ -10,10 +10,10 @@ import org.springframework.core.env.Environment;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * Prometheus工具类
+ * @date 2022/6/11
  */
 public class JwkPrometheusUtil {
 

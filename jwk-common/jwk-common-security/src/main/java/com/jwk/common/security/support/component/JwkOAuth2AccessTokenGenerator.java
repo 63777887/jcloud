@@ -36,11 +36,11 @@ import org.springframework.util.StringUtils;
 
 /**
  * @author Jiwk
- * @date 2022/11/14
  * @version 0.1.4
  * <p>
  * 自定义AccessToken生成策略
  * 重写{@link org.springframework.security.oauth2.server.authorization.token.OAuth2AccessTokenGenerator}
+ * @date 2022/11/14
  */
 public final class JwkOAuth2AccessTokenGenerator implements OAuth2TokenGenerator<OAuth2AccessToken> {
 
@@ -57,10 +57,9 @@ public final class JwkOAuth2AccessTokenGenerator implements OAuth2TokenGenerator
 		if (WebUtils.getRequest().get().getParameter(OAuth2ParameterNames.SCOPE) == null) {
 			throw new ScopeException(OAuth2ErrorCodeConstant.SCOPE_IS_EMPTY);
 		}
-		Set<String> requestScopes = CollUtil.newHashSet(
-				Arrays.asList(StringUtils.delimitedListToStringArray(
-						WebUtils.getRequest().get().getParameter(OAuth2ParameterNames.SCOPE), ",")));
-		if (!CollUtil.containsAll(context.getAuthorizedScopes(),requestScopes)) {
+		Set<String> requestScopes = CollUtil.newHashSet(Arrays.asList(StringUtils.delimitedListToStringArray(
+				WebUtils.getRequest().get().getParameter(OAuth2ParameterNames.SCOPE), ",")));
+		if (!CollUtil.containsAll(context.getAuthorizedScopes(), requestScopes)) {
 			throw new OAuth2AuthenticationException(OAuth2ErrorCodes.INVALID_SCOPE);
 		}
 
@@ -68,8 +67,9 @@ public final class JwkOAuth2AccessTokenGenerator implements OAuth2TokenGenerator
 				.equals(context.getRegisteredClient().getTokenSettings().getAccessTokenFormat())) {
 			return null;
 		}
-		if (context.getAuthorizedScopes().contains(OidcScopes.OPENID)){
-			return new OAuth2AccessToken(TokenType.BEARER, JwkSecurityConstants.OIDC_TOKEN_DEFAULT_VALUE,Instant.now(),null);
+		if (context.getAuthorizedScopes().contains(OidcScopes.OPENID)) {
+			return new OAuth2AccessToken(TokenType.BEARER, JwkSecurityConstants.OIDC_TOKEN_DEFAULT_VALUE, Instant.now(),
+					null);
 		}
 
 		String issuer = null;
@@ -81,42 +81,43 @@ public final class JwkOAuth2AccessTokenGenerator implements OAuth2TokenGenerator
 		Instant issuedAt = Instant.now();
 		Instant expiresAt = issuedAt.plus(registeredClient.getTokenSettings().getAccessTokenTimeToLive());
 
-		// @formatter:off
-		OAuth2TokenClaimsSet.Builder claimsBuilder = OAuth2TokenClaimsSet.builder();
-		if (StringUtils.hasText(issuer)) {
-			claimsBuilder.issuer(issuer);
-		}
-		claimsBuilder
-				.subject(context.getPrincipal().getName())
-				.audience(Collections.singletonList(registeredClient.getClientId()))
-				.issuedAt(issuedAt)
-				.expiresAt(expiresAt)
-				.notBefore(issuedAt)
-				.id(UUID.randomUUID().toString());
-		if (!CollectionUtils.isEmpty(context.getAuthorizedScopes())) {
-			claimsBuilder.claim(OAuth2ParameterNames.SCOPE, context.getAuthorizedScopes());
-			if (context.getAuthorizedScopes().contains(OidcScopes.OPENID)){
-				claimsBuilder.expiresAt(Instant.ofEpochSecond(30*60));
-			}
-		}
-		// @formatter:on
+	// @formatter:off
+    OAuth2TokenClaimsSet.Builder claimsBuilder = OAuth2TokenClaimsSet.builder();
+    if (StringUtils.hasText(issuer)) {
+      claimsBuilder.issuer(issuer);
+    }
+    claimsBuilder
+        .subject(context.getPrincipal().getName())
+        .audience(Collections.singletonList(registeredClient.getClientId()))
+        .issuedAt(issuedAt)
+        .expiresAt(expiresAt)
+        .notBefore(issuedAt)
+        .id(UUID.randomUUID().toString());
+    if (!CollectionUtils.isEmpty(context.getAuthorizedScopes())) {
+      claimsBuilder.claim(OAuth2ParameterNames.SCOPE, context.getAuthorizedScopes());
+      if (context.getAuthorizedScopes().contains(OidcScopes.OPENID)) {
+        claimsBuilder.expiresAt(Instant.ofEpochSecond(30 * 60));
+      }
+    }
+    // @formatter:on
 
 		if (this.accessTokenCustomizer != null) {
-			// @formatter:off
-			OAuth2TokenClaimsContext.Builder accessTokenContextBuilder = OAuth2TokenClaimsContext.with(claimsBuilder)
-					.registeredClient(context.getRegisteredClient())
-					.principal(context.getPrincipal())
-					.providerContext(context.getProviderContext())
-					.authorizedScopes(context.getAuthorizedScopes())
-					.tokenType(context.getTokenType())
-					.authorizationGrantType(context.getAuthorizationGrantType());
-			if (context.getAuthorization() != null) {
-				accessTokenContextBuilder.authorization(context.getAuthorization());
-			}
-			if (context.getAuthorizationGrant() != null) {
-				accessTokenContextBuilder.authorizationGrant(context.getAuthorizationGrant());
-			}
-			// @formatter:on
+		// @formatter:off
+      OAuth2TokenClaimsContext.Builder accessTokenContextBuilder = OAuth2TokenClaimsContext
+          .with(claimsBuilder)
+          .registeredClient(context.getRegisteredClient())
+          .principal(context.getPrincipal())
+          .providerContext(context.getProviderContext())
+          .authorizedScopes(context.getAuthorizedScopes())
+          .tokenType(context.getTokenType())
+          .authorizationGrantType(context.getAuthorizationGrantType());
+      if (context.getAuthorization() != null) {
+        accessTokenContextBuilder.authorization(context.getAuthorization());
+      }
+      if (context.getAuthorizationGrant() != null) {
+        accessTokenContextBuilder.authorizationGrant(context.getAuthorizationGrant());
+      }
+      // @formatter:on
 
 			OAuth2TokenClaimsContext accessTokenContext = accessTokenContextBuilder.build();
 			this.accessTokenCustomizer.customize(accessTokenContext);

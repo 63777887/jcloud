@@ -6,10 +6,10 @@ import org.springframework.data.redis.core.RedisTemplate;
 
 /**
  * @author Jiwk
- * @date 2022/11/9
  * @version 0.1.3
  * <p>
  * 通过redis key生成serverId
+ * @date 2022/11/9
  */
 public class RedisSeqCacheServerIdFactory implements CacheServerIdFactory {
 

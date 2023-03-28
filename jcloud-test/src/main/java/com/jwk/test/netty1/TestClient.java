@@ -22,6 +22,20 @@ public class TestClient {
 		this.port = port;
 	}
 
+	public static void main(String[] args) {
+
+		ExecutorService executorService = Executors.newFixedThreadPool(30);
+		for (int i = 0; i < 10000; i++) {
+			executorService.execute(new Runnable() {
+				@Override
+				public void run() {
+					new TestClient("127.0.0.1", 9999).run();
+				}
+			});
+
+		}
+	}
+
 	// @PostConstruct
 	public void run() {
 		NioEventLoopGroup workgroup = new NioEventLoopGroup();
@@ -48,20 +62,6 @@ public class TestClient {
 		}
 		finally {
 			workgroup.shutdownGracefully();
-		}
-	}
-
-	public static void main(String[] args) {
-
-		ExecutorService executorService = Executors.newFixedThreadPool(30);
-		for (int i = 0; i < 10000; i++) {
-			executorService.execute(new Runnable() {
-				@Override
-				public void run() {
-					new TestClient("127.0.0.1", 9999).run();
-				}
-			});
-
 		}
 	}
 

@@ -5,10 +5,10 @@ import org.springframework.cloud.gateway.route.RouteDefinition;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * 路由配置
+ * @date 2022/6/11
  */
 public class ConfigRouteDefinition {
 

@@ -1,8 +1,8 @@
 package com.jwk.upms.web.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.jwk.upms.web.dao.SysUserMapper;
 import com.jwk.upms.base.entity.SysUser;
+import com.jwk.upms.web.dao.SysUserMapper;
 import com.jwk.upms.web.service.SysUserService;
 import org.springframework.stereotype.Service;
 

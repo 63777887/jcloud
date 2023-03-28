@@ -48,10 +48,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 /**
  * @author Jiwk
- * @date 2022/11/24
  * @version 0.1.4
  * <p>
  * token控制
+ * @date 2022/11/24
  */
 @Slf4j
 @RestController
@@ -67,6 +67,19 @@ public class JwkTokenEndpoint {
 
 	private final UpmsRemoteService upmsRemoteService;
 
+	private static Set<ScopeWithDescription> withDescription(Set<String> scopes, List<SysRole> scopeList) {
+		Set<ScopeWithDescription> scopeWithDescriptions = new LinkedHashSet<>();
+		for (String scope : scopes) {
+			for (SysRole sysRole : scopeList) {
+				if (scope.equals(sysRole.getCode())) {
+					scopeWithDescriptions
+							.add(new ScopeWithDescription(scope, sysRole.getRoleName(), sysRole.getRoleDesc()));
+				}
+			}
+		}
+		return scopeWithDescriptions;
+	}
+
 	/**
 	 * 认证页面
 	 * @param modelAndView
@@ -80,28 +93,27 @@ public class JwkTokenEndpoint {
 		return modelAndView;
 	}
 
-  @GetMapping("/confirm_access")
-  public ModelAndView confirm(Principal principal, ModelAndView modelAndView,
-      @RequestParam(OAuth2ParameterNames.CLIENT_ID) String clientId,
-      @RequestParam(OAuth2ParameterNames.SCOPE) String scope,
-      @RequestParam(OAuth2ParameterNames.STATE) String state) {
-    SysOauthClientDto clientDetails = upmsRemoteService.getClientDetailsById(clientId).getData();
-    Set<String> authorizedScopes = StrUtil.isNotBlank(scope) ? new HashSet<>(StrUtil.split(scope, CharPool.SPACE))
-            : new HashSet<>(StrUtil.split(clientDetails.getScope(), CharPool.COMMA));
-    List<SysRole> scopeList = clientDetails.getScopeList();
-    if (CollUtil.isEmpty(authorizedScopes) || CollUtil.isEmpty(scopeList)) {
-      throw new ScopeException(OAuth2ErrorCodeConstant.SCOPE_IS_EMPTY);
-    }
-    modelAndView.addObject("clientId", clientId);
-    modelAndView.addObject("state", state);
-    modelAndView.addObject("scopes", withDescription(authorizedScopes,scopeList));
-    modelAndView.addObject("principalName", principal.getName());
-    modelAndView.addObject("clientName", clientDetails.getClientName());
-    modelAndView.addObject("redirectUri", clientDetails.getWebServerRedirectUri());
-    modelAndView.setViewName("consent");
-    return modelAndView;
-  }
-
+	@GetMapping("/confirm_access")
+	public ModelAndView confirm(Principal principal, ModelAndView modelAndView,
+			@RequestParam(OAuth2ParameterNames.CLIENT_ID) String clientId,
+			@RequestParam(OAuth2ParameterNames.SCOPE) String scope,
+			@RequestParam(OAuth2ParameterNames.STATE) String state) {
+		SysOauthClientDto clientDetails = upmsRemoteService.getClientDetailsById(clientId).getData();
+		Set<String> authorizedScopes = StrUtil.isNotBlank(scope) ? new HashSet<>(StrUtil.split(scope, CharPool.SPACE))
+				: new HashSet<>(StrUtil.split(clientDetails.getScope(), CharPool.COMMA));
+		List<SysRole> scopeList = clientDetails.getScopeList();
+		if (CollUtil.isEmpty(authorizedScopes) || CollUtil.isEmpty(scopeList)) {
+			throw new ScopeException(OAuth2ErrorCodeConstant.SCOPE_IS_EMPTY);
+		}
+		modelAndView.addObject("clientId", clientId);
+		modelAndView.addObject("state", state);
+		modelAndView.addObject("scopes", withDescription(authorizedScopes, scopeList));
+		modelAndView.addObject("principalName", principal.getName());
+		modelAndView.addObject("clientName", clientDetails.getClientName());
+		modelAndView.addObject("redirectUri", clientDetails.getWebServerRedirectUri());
+		modelAndView.setViewName("consent");
+		return modelAndView;
+	}
 
 	/**
 	 * 认证页面
@@ -120,7 +132,8 @@ public class JwkTokenEndpoint {
 	 * @param authHeader Authorization
 	 */
 	@DeleteMapping("/logout")
-	public RestResponse<Boolean> logout(@RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String authHeader) {
+	public RestResponse<Boolean> logout(
+			@RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String authHeader) {
 		if (StrUtil.isBlank(authHeader)) {
 			return RestResponse.success();
 		}
@@ -137,7 +150,7 @@ public class JwkTokenEndpoint {
 	@GetMapping("/check_token")
 	public void checkToken(String token, HttpServletResponse response, HttpServletRequest request) {
 		ServletServerHttpResponse httpResponse = new ServletServerHttpResponse(response);
-//
+		//
 		if (StrUtil.isBlank(token)) {
 			httpResponse.setStatusCode(HttpStatus.UNAUTHORIZED);
 			this.authenticationFailureHandler.onAuthenticationFailure(request, response,
@@ -176,39 +189,30 @@ public class JwkTokenEndpoint {
 			return RestResponse.success();
 		}
 		// 清空用户信息
-//		cacheManager.getCache(CacheConstants.USER_DETAILS).evict(authorization.getPrincipalName());
+		// cacheManager.getCache(CacheConstants.USER_DETAILS).evict(authorization.getPrincipalName());
 		// 清空access token
 		authorizationService.remove(authorization);
-//		// 处理自定义退出事件，保存相关日志
-//		SpringContextHolder.publishEvent(new LogoutSuccessEvent(new PreAuthenticatedAuthenticationToken(
-//				authorization.getPrincipalName(), authorization.getRegisteredClientId())));
+		// // 处理自定义退出事件，保存相关日志
+		// SpringContextHolder.publishEvent(new LogoutSuccessEvent(new
+		// PreAuthenticatedAuthenticationToken(
+		// authorization.getPrincipalName(), authorization.getRegisteredClientId())));
 		return RestResponse.success();
 	}
 
-  private static Set<ScopeWithDescription> withDescription(Set<String> scopes,
-      List<SysRole> scopeList) {
-    Set<ScopeWithDescription> scopeWithDescriptions = new LinkedHashSet<>();
-    for (String scope : scopes) {
-      for (SysRole sysRole : scopeList) {
-       if (scope.equals(sysRole.getCode())){
-         scopeWithDescriptions.add(new ScopeWithDescription(scope,sysRole.getRoleName(),sysRole.getRoleDesc()));
-       }
-      }
-    }
-    return scopeWithDescriptions;
-  }
+	public static class ScopeWithDescription {
 
+		public final String scope;
 
-  public static class ScopeWithDescription {
-    public final String scope;
-    public final String scopeName;
-    public final String description;
+		public final String scopeName;
 
-    ScopeWithDescription(String scope, String scopeName, String scopeDesc) {
-      this.scope = scope;
-      this.scopeName = scopeName;
-      this.description = scopeDesc;
-    }
-  }
+		public final String description;
+
+		ScopeWithDescription(String scope, String scopeName, String scopeDesc) {
+			this.scope = scope;
+			this.scopeName = scopeName;
+			this.description = scopeDesc;
+		}
+
+	}
 
 }

@@ -15,13 +15,12 @@ import org.springframework.util.StringUtils;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * 资源所有者密码令牌授予者
+ * @date 2022/6/11
  */
-public class PasswordTokenGranter
-		extends OAuth2ResourceOwnerBaseAuthenticationConverter<PasswordAuthenticationToken> {
+public class PasswordTokenGranter extends OAuth2ResourceOwnerBaseAuthenticationConverter<PasswordAuthenticationToken> {
 
 	private final String GRANT_TYPE = "password";
 

@@ -22,18 +22,18 @@ import reactor.core.publisher.Mono;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * 动态变更网关路由
+ * @date 2022/6/11
  */
 public class NacosRouteDefinitionRepository implements RouteDefinitionRepository {
 
-	NacosConfigManager nacosConfigManager;
-
 	private static final Logger logger = LoggerFactory.getLogger(NacosRouteDefinitionRepository.class);
 
-	private ApplicationEventPublisher publisher;
+	NacosConfigManager nacosConfigManager;
+
+	private final ApplicationEventPublisher publisher;
 
 	public NacosRouteDefinitionRepository(ApplicationEventPublisher publisher,
 			NacosConfigProperties nacosConfigProperties) {

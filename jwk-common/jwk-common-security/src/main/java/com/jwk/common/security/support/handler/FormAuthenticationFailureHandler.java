@@ -14,10 +14,10 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
  * @author Jiwk
- * @date 2022/11/14
  * @version 0.1.4
  * <p>
  * 表单登录失败拦截器
+ * @date 2022/11/14
  */
 @Slf4j
 public class FormAuthenticationFailureHandler implements AuthenticationFailureHandler {

@@ -1,10 +1,10 @@
 package com.jwk.test.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.jwk.common.core.enums.StatBusinessTypeReqE;
 import com.jwk.common.core.excel.ExcelExportReq;
 import com.jwk.common.core.excel.ExcelHeadReq;
 import com.jwk.common.core.excel.ExcelQueryConditionReq;
-import com.jwk.common.core.enums.StatBusinessTypeReqE;
 import com.jwk.common.core.exception.ServiceException;
 import com.jwk.test.service.ExcelExportService;
 import java.util.ArrayList;
@@ -12,7 +12,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.stereotype.Service;
 
 /**
@@ -20,8 +24,6 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class HcCheckInMemberServiceImpl implements ExcelExportService {
-
-	private final String TASK_NAME = "入住人员资质发起审批";
 
 	/**
 	 * 导入条数限制
@@ -32,6 +34,8 @@ public class HcCheckInMemberServiceImpl implements ExcelExportService {
 	 * 导入模板表头行数
 	 */
 	public static final int IMPORT_HEAD_LINE_NUM = 2;
+
+	private final String TASK_NAME = "入住人员资质发起审批";
 
 	@Override
 	public HSSFWorkbook export(ExcelExportReq condition) throws ServiceException {

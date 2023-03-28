@@ -26,7 +26,6 @@ import org.redisson.config.SentinelServersConfig;
 import org.redisson.config.SingleServerConfig;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties.Sentinel;
-import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
@@ -41,24 +40,24 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Slf4j
 public class RedisUtil {
 
-	private static int threads = 10;
+	private static final int threads = 10;
 
-	private static int nettyThreads = 10;
+	private static final int nettyThreads = 10;
 
-	private static int masterConnectionMinimumIdleSize = 10;
+	private static final int masterConnectionMinimumIdleSize = 10;
 
-	private static int masterConnectionPoolSize = 64;
+	private static final int masterConnectionPoolSize = 64;
 
-	private static int slaveConnectionMinimumIdleSize = 10;
+	private static final int slaveConnectionMinimumIdleSize = 10;
 
-	private static int slaveConnectionPoolSize = 64;
+	private static final int slaveConnectionPoolSize = 64;
 
-	private static int scanInterval = 5000;
+	private static final int scanInterval = 5000;
 
 	/**
 	 * 监控锁的看门狗超时时间单位为毫秒。该参数只适用于分布式锁的加锁请求中未明确使用leaseTimeout参数的情况,这里设置成我们接口的超时时间5s
 	 */
-	private static int lockWatchdogTimeout = 5000;
+	private static final int lockWatchdogTimeout = 5000;
 
 	/**
 	 * redssionConfig 构建
@@ -79,7 +78,7 @@ public class RedisUtil {
 		config.setCodec(StringCodec.INSTANCE);
 
 		RedisProperties redisProperties = redisConfigProperties.getRedis();
-		if (redisProperties!=null && redisProperties.getCluster() != null) {
+		if (redisProperties != null && redisProperties.getCluster() != null) {
 
 			// 集群
 			ClusterServersConfig clusterServers = config.useClusterServers();
@@ -107,7 +106,8 @@ public class RedisUtil {
 			clusterServers.setSlaveConnectionMinimumIdleSize(slaveConnectionMinimumIdleSize);
 			clusterServers.setSlaveConnectionPoolSize(slaveConnectionPoolSize);
 			clusterServers.setScanInterval(scanInterval);
-		} else if (redisProperties!=null && redisProperties.getSentinel() != null) {
+		}
+		else if (redisProperties != null && redisProperties.getSentinel() != null) {
 
 			Sentinel sentinel = redisProperties.getSentinel();
 			// 哨兵
@@ -146,8 +146,9 @@ public class RedisUtil {
 			sentinelServers.setSlaveConnectionMinimumIdleSize(slaveConnectionMinimumIdleSize);
 			sentinelServers.setSlaveConnectionPoolSize(slaveConnectionPoolSize);
 			sentinelServers.setScanInterval(scanInterval);
-		} else {
-			if (redisProperties==null){
+		}
+		else {
+			if (redisProperties == null) {
 				redisProperties = new RedisProperties();
 				redisProperties.setHost("127.0.0.1");
 				redisProperties.setPort(6379);
@@ -188,11 +189,10 @@ public class RedisUtil {
 	 */
 	public RedisSerializer<Object> valueSerializer() {
 		// 使用 GenericFastJsonRedisSerializer 替换默认序列化
-		//这里覆盖默认的ObjectMapper
+		// 这里覆盖默认的ObjectMapper
 		// 设置key和value的序列化规则
 		return RedisSerializer.java();
 	}
-
 
 	public ObjectMapper getObjectMapper() {
 		ObjectMapper mapper = new ObjectMapper();
@@ -201,13 +201,14 @@ public class RedisUtil {
 		mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
 		mapper.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
 		JavaTimeModule javaTimeModule = new JavaTimeModule();
-		javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(
-				DateTimeFormatter.ISO_DATE_TIME));
+		javaTimeModule.addDeserializer(LocalDateTime.class,
+				new LocalDateTimeDeserializer(DateTimeFormatter.ISO_DATE_TIME));
 		mapper.registerModule(javaTimeModule);
 		mapper.registerModule(new Jdk8Module());
 		mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
 		mapper.setTimeZone(Calendar.getInstance().getTimeZone());
-		mapper.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
+		mapper.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.NON_FINAL,
+				JsonTypeInfo.As.PROPERTY);
 		return mapper;
 	}
 

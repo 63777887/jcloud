@@ -8,10 +8,10 @@ import java.lang.annotation.Target;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * 自动获取User信息
+ * @date 2022/6/11
  */
 @Documented
 @Target({ ElementType.PARAMETER })

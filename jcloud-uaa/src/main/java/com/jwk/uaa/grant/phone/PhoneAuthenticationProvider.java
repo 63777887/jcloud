@@ -18,12 +18,13 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
 
 /**
  * @author Jiwk
- * @date 2022/11/24
  * @version 0.1.4
  * <p>
  * 短信登录Provider
+ * @date 2022/11/24
  */
-public class PhoneAuthenticationProvider extends OAuth2ResourceOwnerBaseAuthenticationProvider<PhoneAuthenticationToken> {
+public class PhoneAuthenticationProvider
+		extends OAuth2ResourceOwnerBaseAuthenticationProvider<PhoneAuthenticationToken> {
 
 	private static final Logger LOGGER = LogManager.getLogger(PhoneAuthenticationProvider.class);
 

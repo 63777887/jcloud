@@ -55,9 +55,9 @@ spring:
             standard:
               precise-algorithm-class-name: com.jwk.shardingjdbc.algorithm.JwkTablePreciseAlgorithm
               sharding-column: id
-#            inline:
-#              algorithm-expression: user_$->{id%2+1}
-#              sharding-column: id
+  #            inline:
+  #              algorithm-expression: user_$->{id%2+1}
+  #              sharding-column: id
 
 
   # 动态数据源配置

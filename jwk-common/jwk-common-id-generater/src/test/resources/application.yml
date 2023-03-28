@@ -1,8 +1,8 @@
 jwk:
   redis:
-#    sentinel:
-#      master: mymaster
-#      nodes: 127.0.0.1:6381,127.0.0.1:6382,127.0.0.1:6383
+    #    sentinel:
+    #      master: mymaster
+    #      nodes: 127.0.0.1:6381,127.0.0.1:6382,127.0.0.1:6383
     port: 6379
     host: 127.0.0.1
 #  docker run --restart=always --log-opt max-size=100m --log-opt max-file=2 -p 6379:6379 --name myredis -v /Users/jiweikuan/myserver/docker-redis/redis.conf:/etc/redis/redis.conf -v /Users/jiweikuan/myserver/docker-redis/data:/data -d redis redis-server /etc/redis/redis.conf  --appendonly yes

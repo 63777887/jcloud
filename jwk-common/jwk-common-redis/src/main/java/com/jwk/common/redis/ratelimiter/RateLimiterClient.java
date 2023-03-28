@@ -6,10 +6,10 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @author Jiwk
- * @date 2022/11/10
  * @version 0.1.3
  * <p>
  * RateLimiter 限流 Client
+ * @date 2022/11/10
  */
 public interface RateLimiterClient {
 

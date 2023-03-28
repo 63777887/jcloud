@@ -9,12 +9,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest(classes = ShardingJdbcApplication.class)
 class ShardingJdbcApplicationTests {
 
+	@Autowired
+	UserService userService;
+
 	@Test
 	void contextLoads() {
 	}
-
-	@Autowired
-	UserService userService;
 
 	@Test
 	void addUser() {

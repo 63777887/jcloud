@@ -1,16 +1,14 @@
 package com.jwk.common.core.utils;
 
-import lombok.Getter;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import lombok.Getter;
 
 /**
  * @author Jiwk
- * @date 2022/11/14
  * @version 0.1.4
  * <p>
- *
+ * @date 2022/11/14
  */
 public class DecimalNum extends Number {
 

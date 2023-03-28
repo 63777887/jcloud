@@ -31,6 +31,7 @@
     <module>jwk-common-seata</module>
     <module>jwk-common-redis</module>
     <module>jwk-common-id-generater</module>
+    <module>jcloud-upms-base</module>
   </modules>
 
   <distributionManagement>

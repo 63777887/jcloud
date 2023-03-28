@@ -12,16 +12,20 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
- *
+ * @date 2022/6/11
  */
 public class JacksonUtil {
 
-	private static Logger logger = LoggerFactory.getLogger(JacksonUtil.class);
-
 	private static final ObjectMapper jacksonMapper = new ObjectMapper();
+
+	private static final Logger logger = LoggerFactory.getLogger(JacksonUtil.class);
+
+	static {
+		jacksonMapper.setSerializationInclusion(Include.NON_NULL);
+		jacksonMapper.setTimeZone(TimeZone.getTimeZone("GMT+8"));
+	}
 
 	public JacksonUtil() {
 	}
@@ -59,11 +63,10 @@ public class JacksonUtil {
 	}
 
 	public static <T> List<T> jacksonToArray(String src, Class<T> valueType) throws IOException {
-		JavaType javaType = jacksonMapper.getTypeFactory().constructParametricType(List.class,
-				new Class[] { valueType });
+		JavaType javaType = jacksonMapper.getTypeFactory().constructParametricType(List.class, valueType);
 
 		try {
-			return (List) jacksonMapper.readValue(src, javaType);
+			return jacksonMapper.readValue(src, javaType);
 		}
 		catch (IOException var4) {
 			logger.error("json转换List对象失败", var4);
@@ -83,11 +86,6 @@ public class JacksonUtil {
 
 	public static ObjectMapper getObjectMapper() {
 		return jacksonMapper;
-	}
-
-	static {
-		jacksonMapper.setSerializationInclusion(Include.NON_NULL);
-		jacksonMapper.setTimeZone(TimeZone.getTimeZone("GMT+8"));
 	}
 
 }

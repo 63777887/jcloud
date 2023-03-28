@@ -9,18 +9,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class MethodHandleTest {
 
-	static class ClassA {
-
-		public void println(String s) {
-			System.out.println(s);
-		}
-
-		public void show(String s) {
-			System.out.println(s);
-		}
-
-	}
-
 	public static void main(String[] args) throws Throwable {
 		Object obj = System.currentTimeMillis() % 2 == 0 ? System.out : new ClassA();
 		// 无论obj最终是哪个实现类，下面这句都能正确调用到println方法。
@@ -48,6 +36,18 @@ public class MethodHandleTest {
 	public Integer testTwo(boolean bool) {
 
 		return testOne(bool) ? 1 : 2;
+	}
+
+	static class ClassA {
+
+		public void println(String s) {
+			System.out.println(s);
+		}
+
+		public void show(String s) {
+			System.out.println(s);
+		}
+
 	}
 
 }

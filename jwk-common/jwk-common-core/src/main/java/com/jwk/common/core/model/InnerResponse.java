@@ -12,10 +12,10 @@ import lombok.experimental.Accessors;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * Fegin接口返回值
+ * @date 2022/6/11
  */
 @ToString
 @NoArgsConstructor

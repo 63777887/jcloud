@@ -14,10 +14,9 @@ import org.apache.poi.ss.usermodel.CellStyle;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
- *
+ * @date 2022/6/11
  */
 public class DateHelper {
 
@@ -928,12 +927,7 @@ public class DateHelper {
 	 * @return
 	 */
 	public static boolean isNotCellDateFormatted(Cell cell) {
-		if (isCellDateFormatted(cell)) {
-			return false;
-		}
-		else {
-			return true;
-		}
+		return !isCellDateFormatted(cell);
 	}
 
 	/**
@@ -980,7 +974,7 @@ public class DateHelper {
 			return false;
 		}
 		String fs = formatString;
-		fs = fs.replaceAll("[\"|\']", "").replaceAll("[年|月|日|时|分|秒|毫秒|微秒]", "");
+		fs = fs.replaceAll("[\"|']", "").replaceAll("[年|月|日|时|分|秒|毫秒|微秒]", "");
 		fs = fs.replaceAll("\\\\-", "-");
 		fs = fs.replaceAll("\\\\,", ",");
 		fs = fs.replaceAll("\\\\.", ".");

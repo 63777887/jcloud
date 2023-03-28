@@ -9,10 +9,10 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * nacos动态路由
+ * @date 2022/6/11
  */
 @Configuration
 @ConditionalOnProperty(prefix = "gateway.dynamicRoute", name = "enabled", havingValue = "true")

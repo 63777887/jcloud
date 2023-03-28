@@ -6,10 +6,10 @@ import org.springframework.web.util.UriUtils;
 
 /**
  * @author Jiwk
- * @date 2022/11/14
  * @version 0.1.4
  * <p>
  * url处理工具类
+ * @date 2022/11/14
  */
 @UtilityClass
 public class UrlUtil extends UriUtils {

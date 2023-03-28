@@ -17,10 +17,10 @@ import org.springframework.context.annotation.Primary;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * 自动配置类
+ * @date 2022/6/11
  */
 @AutoConfigureBefore({ DynamicDataSourceAutoConfiguration.class, SpringBootConfiguration.class })
 @EnableConfigurationProperties(JwkDynamicDataSourceProperties.class)

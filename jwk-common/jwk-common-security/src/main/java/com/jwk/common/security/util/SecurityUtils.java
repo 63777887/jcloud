@@ -24,10 +24,10 @@ import org.springframework.util.MultiValueMap;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * 安全工具类
+ * @date 2022/6/11
  */
 @UtilityClass
 public class SecurityUtils {

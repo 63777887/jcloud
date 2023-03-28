@@ -18,9 +18,9 @@ import org.springframework.stereotype.Service;
 @Service("register")
 public class Register implements InitializingBean, ApplicationContextAware {
 
-	private Logger logger = LoggerFactory.getLogger(Register.class);
+	private final Logger logger = LoggerFactory.getLogger(Register.class);
 
-	private Map<String, ExcelExportService> exportServiceImpMap = new HashMap<String, ExcelExportService>();
+	private final Map<String, ExcelExportService> exportServiceImpMap = new HashMap<String, ExcelExportService>();
 
 	private ApplicationContext applicationContext;
 

@@ -7,10 +7,10 @@ import lombok.NoArgsConstructor;
 
 /**
  * @author Jiwk
- * @date 2022/10/10
  * @version 0.1.1
  * <p>
  * 缓存的Topic消息对象
+ * @date 2022/10/10
  */
 @Data
 @AllArgsConstructor

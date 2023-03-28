@@ -25,10 +25,10 @@ import org.springframework.util.CollectionUtils;
 
 /**
  * @author Jiwk
- * @date 2022/11/24
  * @version 0.1.4
  * <p>
  * 登录成功事件
+ * @date 2022/11/24
  */
 @Slf4j
 public class JwkAuthenticationSuccessEventHandler implements AuthenticationSuccessHandler {
@@ -73,7 +73,7 @@ public class JwkAuthenticationSuccessEventHandler implements AuthenticationSucce
 		if (accessToken.getIssuedAt() != null && accessToken.getExpiresAt() != null) {
 			builder.expiresIn(ChronoUnit.SECONDS.between(accessToken.getIssuedAt(), accessToken.getExpiresAt()));
 		}
-		if (accessToken.getScopes().contains(OidcScopes.OPENID)){
+		if (accessToken.getScopes().contains(OidcScopes.OPENID)) {
 			builder.expiresIn(JwkSecurityConstants.ID_TOKEN_EXPIRE_AT);
 		}
 		if (refreshToken != null) {

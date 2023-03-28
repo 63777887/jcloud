@@ -12,10 +12,10 @@ import org.springframework.security.web.SecurityFilterChain;
 
 /**
  * @author Jiwk
- * @date 2022/11/24
  * @version 0.1.4
  * <p>
  * 服务安全相关配置
+ * @date 2022/11/24
  */
 @EnableWebSecurity(debug = true)
 @Configuration
@@ -42,7 +42,7 @@ public class WebSecurityConfiguration {
 
 	/**
 	 * 暴露静态资源
-	 *
+	 * <p>
 	 * https://github.com/spring-projects/spring-security/issues/10938
 	 * @param http
 	 * @return
@@ -51,7 +51,7 @@ public class WebSecurityConfiguration {
 	@Bean
 	@Order(0)
 	SecurityFilterChain resources(HttpSecurity http) throws Exception {
-		http.requestMatchers((matchers) -> matchers.antMatchers("/actuator/**","/css/**", "/error"))
+		http.requestMatchers((matchers) -> matchers.antMatchers("/actuator/**", "/css/**", "/error"))
 				.authorizeHttpRequests((authorize) -> authorize.anyRequest().permitAll()).requestCache().disable()
 				.securityContext().disable().sessionManagement().disable();
 		return http.build();

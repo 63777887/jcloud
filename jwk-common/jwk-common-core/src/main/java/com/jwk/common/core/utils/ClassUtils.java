@@ -14,10 +14,10 @@ import org.springframework.web.method.HandlerMethod;
 
 /**
  * @author Jiwk
- * @date 2022/11/14
  * @version 0.1.4
  * <p>
  * 类工具类
+ * @date 2022/11/14
  */
 @UtilityClass
 public class ClassUtils extends org.springframework.util.ClassUtils {
@@ -66,7 +66,6 @@ public class ClassUtils extends org.springframework.util.ClassUtils {
 		specificMethod = BridgeMethodResolver.findBridgedMethod(specificMethod);
 		// 先找方法，再找方法上的类
 		A annotation = AnnotatedElementUtils.findMergedAnnotation(specificMethod, annotationType);
-		;
 		if (null != annotation) {
 			return annotation;
 		}

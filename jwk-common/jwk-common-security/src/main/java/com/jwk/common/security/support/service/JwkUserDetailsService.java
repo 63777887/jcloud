@@ -1,6 +1,5 @@
 package com.jwk.common.security.support.service;
 
-import cn.hutool.core.convert.Convert;
 import com.jwk.common.security.dto.AdminUserDetails;
 import com.jwk.common.security.dto.ResourceConfigAttribute;
 import com.jwk.upms.base.dto.UserInfo;
@@ -14,10 +13,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * 获取用户信息
+ * @date 2022/6/11
  */
 public interface JwkUserDetailsService extends UserDetailsService, Ordered {
 
@@ -64,4 +63,5 @@ public interface JwkUserDetailsService extends UserDetailsService, Ordered {
 				.collect(Collectors.toList());
 		return new AdminUserDetails(sysUser, configAttributes);
 	}
+
 }

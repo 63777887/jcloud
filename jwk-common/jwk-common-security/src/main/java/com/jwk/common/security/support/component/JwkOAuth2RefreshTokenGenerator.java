@@ -14,15 +14,16 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
 
 /**
  * @author Jiwk
- * @date 2022/11/14
  * @version 0.1.4
  * <p>
  * 自定义RefreshToken生成策略
  * 重写{@link org.springframework.security.oauth2.server.authorization.token.OAuth2RefreshTokenGenerator}
+ * @date 2022/11/14
  */
 public final class JwkOAuth2RefreshTokenGenerator implements OAuth2TokenGenerator<OAuth2RefreshToken> {
-	private final StringKeyGenerator refreshTokenGenerator =
-			new Base64StringKeyGenerator(Base64.getUrlEncoder().withoutPadding(), 96);
+
+	private final StringKeyGenerator refreshTokenGenerator = new Base64StringKeyGenerator(
+			Base64.getUrlEncoder().withoutPadding(), 96);
 
 	@Nullable
 	@Override
@@ -30,8 +31,8 @@ public final class JwkOAuth2RefreshTokenGenerator implements OAuth2TokenGenerato
 		if (!OAuth2TokenType.REFRESH_TOKEN.equals(context.getTokenType())) {
 			return null;
 		}
-		if (context.getAuthorizedScopes().contains(OidcScopes.OPENID)){
-			return new OAuth2RefreshToken(JwkSecurityConstants.OIDC_TOKEN_DEFAULT_VALUE,Instant.now());
+		if (context.getAuthorizedScopes().contains(OidcScopes.OPENID)) {
+			return new OAuth2RefreshToken(JwkSecurityConstants.OIDC_TOKEN_DEFAULT_VALUE, Instant.now());
 		}
 		Instant issuedAt = Instant.now();
 		Instant expiresAt = issuedAt.plus(context.getRegisteredClient().getTokenSettings().getRefreshTokenTimeToLive());

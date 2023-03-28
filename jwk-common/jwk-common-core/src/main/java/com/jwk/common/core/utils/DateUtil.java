@@ -9,14 +9,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
- *
+ * @date 2022/6/11
  */
 public class DateUtil {
-
-	private static Logger logger = LoggerFactory.getLogger(DateUtil.class);
 
 	public static final String FORMAT_YYYY_MM_DD = "yyyy-MM-dd";
 
@@ -33,6 +30,8 @@ public class DateUtil {
 	public static final String FORMAT_YYYYMMDDHH = "yyyyMMddHH";
 
 	public static final String FORMAT_YYYY_MM = "yyyy-MM";
+
+	private static final Logger logger = LoggerFactory.getLogger(DateUtil.class);
 
 	public DateUtil() {
 	}
@@ -286,7 +285,7 @@ public class DateUtil {
 	}
 
 	public static boolean compareDay(Date fromDate, Date toDate, int day) {
-		return fromDate != null && toDate != null ? addDateDay(fromDate, day).after(toDate) : false;
+		return fromDate != null && toDate != null && addDateDay(fromDate, day).after(toDate);
 	}
 
 	public static Date createTokenExpireDate(int day) {
@@ -302,8 +301,8 @@ public class DateUtil {
 			f = new SimpleDateFormat("yyyyMMddHH");
 		}
 
-		int fromDateNumber = Integer.parseInt(f.format(fromDate).toString());
-		int toDateNumber = Integer.parseInt(f.format(toDate).toString());
+		int fromDateNumber = Integer.parseInt(f.format(fromDate));
+		int toDateNumber = Integer.parseInt(f.format(toDate));
 		System.out.println("fromDateNumber+==" + fromDateNumber + "toDateNumber===" + toDateNumber);
 		int retInt = fromDateNumber - toDateNumber;
 		return retInt;

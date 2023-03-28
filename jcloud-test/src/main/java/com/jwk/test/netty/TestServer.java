@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class TestServer {
 
-	private Integer port = 7000;
+	private final Integer port = 7000;
 
 	// public TestServer(Integer port) {
 	// this.port=port;

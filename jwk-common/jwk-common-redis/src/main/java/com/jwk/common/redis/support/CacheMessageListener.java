@@ -1,7 +1,6 @@
 package com.jwk.common.redis.support;
 
 import cn.hutool.core.util.ObjectUtil;
-import java.util.Objects;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,10 +10,10 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 
 /**
  * @author Jiwk
- * @date 2022/10/10
  * @version 0.1.1
  * <p>
  * Redis监听缓存Topic，多节点同步删除缓存
+ * @date 2022/10/10
  */
 @Slf4j
 @Getter

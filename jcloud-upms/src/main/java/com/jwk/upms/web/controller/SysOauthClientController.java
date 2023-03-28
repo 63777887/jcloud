@@ -1,10 +1,8 @@
 package com.jwk.upms.web.controller;
 
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.jwk.common.core.model.RestResponse;
 import com.jwk.common.security.annotation.Inner;
 import com.jwk.upms.base.dto.SysOauthClientDto;
-import com.jwk.upms.base.entity.SysOauthClient;
 import com.jwk.upms.web.service.SysOauthClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,10 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author Jiwk
- * @date 2022/11/25
  * @version 0.1.4
  * <p>
  * 客户端控制器
+ * @date 2022/11/25
  */
 @RestController
 @RequestMapping("/oauthClient")

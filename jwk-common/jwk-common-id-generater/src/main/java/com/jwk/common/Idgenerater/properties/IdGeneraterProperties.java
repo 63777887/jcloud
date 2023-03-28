@@ -5,10 +5,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * @author Jiwk
- * @date 2022/11/2
  * @version 0.1.3
  * <p>
  * 槽位相关配置项
+ * @date 2022/11/2
  */
 @Data
 @ConfigurationProperties(prefix = "jwk.id.gen")

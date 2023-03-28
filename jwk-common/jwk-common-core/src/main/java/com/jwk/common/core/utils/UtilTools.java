@@ -12,10 +12,10 @@ import org.springframework.beans.BeanWrapperImpl;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * 常用日期时间、数据、字符处理
+ * @date 2022/6/11
  */
 public class UtilTools {
 
@@ -70,10 +70,10 @@ public class UtilTools {
 			return "0.00";
 		}
 		else if (obj.compareTo(BigDecimal.ZERO) > 0 && obj.compareTo(new BigDecimal(1)) < 0) {
-			return "0" + df.format(obj).toString();
+			return "0" + df.format(obj);
 		}
 		else {
-			return df.format(obj).toString();
+			return df.format(obj);
 		}
 	}
 

@@ -8,10 +8,10 @@ import org.springframework.security.oauth2.core.AuthorizationGrantType;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * 自定义token
+ * @date 2022/6/11
  */
 public class PasswordAuthenticationToken extends OAuth2ResourceOwnerBaseAuthenticationToken {
 

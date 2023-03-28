@@ -28,10 +28,10 @@ import org.springframework.stereotype.Service;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * 远程认证
+ * @date 2022/6/11
  */
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -51,7 +51,7 @@ public class AuthServiceImpl implements AuthService {
 	@Autowired
 	SysApiService sysApiService;
 
-	private PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+	private final PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
 	public void register(RegisterReq user) {
 		List<SysUser> allUser = sysUserService.list();
@@ -70,8 +70,6 @@ public class AuthServiceImpl implements AuthService {
 		sysUserService.save(sysUser);
 		// todo 给用户赋予角色和权限
 	}
-
-
 
 	@Override
 	public UserInfo findUserByName(String name) {

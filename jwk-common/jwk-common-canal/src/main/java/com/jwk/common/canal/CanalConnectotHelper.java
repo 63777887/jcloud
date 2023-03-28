@@ -2,10 +2,9 @@ package com.jwk.common.canal;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
- *
+ * @date 2022/6/11
  */
 public interface CanalConnectotHelper {
 

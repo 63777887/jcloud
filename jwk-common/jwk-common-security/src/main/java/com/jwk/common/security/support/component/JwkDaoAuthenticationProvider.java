@@ -4,9 +4,13 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.servlet.ServletUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import com.jwk.common.core.utils.WebUtils;
-import com.jwk.common.core.constant.JwkSecurityConstants;
 import com.jwk.common.security.support.properties.JwkAuthProperties;
 import com.jwk.common.security.support.service.JwkUserDetailsService;
+import java.util.Comparator;
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.Supplier;
+import javax.servlet.http.HttpServletRequest;
 import lombok.SneakyThrows;
 import org.springframework.core.Ordered;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -25,19 +29,13 @@ import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.security.web.authentication.www.BasicAuthenticationConverter;
 import org.springframework.util.Assert;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.Comparator;
-import java.util.Map;
-import java.util.Optional;
-import java.util.function.Supplier;
-
 /**
  * @author Jiwk
- * @date 2022/11/18
  * @version 0.1.4
  * <p>
- * UsernamePasswordAuthenticationToken 认证信息
- * 重写 {@link org.springframework.security.authentication.dao.DaoAuthenticationProvider}
+ * UsernamePasswordAuthenticationToken 认证信息 重写
+ * {@link org.springframework.security.authentication.dao.DaoAuthenticationProvider}
+ * @date 2022/11/18
  */
 public class JwkDaoAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
 
@@ -109,8 +107,7 @@ public class JwkDaoAuthenticationProvider extends AbstractUserDetailsAuthenticat
 		String finalClientId = clientId;
 		Optional<JwkUserDetailsService> optional = userDetailsServiceMap.values().stream()
 				.filter(service -> service.support(finalClientId))
-				.filter(service -> service.supportGrantType(grantType))
-				.max(Comparator.comparingInt(Ordered::getOrder));
+				.filter(service -> service.supportGrantType(grantType)).max(Comparator.comparingInt(Ordered::getOrder));
 
 		if (!optional.isPresent()) {
 			throw new InternalAuthenticationServiceException("No suitable userDetailsService provider");
@@ -119,7 +116,8 @@ public class JwkDaoAuthenticationProvider extends AbstractUserDetailsAuthenticat
 		try {
 			UserDetails loadedUser = optional.get().loadUserByUsername(username);
 			if (loadedUser == null) {
-				throw new UsernameNotFoundException("UserDetailsService returned null, which is an interface contract violation");
+				throw new UsernameNotFoundException(
+						"UserDetailsService returned null, which is an interface contract violation");
 			}
 			return loadedUser;
 		}
@@ -161,6 +159,10 @@ public class JwkDaoAuthenticationProvider extends AbstractUserDetailsAuthenticat
 		}
 	}
 
+	protected PasswordEncoder getPasswordEncoder() {
+		return this.passwordEncoder;
+	}
+
 	/**
 	 * Sets the PasswordEncoder instance to be used to encode and validate passwords. If
 	 * not set, the password will be compared using
@@ -174,16 +176,12 @@ public class JwkDaoAuthenticationProvider extends AbstractUserDetailsAuthenticat
 		this.userNotFoundEncodedPassword = null;
 	}
 
-	protected PasswordEncoder getPasswordEncoder() {
-		return this.passwordEncoder;
+	protected UserDetailsService getUserDetailsService() {
+		return this.userDetailsService;
 	}
 
 	public void setUserDetailsService(UserDetailsService userDetailsService) {
 		this.userDetailsService = userDetailsService;
-	}
-
-	protected UserDetailsService getUserDetailsService() {
-		return this.userDetailsService;
 	}
 
 	public void setUserDetailsPasswordService(UserDetailsPasswordService userDetailsPasswordService) {
@@ -194,8 +192,8 @@ public class JwkDaoAuthenticationProvider extends AbstractUserDetailsAuthenticat
 		return jwkAuthProperties;
 	}
 
-	public void setJwkAuthProperties(
-			JwkAuthProperties jwkAuthProperties) {
+	public void setJwkAuthProperties(JwkAuthProperties jwkAuthProperties) {
 		this.jwkAuthProperties = jwkAuthProperties;
 	}
+
 }

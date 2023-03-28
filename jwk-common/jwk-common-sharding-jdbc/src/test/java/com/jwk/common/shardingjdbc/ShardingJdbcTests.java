@@ -16,12 +16,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 //@SpringBootTest(classes = ShardingJdbcApplication.class)
 class ShardingJdbcTests {
 
+	@Autowired
+	UserService userService;
+
 	@Test
 	void contextLoads() {
 	}
-
-	@Autowired
-	UserService userService;
 
 	@Test
 	void addUser() {

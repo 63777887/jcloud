@@ -8,10 +8,10 @@ import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
 /**
  * @author Jiwk
- * @date 2022/10/10
  * @version 0.1.1
  * <p>
  * 缓存配置项
+ * @date 2022/10/10
  */
 @Data
 @ConfigurationProperties(prefix = "jwk.cache.multi")

@@ -26,11 +26,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class SysUserController {
 
 	@Autowired
-	private SysUserService sysUserService;
-
-	@Autowired
 	AuthService authService;
 
+	@Autowired
+	private SysUserService sysUserService;
 
 	/**
 	 * 根据用户名查找用户

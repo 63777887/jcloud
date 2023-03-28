@@ -2,7 +2,6 @@ package com.jwk.test.netty1;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class TestClientChannel extends SimpleChannelInboundHandler<Long> {
 

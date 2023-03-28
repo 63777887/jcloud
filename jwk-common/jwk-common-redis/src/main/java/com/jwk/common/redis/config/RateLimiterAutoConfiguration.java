@@ -18,10 +18,10 @@ import org.springframework.scripting.support.ResourceScriptSource;
 
 /**
  * @author Jiwk
- * @date 2022/11/10
  * @version 0.1.3
  * <p>
  * 基于 redis 的限流自动配置
+ * @date 2022/11/10
  */
 @Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties(RedisRateLimiterProperties.class)

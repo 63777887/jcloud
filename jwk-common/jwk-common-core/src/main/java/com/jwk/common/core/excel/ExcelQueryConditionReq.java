@@ -8,10 +8,10 @@ import org.hibernate.validator.constraints.Length;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * excel导出条件
+ * @date 2022/6/11
  */
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)

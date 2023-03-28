@@ -2,10 +2,10 @@ package com.jwk.common.core.enums;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * 统计业务类型
+ * @date 2022/6/11
  */
 public enum StatBusinessTypeReqE {
 
@@ -13,6 +13,10 @@ public enum StatBusinessTypeReqE {
 	 * 入住人员导出
 	 */
 	HcCheckInMember(1, "入住人员");
+
+	private final Integer id;
+
+	private final String name;
 
 	StatBusinessTypeReqE(Integer id, String name) {
 		this.id = id;
@@ -44,10 +48,6 @@ public enum StatBusinessTypeReqE {
 		}
 		return "";
 	}
-
-	private Integer id;
-
-	private String name;
 
 	public Integer getId() {
 		return id;

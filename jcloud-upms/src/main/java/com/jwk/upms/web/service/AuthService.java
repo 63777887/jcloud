@@ -13,23 +13,23 @@ import java.util.List;
  */
 public interface AuthService {
 
-  UserInfo findUserByName(String name);
+	UserInfo findUserByName(String name);
 
+	/**
+	 * 根据手机找用户
+	 * @param phone
+	 * @return
+	 */
+	UserInfo findUserByPhone(String phone);
 
-  /**
-   * 根据手机找用户
-   * @param phone
-   * @return
-   */
-  UserInfo findUserByPhone(String phone);
+	/**
+	 * 获取资源列表
+	 * @return
+	 */
+	List<SysApi> resourceList();
 
-  /**
-   * 获取资源列表
-   * @return
-   */
-  List<SysApi> resourceList();
+	Integer testSeata();
 
-  Integer testSeata();
+	UserInfo findUserByEmail(String mail);
 
-  UserInfo findUserByEmail(String mail);
 }

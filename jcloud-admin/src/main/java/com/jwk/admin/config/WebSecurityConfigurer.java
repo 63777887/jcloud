@@ -9,10 +9,10 @@ import org.springframework.security.web.authentication.SavedRequestAwareAuthenti
 
 /**
  * @author Jiwk
- * @date 2022/10/15
  * @version 0.1.1
  * <p>
  * 开启admin登录认证
+ * @date 2022/10/15
  */
 @EnableWebSecurity
 public class WebSecurityConfigurer {

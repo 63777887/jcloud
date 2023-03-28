@@ -1,10 +1,9 @@
 package com.jwk.common.prometheus.utils;
 
-import com.jwk.common.prometheus.support.JwkPrometheusContext;
 import com.jwk.common.prometheus.constant.JwkPrometheusConstants;
+import com.jwk.common.prometheus.support.JwkPrometheusContext;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.Timer;
-import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
@@ -12,10 +11,10 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * 提供自定义监控信息工具类
+ * @date 2022/6/11
  */
 public class JwkMetricsUtils {
 

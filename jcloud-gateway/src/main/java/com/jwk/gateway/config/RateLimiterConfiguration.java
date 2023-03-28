@@ -8,10 +8,10 @@ import reactor.core.publisher.Mono;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * 路由限流配置
+ * @date 2022/6/11
  */
 @Configuration(proxyBeanMethods = false)
 public class RateLimiterConfiguration {

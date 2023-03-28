@@ -1,21 +1,20 @@
 package com.jwk.common.core.utils;
 
-import lombok.SneakyThrows;
-import lombok.experimental.UtilityClass;
-import org.springframework.util.StringUtils;
-
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.ServerSocket;
 import java.net.UnknownHostException;
 import java.util.Enumeration;
+import lombok.SneakyThrows;
+import lombok.experimental.UtilityClass;
+import org.springframework.util.StringUtils;
 
 /**
  * @author Jiwk
- * @date 2022/11/14
  * @version 0.1.4
  * <p>
  * Net 相关工具
+ * @date 2022/11/14
  */
 @UtilityClass
 public class INetUtil {

@@ -6,10 +6,10 @@ import org.springframework.amqp.core.Message;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * 接收消息抽象类
+ * @date 2022/6/11
  */
 public abstract class AbstractMQ implements RabbiitMqMessageListener {
 

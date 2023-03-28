@@ -1,11 +1,11 @@
 package com.jwk.upms.web.dao;
 
-import com.jwk.upms.base.entity.SysOauthClient;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.jwk.upms.base.entity.SysOauthClient;
 
 /**
  * <p>
- *  Mapper 接口
+ * Mapper 接口
  * </p>
  *
  * @author jiwk

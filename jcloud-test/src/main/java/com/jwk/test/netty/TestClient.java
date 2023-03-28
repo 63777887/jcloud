@@ -5,18 +5,15 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import java.util.Scanner;
-import javax.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 
 //@Component
 @Slf4j
 public class TestClient {
 
-	private String ip = "127.0.0.1";
+	private final String ip = "127.0.0.1";
 
-	private Integer port = 9999;
+	private final Integer port = 9999;
 
 	// public TestClient(String ip, Integer port) {
 	// this.ip = ip;

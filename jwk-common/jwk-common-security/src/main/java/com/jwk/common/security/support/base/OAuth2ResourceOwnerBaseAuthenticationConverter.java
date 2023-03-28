@@ -1,7 +1,7 @@
 package com.jwk.common.security.support.base;
 
-import com.jwk.common.core.utils.WebUtils;
 import com.jwk.common.core.constant.JwkSecurityConstants;
+import com.jwk.common.core.utils.WebUtils;
 import com.jwk.common.security.util.SecurityUtils;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -19,10 +19,10 @@ import org.springframework.util.StringUtils;
 
 /**
  * @author Jiwk
- * @date 2022/11/24
  * @version 0.1.4
  * <p>
  * 自定义模式认证转换器 参数校验
+ * @date 2022/11/24
  */
 public abstract class OAuth2ResourceOwnerBaseAuthenticationConverter<T extends OAuth2ResourceOwnerBaseAuthenticationToken>
 		implements AuthenticationConverter {

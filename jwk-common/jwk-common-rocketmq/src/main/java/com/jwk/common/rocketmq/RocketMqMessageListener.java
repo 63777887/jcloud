@@ -6,10 +6,10 @@ import org.apache.rocketmq.common.message.MessageExt;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * 消息处理
+ * @date 2022/6/11
  */
 public interface RocketMqMessageListener {
 

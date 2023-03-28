@@ -46,10 +46,10 @@ import org.springframework.util.CollectionUtils;
 
 /**
  * @author Jiwk
- * @date 2022/11/24
  * @version 0.1.4
  * <p>
  * 自定义授权
+ * @date 2022/11/24
  */
 public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OAuth2ResourceOwnerBaseAuthenticationToken>
 		implements AuthenticationProvider {
@@ -138,7 +138,8 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
 				}
 			}
 			authorizedScopes = new LinkedHashSet<>(resouceOwnerBaseAuthentication.getScopes());
-		} else {
+		}
+		else {
 			throw new ScopeException(OAuth2ErrorCodeConstant.SCOPE_IS_EMPTY);
 		}
 
@@ -154,15 +155,15 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
 			Authentication usernamePasswordAuthentication = authenticationManager
 					.authenticate(usernamePasswordAuthenticationToken);
 
-			// @formatter:off
-			DefaultOAuth2TokenContext.Builder tokenContextBuilder = DefaultOAuth2TokenContext.builder()
-					.registeredClient(registeredClient)
-					.principal(usernamePasswordAuthentication)
-					.providerContext(ProviderContextHolder.getProviderContext())
-					.authorizedScopes(authorizedScopes)
-					.authorizationGrantType(AuthorizationGrantType.PASSWORD)
-					.authorizationGrant(resouceOwnerBaseAuthentication);
-			// @formatter:on
+		// @formatter:off
+      DefaultOAuth2TokenContext.Builder tokenContextBuilder = DefaultOAuth2TokenContext.builder()
+          .registeredClient(registeredClient)
+          .principal(usernamePasswordAuthentication)
+          .providerContext(ProviderContextHolder.getProviderContext())
+          .authorizedScopes(authorizedScopes)
+          .authorizationGrantType(AuthorizationGrantType.PASSWORD)
+          .authorizationGrant(resouceOwnerBaseAuthentication);
+      // @formatter:on
 
 			OAuth2Authorization.Builder authorizationBuilder = OAuth2Authorization
 					.withRegisteredClient(registeredClient).principalName(usernamePasswordAuthentication.getName())
@@ -245,32 +246,31 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
 			AuthenticationException authenticationException) {
 		if (authenticationException instanceof UsernameNotFoundException) {
 			return new OAuth2AuthenticationException(new OAuth2Error(OAuth2ErrorCodeConstant.USERNAME_NOT_FOUND,
-					OAuth2ErrorCodeConstant.USERNAME_NOT_FOUND,
-					""));
+					OAuth2ErrorCodeConstant.USERNAME_NOT_FOUND, ""));
 		}
 		if (authenticationException instanceof BadCredentialsException) {
-			return new OAuth2AuthenticationException(
-					new OAuth2Error(OAuth2ErrorCodeConstant.BAD_CREDENTIALS, OAuth2ErrorCodeConstant.BAD_CREDENTIALS, ""));
+			return new OAuth2AuthenticationException(new OAuth2Error(OAuth2ErrorCodeConstant.BAD_CREDENTIALS,
+					OAuth2ErrorCodeConstant.BAD_CREDENTIALS, ""));
 		}
 		if (authenticationException instanceof LockedException) {
-			return new OAuth2AuthenticationException(new OAuth2Error(OAuth2ErrorCodeConstant.USER_LOCKED, "User account is locked", ""));
+			return new OAuth2AuthenticationException(
+					new OAuth2Error(OAuth2ErrorCodeConstant.USER_LOCKED, "User account is locked", ""));
 		}
 		if (authenticationException instanceof DisabledException) {
-			return new OAuth2AuthenticationException(new OAuth2Error(OAuth2ErrorCodeConstant.USER_DISABLE,
-					"User is disabled",
-					""));
+			return new OAuth2AuthenticationException(
+					new OAuth2Error(OAuth2ErrorCodeConstant.USER_DISABLE, "User is disabled", ""));
 		}
 		if (authenticationException instanceof AccountExpiredException) {
-			return new OAuth2AuthenticationException(new OAuth2Error(OAuth2ErrorCodeConstant.USER_EXPIRED, "User account has expired", ""));
+			return new OAuth2AuthenticationException(
+					new OAuth2Error(OAuth2ErrorCodeConstant.USER_EXPIRED, "User account has expired", ""));
 		}
 		if (authenticationException instanceof CredentialsExpiredException) {
-			return new OAuth2AuthenticationException(new OAuth2Error(OAuth2ErrorCodeConstant.CREDENTIALS_EXPIRED,
-					"User credentials have expired",
-					""));
+			return new OAuth2AuthenticationException(
+					new OAuth2Error(OAuth2ErrorCodeConstant.CREDENTIALS_EXPIRED, "User credentials have expired", ""));
 		}
 		if (authenticationException instanceof ScopeException) {
-			return new OAuth2AuthenticationException(new OAuth2Error(OAuth2ErrorCodes.INVALID_SCOPE,
-					OAuth2ErrorCodes.INVALID_SCOPE, ""));
+			return new OAuth2AuthenticationException(
+					new OAuth2Error(OAuth2ErrorCodes.INVALID_SCOPE, OAuth2ErrorCodes.INVALID_SCOPE, ""));
 		}
 		return new OAuth2AuthenticationException(OAuth2ErrorCodeConstant.UN_KNOW_LOGIN_ERROR);
 	}

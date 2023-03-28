@@ -14,25 +14,6 @@ import org.springframework.util.ClassUtils;
 @Slf4j
 public class MybatisPlusMetaObjectHandler implements MetaObjectHandler {
 
-	@Override
-	public void insertFill(MetaObject metaObject) {
-		if (log.isDebugEnabled()) {
-			log.debug("mybatis plus start insert fill ....");
-		}
-		LocalDateTime now = LocalDateTime.now();
-
-		fillValIfNullByName("createTime", now, metaObject, false);
-		fillValIfNullByName("updateTime", now, metaObject, false);
-	}
-
-	@Override
-	public void updateFill(MetaObject metaObject) {
-		if (log.isDebugEnabled()) {
-			log.debug("mybatis plus start update fill ....");
-		}
-		fillValIfNullByName("updateTime", LocalDateTime.now(), metaObject, true);
-	}
-
 	/**
 	 * 填充值，先判断是否有手动设置，优先手动设置的值，例如：job必须手动设置
 	 * @param fieldName 属性名
@@ -56,6 +37,25 @@ public class MybatisPlusMetaObjectHandler implements MetaObjectHandler {
 		if (ClassUtils.isAssignableValue(getterType, fieldVal)) {
 			metaObject.setValue(fieldName, fieldVal);
 		}
+	}
+
+	@Override
+	public void insertFill(MetaObject metaObject) {
+		if (log.isDebugEnabled()) {
+			log.debug("mybatis plus start insert fill ....");
+		}
+		LocalDateTime now = LocalDateTime.now();
+
+		fillValIfNullByName("createTime", now, metaObject, false);
+		fillValIfNullByName("updateTime", now, metaObject, false);
+	}
+
+	@Override
+	public void updateFill(MetaObject metaObject) {
+		if (log.isDebugEnabled()) {
+			log.debug("mybatis plus start update fill ....");
+		}
+		fillValIfNullByName("updateTime", LocalDateTime.now(), metaObject, true);
 	}
 
 	// /**

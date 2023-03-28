@@ -18,7 +18,7 @@ public class DBStandardShardingAlgorithm implements PreciseShardingAlgorithm<Lon
 
 	@Override
 	public String doSharding(Collection<String> availableTargetNames, PreciseShardingValue<Long> shardingValue) {
-		int value = BigDecimal.valueOf((Long) shardingValue.getValue()).divide(BigDecimal.valueOf(100L))
+		int value = BigDecimal.valueOf(shardingValue.getValue()).divide(BigDecimal.valueOf(100L))
 				.remainder(BigDecimal.valueOf(128L)).divide(BigDecimal.valueOf(32L)).intValue();
 		Iterator var4 = availableTargetNames.iterator();
 
