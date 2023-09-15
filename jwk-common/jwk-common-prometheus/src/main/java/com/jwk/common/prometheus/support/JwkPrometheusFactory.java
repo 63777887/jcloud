@@ -1,8 +1,8 @@
 package com.jwk.common.prometheus.support;
 
+import com.jwk.common.prometheus.constant.JwkPrometheusConstants;
 import com.jwk.common.prometheus.exception.PrometheusException;
 import com.jwk.common.prometheus.properties.JwkPrometheusProperties;
-import com.jwk.common.prometheus.constant.JwkPrometheusConstants;
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
@@ -48,7 +48,8 @@ public final class JwkPrometheusFactory {
 			jwkPrometheusProperties.setRegistryMode(JwkPrometheusConstants.DEFAULT_REGISTER_MODE);
 		}
 		if (StringUtils.isBlank(jwkPrometheusProperties.getApplication())) {
-			jwkPrometheusProperties.setApplication(applicationContext.getApplicationName());
+			jwkPrometheusProperties
+					.setApplication(applicationContext.getEnvironment().getProperty("spring.application.name"));
 		}
 		getContext().setApplicationContext(applicationContext).setRegistry(registry)
 				.setJwkPrometheusProperties(jwkPrometheusProperties).registry();

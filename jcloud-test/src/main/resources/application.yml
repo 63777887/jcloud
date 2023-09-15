@@ -175,3 +175,9 @@
 ##    web:
 ##      exposure:
 ##        include: '*'
+
+jwk:
+  prometheus:
+    enabled: false
+  zookeeper:
+    enabled: false

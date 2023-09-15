@@ -3,7 +3,7 @@ package com.jwk.common.security.support.properties;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ReUtil;
 import cn.hutool.core.util.StrUtil;
-import com.jwk.common.core.utils.JwkSpringUtil;
+import cn.hutool.extra.spring.SpringUtil;
 import com.jwk.common.security.annotation.Inner;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +62,7 @@ public class JwkAuthProperties implements InitializingBean {
 	public void afterPropertiesSet() {
 		List<String> noAuthUrlList = new ArrayList<>();
 		List<String> innerUrlList = new ArrayList<>();
-		RequestMappingHandlerMapping mapping = JwkSpringUtil.getBean("requestMappingHandlerMapping");
+		RequestMappingHandlerMapping mapping = SpringUtil.getBean("requestMappingHandlerMapping");
 		Map<RequestMappingInfo, HandlerMethod> map = mapping.getHandlerMethods();
 
 		map.keySet().forEach(info -> {

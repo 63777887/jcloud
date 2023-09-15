@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jwk.upms.web.dao.SysUserMapper">
+
+  <!--定义接口方法对应的 SQL 语句-->
+
+  <update id="updateUser" parameterType="java.util.List">
+    <foreach collection="list" item="item" index="index" open="" close="">
+      UPDATE sys_user
+      <set>
+          status=3
+      </set>
+      WHERE id=#{item};
+    </foreach>
+  </update>
+</mapper>

@@ -8,12 +8,12 @@
 
   <groupId>com.jwk</groupId>
   <artifactId>jwk-common-bom</artifactId>
-  <version>0.1.4</version>
+  <version>0.1.5</version>
   <packaging>pom</packaging>
 
   <name>jwk-common-bom</name>
   <description>jcloud common bom</description>
-  
+
   <properties>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
@@ -110,6 +110,11 @@
       <dependency>
         <groupId>com.jwk</groupId>
         <artifactId>jwk-common-redis</artifactId>
+        <version>${jwk.common.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.jwk</groupId>
+        <artifactId>jwk-common-zookeeper</artifactId>
         <version>${jwk.common.version}</version>
       </dependency>
       <dependency>

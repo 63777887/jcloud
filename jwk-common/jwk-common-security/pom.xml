@@ -7,7 +7,7 @@
   <parent>
     <artifactId>jwk-common</artifactId>
     <groupId>com.jwk</groupId>
-    <version>0.1.4</version>
+    <version>0.1.5</version>
   </parent>
 
   <artifactId>jwk-common-security</artifactId>
@@ -20,7 +20,7 @@
     <dependency>
       <groupId>com.jwk</groupId>
       <artifactId>jcloud-upms-base</artifactId>
-      <version>0.1.4</version>
+      <version>0.1.5</version>
     </dependency>
     <dependency>
       <groupId>com.jwk</groupId>
@@ -33,7 +33,7 @@
     <dependency>
       <groupId>com.jwk</groupId>
       <artifactId>jwk-common-redis</artifactId>
-      <version>0.1.4</version>
+      <version>0.1.5</version>
     </dependency>
     <!--        登陆鉴权-->
     <dependency>

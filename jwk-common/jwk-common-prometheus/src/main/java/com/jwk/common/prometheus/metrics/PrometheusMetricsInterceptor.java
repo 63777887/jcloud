@@ -1,16 +1,10 @@
 package com.jwk.common.prometheus.metrics;
 
 import com.jwk.common.prometheus.utils.JwkMetricsUtils;
-import io.micrometer.core.instrument.Counter;
-import io.prometheus.client.Summary;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
+import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.HandlerInterceptor;
 
 /**
  * @author wanghuainan
@@ -47,7 +41,8 @@ public class PrometheusMetricsInterceptor implements HandlerInterceptor {
 			throws Exception {
 		String service = request.getRequestURI();
 		long duration = System.currentTimeMillis() - (Long) request.getAttribute("startTime");
-		JwkMetricsUtils.pushPrometheus(service, duration, Boolean.TRUE);
+		JwkMetricsUtils.pushPrometheus(service, duration,
+				response.getStatus() == HttpServletResponse.SC_OK ? Boolean.TRUE : Boolean.FALSE);
 	}
 
 }

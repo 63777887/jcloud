@@ -1,5 +1,7 @@
 package com.jwk.common.prometheus.support;
 
+import cn.hutool.core.util.StrUtil;
+import com.jwk.common.prometheus.constant.JwkPrometheusConstants;
 import java.util.Map;
 import java.util.TreeMap;
 import org.springframework.boot.SpringApplication;
@@ -10,10 +12,10 @@ import org.springframework.core.env.MutablePropertySources;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * 预设配置初始值
+ * @date 2022/6/11
  */
 public class MeteorEnvironmentPostProcessor implements EnvironmentPostProcessor {
 
@@ -47,7 +49,7 @@ public class MeteorEnvironmentPostProcessor implements EnvironmentPostProcessor 
 			return;
 		}
 
-		resolveManagement();
+		resolveManagement(environment);
 		MapPropertySource lastPropertySource = new MapPropertySource(ACTUATOR_FIRST, lastSource);
 		propertySources.addLast(lastPropertySource);
 
@@ -55,25 +57,41 @@ public class MeteorEnvironmentPostProcessor implements EnvironmentPostProcessor 
 		propertySources.addFirst(firstPropertySource);
 	}
 
-	private void resolveManagement() {
-		// 默认全部打开
-		lastSource.put("management.endpoints.enabled-by-default", true);
-		lastSource.put("management.endpoints.jmx.exposure.include", "*");
+	private void resolveManagement(ConfigurableEnvironment environment) {
 
-		lastSource.put("management.endpoints.web.exposure.include", "*");
-		lastSource.put("management.endpoints.web.exposure.exclude", "");
-		lastSource.put("management.endpoints.web.base-path", "/jwk");
+		String namespace = environment.getProperty("jwk.prometheus.namespace");
+		String enabled = environment.getProperty("jwk.prometheus.enabled");
+		String registryMode = environment.getProperty("jwk.prometheus.registryMode");
 
-		lastSource.put("management.endpoint.health.enabled", true);
-		// lastSource.put("management.endpoint.health.show-details","never");
-		//
-		// firstSource.put("management.endpoint.info.enabled",true);
-		// firstSource.put("management.endpoint.mappings.enabled",true);
-		// firstSource.put("management.endpoint.metrics.enabled",true);
-		// firstSource.put("management.endpoint.env.enabled",true);
-		// firstSource.put("management.endpoint.configprops.enabled",true);
-		// firstSource.put("management.endpoint.beans.enabled",true);
-		// firstSource.put("management.endpoint.httptrace.enabled",true);
+		if ("true".equals(enabled)) {
+			// 默认全部打开
+			lastSource.put("management.endpoints.enabled-by-default", true);
+			lastSource.put("management.endpoints.jmx.exposure.include", "*");
+
+			lastSource.put("management.endpoints.web.exposure.include", "*");
+			lastSource.put("management.endpoints.web.exposure.exclude", "");
+			lastSource.put("management.endpoints.web.base-path",
+					JwkPrometheusConstants.P + (StrUtil.isBlank(namespace) ? "jcloud" : namespace));
+			lastSource.put("management.endpoint.health.enabled", true);
+			lastSource.put("management.metrics.export.prometheus.enabled", enabled);
+			StrUtil.isBlank(enabled);
+			lastSource.put("jwk.zookeeper.enabled",
+					StrUtil.isBlank(registryMode) || JwkPrometheusConstants.DEFAULT_REGISTER_MODE
+							.equals(registryMode));
+			// lastSource.put("management.endpoint.health.show-details","never");
+			//
+			// firstSource.put("management.endpoint.info.enabled",true);
+			// firstSource.put("management.endpoint.mappings.enabled",true);
+			// firstSource.put("management.endpoint.metrics.enabled",true);
+			// firstSource.put("management.endpoint.env.enabled",true);
+			// firstSource.put("management.endpoint.configprops.enabled",true);
+			// firstSource.put("management.endpoint.beans.enabled",true);
+			// firstSource.put("management.endpoint.httptrace.enabled",true);
+		}
+		if ("false".equals(enabled)) {
+			lastSource.put("jwk.zookeeper.enabled", false);
+		}
+
 	}
 
 }

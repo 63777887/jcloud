@@ -1,26 +1,25 @@
-package com.jwk.common.prometheus.properties;
+package com.jwk.common.zookeeper.properties;
 
 import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
- * @version 0.1.0
+ * @date 2023/9/15
+ * @version 0.1.4
  * <p>
  * Zookeeper配置信息
  */
 @Data
-public class ZookeeperProperties {
+@ConfigurationProperties(prefix = "jwk.zookeeper")
+public class JwkZookeeperProperties {
+
+	private boolean enabled;
 
 	/**
 	 * 优先级: address > addressEnv
 	 */
 	private String address = System.getenv("ZOOKEEPER_URL");
-
-	/**
-	 * 服务注册namespace
-	 */
-	private String namespace = System.getenv("PROMETHEUS_SERVICE_NAMESPACE");
 
 	/**
 	 * session超时时间

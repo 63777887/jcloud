@@ -1,4 +1,4 @@
-package com.jwk.common.prometheus.ext;
+package com.jwk.common.cloud.fegin.ext.promethus;
 
 import com.alibaba.cloud.sentinel.feign.SentinelContractHolder;
 import feign.Contract;

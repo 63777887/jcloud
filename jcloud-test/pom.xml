@@ -6,7 +6,7 @@
   <parent>
     <artifactId>jcloud-parent</artifactId>
     <groupId>com.jwk</groupId>
-    <version>0.1.4</version>
+    <version>0.1.5</version>
   </parent>
   <artifactId>jcloud-test</artifactId>
   <packaging>jar</packaging>
@@ -50,12 +50,17 @@
       <artifactId>jwk-common-security</artifactId>
     </dependency>
     <dependency>
+
       <groupId>com.jwk</groupId>
       <artifactId>jwk-common-knife4j</artifactId>
     </dependency>
     <dependency>
       <groupId>com.jwk</groupId>
       <artifactId>jcloud-upms-base</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.jwk</groupId>
+      <artifactId>jwk-common-zookeeper</artifactId>
     </dependency>
 <!--    <dependency>-->
 <!--      <groupId>com.jwk</groupId>-->

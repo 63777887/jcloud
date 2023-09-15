@@ -1,23 +1,17 @@
 package com.jwk.common.prometheus;
 
-import com.jwk.common.cloud.config.FeignAutoConfiguration;
+import com.jwk.common.prometheus.config.JwkPrometheusConfiguration;
 import com.jwk.common.prometheus.metrics.PrometheusMetricsInterceptor;
 import com.jwk.common.prometheus.metrics.WebConfig;
 import com.jwk.common.prometheus.properties.JwkPrometheusProperties;
-import com.jwk.common.prometheus.config.JwkPrometheusConfiguration;
 import com.jwk.common.prometheus.support.JwkPrometheusFactory;
-import com.jwk.common.prometheus.ext.PrometheusSentinelFeign;
-import feign.Feign;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.Scope;
 
 /**
  * @author Jiwk
@@ -28,7 +22,7 @@ import org.springframework.context.annotation.Scope;
  */
 @EnableConfigurationProperties(JwkPrometheusProperties.class)
 @Import({ JwkPrometheusConfiguration.class, PrometheusMetricsInterceptor.class, WebConfig.class })
-@AutoConfigureBefore(FeignAutoConfiguration.class)
+@ConditionalOnProperty(prefix = "jwk.prometheus", name = "enabled", havingValue = "true")
 public class JwkPrometheusAutoConfiguration {
 
 	private static Logger logger = LoggerFactory.getLogger(JwkPrometheusAutoConfiguration.class);
@@ -36,13 +30,6 @@ public class JwkPrometheusAutoConfiguration {
 	public JwkPrometheusAutoConfiguration(ApplicationContext applicationContext, MeterRegistry registry,
 			JwkPrometheusProperties jwkPrometheusProperties) {
 		JwkPrometheusFactory.init(applicationContext, registry, jwkPrometheusProperties);
-	}
-
-	@Bean
-	@Scope("prototype")
-	@ConditionalOnProperty(name = "feign.sentinel.enabled")
-	public Feign.Builder feignSentinelBuilder() {
-		return PrometheusSentinelFeign.builder();
 	}
 
 }

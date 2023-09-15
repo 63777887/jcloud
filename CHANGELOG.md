@@ -1,5 +1,10 @@
 # 变更记录
 
+### v0.1.5 - 2023-9-15
+- :sparkles: 模块拆分，独立出zk模块
+- :sparkles: 普罗米修斯增加了开关控制
+- :recycle: 普罗米修斯监控feign接口的功能转移到了cloud模块
+  
 ### v0.1.4 - 2022-12-2
 - :sparkles: jwk-common-security 由oauth2改成spring authorization server授权模式
 - :sparkles: jcloud-uaa 扩展了密码授权模式，手机号授权模式和邮箱授权模式

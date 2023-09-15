@@ -1,6 +1,6 @@
 package com.jwk.uaa.config;
 
-import com.jwk.common.core.utils.JwkSpringUtil;
+import cn.hutool.extra.spring.SpringUtil;
 import com.jwk.common.security.support.component.JwkDaoAuthenticationProvider;
 import com.jwk.common.security.support.properties.JwkAuthProperties;
 import org.springframework.context.annotation.Bean;
@@ -29,7 +29,7 @@ public class WebSecurityConfiguration {
 	 */
 	@Bean
 	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-		JwkAuthProperties properties = JwkSpringUtil.getBean(JwkAuthProperties.class);
+		JwkAuthProperties properties = SpringUtil.getBean(JwkAuthProperties.class);
 		http.authorizeRequests(authorizeRequests -> authorizeRequests.antMatchers("/token/*").permitAll()// 开放自定义的部分端点
 				.anyRequest().authenticated()).headers().frameOptions().sameOrigin()// 避免iframe同源无法登录
 				.and().apply(new FormIdentityLoginConfigurer()); // 表单登录个性化

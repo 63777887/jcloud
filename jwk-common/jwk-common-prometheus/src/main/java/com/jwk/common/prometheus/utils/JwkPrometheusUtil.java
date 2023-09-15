@@ -1,9 +1,9 @@
 package com.jwk.common.prometheus.utils;
 
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.extra.spring.SpringUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.jwk.common.core.utils.JwkSpringUtil;
 import com.jwk.common.prometheus.properties.JwkPrometheusProperties;
 import java.util.UUID;
 import org.springframework.core.env.Environment;
@@ -26,7 +26,7 @@ public class JwkPrometheusUtil {
 
 		JSONObject data = JSONObject.parseObject(jsonString);
 		JSONObject object = new JSONObject();
-		Environment environment = JwkSpringUtil.getBean(Environment.class);
+		Environment environment = SpringUtil.getBean(Environment.class);
 		object.put("path", environment.getProperty("management.endpoints.web.base-path"));
 		String port = environment.getProperty("management.server.port");
 		if (StrUtil.isBlank(port)) {

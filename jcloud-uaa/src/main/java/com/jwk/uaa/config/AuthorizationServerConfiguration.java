@@ -1,7 +1,7 @@
 package com.jwk.uaa.config;
 
+import cn.hutool.extra.spring.SpringUtil;
 import com.jwk.common.core.constant.JwkSecurityConstants;
-import com.jwk.common.core.utils.JwkSpringUtil;
 import com.jwk.common.security.dto.AdminUserDetails;
 import com.jwk.common.security.support.component.CustomeOAuth2TokenCustomizer;
 import com.jwk.common.security.support.component.JwkDaoAuthenticationProvider;
@@ -252,7 +252,7 @@ public class AuthorizationServerConfiguration {
 				authorizationService, oAuth2TokenGenerator());
 
 		// 处理 UsernamePasswordAuthenticationToken
-		JwkAuthProperties properties = JwkSpringUtil.getBean(JwkAuthProperties.class);
+		JwkAuthProperties properties = SpringUtil.getBean(JwkAuthProperties.class);
 		JwkDaoAuthenticationProvider authenticationProvider = new JwkDaoAuthenticationProvider();
 		authenticationProvider.setJwkAuthProperties(properties);
 		http.authenticationProvider(authenticationProvider);

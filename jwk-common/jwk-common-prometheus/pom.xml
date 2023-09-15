@@ -5,27 +5,19 @@
   <parent>
     <artifactId>jwk-common</artifactId>
     <groupId>com.jwk</groupId>
-    <version>0.1.4</version>
+    <version>0.1.5</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>jwk-common-prometheus</artifactId>
   <packaging>jar</packaging>
 
-  <description>jcloud prometheus包</description>
+  <description>jcloud prometheus</description>
 
   <dependencies>
     <dependency>
       <groupId>com.jwk</groupId>
-      <artifactId>jwk-common-cloud</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.micrometer</groupId>
-      <artifactId>micrometer-registry-prometheus</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.curator</groupId>
-      <artifactId>curator-x-discovery</artifactId>
+      <artifactId>jwk-common-zookeeper</artifactId>
     </dependency>
   </dependencies>
 

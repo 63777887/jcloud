@@ -27,7 +27,7 @@ public interface JwkPrometheusConstants {
 	String TAG_METHOD = "method";
 
 	/**
-	 * Tag method
+	 * Tag status
 	 */
 	String TAG_STATUS = "status";
 

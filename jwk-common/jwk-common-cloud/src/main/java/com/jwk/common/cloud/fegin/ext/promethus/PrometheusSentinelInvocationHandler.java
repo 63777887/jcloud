@@ -1,4 +1,4 @@
-package com.jwk.common.prometheus.ext;
+package com.jwk.common.cloud.fegin.ext.promethus;
 
 import static feign.Util.checkNotNull;
 

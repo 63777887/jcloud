@@ -1,6 +1,6 @@
 package com.jwk.common.prometheus.support;
 
-import com.jwk.common.core.utils.JwkSpringUtil;
+import cn.hutool.extra.spring.SpringUtil;
 import com.jwk.common.prometheus.exception.PrometheusException;
 import com.jwk.common.prometheus.exception.PrometheusExceptionCodeE;
 import com.jwk.common.prometheus.properties.JwkPrometheusProperties;
@@ -58,7 +58,7 @@ public class JwkPrometheusContext {
 
 	public void registry() throws PrometheusException {
 		synchronized (JwkPrometheusContext.class) {
-			Map<String, RegistryService> registryServiceMap = JwkSpringUtil.getBeansOfType(RegistryService.class);
+			Map<String, RegistryService> registryServiceMap = SpringUtil.getBeansOfType(RegistryService.class);
 			String registryMode = jwkPrometheusProperties.getRegistryMode();
 			if (null != registryMode) {
 				Optional<RegistryService> optional = registryServiceMap.values().stream()

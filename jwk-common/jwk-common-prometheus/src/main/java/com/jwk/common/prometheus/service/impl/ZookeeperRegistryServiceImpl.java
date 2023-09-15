@@ -1,17 +1,17 @@
 package com.jwk.common.prometheus.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.jwk.common.prometheus.support.JwkPrometheusContext;
+import com.jwk.common.prometheus.constant.JwkPrometheusConstants;
 import com.jwk.common.prometheus.exception.PrometheusException;
 import com.jwk.common.prometheus.exception.PrometheusExceptionCodeE;
 import com.jwk.common.prometheus.properties.JwkPrometheusProperties;
-import com.jwk.common.prometheus.properties.ZookeeperProperties;
-import com.jwk.common.prometheus.constant.JwkPrometheusConstants;
 import com.jwk.common.prometheus.service.RegistryService;
+import com.jwk.common.prometheus.support.JwkPrometheusContext;
 import com.jwk.common.prometheus.utils.JwkPrometheusUtil;
 import java.nio.charset.StandardCharsets;
-import org.apache.commons.lang3.StringUtils;
+import lombok.RequiredArgsConstructor;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.api.CuratorWatcher;
 import org.apache.zookeeper.CreateMode;
@@ -19,38 +19,29 @@ import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.data.Stat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.context.ApplicationContext;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * Zookeeper注册模式实现
+ * @date 2022/6/11
  */
-@Service
+@RequiredArgsConstructor
 public class ZookeeperRegistryServiceImpl implements RegistryService {
 
 	private static Logger logger = LoggerFactory.getLogger(ZookeeperRegistryServiceImpl.class);
 
-	@Autowired
-	CuratorFramework curatorFramework;
+	private final CuratorFramework curatorFramework;
+
+	private final ApplicationContext applicationContext;
 
 	@Override
 	public void registry() {
-		checkConfig();
 		JwkPrometheusProperties jwkPrometheusProperties = JwkPrometheusContext.getInstance()
 				.getJwkPrometheusProperties();
-		ZookeeperProperties zookeeper = jwkPrometheusProperties.getZookeeper();
-
-		if (StringUtils.isBlank(zookeeper.getAddress())) {
-			throw new IllegalArgumentException("jcloud prometheus address is undefined, please check config");
-		}
-
-		if (StringUtils.isBlank(zookeeper.getNamespace())) {
-			throw new IllegalArgumentException("jcloud prometheus namespace is undefined, please check config");
-		}
+		checkConfig(jwkPrometheusProperties);
 
 		try {
 			if (logger.isDebugEnabled()) {
@@ -71,20 +62,18 @@ public class ZookeeperRegistryServiceImpl implements RegistryService {
 		return JwkPrometheusConstants.DEFAULT_REGISTER_MODE;
 	}
 
-	private void checkConfig() {
-		JwkPrometheusProperties jwkPrometheusProperties = JwkPrometheusContext.getInstance()
-				.getJwkPrometheusProperties();
-		ZookeeperProperties zookeeper = jwkPrometheusProperties.getZookeeper();
+	private void checkConfig(JwkPrometheusProperties jwkPrometheusProperties) {
 
-		if (null == zookeeper.getAddress()) {
-			String zookeeperUrl = System.getenv("ZOOKEEPER_URL");
-			if (null == zookeeperUrl) {
-				throw new IllegalArgumentException("prometheus zookeeper register url is empty...");
+		if (StrUtil.isBlank(jwkPrometheusProperties.getApplication())) {
+			String application = System.getenv("PROMETHEUS_SERVICE_NAMESPACE");
+			if (StrUtil.isBlank(application)) {
+				application = applicationContext.getEnvironment().getProperty("spring.application.name");
+				throw new IllegalArgumentException("prometheus application is undefined, please check config");
 			}
-			zookeeper.setAddress(zookeeperUrl);
+			jwkPrometheusProperties.setApplication(application);
 		}
 		if (logger.isDebugEnabled()) {
-			logger.debug("config init value vrvActuatorProperties :{}", JSON.toJSON(jwkPrometheusProperties));
+			logger.debug("config init value JwkPrometheusProperties :{}", JSON.toJSON(jwkPrometheusProperties));
 		}
 
 	}
@@ -103,7 +92,7 @@ public class ZookeeperRegistryServiceImpl implements RegistryService {
 		return false;
 	}
 
-	private String registerPrometheusMetrics(JwkPrometheusProperties jwkPrometheusProperties) throws Exception {
+	private void registerPrometheusMetrics(JwkPrometheusProperties jwkPrometheusProperties) throws Exception {
 		String path = zkPath(jwkPrometheusProperties);
 
 		JSONObject data = JwkPrometheusUtil.getPrometheusInfo(jwkPrometheusProperties);
@@ -168,7 +157,6 @@ public class ZookeeperRegistryServiceImpl implements RegistryService {
 					// logger.error("",e);
 				}
 			}));
-			return realPath;
 		}
 		else {
 			throw new PrometheusException(PrometheusExceptionCodeE.NodeExist);
@@ -177,7 +165,7 @@ public class ZookeeperRegistryServiceImpl implements RegistryService {
 	}
 
 	private String zkPath(JwkPrometheusProperties jwkPrometheusProperties) {
-		return jwkPrometheusProperties.getZookeeper().getNamespace() + JwkPrometheusConstants.P
+		return JwkPrometheusConstants.P + jwkPrometheusProperties.getNamespace() + JwkPrometheusConstants.P
 				+ jwkPrometheusProperties.getApplication() + JwkPrometheusConstants.P + JwkPrometheusUtil.getId();
 	}
 
