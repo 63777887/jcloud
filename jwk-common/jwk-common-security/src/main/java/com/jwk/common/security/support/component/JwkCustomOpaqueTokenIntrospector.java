@@ -6,19 +6,9 @@ import cn.hutool.extra.spring.SpringUtil;
 import com.jwk.common.security.constants.OAuth2ErrorCodeConstant;
 import com.jwk.common.security.dto.AdminUserDetails;
 import com.jwk.common.security.dto.ResourceConfigAttribute;
-import com.jwk.common.security.support.feign.api.UpmsRemoteService;
+import com.jwk.upms.base.api.UpmsRemoteService;
 import com.jwk.common.security.support.service.JwkUserDetailsService;
 import com.jwk.upms.base.entity.SysApi;
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.Ordered;
@@ -33,6 +23,10 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.resource.InvalidBearerTokenException;
 import org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector;
+
+import java.security.Principal;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author Jiwk

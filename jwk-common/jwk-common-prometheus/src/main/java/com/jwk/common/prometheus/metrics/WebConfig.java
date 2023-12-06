@@ -1,19 +1,15 @@
 package com.jwk.common.prometheus.metrics;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-/**
- * @author wanghuainan
- * @date 2021/9/24
- */
-@Component
+@RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
 
-	@Autowired
-	private PrometheusMetricsInterceptor prometheusMetricsInterceptor;
+	private final PrometheusMetricsInterceptor prometheusMetricsInterceptor;
 
 	/**
 	 * 添加自定义拦截器

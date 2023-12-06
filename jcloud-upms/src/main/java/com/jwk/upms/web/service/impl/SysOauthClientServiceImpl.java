@@ -12,6 +12,7 @@ import com.jwk.upms.web.dao.SysOauthClientMapper;
 import com.jwk.upms.web.service.SysOauthClientService;
 import com.jwk.upms.web.service.SysRoleService;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,11 +25,11 @@ import org.springframework.stereotype.Service;
  * @since 2022-11-22
  */
 @Service
+@RequiredArgsConstructor
 public class SysOauthClientServiceImpl extends ServiceImpl<SysOauthClientMapper, SysOauthClient>
 		implements SysOauthClientService {
 
-	@Autowired
-	SysRoleService sysRoleService;
+	private final SysRoleService sysRoleService;
 
 	@Override
 	public SysOauthClientDto getClientDetailsById(String clientId) {

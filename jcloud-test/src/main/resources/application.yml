@@ -177,6 +177,8 @@
 ##        include: '*'
 
 jwk:
+  redis:
+    host: 127.0.0.1
   prometheus:
     enabled: false
   zookeeper:

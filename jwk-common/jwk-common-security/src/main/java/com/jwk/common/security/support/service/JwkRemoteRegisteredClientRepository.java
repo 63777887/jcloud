@@ -2,7 +2,7 @@ package com.jwk.common.security.support.service;
 
 import cn.hutool.core.util.BooleanUtil;
 import cn.hutool.core.util.StrUtil;
-import com.jwk.common.security.support.feign.api.UpmsRemoteService;
+import com.jwk.upms.base.api.UpmsRemoteService;
 import com.jwk.upms.base.dto.SysOauthClientDto;
 import java.time.Duration;
 import java.util.Arrays;

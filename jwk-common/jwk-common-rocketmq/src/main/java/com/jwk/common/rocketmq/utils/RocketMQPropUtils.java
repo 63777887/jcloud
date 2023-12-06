@@ -5,7 +5,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.jwk.common.rocketmq.JwkRocketMQProperties;
 import java.util.HashMap;
 import javax.annotation.PostConstruct;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * @author Jiwk
@@ -14,12 +17,12 @@ import org.springframework.beans.factory.annotation.Autowired;
  * 获取配置信息
  * @date 2022/6/11
  */
+@RequiredArgsConstructor
 public class RocketMQPropUtils {
 
 	public static HashMap concurrentHashMap = new HashMap<>();
 
-	@Autowired
-	JwkRocketMQProperties jwkRocketMQProperties;
+	private final JwkRocketMQProperties jwkRocketMQProperties;
 
 	public static String getProperty(String var1) {
 		return String.valueOf(concurrentHashMap.get(var1));

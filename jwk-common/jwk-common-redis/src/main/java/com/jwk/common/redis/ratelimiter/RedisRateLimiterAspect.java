@@ -1,11 +1,9 @@
 package com.jwk.common.redis.ratelimiter;
 
-import cn.hutool.core.text.CharPool;
 import cn.hutool.core.util.StrUtil;
+import com.jwk.common.core.constant.CharConstants;
 import com.jwk.common.core.spel.ExpressionEvaluator;
 import com.jwk.common.redis.annotation.JwkRateLimiter;
-import java.lang.reflect.Method;
-import java.util.concurrent.TimeUnit;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -18,6 +16,9 @@ import org.springframework.context.expression.AnnotatedElementKey;
 import org.springframework.expression.EvaluationContext;
 import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
+
+import java.lang.reflect.Method;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Jiwk
@@ -55,7 +56,7 @@ public class RedisRateLimiterAspect implements ApplicationContextAware {
 		String rateKey;
 		if (StrUtil.isNotBlank(limitParam)) {
 			String evalAsText = evalLimitParam(point, limitParam);
-			rateKey = limitKey + CharPool.COLON + evalAsText;
+			rateKey = limitKey + CharConstants.COLON + evalAsText;
 		}
 		else {
 			rateKey = limitKey;

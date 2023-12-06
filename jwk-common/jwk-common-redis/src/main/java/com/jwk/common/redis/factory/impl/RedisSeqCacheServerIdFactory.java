@@ -13,19 +13,19 @@ import org.springframework.data.redis.core.RedisTemplate;
  */
 public class RedisSeqCacheServerIdFactory implements CacheServerIdFactory {
 
-	protected final RedisTemplate<String, Object> stringKeyRedisTemplate;
+	protected final RedisTemplate<String, Object> redisTemplate;
 
 	protected final CacheConfigProperties properties;
 
 	public RedisSeqCacheServerIdFactory(CacheConfigProperties properties,
-			RedisTemplate<String, Object> stringKeyRedisTemplate) {
-		this.stringKeyRedisTemplate = stringKeyRedisTemplate;
+			RedisTemplate<String, Object> redisTemplate) {
+		this.redisTemplate = redisTemplate;
 		this.properties = properties;
 	}
 
 	@Override
 	public Object get() {
-		return stringKeyRedisTemplate.opsForValue().increment(properties.getRedis().getServerIdGeneratorKey());
+		return redisTemplate.opsForValue().increment(properties.getRedis().getServerIdGeneratorKey());
 	}
 
 }

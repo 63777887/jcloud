@@ -76,8 +76,7 @@ public class MeteorEnvironmentPostProcessor implements EnvironmentPostProcessor 
 			lastSource.put("management.metrics.export.prometheus.enabled", enabled);
 			StrUtil.isBlank(enabled);
 			lastSource.put("jwk.zookeeper.enabled",
-					StrUtil.isBlank(registryMode) || JwkPrometheusConstants.DEFAULT_REGISTER_MODE
-							.equals(registryMode));
+					StrUtil.isBlank(registryMode) || JwkPrometheusConstants.DEFAULT_REGISTER_MODE.equals(registryMode));
 			// lastSource.put("management.endpoint.health.show-details","never");
 			//
 			// firstSource.put("management.endpoint.info.enabled",true);

@@ -1,8 +1,9 @@
-import com.jwk.common.Idgenerater.IdGeneraterAutoConfiguration;
-import com.jwk.common.Idgenerater.exception.IdGeneratorException;
-import com.jwk.common.Idgenerater.service.impl.IdGeneratorServiceImpl;
+import com.jwk.common.idgenerater.IdGeneraterAutoConfiguration;
+import com.jwk.common.idgenerater.service.impl.IdGeneratorServiceImpl;
 import com.jwk.common.redis.JwkRedisAutoConfiguration;
-import com.jwk.common.redis.exception.RedisException;
+import com.jwk.common.redis.annotation.JwkRateLimiter;
+import com.jwk.common.redis.annotation.JwkRedisLock;
+
 import javax.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,7 +27,9 @@ public class IdGeneratorTest {
 	IdGeneratorServiceImpl idGeneratorService;
 
 	@Test
-	void testRedisTemplate() throws IdGeneratorException, RedisException {
+	@JwkRedisLock
+	@JwkRateLimiter(value = "test")
+	void testRedisTemplate() throws Throwable {
 		long startTime = System.currentTimeMillis();
 		for (int i = 0; i < 1; i++) {
 			idGeneratorService.getId(1);

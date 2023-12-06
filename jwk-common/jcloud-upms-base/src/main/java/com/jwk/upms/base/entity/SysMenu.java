@@ -4,8 +4,10 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.io.Serializable;
+import java.util.Date;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 /**
  * <p>
@@ -13,10 +15,11 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author jiwk
- * @since 2021-06-03
+ * @since 2023-10-11
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
 public class SysMenu extends Model<SysMenu> {
 
 	private static final long serialVersionUID = 1L;
@@ -28,49 +31,54 @@ public class SysMenu extends Model<SysMenu> {
 	private Long id;
 
 	/**
-	 * menuPid
+	 * 父级ID
 	 */
 	private Long parentId;
 
 	/**
-	 * menuName
+	 * 菜单名
 	 */
 	private String menuName;
 
 	/**
-	 * menuSort
+	 * 排序
 	 */
 	private Integer sort;
 
 	/**
-	 * url
+	 * 权限值
 	 */
-	private String url;
+	private String permission;
 
 	/**
-	 * icon
+	 * 路径
+	 */
+	private String path;
+
+	/**
+	 * 图标
 	 */
 	private String icon;
 
 	/**
-	 * level
-	 */
-	private Integer level;
-
-	/**
-	 * status
+	 * 状态，1: 正常，2:删除
 	 */
 	private Byte status;
 
 	/**
-	 * hidden
+	 * 1: 展示, 2: 隐藏
 	 */
 	private Byte hidden;
 
 	/**
-	 * viewImport
+	 * 是否展示在tabs，1: 展示，2:不展示
 	 */
-	private String viewImport;
+	private Byte tab;
+
+	/**
+	 * 1：菜单，2: 按钮
+	 */
+	private Byte type;
 
 	/**
 	 * createBy
@@ -80,7 +88,7 @@ public class SysMenu extends Model<SysMenu> {
 	/**
 	 * createTime
 	 */
-	private Long createTime;
+	private Date createTime;
 
 	/**
 	 * updateBy
@@ -90,7 +98,7 @@ public class SysMenu extends Model<SysMenu> {
 	/**
 	 * updateTime
 	 */
-	private Long updateTime;
+	private Date updateTime;
 
 	@Override
 	protected Serializable pkVal() {

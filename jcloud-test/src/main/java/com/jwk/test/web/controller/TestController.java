@@ -1,6 +1,7 @@
 package com.jwk.test.web.controller;
 
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
+import com.jwk.common.idgenerater.service.IdGeneratorService;
 import com.jwk.common.core.model.RestResponse;
 import com.jwk.common.security.annotation.Inner;
 import com.jwk.common.security.annotation.UserParam;
@@ -29,11 +30,19 @@ public class TestController {
 	@Autowired
 	private TestSeataService testSeataService;
 
+	@Autowired
+	IdGeneratorService idGeneratorService;
+
 	@GetMapping("/test")
 	@SentinelResource(value = "/test")
 	public RestResponse advertiseList(Long id) {
 
 		return testService.getId(id);
+	}
+
+	@GetMapping("/getId")
+	public RestResponse getId(Long id) throws Throwable {
+		return RestResponse.success(idGeneratorService.getId(id));
 	}
 
 	@GetMapping("/test1")

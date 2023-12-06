@@ -1,5 +1,6 @@
 package com.jwk.common.security.support.service;
 
+import com.jwk.common.security.constants.OAuth2Constant;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +30,6 @@ import org.springframework.util.Assert;
 public class JwkRedisOAuth2AuthorizationService implements OAuth2AuthorizationService {
 
 	private final static Long TIMEOUT = 10L;
-
-	private static final String AUTHORIZATION = "token";
 
 	private final RedisTemplate<String, Object> redisTemplate;
 
@@ -159,7 +158,7 @@ public class JwkRedisOAuth2AuthorizationService implements OAuth2AuthorizationSe
 	}
 
 	private String buildKey(String type, String id) {
-		return String.format("%s:%s:%s", AUTHORIZATION, type, id);
+		return String.format("%s:%s:%s", OAuth2Constant.TOKEN, type, id);
 	}
 
 }

@@ -6,11 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-/**
- * @author wanghuainan
- * @date 2021/9/24
- */
-@Component
+
 public class PrometheusMetricsInterceptor implements HandlerInterceptor {
 
 	/**
@@ -40,7 +36,7 @@ public class PrometheusMetricsInterceptor implements HandlerInterceptor {
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
 		String service = request.getRequestURI();
-		long duration = System.currentTimeMillis() - (Long) request.getAttribute("startTime");
+		long duration = (Long) request.getAttribute("startTime");
 		JwkMetricsUtils.pushPrometheus(service, duration,
 				response.getStatus() == HttpServletResponse.SC_OK ? Boolean.TRUE : Boolean.FALSE);
 	}

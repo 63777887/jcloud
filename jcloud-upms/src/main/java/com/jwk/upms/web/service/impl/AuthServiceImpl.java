@@ -1,30 +1,30 @@
 package com.jwk.upms.web.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.convert.Convert;
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 import com.jwk.common.core.enums.StatusE;
 import com.jwk.common.core.exception.ServiceException;
-import com.jwk.common.core.utils.DateHelper;
 import com.jwk.upms.base.dto.RegisterReq;
 import com.jwk.upms.base.dto.UserInfo;
-import com.jwk.upms.base.entity.SysApi;
-import com.jwk.upms.base.entity.SysRoleApi;
-import com.jwk.upms.base.entity.SysUser;
-import com.jwk.upms.base.entity.SysUserRole;
-import com.jwk.upms.web.service.AuthService;
-import com.jwk.upms.web.service.SysApiService;
-import com.jwk.upms.web.service.SysRoleApiService;
-import com.jwk.upms.web.service.SysRoleService;
-import com.jwk.upms.web.service.SysUserRoleService;
-import com.jwk.upms.web.service.SysUserService;
+import com.jwk.upms.base.entity.*;
+import com.jwk.upms.dto.UserImportDto;
+import com.jwk.upms.enums.ErrorCodeStatusE;
+import com.jwk.upms.web.service.*;
+import com.jwk.upms.enums.UserStatusE;
+
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Jiwk
@@ -33,98 +33,198 @@ import org.springframework.stereotype.Service;
  * 远程认证
  * @date 2022/6/11
  */
+
+@Slf4j
 @Service
+@RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
-	@Autowired
-	SysUserService sysUserService;
+    private final SysUserService sysUserService;
 
-	@Autowired
-	SysRoleService sysRoleService;
+    private final SysUserRoleService userRoleService;
 
-	@Autowired
-	SysUserRoleService userRoleService;
+    private final SysRoleApiService sysRoleApiService;
 
-	@Autowired
-	SysRoleApiService sysRoleApiService;
+    private final SysApiService sysApiService;
 
-	@Autowired
-	SysApiService sysApiService;
+    private final SysOrgService sysOrgService;
 
-	private final PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
-	public void register(RegisterReq user) {
-		List<SysUser> allUser = sysUserService.list();
-		allUser.forEach(t -> {
-			if (user.getPhone().equals(t.getPhone())) {
-				throw new ServiceException("该手机号已被注册！");
-			}
-			if (user.getUsername().equals(t.getUsername())) {
-				throw new ServiceException("该用户名已被注册！");
-			}
-		});
-		SysUser sysUser = Convert.convert(SysUser.class, user);
-		sysUser.setPassword(passwordEncoder.encode(user.getPassword()));
-		sysUser.setStatus(StatusE.Normal.getId().byteValue());
-		sysUser.setCreateTime(DateHelper.getLongDate(new Date()));
-		sysUserService.save(sysUser);
-		// todo 给用户赋予角色和权限
-	}
+    private final PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
-	@Override
-	public UserInfo findUserByName(String name) {
-		SysUser user = sysUserService.lambdaQuery().eq(SysUser::getUsername, name).one();
-		UserInfo userInfo = getUserInfo(user);
-		return userInfo;
-	}
+    /**
+     * 用户注册
+     * @param user
+     * @return
+     */
+    @Override
+    @Transactional
+    public Boolean register(RegisterReq user) {
+        checkUserExist(user.getPhone(),user.getUsername(),user.getEmail());
+        SysUser sysUser = Convert.convert(SysUser.class, user);
+        sysUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        sysUser.setStatus(UserStatusE.Normal.getId());
+        sysUser.setCreateTime(DateUtil.date());
+        sysUserService.save(sysUser);
+        // todo 给用户赋予角色和权限
+        if (CollUtil.isNotEmpty(user.getRoles())) {
+            List<SysUserRole> sysUserRoles = user.getRoles().stream().map(t -> {
+                SysUserRole sysUserRole = new SysUserRole();
+                sysUserRole.setUserId(sysUser.getId());
+                sysUserRole.setRoleId(t);
+                return sysUserRole;
+            }).collect(Collectors.toList());
+            userRoleService.saveBatch(sysUserRoles);
+        }
+        return Boolean.TRUE;
+    }
 
-	private UserInfo getUserInfo(SysUser user) {
-		if (BeanUtil.isEmpty(user)) {
-			return null;
-		}
-		// 加载用户角色列表
-		List<SysUserRole> sysUserRoles = userRoleService.lambdaQuery().eq(SysUserRole::getUserId, user.getId()).list();
-		List<Long> roleIds = sysUserRoles.stream().map(SysUserRole::getRoleId).collect(Collectors.toList());
+    private void checkUserExist(String phone,String username,String email) {
+        List<SysUser> allUser = sysUserService
+                .lambdaQuery().and(tmp -> tmp.eq(SysUser::getPhone, phone).or()
+                        .eq(SysUser::getUsername, username).or().eq(SysUser::getEmail, email))
+                .list();
+        allUser.forEach(t -> {
+            if (phone.equals(t.getPhone())) {
+                if (log.isWarnEnabled()){
+                    log.warn("该手机号已被注册: {}",t.getPhone());
+                }
+                throw new ServiceException("该手机号已被注册！");
+            }
+            if (username.equals(t.getUsername())) {
+                if (log.isWarnEnabled()) {
+                    log.warn("该用户名已被注册: {}", t.getUsername());
+                }
+                throw new ServiceException("该用户名已被注册！");
+            }
+            if (email.equals(t.getEmail())) {
+                if (log.isWarnEnabled()) {
+                    log.warn("该邮箱已被注册: {}", t.getEmail());
+                }
+                throw new ServiceException("该邮箱已被注册！");
+            }
+        });
+    }
 
-		List<SysApi> sysApis = new ArrayList<>();
-		for (Long roleId : roleIds) {
-			// 通过用户角色列表加载用户的资源权限列表
-			List<SysRoleApi> sysRoleApis = sysRoleApiService.lambdaQuery().eq(SysRoleApi::getRoleId, roleId).list();
-			List<Long> apiIds = sysRoleApis.stream().map(SysRoleApi::getApiId).collect(Collectors.toList());
-			sysApis = sysApiService.listByIds(apiIds);
-		}
+    /**
+     * 用户导入注册
+     * @param datalist
+     * @return
+     */
+    @Override
+    public Boolean registerImportUsers(List<UserImportDto> datalist) {
+        if (CollUtil.isEmpty(datalist)){
+            return Boolean.TRUE;
+        }
+        List<UserImportDto> userlist = datalist.stream().filter(userImportDto -> {
+            if (StrUtil.isBlank(userImportDto.getUsername())){
+                if (log.isWarnEnabled()){
+                    log.warn("用户名不能为空！");
+                }
+                return false;
+            }
+            if (StrUtil.isBlank(userImportDto.getPhone())){
+                if (log.isWarnEnabled()){
+                    log.warn("手机号不能为空！");
+                }
+                return false;
+            }
+            if (StrUtil.isBlank(userImportDto.getEmail())){
+                if (log.isWarnEnabled()){
+                    log.warn("邮箱不能为空！");
+                }
+                return false;
+            }
+            try {
+                checkUserExist(userImportDto.getUsername(), userImportDto.getPhone(), userImportDto.getEmail());
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }).collect(Collectors.toList());
 
-		UserInfo userInfo = new UserInfo();
-		userInfo.setSysUser(user);
-		userInfo.setSysApis(sysApis);
-		return userInfo;
-	}
+        List<String> orgNames = userlist.stream().map(UserImportDto::getOrgName).filter(StrUtil::isNotBlank).distinct().collect(Collectors.toList());
+        List<SysOrg> sysOrgs = new ArrayList<>();
+        if (CollUtil.isNotEmpty(orgNames)) {
+            sysOrgs = sysOrgService.lambdaQuery().in(SysOrg::getOrgName, orgNames).list();
+        }
+        List<SysOrg> finalSysOrgs = sysOrgs;
+        List<SysUser> sysUserList = userlist.stream().map(t -> {
+            SysUser sysUser = Convert.convert(SysUser.class, t);
+            // todo 后续从字典中获取
+            sysUser.setPassword(passwordEncoder.encode("Awert159"));
+            sysUser.setStatus(UserStatusE.Normal.getId());
+            sysUser.setCreateTime(DateUtil.date());
+            if (StrUtil.isNotBlank(t.getOrgName())) {
+                for (SysOrg sysOrg : finalSysOrgs) {
+                    if (sysOrg.getOrgName().equals(t.getOrgName())) {
+                        sysUser.setOrgId(sysOrg.getId());
+                        break;
+                    }
+                }
+            }
+            return sysUser;
+        }).collect(Collectors.toList());
+        sysUserService.saveBatch(sysUserList);
+        return Boolean.TRUE;
+    }
 
-	@Override
-	public UserInfo findUserByPhone(String phone) {
-		SysUser user = sysUserService.lambdaQuery().eq(SysUser::getPhone, phone).one();
-		return getUserInfo(user);
-	}
+    @Override
+    public UserInfo findUserByName(String name) {
+        SysUser user = sysUserService.lambdaQuery().eq(SysUser::getUsername, name).one();
+        return getUserInfo(user);
+    }
 
-	@Override
-	public List<SysApi> resourceList() {
-		List<SysApi> list = sysApiService.lambdaQuery().eq(SysApi::getStatus, StatusE.Normal.getId()).list();
-		return list.stream().map(t -> Convert.convert(SysApi.class, t)).collect(Collectors.toList());
-	}
+    private UserInfo getUserInfo(SysUser user) {
+        if (BeanUtil.isEmpty(user)) {
+            return null;
+        }
+        // 加载用户角色列表
+        List<SysUserRole> sysUserRoles = userRoleService.lambdaQuery().eq(SysUserRole::getUserId, user.getId()).list();
+        List<Long> roleIds = sysUserRoles.stream().map(SysUserRole::getRoleId).collect(Collectors.toList());
 
-	@Override
-	public Integer testSeata() {
-		SysUser sysUser = new SysUser();
-		sysUser.setOrgId(100L);
-		sysUser.setId(4L);
-		boolean update = sysUserService.lambdaUpdate().update(sysUser);
-		return update ? 1 : 0;
-	}
+        List<SysApi> sysApis = new ArrayList<>();
+        for (Long roleId : roleIds) {
+            // 通过用户角色列表加载用户的资源权限列表
+            List<SysRoleApi> sysRoleApis = sysRoleApiService.lambdaQuery().eq(SysRoleApi::getRoleId, roleId).list();
+            List<Long> apiIds = sysRoleApis.stream().map(SysRoleApi::getApiId).collect(Collectors.toList());
+            List<SysApi> sysApiList = sysApiService.listByIds(apiIds);
+            if (CollUtil.isNotEmpty(sysApiList)) {
+                sysApis.addAll(sysApiList);
+            }
+        }
 
-	@Override
-	public UserInfo findUserByEmail(String mail) {
-		SysUser user = sysUserService.lambdaQuery().eq(SysUser::getEmail, mail).one();
-		return getUserInfo(user);
-	}
+        UserInfo userInfo = new UserInfo();
+        userInfo.setSysUser(user);
+        userInfo.setSysApis(sysApis);
+        return userInfo;
+    }
+
+    @Override
+    public UserInfo findUserByPhone(String phone) {
+        SysUser user = sysUserService.lambdaQuery().eq(SysUser::getPhone, phone).one();
+        return getUserInfo(user);
+    }
+
+    @Override
+    public List<SysApi> resourceList() {
+        List<SysApi> list = sysApiService.lambdaQuery().eq(SysApi::getStatus, StatusE.Normal.getId()).list();
+        return list.stream().map(t -> Convert.convert(SysApi.class, t)).collect(Collectors.toList());
+    }
+
+    @Override
+    public Integer testSeata() {
+        SysUser sysUser = new SysUser();
+        sysUser.setOrgId(100L);
+        sysUser.setId(4L);
+        boolean update = sysUserService.lambdaUpdate().update(sysUser);
+        return update ? 1 : 0;
+    }
+
+    @Override
+    public UserInfo findUserByEmail(String mail) {
+        SysUser user = sysUserService.lambdaQuery().eq(SysUser::getEmail, mail).one();
+        return getUserInfo(user);
+    }
 
 }

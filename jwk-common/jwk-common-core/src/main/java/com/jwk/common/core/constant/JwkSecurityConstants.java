@@ -52,7 +52,11 @@ public interface JwkSecurityConstants {
 	/**
 	 * 用户信息
 	 */
-	String DETAILS_USER = "user_info";
+	String DETAILS_USER_NAME = "username";
+
+	String DETAILS_USER_ID = "userId";
+
+	String DETAILS_ORGID = "orgId";
 
 	/**
 	 * 错误url

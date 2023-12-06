@@ -56,12 +56,12 @@ public class RestResponse<T> implements Serializable {
 		return restResult(ResponseConstants.ERROR_CODE, ResponseConstants.ERROR_MSG, null);
 	}
 
-	public static <T> RestResponse<T> error(T data) {
-		return restResult(ResponseConstants.ERROR_CODE, ResponseConstants.ERROR_MSG, data);
+	public static <T> RestResponse<T> error(String msg) {
+		return restResult(ResponseConstants.ERROR_CODE, msg, null);
 	}
 
-	public static <T> RestResponse<T> error(String msg, T data) {
-		return restResult(ResponseConstants.ERROR_CODE, msg, data);
+	public static <T> RestResponse<T> error(String code, String msg) {
+		return restResult(code, msg, null);
 	}
 
 	public static <T> RestResponse<T> error(String code, String msg, T data) {

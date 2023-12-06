@@ -36,8 +36,8 @@ public class PhoneAuthenticationGranter
 	}
 
 	@Override
-	public PhoneAuthenticationToken buildToken(Authentication clientPrincipal, Set requestedScopes,
-			Map additionalParameters) {
+	public PhoneAuthenticationToken buildToken(Authentication clientPrincipal, Set<String> requestedScopes,
+			Map<String, Object> additionalParameters) {
 		return new PhoneAuthenticationToken(new AuthorizationGrantType(JwkOAuth2ParameterNames.PHONE), clientPrincipal,
 				requestedScopes, additionalParameters);
 	}

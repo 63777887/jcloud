@@ -1,7 +1,10 @@
 package com.jwk.upms.web.service;
 
+import com.jwk.upms.base.dto.RegisterReq;
 import com.jwk.upms.base.dto.UserInfo;
 import com.jwk.upms.base.entity.SysApi;
+import com.jwk.upms.dto.UserImportDto;
+
 import java.util.List;
 
 /**
@@ -32,4 +35,7 @@ public interface AuthService {
 
 	UserInfo findUserByEmail(String mail);
 
+	Boolean register(RegisterReq registerReq);
+
+    Boolean registerImportUsers(List<UserImportDto> datalist);
 }

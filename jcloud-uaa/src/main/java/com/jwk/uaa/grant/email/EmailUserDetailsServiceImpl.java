@@ -1,6 +1,6 @@
 package com.jwk.uaa.grant.email;
 
-import com.jwk.common.security.support.feign.api.UpmsRemoteService;
+import com.jwk.upms.base.api.UpmsRemoteService;
 import com.jwk.common.security.support.service.JwkUserDetailsService;
 import com.jwk.uaa.constant.JwkOAuth2ParameterNames;
 import com.jwk.upms.base.dto.UserInfo;

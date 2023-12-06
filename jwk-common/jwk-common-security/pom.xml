@@ -1,58 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <artifactId>jwk-common</artifactId>
-    <groupId>com.jwk</groupId>
-    <version>0.1.5</version>
-  </parent>
+    <parent>
+        <artifactId>jwk-common</artifactId>
+        <groupId>com.jwk</groupId>
+        <version>0.1.5</version>
+    </parent>
 
-  <artifactId>jwk-common-security</artifactId>
-  <packaging>jar</packaging>
+    <artifactId>jwk-common-security</artifactId>
+    <packaging>jar</packaging>
 
-  <description>jcloud 权限控制</description>
+    <description>jcloud 权限控制</description>
 
 
-  <dependencies>
-    <dependency>
-      <groupId>com.jwk</groupId>
-      <artifactId>jcloud-upms-base</artifactId>
-      <version>0.1.5</version>
-    </dependency>
-    <dependency>
-      <groupId>com.jwk</groupId>
-      <artifactId>jwk-common-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.jwk</groupId>
-      <artifactId>jwk-common-cloud</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.jwk</groupId>
-      <artifactId>jwk-common-redis</artifactId>
-      <version>0.1.5</version>
-    </dependency>
-    <!--        登陆鉴权-->
-    <dependency>
-      <groupId>io.jsonwebtoken</groupId>
-      <artifactId>jjwt</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-oauth2-jose</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-oauth2-authorization-server</artifactId>
-      <version>${spring.authorization.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-thymeleaf</artifactId>
-    </dependency>
-  </dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>com.jwk</groupId>
+            <artifactId>jcloud-upms-base</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.jwk</groupId>
+            <artifactId>jwk-common-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.jwk</groupId>
+            <artifactId>jwk-common-cloud</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.jwk</groupId>
+            <artifactId>jwk-common-redis</artifactId>
+        </dependency>
+        <!--        登陆鉴权-->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-oauth2-jose</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-oauth2-authorization-server</artifactId>
+            <version>${spring.authorization.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.jwk</groupId>
+            <artifactId>jwk-common-log</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>

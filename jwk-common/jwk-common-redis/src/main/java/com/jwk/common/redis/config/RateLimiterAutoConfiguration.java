@@ -40,7 +40,7 @@ public class RateLimiterAutoConfiguration {
 	@Bean
 	@ConditionalOnMissingBean
 	public RedisRateLimiterClient redisRateLimiter(
-			@Qualifier("stringKeyRedisTemplate") RedisTemplate<String, Object> redisTemplate, Environment environment,
+			@Qualifier("redisTemplate") RedisTemplate<String, Object> redisTemplate, Environment environment,
 			RedisRateLimiterProperties redisRateLimiterProperties) {
 		RedisScript<Long> redisRateLimiterScript = redisRateLimiterScript(redisRateLimiterProperties);
 		return new RedisRateLimiterClient(redisTemplate, redisRateLimiterScript, environment,

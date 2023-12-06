@@ -71,7 +71,7 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationConverter<T extends O
 
 		Set<String> requestedScopes = null;
 		if (StringUtils.hasText(scope)) {
-			requestedScopes = new HashSet<>(Arrays.asList(StringUtils.delimitedListToStringArray(scope, " ")));
+			requestedScopes = new HashSet<>(Arrays.asList(StringUtils.delimitedListToStringArray(scope, ",")));
 		}
 
 		// 校验个性化参数

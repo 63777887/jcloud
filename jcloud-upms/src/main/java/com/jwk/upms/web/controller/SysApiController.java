@@ -2,6 +2,7 @@ package com.jwk.upms.web.controller;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.convert.Convert;
+import cn.hutool.core.util.StrUtil;
 import com.jwk.common.core.model.RestResponse;
 import com.jwk.common.security.annotation.Inner;
 import com.jwk.upms.base.entity.SysApi;
@@ -43,8 +44,8 @@ public class SysApiController {
 	 * 接口列表
 	 */
 	@GetMapping(value = "/list")
-	public RestResponse list() {
-		List<SysApi> list = sysApiService.list();
+	public RestResponse list(@RequestParam(value = "url", required = false) String url) {
+		List<SysApi> list = sysApiService.lambdaQuery().like(StrUtil.isNotBlank(url), SysApi::getUrl, url).list();
 		return RestResponse.success(list);
 	}
 

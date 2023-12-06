@@ -16,3 +16,7 @@ spring:
     import:
 #      - nacos:application-@profiles.active@.yml
       - nacos:${spring.application.name}.yml
+#  servlet:
+#    multipart:
+#      max-file-size: 10MB
+#      max-request-size: 10MB

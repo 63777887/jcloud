@@ -1,9 +1,10 @@
 package com.jwk.common.mybatis.config;
 
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import java.nio.charset.Charset;
-import java.time.LocalDateTime;
+import java.util.Date;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.util.ClassUtils;
@@ -44,7 +45,7 @@ public class MybatisPlusMetaObjectHandler implements MetaObjectHandler {
 		if (log.isDebugEnabled()) {
 			log.debug("mybatis plus start insert fill ....");
 		}
-		LocalDateTime now = LocalDateTime.now();
+		Date now = DateUtil.date();
 
 		fillValIfNullByName("createTime", now, metaObject, false);
 		fillValIfNullByName("updateTime", now, metaObject, false);
@@ -55,7 +56,7 @@ public class MybatisPlusMetaObjectHandler implements MetaObjectHandler {
 		if (log.isDebugEnabled()) {
 			log.debug("mybatis plus start update fill ....");
 		}
-		fillValIfNullByName("updateTime", LocalDateTime.now(), metaObject, true);
+		fillValIfNullByName("updateTime", DateUtil.date(), metaObject, true);
 	}
 
 	// /**

@@ -31,7 +31,11 @@ public class CustomeOAuth2TokenCustomizer implements OAuth2TokenCustomizer<OAuth
 		}
 
 		AdminUserDetails adminUserDetails = (AdminUserDetails) context.getPrincipal().getPrincipal();
-		claims.claim(JwkSecurityConstants.DETAILS_USER, adminUserDetails);
+		claims.claim(JwkSecurityConstants.DETAILS_USER_NAME, adminUserDetails.getSysUser().getUsername());
+		claims.claim(JwkSecurityConstants.DETAILS_USER_ID, adminUserDetails.getSysUser().getId());
+		if (adminUserDetails.getSysUser().getOrgId()!=null) {
+			claims.claim(JwkSecurityConstants.DETAILS_ORGID, adminUserDetails.getSysUser().getOrgId());
+		}
 	}
 
 }

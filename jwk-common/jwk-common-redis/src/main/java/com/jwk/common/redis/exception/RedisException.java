@@ -1,6 +1,7 @@
 package com.jwk.common.redis.exception;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.jwk.common.redis.enums.RedisExceptionCodeE;
 import lombok.Getter;
 
 /**
@@ -10,12 +11,12 @@ import lombok.Getter;
  * 异常处理
  * @date 2022/11/2
  */
+@Getter
 @JsonSerialize(using = RedisExceptionSerializer.class)
-public class RedisException extends Exception {
+public class RedisException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
-	@Getter
 	private Integer errorCode;
 
 	public RedisException(String msg) {

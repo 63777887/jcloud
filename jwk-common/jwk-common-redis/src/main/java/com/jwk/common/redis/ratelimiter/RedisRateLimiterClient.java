@@ -1,14 +1,15 @@
 package com.jwk.common.redis.ratelimiter;
 
-import cn.hutool.core.text.CharPool;
+import com.jwk.common.core.constant.CharConstants;
 import com.jwk.common.redis.properties.RedisRateLimiterProperties;
-import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.RedisScript;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Jiwk
@@ -60,7 +61,7 @@ public class RedisRateLimiterClient implements RateLimiterClient {
 	@Override
 	public boolean isAllowed(String key, long max, long ttl, TimeUnit timeUnit) {
 		// redis key
-		String redisKeyBuilder = REDIS_KEY_PREFIX + CharPool.COLON + getApplicationName(environment) + CharPool.COLON
+		String redisKeyBuilder = REDIS_KEY_PREFIX + CharConstants.COLON + getApplicationName(environment) + CharConstants.COLON
 				+ key;
 		List<String> keys = Collections.singletonList(redisKeyBuilder);
 		// 毫秒，考虑主从策略和脚本回放机制，这个time由客户端获取传入

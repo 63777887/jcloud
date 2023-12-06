@@ -1,50 +1,49 @@
 package com.jwk.uaa.endpoint;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.text.CharPool;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.extra.spring.SpringUtil;
+import com.jwk.common.core.constant.CharConstants;
 import com.jwk.common.core.model.RestResponse;
+import com.jwk.common.log.enums.LogStatusE;
+import com.jwk.common.log.enums.LogTypeE;
+import com.jwk.common.log.event.SysLogEvent;
+import com.jwk.common.log.utils.SysLogUtils;
 import com.jwk.common.security.annotation.Inner;
+import com.jwk.common.security.constants.OAuth2Constant;
 import com.jwk.common.security.constants.OAuth2ErrorCodeConstant;
 import com.jwk.common.security.exception.ScopeException;
-import com.jwk.common.security.support.feign.api.UpmsRemoteService;
+import com.jwk.upms.base.api.UpmsRemoteService;
 import com.jwk.common.security.support.handler.JwkAuthenticationFailureEventHandler;
+import com.jwk.common.security.support.handler.JwkOAuth2AccessTokenResponseHttpMessageConverter;
 import com.jwk.common.security.util.SecurityUtils;
+import com.jwk.upms.base.dto.SysLogDto;
 import com.jwk.upms.base.dto.SysOauthClientDto;
 import com.jwk.upms.base.entity.SysRole;
-import java.security.Principal;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServletServerHttpResponse;
+import org.springframework.security.authentication.event.LogoutSuccessEvent;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2TokenType;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenResponse;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
-import org.springframework.security.oauth2.core.http.converter.OAuth2AccessTokenResponseHttpMessageConverter;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.resource.InvalidBearerTokenException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.security.Principal;
+import java.util.*;
 
 /**
  * @author Jiwk
@@ -59,7 +58,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/token")
 public class JwkTokenEndpoint {
 
-	private final HttpMessageConverter<OAuth2AccessTokenResponse> accessTokenHttpResponseConverter = new OAuth2AccessTokenResponseHttpMessageConverter();
+	private final HttpMessageConverter<OAuth2AccessTokenResponse> accessTokenHttpResponseConverter = new JwkOAuth2AccessTokenResponseHttpMessageConverter();
 
 	private final AuthenticationFailureHandler authenticationFailureHandler = new JwkAuthenticationFailureEventHandler();
 
@@ -99,8 +98,8 @@ public class JwkTokenEndpoint {
 			@RequestParam(OAuth2ParameterNames.SCOPE) String scope,
 			@RequestParam(OAuth2ParameterNames.STATE) String state) {
 		SysOauthClientDto clientDetails = upmsRemoteService.getClientDetailsById(clientId).getData();
-		Set<String> authorizedScopes = StrUtil.isNotBlank(scope) ? new HashSet<>(StrUtil.split(scope, CharPool.SPACE))
-				: new HashSet<>(StrUtil.split(clientDetails.getScope(), CharPool.COMMA));
+		Set<String> authorizedScopes = StrUtil.isNotBlank(scope) ? new HashSet<>(StrUtil.split(scope, CharConstants.SPACE))
+				: new HashSet<>(StrUtil.split(clientDetails.getScope(), CharConstants.COMMA));
 		List<SysRole> scopeList = clientDetails.getScopeList();
 		if (CollUtil.isEmpty(authorizedScopes) || CollUtil.isEmpty(scopeList)) {
 			throw new ScopeException(OAuth2ErrorCodeConstant.SCOPE_IS_EMPTY);
@@ -133,7 +132,7 @@ public class JwkTokenEndpoint {
 	 */
 	@DeleteMapping("/logout")
 	public RestResponse<Boolean> logout(
-			@RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String authHeader) {
+			@RequestHeader(value = OAuth2Constant.TOKEN, required = false) String authHeader) {
 		if (StrUtil.isBlank(authHeader)) {
 			return RestResponse.success();
 		}
@@ -144,13 +143,20 @@ public class JwkTokenEndpoint {
 
 	/**
 	 * 校验token
-	 * @param token 令牌
+	 * @param authHeader 令牌
 	 */
 	@SneakyThrows
 	@GetMapping("/check_token")
-	public void checkToken(String token, HttpServletResponse response, HttpServletRequest request) {
+	public void checkToken(@RequestHeader(value = OAuth2Constant.TOKEN, required = false) String authHeader,
+			HttpServletResponse response, HttpServletRequest request) {
 		ServletServerHttpResponse httpResponse = new ServletServerHttpResponse(response);
 		//
+		if (StrUtil.isBlank(authHeader)) {
+			this.authenticationFailureHandler.onAuthenticationFailure(request, response,
+					new InvalidBearerTokenException(OAuth2ErrorCodeConstant.TOKEN_MISSING));
+		}
+
+		String token = authHeader.replace(OAuth2AccessToken.TokenType.BEARER.getValue(), StrUtil.EMPTY).trim();
 		if (StrUtil.isBlank(token)) {
 			httpResponse.setStatusCode(HttpStatus.UNAUTHORIZED);
 			this.authenticationFailureHandler.onAuthenticationFailure(request, response,
@@ -188,15 +194,20 @@ public class JwkTokenEndpoint {
 		if (accessToken == null || StrUtil.isBlank(accessToken.getToken().getTokenValue())) {
 			return RestResponse.success();
 		}
-		// 清空用户信息
-		// cacheManager.getCache(CacheConstants.USER_DETAILS).evict(authorization.getPrincipalName());
 		// 清空access token
 		authorizationService.remove(authorization);
-		// // 处理自定义退出事件，保存相关日志
-		// SpringContextHolder.publishEvent(new LogoutSuccessEvent(new
-		// PreAuthenticatedAuthenticationToken(
-		// authorization.getPrincipalName(), authorization.getRegisteredClientId())));
+		 // 处理自定义退出事件，保存相关日志
+		pushLoginFailLog();
 		return RestResponse.success();
+	}
+
+	private void pushLoginFailLog() {
+		SysLogDto sysLogDto = SysLogUtils.getSysLog();
+		sysLogDto.setLogType(LogTypeE.USER_LOGOUT.getCode());
+		sysLogDto.setLogTitle(LogTypeE.USER_LOGOUT.getMsg());
+		sysLogDto.setStatus(LogStatusE.SUCCESS_LOG.getCode());
+		sysLogDto.setCreateBy(StrUtil.isNotBlank(SecurityUtils.getAuthentication().getName()) ? SecurityUtils.getAuthentication().getName() : "");
+		SpringUtil.publishEvent(new SysLogEvent(sysLogDto));
 	}
 
 	public static class ScopeWithDescription {

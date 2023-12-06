@@ -4,8 +4,10 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.io.Serializable;
+import java.util.Date;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 /**
  * <p>
@@ -13,10 +15,11 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author jiwk
- * @since 2021-06-03
+ * @since 2023-10-11
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
 public class SysApi extends Model<SysApi> {
 
 	private static final long serialVersionUID = 1L;
@@ -28,27 +31,17 @@ public class SysApi extends Model<SysApi> {
 	private Long id;
 
 	/**
-	 * apiPid
-	 */
-	private Long parentId;
-
-	/**
-	 * apiName
+	 * 接口描述
 	 */
 	private String apiDesc;
 
 	/**
-	 * url
+	 * 接口URL
 	 */
 	private String url;
 
 	/**
-	 * level
-	 */
-	private Integer level;
-
-	/**
-	 * status
+	 * 状态，1: 正常，2:删除
 	 */
 	private Byte status;
 
@@ -60,7 +53,7 @@ public class SysApi extends Model<SysApi> {
 	/**
 	 * createTime
 	 */
-	private Long createTime;
+	private Date createTime;
 
 	/**
 	 * updateBy
@@ -70,9 +63,7 @@ public class SysApi extends Model<SysApi> {
 	/**
 	 * updateTime
 	 */
-	private Long updateTime;
-
-	private Long categoryId;
+	private Date updateTime;
 
 	@Override
 	protected Serializable pkVal() {

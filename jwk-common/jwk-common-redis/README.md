@@ -1,6 +1,7 @@
 # common-redis
 - redis cache 增强，支持 自定义符号（默认#）分隔 cachename 、 超时时间和是否使用多级缓存，支持 ms（毫秒），s（秒默认），m（分），h（小时），d（天）等单位。
 - 基于 redis 的分布式限流组件。
+-  提供 注解和方法 形式的分布式锁组件，支持spel表达式动态获取lockKey，简化加锁逻辑
 
 ## 依赖引用
 ### maven
@@ -157,4 +158,25 @@ public void redisKeyExpiredEvent(RedisKeyExpiredEvent<Object> event) {
     String redisKey = new String(event.getId());
     System.out.println(redisKey);
 }
+```
+
+### 4. 示例 redis 分布式锁
+#### 4.1 注解形式
+```java
+@JwkRedisLock(key = "new com.jwk.common.idgenerater.manager.impl.RedisGeneratorManage().getIdLockKey(#slotId)")
+public long generate(int slotId) throws Throwable {
+    List<Long> ids = genIds(slotId, 1);
+    return !ids.isEmpty() ? ids.get(0) : -1;
+}
+```
+#### 4.2 方法形式
+```java
+@Autowired
+private RedisLockService redisLockService;
+
+public long generate(int slotId) throws Throwable {
+    List<Long> ids = redisLockService.executeWithLock(getIdLockKey(slotId),()-> genIds(slotId, 1));
+    return !ids.isEmpty() ? ids.get(0) : -1;
+}
+
 ```

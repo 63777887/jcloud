@@ -19,12 +19,12 @@ public class DefaultCacheFactory implements CacheFactory {
 
 	private final CacheConfigProperties cacheConfigProperties;
 
-	private final RedisTemplate<String, Object> stringKeyRedisTemplate;
+	private final RedisTemplate<String, Object> redisTemplate;
 
 	public DefaultCacheFactory(CacheConfigProperties cacheConfigProperties,
-			RedisTemplate<String, Object> stringKeyRedisTemplate) {
+			RedisTemplate<String, Object> redisTemplate) {
 		this.cacheConfigProperties = cacheConfigProperties;
-		this.stringKeyRedisTemplate = stringKeyRedisTemplate;
+		this.redisTemplate = redisTemplate;
 	}
 
 	/**
@@ -42,7 +42,7 @@ public class DefaultCacheFactory implements CacheFactory {
 				usedCaffeineCache = true;
 			}
 		}
-		return new RedisCaffeineCache(name, stringKeyRedisTemplate, cacheConfigProperties, usedCaffeineCache);
+		return new RedisCaffeineCache(name, redisTemplate, cacheConfigProperties, usedCaffeineCache);
 	}
 
 }

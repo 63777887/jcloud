@@ -9,7 +9,7 @@ package com.jwk.common.core.constant;
  */
 public interface ResponseConstants {
 
-	String SUCCESS_CODE = "1";
+	String SUCCESS_CODE = "0";
 
 	String ERROR_CODE = "-1";
 

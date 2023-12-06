@@ -21,7 +21,7 @@ import org.springframework.context.annotation.Bean;
  * 自动配置类
  */
 @EnableConfigurationProperties(JwkZookeeperProperties.class)
-@ConditionalOnProperty(prefix = "jwk.zookeeper",name = "enabled", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(prefix = "jwk.zookeeper", name = "enabled", havingValue = "true", matchIfMissing = true)
 public class JwkZookeeperAutoConfiguration {
 
 	private static Logger logger = LoggerFactory.getLogger(JwkZookeeperAutoConfiguration.class);

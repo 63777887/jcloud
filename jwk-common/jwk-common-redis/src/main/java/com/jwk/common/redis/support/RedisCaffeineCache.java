@@ -37,7 +37,7 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
 
 	private final Cache<Object, Object> caffeineCache;
 
-	private final RedisTemplate<String, Object> stringKeyRedisTemplate;
+	private final RedisTemplate<String, Object> redisTemplate;
 
 	private final String cachePrefix;
 
@@ -57,11 +57,11 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
 
 	private final Map<String, ReentrantLock> keyLockMap = new ConcurrentHashMap<>();
 
-	public RedisCaffeineCache(String name, RedisTemplate<String, Object> stringKeyRedisTemplate,
+	public RedisCaffeineCache(String name, RedisTemplate<String, Object> redisTemplate,
 			CacheConfigProperties cacheConfigProperties, Boolean usedCaffeineCache) {
 		super(cacheConfigProperties.isCacheNullValues());
 		this.name = name;
-		this.stringKeyRedisTemplate = stringKeyRedisTemplate;
+		this.redisTemplate = redisTemplate;
 		this.cachePrefix = cacheConfigProperties.getCachePrefix();
 		this.defaultExpiration = cacheConfigProperties.getRedis().getDefaultExpiration();
 		this.expires = cacheConfigProperties.getRedis().getExpires();
@@ -171,7 +171,7 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
 	@Override
 	public void evict(Object key) {
 		// 先清除redis中缓存数据，然后清除caffeine中的缓存，避免短时间内如果先清除caffeine缓存后其他请求会再从redis里加载到caffeine中
-		stringKeyRedisTemplate.delete(getKey(key));
+		redisTemplate.delete(getKey(key));
 
 		if (this.usedCaffeineCache) {
 			push(key);
@@ -183,10 +183,10 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
 	@Override
 	public void clear() {
 		// 先清除redis中缓存数据，然后清除caffeine中的缓存，避免短时间内如果先清除caffeine缓存后其他请求会再从redis里加载到caffeine中
-		Set<String> keys = stringKeyRedisTemplate.keys(this.name.concat(":*"));
+		Set<String> keys = redisTemplate.keys(this.name.concat(":*"));
 
 		if (!CollectionUtils.isEmpty(keys)) {
-			stringKeyRedisTemplate.delete(keys);
+			redisTemplate.delete(keys);
 		}
 
 		if (this.usedCaffeineCache) {
@@ -256,7 +256,7 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
 	 * @param key
 	 */
 	protected void push(Object key) {
-		stringKeyRedisTemplate.convertAndSend(topic, new CacheMessage(this.name, key, this.cacheServerId));
+		redisTemplate.convertAndSend(topic, new CacheMessage(this.name, key, this.cacheServerId));
 	}
 
 	/**
@@ -277,19 +277,19 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
 
 	protected void setRedisValue(Object key, Object value, Duration expire) {
 		if (!expire.isNegative() && !expire.isZero()) {
-			stringKeyRedisTemplate.opsForValue().set(getKey(key), value, expire);
+			redisTemplate.opsForValue().set(getKey(key), value, expire);
 		}
 		else {
-			stringKeyRedisTemplate.opsForValue().set(getKey(key), value);
+			redisTemplate.opsForValue().set(getKey(key), value);
 		}
 	}
 
 	protected Object getRedisValue(Object key) {
-		return stringKeyRedisTemplate.opsForValue().get(getKey(key));
+		return redisTemplate.opsForValue().get(getKey(key));
 	}
 
 	protected boolean setRedisValueIfAbsent(Object key, Object value) {
-		return stringKeyRedisTemplate.opsForValue().setIfAbsent(getKey(key), value);
+		return redisTemplate.opsForValue().setIfAbsent(getKey(key), value);
 	}
 
 	protected void setCaffeineValue(Object key, Object value) {

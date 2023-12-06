@@ -2,7 +2,10 @@ package com.jwk.common.redis.utils;
 
 import cn.hutool.core.text.StrPool;
 import cn.hutool.core.util.StrUtil;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,13 +22,16 @@ import java.util.Calendar;
 import java.util.List;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
+import org.redisson.client.codec.Codec;
 import org.redisson.client.codec.StringCodec;
+import org.redisson.codec.JsonJacksonCodec;
 import org.redisson.config.ClusterServersConfig;
 import org.redisson.config.Config;
 import org.redisson.config.SentinelServersConfig;
 import org.redisson.config.SingleServerConfig;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties.Sentinel;
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
@@ -61,13 +67,13 @@ public class RedisUtil {
 
 	/**
 	 * redssionConfig 构建
-	 * @param redisConfigProperties
+	 * @param redisProperties
 	 * @return
 	 */
-	public Config config(RedisConfigProperties redisConfigProperties) {
+	public Config config(RedisProperties redisProperties) {
 
 		if (log.isDebugEnabled()) {
-			log.debug("redisson init config start...RedisConfigProperties:{}", redisConfigProperties);
+			log.debug("redisson init config start...RedisConfigProperties:{}", redisProperties);
 		}
 
 		// redisson配置文件
@@ -75,9 +81,11 @@ public class RedisUtil {
 		config.setThreads(threads);
 		config.setNettyThreads(nettyThreads);
 		config.setLockWatchdogTimeout(lockWatchdogTimeout);
-		config.setCodec(StringCodec.INSTANCE);
 
-		RedisProperties redisProperties = redisConfigProperties.getRedis();
+		// 使用json序列化方式
+		Codec codec = new JsonJacksonCodec();
+		config.setCodec(codec);
+
 		if (redisProperties != null && redisProperties.getCluster() != null) {
 
 			// 集群
@@ -106,8 +114,7 @@ public class RedisUtil {
 			clusterServers.setSlaveConnectionMinimumIdleSize(slaveConnectionMinimumIdleSize);
 			clusterServers.setSlaveConnectionPoolSize(slaveConnectionPoolSize);
 			clusterServers.setScanInterval(scanInterval);
-		}
-		else if (redisProperties != null && redisProperties.getSentinel() != null) {
+		} else if (redisProperties != null && redisProperties.getSentinel() != null) {
 
 			Sentinel sentinel = redisProperties.getSentinel();
 			// 哨兵
@@ -146,8 +153,7 @@ public class RedisUtil {
 			sentinelServers.setSlaveConnectionMinimumIdleSize(slaveConnectionMinimumIdleSize);
 			sentinelServers.setSlaveConnectionPoolSize(slaveConnectionPoolSize);
 			sentinelServers.setScanInterval(scanInterval);
-		}
-		else {
+		} else {
 			if (redisProperties == null) {
 				redisProperties = new RedisProperties();
 				redisProperties.setHost("127.0.0.1");
@@ -181,35 +187,15 @@ public class RedisUtil {
 	 * redis键序列化使用StringRedisSerializer
 	 */
 	public RedisSerializer<String> keySerializer() {
-		return new StringRedisSerializer(StandardCharsets.UTF_8);
+		return RedisSerializer.string();
 	}
 
-	/**
-	 * redis值序列化使用json序列化器
-	 */
 	public RedisSerializer<Object> valueSerializer() {
-		// 使用 GenericFastJsonRedisSerializer 替换默认序列化
-		// 这里覆盖默认的ObjectMapper
-		// 设置key和value的序列化规则
 		return RedisSerializer.java();
 	}
 
-	public ObjectMapper getObjectMapper() {
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		mapper.configure(JsonParser.Feature.ALLOW_COMMENTS, true);
-		mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
-		mapper.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
-		JavaTimeModule javaTimeModule = new JavaTimeModule();
-		javaTimeModule.addDeserializer(LocalDateTime.class,
-				new LocalDateTimeDeserializer(DateTimeFormatter.ISO_DATE_TIME));
-		mapper.registerModule(javaTimeModule);
-		mapper.registerModule(new Jdk8Module());
-		mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-		mapper.setTimeZone(Calendar.getInstance().getTimeZone());
-		mapper.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.NON_FINAL,
-				JsonTypeInfo.As.PROPERTY);
-		return mapper;
+	public RedisSerializer<String> stringValueSerializer() {
+		return RedisSerializer.string();
 	}
 
 	public String[] replaceName(String name, String delimiter) {

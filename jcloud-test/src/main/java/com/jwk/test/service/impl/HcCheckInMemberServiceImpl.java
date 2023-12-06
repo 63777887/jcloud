@@ -2,9 +2,8 @@ package com.jwk.test.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.jwk.common.core.enums.StatBusinessTypeReqE;
-import com.jwk.common.core.excel.ExcelExportReq;
+import com.jwk.common.core.excel.ExcelReq;
 import com.jwk.common.core.excel.ExcelHeadReq;
-import com.jwk.common.core.excel.ExcelQueryConditionReq;
 import com.jwk.common.core.exception.ServiceException;
 import com.jwk.test.service.ExcelExportService;
 import java.util.ArrayList;
@@ -38,7 +37,7 @@ public class HcCheckInMemberServiceImpl implements ExcelExportService {
 	private final String TASK_NAME = "入住人员资质发起审批";
 
 	@Override
-	public HSSFWorkbook export(ExcelExportReq condition) throws ServiceException {
+	public HSSFWorkbook export(ExcelReq condition) throws ServiceException {
 		// 根据reqList条件查询数据
 		List<ExcelQueryConditionReq> reqList = condition.getReqList();
 		Map<String, Object> map = new HashMap<>(reqList.size());

@@ -1,6 +1,7 @@
 package com.jwk.upms.base.dto;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.Data;
@@ -9,7 +10,7 @@ import lombok.Data;
  * @author Jiwk
  * @version 0.1.0
  * <p>
- * 注册用户请求参数
+ * 用户参数
  * @date 2022/6/11
  */
 @Data
@@ -30,6 +31,17 @@ public class RegisterReq implements Serializable {
 	private String username;
 
 	/**
+	 * nickname
+	 */
+	@NotBlank(message = "用户昵称不能为空")
+	private String nickname;
+
+	/**
+	 * status
+	 */
+	private Byte status = 1;
+
+	/**
 	 * password
 	 */
 	@NotBlank(message = "密码不能为空")
@@ -44,6 +56,9 @@ public class RegisterReq implements Serializable {
 	/**
 	 * email
 	 */
+	@NotBlank(message = "邮箱不能为空")
 	private String email;
+
+	List<Long> roles;
 
 }

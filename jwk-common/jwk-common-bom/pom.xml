@@ -44,6 +44,11 @@
       </dependency>
       <dependency>
         <groupId>com.jwk</groupId>
+        <artifactId>jwk-common-log</artifactId>
+        <version>${jwk.common.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.jwk</groupId>
         <artifactId>jwk-common-core</artifactId>
         <version>${jwk.common.version}</version>
       </dependency>

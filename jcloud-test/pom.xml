@@ -157,6 +157,12 @@
       <artifactId>apm-toolkit-logback-1.x</artifactId>
       <version>8.6.0</version>
     </dependency>
+      <dependency>
+          <groupId>com.jwk</groupId>
+          <artifactId>jwk-common-id-generater</artifactId>
+          <version>0.1.5</version>
+          <scope>compile</scope>
+      </dependency>
 
   </dependencies>
 

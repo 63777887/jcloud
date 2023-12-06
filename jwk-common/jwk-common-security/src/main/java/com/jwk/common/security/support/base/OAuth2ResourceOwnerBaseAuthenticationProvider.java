@@ -226,8 +226,7 @@ public abstract class OAuth2ResourceOwnerBaseAuthenticationProvider<T extends OA
 			return new OAuth2AccessTokenAuthenticationToken(registeredClient, clientPrincipal, accessToken,
 					refreshToken, Objects.requireNonNull(authorization.getAccessToken().getClaims()));
 
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			if (LOGGER.isErrorEnabled()) {
 				LOGGER.error("problem in authenticate", ex);
 			}

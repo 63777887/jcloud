@@ -15,6 +15,6 @@ import java.util.List;
  */
 public interface SysUserMapper extends BaseMapper<SysUser> {
 
-  int updateUser(List<Long> list);
+	int updateUser(List<Long> list);
 
 }

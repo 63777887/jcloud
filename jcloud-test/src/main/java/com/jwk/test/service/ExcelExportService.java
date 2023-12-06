@@ -2,7 +2,7 @@ package com.jwk.test.service;
 
 import com.jwk.common.core.enums.ExportResourcesTypeReqE;
 import com.jwk.common.core.enums.StatBusinessTypeReqE;
-import com.jwk.common.core.excel.ExcelExportReq;
+import com.jwk.common.core.excel.ExcelReq;
 import com.jwk.common.core.exception.ServiceException;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
@@ -18,7 +18,7 @@ public interface ExcelExportService {
 	 * @return HSSFWorkbook
 	 * @throws ServiceException
 	 */
-	HSSFWorkbook export(ExcelExportReq condition) throws ServiceException;
+	HSSFWorkbook export(ExcelReq condition) throws ServiceException;
 
 	/**
 	 * 生成excel的sheet名称

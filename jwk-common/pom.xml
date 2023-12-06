@@ -1,48 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <artifactId>jcloud-parent</artifactId>
-    <groupId>com.jwk</groupId>
-    <version>0.1.5</version>
-  </parent>
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>jcloud-parent</artifactId>
+        <groupId>com.jwk</groupId>
+        <version>0.1.5</version>
+    </parent>
 
 
-  <artifactId>jwk-common</artifactId>
-  <packaging>pom</packaging>
+    <artifactId>jwk-common</artifactId>
+    <packaging>pom</packaging>
 
 
-  <modules>
-    <module>jwk-common-bom</module>
-    <module>jwk-common-core</module>
-    <module>jwk-common-mybatis</module>
-    <module>jwk-common-cloud</module>
-    <module>jwk-common-security</module>
-    <module>jwk-common-knife4j</module>
-    <module>jwk-common-canal</module>
-    <module>jwk-common-canal-rocketmq</module>
-    <module>jwk-common-rocketmq</module>
-    <module>jwk-common-rabbitmq</module>
-    <module>jwk-common-sharding-jdbc</module>
-    <module>jwk-common-dynamic-datasource</module>
-    <module>jwk-common-prometheus</module>
-    <module>jwk-common-seata</module>
-    <module>jwk-common-redis</module>
-    <module>jwk-common-id-generater</module>
-    <module>jcloud-upms-base</module>
-    <module>jwk-common-zookeeper</module>
-  </modules>
+    <modules>
+        <module>jwk-common-bom</module>
+        <module>jwk-common-core</module>
+        <module>jwk-common-mybatis</module>
+        <module>jwk-common-cloud</module>
+        <module>jwk-common-security</module>
+        <module>jwk-common-knife4j</module>
+        <module>jwk-common-canal</module>
+        <module>jwk-common-canal-rocketmq</module>
+        <module>jwk-common-rocketmq</module>
+        <module>jwk-common-rabbitmq</module>
+        <module>jwk-common-sharding-jdbc</module>
+        <module>jwk-common-dynamic-datasource</module>
+        <module>jwk-common-prometheus</module>
+        <module>jwk-common-seata</module>
+        <module>jwk-common-redis</module>
+        <module>jwk-common-id-generater</module>
+        <module>jcloud-upms-base</module>
+        <module>jwk-common-zookeeper</module>
+        <module>jwk-common-log</module>
+    </modules>
 
-  <distributionManagement>
-    <repository>
-      <id>jwk-nexus</id>
-      <url>http://${nexus.host}/repository/${nexus.maven.releases}/</url>
-    </repository>
-    <snapshotRepository>
-      <id>jwk-nexus</id>
-      <url>http://${nexus.host}/repository/${nexus.maven.snapshots}/</url>
-    </snapshotRepository>
-  </distributionManagement>
+    <distributionManagement>
+        <repository>
+            <id>jwk-nexus</id>
+            <url>http://${nexus.host}/repository/${nexus.maven.releases}/</url>
+        </repository>
+        <snapshotRepository>
+            <id>jwk-nexus</id>
+            <url>http://${nexus.host}/repository/${nexus.maven.snapshots}/</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>

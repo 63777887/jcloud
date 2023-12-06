@@ -44,7 +44,7 @@ public @interface JwkRateLimiter {
 	long ttl() default 3600L;
 
 	/**
-	 * 时间单位，默认为分
+	 * 时间单位，默认为秒
 	 * @return TimeUnit
 	 */
 	TimeUnit timeUnit() default TimeUnit.SECONDS;

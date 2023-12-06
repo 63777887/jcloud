@@ -1,6 +1,6 @@
 package com.jwk.test.service.impl;
 
-import com.jwk.common.security.support.feign.api.UpmsRemoteService;
+import com.jwk.upms.base.api.UpmsRemoteService;
 import com.jwk.test.mapper.UserMapper;
 import com.jwk.test.service.TestSeataService;
 import org.springframework.beans.factory.annotation.Autowired;

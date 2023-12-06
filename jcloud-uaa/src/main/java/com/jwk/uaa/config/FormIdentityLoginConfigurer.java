@@ -1,7 +1,6 @@
 package com.jwk.uaa.config;
 
 import com.jwk.common.security.support.handler.FormAuthenticationFailureHandler;
-import com.jwk.common.security.support.handler.SsoLogoutSuccessHandler;
 import com.jwk.uaa.constant.JwkOAuth2Urls;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -25,9 +24,8 @@ public final class FormIdentityLoginConfigurer
 			formLogin.defaultSuccessUrl(JwkOAuth2Urls.DEFAULT_SUCCESS_URL);
 			formLogin.loginProcessingUrl(JwkOAuth2Urls.LOGIN_PROCESSING_URL);
 			formLogin.failureHandler(new FormAuthenticationFailureHandler());
-		}).logout() // SSO登出成功处理
-				.logoutSuccessHandler(new SsoLogoutSuccessHandler()).deleteCookies("JSESSIONID")
-				.invalidateHttpSession(true).and().csrf().disable();
+		})
+		 .csrf(AbstractHttpConfigurer::disable);
 
 	}
 

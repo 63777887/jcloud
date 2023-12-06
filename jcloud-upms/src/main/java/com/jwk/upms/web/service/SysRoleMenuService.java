@@ -2,6 +2,7 @@ package com.jwk.upms.web.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.jwk.upms.base.entity.SysRoleMenu;
+import com.jwk.upms.dto.SetRoleMenuDto;
 
 /**
  * <p>
@@ -12,5 +13,7 @@ import com.jwk.upms.base.entity.SysRoleMenu;
  * @since 2021-06-03
  */
 public interface SysRoleMenuService extends IService<SysRoleMenu> {
+
+	Boolean setRoleMenu(SetRoleMenuDto setRoleMenuDto);
 
 }

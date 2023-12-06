@@ -1,9 +1,9 @@
 package com.jwk.common.security.support.grant.password;
 
-import com.jwk.common.security.support.feign.api.UpmsRemoteService;
+import com.jwk.upms.base.api.UpmsRemoteService;
 import com.jwk.common.security.support.service.JwkUserDetailsService;
 import com.jwk.upms.base.dto.UserInfo;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
@@ -14,10 +14,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
  * 账号密码用户登陆service
  * @date 2022/6/11
  */
+@RequiredArgsConstructor
 public class JwkUserDetailsServiceImpl implements JwkUserDetailsService {
 
-	@Autowired
-	UpmsRemoteService upmsRemoteService;
+	private final UpmsRemoteService upmsRemoteService;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

@@ -4,10 +4,10 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.io.Serializable;
-import lombok.AllArgsConstructor;
+import java.util.Date;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * <p>
@@ -15,12 +15,11 @@ import lombok.NoArgsConstructor;
  * </p>
  *
  * @author jiwk
- * @since 2021-06-03
+ * @since 2023-10-11
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@AllArgsConstructor
-@NoArgsConstructor
+@Accessors(chain = true)
 public class SysUser extends Model<SysUser> {
 
 	private static final long serialVersionUID = 1L;
@@ -32,49 +31,59 @@ public class SysUser extends Model<SysUser> {
 	private Long id;
 
 	/**
-	 * orgId
+	 * 组织机构ID
 	 */
 	private Long orgId;
 
 	/**
-	 * username
+	 * 用户名
 	 */
 	private String username;
 
 	/**
-	 * password
+	 * 昵称
+	 */
+	private String nickname;
+
+	/**
+	 * 个性签名
+	 */
+	private String signature;
+
+	/**
+	 * 密码
 	 */
 	private String password;
 
 	/**
-	 * phone
+	 * 手机号
 	 */
 	private String phone;
 
 	/**
-	 * email
+	 * 邮箱
 	 */
 	private String email;
 
 	/**
-	 * icon
+	 * 头像
 	 */
 	private String icon;
 
 	/**
-	 * enabled
+	 * 状态，1: 正常，2:删除
 	 */
 	private Byte status;
 
 	/**
 	 * createTime
 	 */
-	private Long createTime;
+	private Date createTime;
 
 	/**
 	 * updateTime
 	 */
-	private Long updateTime;
+	private Date updateTime;
 
 	@Override
 	protected Serializable pkVal() {

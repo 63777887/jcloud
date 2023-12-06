@@ -1,5 +1,7 @@
 package com.jwk.common.core.exception;
 
+import com.jwk.common.core.constant.ResponseConstants;
+
 /**
  * @author Jiwk
  * @date 2022/6/11
@@ -20,10 +22,16 @@ public class ServiceException extends RuntimeException {
 
 	public ServiceException(String message) {
 		super(message);
+		setErrorCode(ResponseConstants.ERROR_CODE);
 	}
 
 	public ServiceException(Throwable cause) {
 		super(cause);
+	}
+
+	public ServiceException(String errorCode, String msg) {
+		super(msg);
+		setErrorCode(errorCode);
 	}
 
 	public String getErrorCode() {

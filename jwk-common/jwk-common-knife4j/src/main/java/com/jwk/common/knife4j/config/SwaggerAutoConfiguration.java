@@ -49,11 +49,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Import(BeanValidatorPluginsConfiguration.class)
 public class SwaggerAutoConfiguration {
 
-	@Autowired
-	JwkSwaggerProperties jwkSwaggerProperties;
 
 	@Bean
-	public Docket createRestApi() {
+	public Docket createRestApi(JwkSwaggerProperties jwkSwaggerProperties) {
 		Predicate<RequestHandler> restPredicate = RequestHandlerSelectors.withClassAnnotation(RestController.class);
 		Predicate<RequestHandler> classPredicate = RequestHandlerSelectors.withClassAnnotation(Controller.class);
 		Predicate<RequestHandler> methodPredicate = RequestHandlerSelectors.withMethodAnnotation(ResponseBody.class);
@@ -62,10 +60,10 @@ public class SwaggerAutoConfiguration {
 		restPredicate.or(classPredicate).or(methodPredicate).or(basePackagePredicate);
 
 		return new Docket(DocumentationType.SWAGGER_2).groupName(jwkSwaggerProperties.getGroupName())
-				.apiInfo(this.apiInfo()).useDefaultResponseMessages(false).select().apis(restPredicate).build();
+				.apiInfo(this.apiInfo(jwkSwaggerProperties)).useDefaultResponseMessages(false).select().apis(restPredicate).build();
 	}
 
-	private ApiInfo apiInfo() {
+	private ApiInfo apiInfo(JwkSwaggerProperties jwkSwaggerProperties) {
 		return new ApiInfoBuilder().title(jwkSwaggerProperties.getTitle())
 				.description(jwkSwaggerProperties.getDescription()).version(jwkSwaggerProperties.getVersion()).build();
 	}

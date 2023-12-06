@@ -1,7 +1,5 @@
 package com.jwk.common.redis.enums;
 
-import com.jwk.common.redis.exception.RedisExceptionCodeE;
-
 /**
  * @author Jiwk
  * @version 0.1.3
