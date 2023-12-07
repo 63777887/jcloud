@@ -9,10 +9,22 @@
 
 ## 系统说明
 
-- 基于 Spring Cloud 2021 、Spring Boot 2.7、 Spring Authorization Server 0.3.1 的 RBAC **权限管理系统**
+- 基于 Spring Cloud 、Spring Boot、 Spring Authorization Server 的 RBAC **权限管理系统**
 - 提供常见中间件的处理方案，如Redis，MQ，Prometheus等
+- 提供动态的前后端权限控制，后端精确到接口，前端精确到按钮
+- 提供如多级缓存，全局ID生成，服务监控等常见问题方案
 - 提供对常见容器化支持 Docker、Kubernetes 支持
 
+## 分支导航
+
+### github
+jcloud: https://github.com/63777887/jcloud   
+jcloud-ui: https://github.com/63777887/jcloud-ui
+
+
+### gitee
+jcloud: https://gitee.com/musi1996/jcloud   
+jcloud-ui: https://gitee.com/musi1996/jcloud-ui   
 
 ### 核心依赖
 
@@ -56,3 +68,32 @@ jCloud
 ### 使用方式
 
 请查看每个模块的使用说明
+
+## 界面
+
+### 登录界面
+![jcloud-login-page.png](docs%2Fimages%2Freadme%2Fjcloud-login-page.png)
+
+### 登录验证
+![jcloud-verify.png](docs%2Fimages%2Freadme%2Fjcloud-verify.png)
+
+### 首页
+![jcloud-home.png](docs%2Fimages%2Freadme%2Fjcloud-home.png)
+![jcloud-user-setting.png](docs%2Fimages%2Freadme%2Fjcloud-user-setting.png)
+![jcloud-theme.png](docs%2Fimages%2Freadme%2Fjcloud-theme.png)
+![jcloud-theme-change.png](docs%2Fimages%2Freadme%2Fjcloud-theme-change.png)
+![jcloud-theme-dark.png](docs%2Fimages%2Freadme%2Fjcloud-theme-dark.png)
+![jcloud-theme-grey.png](docs%2Fimages%2Freadme%2Fjcloud-theme-grey.png)
+
+### 用户管理
+![jcloud-user.png](docs%2Fimages%2Freadme%2Fjcloud-user.png)
+![jcloud-user-import.png](docs%2Fimages%2Freadme%2Fjcloud-user-import.png)
+![jcloud-user-export.png](docs%2Fimages%2Freadme%2Fjcloud-user-export.png)
+
+### 权限管理
+![jcloud-role.png](docs%2Fimages%2Freadme%2Fjcloud-role.png)
+![jcloud-role-setting.png](docs%2Fimages%2Freadme%2Fjcloud-role-setting.png)
+
+### 菜单管理
+![jcloud-menu.png](docs%2Fimages%2Freadme%2Fjcloud-menu.png)
+![jcloud-menu-add.png](docs%2Fimages%2Freadme%2Fjcloud-menu-add.png)
