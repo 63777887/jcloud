@@ -1,11 +1,11 @@
 package com.jwk.upms.base.dto;
 
 import cn.hutool.core.lang.tree.Tree;
-import com.jwk.upms.base.entity.SysApi;
 import com.jwk.upms.base.entity.SysMenu;
 import com.jwk.upms.base.entity.SysUser;
-import java.util.List;
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * @author Jiwk
@@ -18,8 +18,6 @@ import lombok.Data;
 public class UserInfo {
 
 	SysUser sysUser;
-
-	List<SysApi> sysApis;
 
 	List<Tree<Long>> sysMenu;
 

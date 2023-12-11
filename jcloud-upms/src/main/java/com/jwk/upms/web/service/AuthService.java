@@ -2,7 +2,7 @@ package com.jwk.upms.web.service;
 
 import com.jwk.upms.base.dto.RegisterReq;
 import com.jwk.upms.base.dto.UserInfo;
-import com.jwk.upms.base.entity.SysApi;
+import com.jwk.upms.base.entity.SysMenu;
 import com.jwk.upms.dto.UserImportDto;
 
 import java.util.List;
@@ -29,7 +29,7 @@ public interface AuthService {
 	 * 获取资源列表
 	 * @return
 	 */
-	List<SysApi> resourceList();
+	List<SysMenu> resourceList();
 
 	Integer testSeata();
 

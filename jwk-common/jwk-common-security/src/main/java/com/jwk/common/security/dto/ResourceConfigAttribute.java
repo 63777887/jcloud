@@ -1,6 +1,6 @@
 package com.jwk.common.security.dto;
 
-import com.jwk.upms.base.entity.SysApi;
+import com.jwk.upms.base.entity.SysMenu;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -13,23 +13,23 @@ import org.springframework.security.core.GrantedAuthority;
  */
 public class ResourceConfigAttribute implements ConfigAttribute, GrantedAuthority {
 
-	private SysApi sysApi;
+	private SysMenu sysMenu;
 
-	public ResourceConfigAttribute(SysApi sysApi) {
-		this.sysApi = sysApi;
+	public ResourceConfigAttribute(SysMenu sysMenu) {
+		this.sysMenu = sysMenu;
 	}
 
 	@Override
 	public String getAttribute() {
-		return sysApi.getUrl();
+		return sysMenu.getPath();
 	}
 
-	public SysApi getSysApi() {
-		return sysApi;
+	public SysMenu getSysMenu() {
+		return sysMenu;
 	}
 
-	public void setSysApi(SysApi sysApi) {
-		this.sysApi = sysApi;
+	public void setSysMenu(SysMenu sysMenu) {
+		this.sysMenu = sysMenu;
 	}
 
 	@Override

@@ -7,8 +7,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
- * @author lengleng
- * @date 2019/2/1 日志自动配置
+ * @author Jiwk
+ * @version 0.1.6
+ * <p>
+ * 自动配置类
+ * @date 2023/12/11
  */
 @EnableAsync
 @Configuration(proxyBeanMethods = false)

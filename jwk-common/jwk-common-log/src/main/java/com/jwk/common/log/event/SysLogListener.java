@@ -10,7 +10,11 @@ import org.springframework.core.annotation.Order;
 import org.springframework.scheduling.annotation.Async;
 
 /**
- * @author lengleng 异步监听日志事件
+ * @author Jiwk
+ * @version 0.1.6
+ * <p>
+ * 异步监听日志事件
+ * @date 2023/12/11
  */
 @Slf4j
 @RequiredArgsConstructor

@@ -6,9 +6,9 @@ import cn.hutool.extra.spring.SpringUtil;
 import com.jwk.common.security.constants.OAuth2ErrorCodeConstant;
 import com.jwk.common.security.dto.AdminUserDetails;
 import com.jwk.common.security.dto.ResourceConfigAttribute;
-import com.jwk.upms.base.api.UpmsRemoteService;
 import com.jwk.common.security.support.service.JwkUserDetailsService;
-import com.jwk.upms.base.entity.SysApi;
+import com.jwk.upms.base.api.UpmsRemoteService;
+import com.jwk.upms.base.entity.SysMenu;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.Ordered;
@@ -59,7 +59,7 @@ public class JwkCustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector
 		// 若scope没有权限，直接返回
 		if (CollUtil.isEmpty(scopeAuthorities)) {
 			return new AdminUserDetails(oldAuthorization.getAttributes(),
-					Collections.singletonList(new ResourceConfigAttribute(new SysApi())),
+					Collections.singletonList(new ResourceConfigAttribute(new SysMenu())),
 					oldAuthorization.getPrincipalName());
 		}
 		// 客户端模式默认返回
@@ -88,15 +88,15 @@ public class JwkCustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector
 					.map(t -> (ResourceConfigAttribute) t).collect(Collectors.toList());
 			// 获取申请的权限
 			List<Long> scopeRoleIds = scopeAuthorities.stream()
-					.map(scopeAuthority -> scopeAuthority.getSysApi().getId()).collect(Collectors.toList());
+					.map(scopeAuthority -> scopeAuthority.getSysMenu().getId()).collect(Collectors.toList());
 			// 获取用户的权限
-			List<Long> userRoleIds = userAuthoritys.stream().map(scopeAuthority -> scopeAuthority.getSysApi().getId())
+			List<Long> userRoleIds = userAuthoritys.stream().map(scopeAuthority -> scopeAuthority.getSysMenu().getId())
 					.collect(Collectors.toList());
 			// 取用户权限和申请权限的交集
 			List<Long> roleIds = (List<Long>) CollUtil.intersection(scopeRoleIds, userRoleIds);
 			// 构建token的权限集
 			List<ResourceConfigAttribute> realAuthorities = scopeAuthorities.stream().filter(realAuthority -> {
-				return roleIds.contains(realAuthority.getSysApi().getId());
+				return roleIds.contains(realAuthority.getSysMenu().getId());
 			}).collect(Collectors.toList());
 			AdminUserDetails adminUserDetails = (AdminUserDetails) userDetails;
 
@@ -128,10 +128,10 @@ public class JwkCustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector
 				}
 				throw new InvalidBearerTokenException(OAuth2ErrorCodeConstant.INVALID_BEARER_TOKEN);
 			}
-			List<SysApi> sysApiDtos = upmsRemoteService.loadUserAuthoritiesByRole((new ArrayList<>((scopeSet))))
+			List<SysMenu> sysMenus = upmsRemoteService.loadUserAuthoritiesByRole((new ArrayList<>((scopeSet))))
 					.getData();
-			if (CollUtil.isNotEmpty(sysApiDtos)) {
-				scopeAuthorities = sysApiDtos.stream().map(sysApiDto -> {
+			if (CollUtil.isNotEmpty(sysMenus)) {
+				scopeAuthorities = sysMenus.stream().map(sysApiDto -> {
 					return new ResourceConfigAttribute(sysApiDto);
 				}).collect(Collectors.toList());
 			}

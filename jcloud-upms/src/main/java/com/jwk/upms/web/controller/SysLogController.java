@@ -4,17 +4,14 @@ package com.jwk.upms.web.controller;
 import cn.hutool.core.convert.Convert;
 import com.jwk.common.core.model.RestResponse;
 import com.jwk.common.security.annotation.Inner;
+import com.jwk.common.security.annotation.UserParam;
 import com.jwk.upms.base.dto.SysLogDto;
 import com.jwk.upms.base.entity.SysLog;
-import com.jwk.upms.base.entity.SysMenu;
+import com.jwk.upms.base.entity.SysUser;
 import com.jwk.upms.dto.GetSysLogDto;
-import com.jwk.upms.dto.MenuDto;
 import com.jwk.upms.web.service.SysLogService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 /**
  * <p>
@@ -44,8 +41,8 @@ public class SysLogController {
     }
 
     @GetMapping("/getLoginLog")
-    public RestResponse getLoginLog() {
-        return RestResponse.success(sysLogService.getLoginLog());
+    public RestResponse getLoginLog(@UserParam SysUser sysUser,String serviceId ) {
+        return RestResponse.success(sysLogService.getLoginLog(sysUser.getId(),serviceId));
     }
 
 }

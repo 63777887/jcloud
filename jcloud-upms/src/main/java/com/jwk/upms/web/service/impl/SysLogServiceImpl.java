@@ -64,8 +64,10 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
     }
 
     @Override
-    public List<SysLog> getLoginLog() {
+    public List<SysLog> getLoginLog(Long userId, String serviceId) {
         return lambdaQuery()
+                .eq(SysLog::getCreateBy, userId)
+                .eq(SysLog::getServiceId, serviceId)
                 .in(SysLog::getLogType, Arrays.asList(LogTypeE.USER_LOGIN.getCode(),LogTypeE.USER_LOGOUT.getCode()))
                 .eq(SysLog::getStatus, LogStatusE.SUCCESS_LOG.getCode()).orderByDesc(SysLog::getCreateTime).last("limit 5").list();
     }

@@ -4,12 +4,13 @@ import com.jwk.common.core.model.InnerResponse;
 import com.jwk.upms.base.api.UpmsRemoteService;
 import com.jwk.upms.base.dto.SysOauthClientDto;
 import com.jwk.upms.base.dto.UserInfo;
-import com.jwk.upms.base.entity.SysApi;
-import java.util.Collections;
-import java.util.List;
+import com.jwk.upms.base.entity.SysMenu;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Jiwk
@@ -43,8 +44,8 @@ public class UpmsRemoteServiceFallBackServiceImpl implements UpmsRemoteService {
 	}
 
 	@Override
-	public InnerResponse<List<SysApi>> loadUserAuthoritiesByRole(List<String> roleCode) {
-		return InnerResponse.success(Collections.singletonList(new SysApi()));
+	public InnerResponse<List<SysMenu>> loadUserAuthoritiesByRole(List<String> roleCode) {
+		return InnerResponse.success(Collections.singletonList(new SysMenu()));
 	}
 
 	@Override

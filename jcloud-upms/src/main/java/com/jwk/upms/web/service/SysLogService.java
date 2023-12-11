@@ -18,5 +18,5 @@ public interface SysLogService extends IService<SysLog> {
 
     List<SysLog> getLog(GetSysLogDto getSysLogDto);
 
-    List<SysLog> getLoginLog();
+    List<SysLog> getLoginLog(Long userId, String serviceId);
 }

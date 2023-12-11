@@ -1,23 +1,20 @@
 package com.jwk.uaa.endpoint;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.extra.spring.SpringUtil;
 import com.jwk.common.core.constant.CharConstants;
+import com.jwk.common.core.constant.JwkSecurityConstants;
 import com.jwk.common.core.model.RestResponse;
-import com.jwk.common.log.enums.LogStatusE;
-import com.jwk.common.log.enums.LogTypeE;
-import com.jwk.common.log.event.SysLogEvent;
 import com.jwk.common.log.utils.SysLogUtils;
 import com.jwk.common.security.annotation.Inner;
 import com.jwk.common.security.constants.OAuth2Constant;
 import com.jwk.common.security.constants.OAuth2ErrorCodeConstant;
 import com.jwk.common.security.exception.ScopeException;
-import com.jwk.upms.base.api.UpmsRemoteService;
 import com.jwk.common.security.support.handler.JwkAuthenticationFailureEventHandler;
 import com.jwk.common.security.support.handler.JwkOAuth2AccessTokenResponseHttpMessageConverter;
 import com.jwk.common.security.util.SecurityUtils;
-import com.jwk.upms.base.dto.SysLogDto;
+import com.jwk.upms.base.api.UpmsRemoteService;
 import com.jwk.upms.base.dto.SysOauthClientDto;
 import com.jwk.upms.base.entity.SysRole;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +24,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServletServerHttpResponse;
-import org.springframework.security.authentication.event.LogoutSuccessEvent;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2TokenType;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenResponse;
@@ -36,7 +32,6 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.resource.InvalidBearerTokenException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -196,18 +191,12 @@ public class JwkTokenEndpoint {
 		}
 		// 清空access token
 		authorizationService.remove(authorization);
-		 // 处理自定义退出事件，保存相关日志
-		pushLoginFailLog();
+		Map<String, Object> claims = authorization.getAccessToken().getClaims();
+		Long userId = MapUtil.getLong(claims,JwkSecurityConstants.DETAILS_USER_ID);
+		String clientId = MapUtil.getStr(claims, JwkSecurityConstants.CLIENT_ID);
+		// 处理自定义退出事件，保存相关日志
+		SysLogUtils.pushLogoutLog(userId,clientId);
 		return RestResponse.success();
-	}
-
-	private void pushLoginFailLog() {
-		SysLogDto sysLogDto = SysLogUtils.getSysLog();
-		sysLogDto.setLogType(LogTypeE.USER_LOGOUT.getCode());
-		sysLogDto.setLogTitle(LogTypeE.USER_LOGOUT.getMsg());
-		sysLogDto.setStatus(LogStatusE.SUCCESS_LOG.getCode());
-		sysLogDto.setCreateBy(StrUtil.isNotBlank(SecurityUtils.getAuthentication().getName()) ? SecurityUtils.getAuthentication().getName() : "");
-		SpringUtil.publishEvent(new SysLogEvent(sysLogDto));
 	}
 
 	public static class ScopeWithDescription {

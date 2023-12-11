@@ -1,8 +1,6 @@
 package com.jwk.common.security.support.handler;
 
 import cn.hutool.core.map.MapUtil;
-import cn.hutool.core.util.StrUtil;
-import cn.hutool.extra.spring.SpringUtil;
 import com.jwk.common.core.constant.JwkSecurityConstants;
 
 import java.io.IOException;
@@ -11,12 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.jwk.common.log.enums.LogStatusE;
-import com.jwk.common.log.enums.LogTypeE;
-import com.jwk.common.log.event.SysLogEvent;
 import com.jwk.common.log.utils.SysLogUtils;
-import com.jwk.common.security.util.SecurityUtils;
-import com.jwk.upms.base.dto.SysLogDto;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -58,24 +51,17 @@ public class JwkAuthenticationSuccessEventHandler implements AuthenticationSucce
         OAuth2AccessTokenAuthenticationToken accessTokenAuthentication = (OAuth2AccessTokenAuthenticationToken) authentication;
         Map<String, Object> map = accessTokenAuthentication.getAdditionalParameters();
         if (MapUtil.isNotEmpty(map)) {
-            String userName = (String) map.get(JwkSecurityConstants.DETAILS_USER_NAME);
+            Long userId = MapUtil.getLong(map,JwkSecurityConstants.DETAILS_USER_ID);
+            String clientId = MapUtil.getStr(map, JwkSecurityConstants.CLIENT_ID);
+            String userName = MapUtil.getStr(map, JwkSecurityConstants.DETAILS_USER_NAME);
             if (log.isDebugEnabled()) {
                 log.debug("用户：{} 登录成功", userName);
             }
-            pushLoginSeccessLog();
+            SysLogUtils.pushLoginSuccessLog(userId,clientId);
         }
 
         // 输出token
         sendAccessTokenResponse(request, response, authentication);
-    }
-
-    private void pushLoginSeccessLog() {
-        SysLogDto sysLogDto = SysLogUtils.getSysLog();
-        sysLogDto.setLogType(LogTypeE.USER_LOGIN.getCode());
-        sysLogDto.setLogTitle(LogTypeE.USER_LOGIN.getMsg());
-        sysLogDto.setStatus(LogStatusE.SUCCESS_LOG.getCode());
-        sysLogDto.setCreateBy(StrUtil.isNotBlank(SecurityUtils.getAuthentication().getName()) ? SecurityUtils.getAuthentication().getName() : "");
-        SpringUtil.publishEvent(new SysLogEvent(sysLogDto));
     }
 
     private void sendAccessTokenResponse(HttpServletRequest request, HttpServletResponse response,

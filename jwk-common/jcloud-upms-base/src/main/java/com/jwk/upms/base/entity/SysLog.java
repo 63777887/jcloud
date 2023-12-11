@@ -47,6 +47,11 @@ public class SysLog extends Model<SysLog> {
     private String requestUri;
 
     /**
+     * 服务ID
+     */
+    private String serviceId;
+
+    /**
      * 用户代理
      */
     private String userAgent;

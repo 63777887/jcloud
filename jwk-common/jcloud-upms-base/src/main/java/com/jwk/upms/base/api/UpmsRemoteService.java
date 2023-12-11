@@ -5,12 +5,13 @@ import com.jwk.common.core.constant.ServerNameConstants;
 import com.jwk.common.core.model.InnerResponse;
 import com.jwk.upms.base.dto.SysOauthClientDto;
 import com.jwk.upms.base.dto.UserInfo;
-import com.jwk.upms.base.entity.SysApi;
-import java.util.List;
+import com.jwk.upms.base.entity.SysMenu;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 /**
  * @author Jiwk
@@ -50,8 +51,8 @@ public interface UpmsRemoteService {
 	 * 获取资源列表
 	 * @return
 	 */
-	@GetMapping(value = "/sysApi/loadUserAuthoritiesByRole", headers = JwkSecurityConstants.HEADER_FROM_IN)
-	InnerResponse<List<SysApi>> loadUserAuthoritiesByRole(@RequestParam("roleCodeList") List<String> roleCode);
+	@GetMapping(value = "/sysMenu/loadUserAuthoritiesByRole", headers = JwkSecurityConstants.HEADER_FROM_IN)
+	InnerResponse<List<SysMenu>> loadUserAuthoritiesByRole(@RequestParam("roleCodeList") List<String> roleCode);
 
 	/**
 	 * 通过clientId 查询客户端信息

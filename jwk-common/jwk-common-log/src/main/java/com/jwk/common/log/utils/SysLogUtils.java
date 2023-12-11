@@ -2,31 +2,35 @@ package com.jwk.common.log.utils;
 
 import cn.hutool.core.util.URLUtil;
 import cn.hutool.extra.servlet.ServletUtil;
+import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.http.HttpUtil;
 import com.jwk.common.core.utils.DateUtil;
+import com.jwk.common.log.enums.LogStatusE;
+import com.jwk.common.log.enums.LogTypeE;
+import com.jwk.common.log.event.SysLogEvent;
 import com.jwk.upms.base.dto.SysLogDto;
 import lombok.experimental.UtilityClass;
-import org.springframework.core.StandardReflectionParameterNameDiscoverer;
-import org.springframework.expression.EvaluationContext;
-import org.springframework.expression.Expression;
-import org.springframework.expression.spel.standard.SpelExpressionParser;
-import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.lang.reflect.Method;
 import java.util.Objects;
 
 /**
+ * @author Jiwk
+ * @version 0.1.6
+ * <p>
  * 系统日志工具类
- *
- * @author L.cm
+ * @date 2023/12/11
  */
 @UtilityClass
 public class SysLogUtils {
 
+	/**
+	 * 获取日志对象
+	 * @return
+	 */
 	public SysLogDto getSysLog() {
 		HttpServletRequest request = ((ServletRequestAttributes) Objects
 			.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
@@ -40,37 +44,41 @@ public class SysLogUtils {
 		return sysLog;
 	}
 
-
 	/**
-	 * 获取spel 定义的参数值
-	 * @param context 参数容器
-	 * @param key key
-	 * @param clazz 需要返回的类型
-	 * @param <T> 返回泛型
-	 * @return 参数值
+	 * 推送退出登陆日志事件
+	 * @param userId
+	 * @param clientId
 	 */
-	public <T> T getValue(EvaluationContext context, String key, Class<T> clazz) {
-		SpelExpressionParser spelExpressionParser = new SpelExpressionParser();
-		Expression expression = spelExpressionParser.parseExpression(key);
-		return expression.getValue(context, clazz);
+	public void pushLogoutLog(Long userId, String clientId) {
+		SysLogDto sysLogDto = getSysLog();
+		sysLogDto.setLogType(LogTypeE.USER_LOGOUT.getCode());
+		sysLogDto.setLogTitle(LogTypeE.USER_LOGOUT.getMsg());
+		pushSuccessLog(userId, clientId, sysLogDto);
 	}
 
 	/**
-	 * 获取参数容器
-	 * @param arguments 方法的参数列表
-	 * @param signatureMethod 被执行的方法体
-	 * @return 装载参数的容器
+	 * 推送成功登陆日志事件
+	 * @param userId
+	 * @param clientId
 	 */
-	public EvaluationContext getContext(Object[] arguments, Method signatureMethod) {
-		String[] parameterNames = new StandardReflectionParameterNameDiscoverer().getParameterNames(signatureMethod);
-		EvaluationContext context = new StandardEvaluationContext();
-		if (parameterNames == null) {
-			return context;
-		}
-		for (int i = 0; i < arguments.length; i++) {
-			context.setVariable(parameterNames[i], arguments[i]);
-		}
-		return context;
+	public void pushLoginSuccessLog(Long userId, String clientId) {
+		SysLogDto sysLogDto = getSysLog();
+		sysLogDto.setLogType(LogTypeE.USER_LOGIN.getCode());
+		sysLogDto.setLogTitle(LogTypeE.USER_LOGIN.getMsg());
+		pushSuccessLog(userId, clientId, sysLogDto);
+	}
+
+	/**
+	 * 推送成功日志
+	 * @param userId
+	 * @param clientId
+	 * @param sysLogDto
+	 */
+	private void pushSuccessLog(Long userId, String clientId, SysLogDto sysLogDto) {
+		sysLogDto.setStatus(LogStatusE.SUCCESS_LOG.getCode());
+		sysLogDto.setCreateBy(String.valueOf(userId));
+		sysLogDto.setServiceId(clientId);
+		SpringUtil.publishEvent(new SysLogEvent(sysLogDto));
 	}
 
 }

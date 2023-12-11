@@ -1,5 +1,6 @@
 package com.jwk.upms.web.controller;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.lang.tree.TreeNode;
 import cn.hutool.core.lang.tree.TreeUtil;
@@ -7,29 +8,28 @@ import cn.hutool.core.util.StrUtil;
 import com.jwk.common.core.exception.ServiceException;
 import com.jwk.common.core.model.RestResponse;
 import com.jwk.common.core.utils.DateUtil;
+import com.jwk.common.security.annotation.Inner;
 import com.jwk.upms.base.entity.SysMenu;
+import com.jwk.upms.base.entity.SysRole;
+import com.jwk.upms.base.entity.SysRoleMenu;
 import com.jwk.upms.dto.MenuDto;
 import com.jwk.upms.enums.ErrorCodeStatusE;
 import com.jwk.upms.enums.MenuStatusE;
 import com.jwk.upms.enums.MenuTypeE;
 import com.jwk.upms.web.service.SysMenuService;
+import com.jwk.upms.web.service.SysRoleMenuService;
+import com.jwk.upms.web.service.SysRoleService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
@@ -45,6 +45,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class SysMenuController {
 
 	private final SysMenuService sysMenuService;
+
+	private final SysRoleService sysRoleService;
+
+	private final SysRoleMenuService sysRoleMenuService;
 
 	@GetMapping("/tree")
 	public RestResponse tree(@RequestParam(name = "menuName", required = false) String menuName,
@@ -112,6 +116,28 @@ public class SysMenuController {
 				.set(null != menuDto.getSort() && menuDto.getSort() > 0, SysMenu::getSort, menuDto.getSort())
 				.set(null != menuDto.getStatus() && menuDto.getStatus() > 0, SysMenu::getStatus, menuDto.getStatus())
 				.set(SysMenu::getUpdateTime, DateUtil.nowDate()).eq(SysMenu::getId, menuDto.getId()).update());
+	}
+
+	/**
+	 * 接口列表
+	 */
+	@Inner
+	@GetMapping(value = "/loadUserAuthoritiesByRole")
+	public RestResponse loadUserAuthoritiesByRole(@RequestParam("roleCodeList") List<String> roleCodeList) {
+		// 加载用户角色列表
+		List<SysRole> sysRoleList = sysRoleService.lambdaQuery().in(SysRole::getCode, roleCodeList).list();
+		if (CollUtil.isEmpty(sysRoleList)) {
+			return RestResponse.success();
+		}
+		List<Long> sysRoleIds = sysRoleList.stream().map(SysRole::getId).collect(Collectors.toList());
+		// 通过用户角色列表加载用户的资源权限列表
+		List<SysRoleMenu> sysRoleMenuList = sysRoleMenuService.lambdaQuery().in(SysRoleMenu::getRoleId, sysRoleIds).list();
+		if (CollUtil.isEmpty(sysRoleMenuList)) {
+			return RestResponse.success();
+		}
+		List<Long> menuIds = sysRoleMenuList.stream().map(SysRoleMenu::getMenuId).collect(Collectors.toList());
+		List<SysMenu> sysApis = sysMenuService.lambdaQuery().eq(SysMenu::getType,MenuTypeE.BUTTON.getId()).in(SysMenu::getId,menuIds).list();
+		return RestResponse.success(sysApis);
 	}
 
 	@GetMapping("/getMenuListByRole/{roleId}")

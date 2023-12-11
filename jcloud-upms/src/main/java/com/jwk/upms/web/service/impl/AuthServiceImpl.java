@@ -11,20 +11,19 @@ import com.jwk.upms.base.dto.RegisterReq;
 import com.jwk.upms.base.dto.UserInfo;
 import com.jwk.upms.base.entity.*;
 import com.jwk.upms.dto.UserImportDto;
-import com.jwk.upms.enums.ErrorCodeStatusE;
-import com.jwk.upms.web.service.*;
+import com.jwk.upms.enums.MenuTypeE;
 import com.jwk.upms.enums.UserStatusE;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
+import com.jwk.upms.web.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Jiwk
@@ -43,9 +42,9 @@ public class AuthServiceImpl implements AuthService {
 
     private final SysUserRoleService userRoleService;
 
-    private final SysRoleApiService sysRoleApiService;
+    private final SysRoleMenuService sysRoleMenuService;
 
-    private final SysApiService sysApiService;
+    private final SysMenuService sysMenuService;
 
     private final SysOrgService sysOrgService;
 
@@ -183,20 +182,23 @@ public class AuthServiceImpl implements AuthService {
         List<SysUserRole> sysUserRoles = userRoleService.lambdaQuery().eq(SysUserRole::getUserId, user.getId()).list();
         List<Long> roleIds = sysUserRoles.stream().map(SysUserRole::getRoleId).collect(Collectors.toList());
 
-        List<SysApi> sysApis = new ArrayList<>();
+        List<SysMenu> sysMenus = new ArrayList<>();
         for (Long roleId : roleIds) {
             // 通过用户角色列表加载用户的资源权限列表
-            List<SysRoleApi> sysRoleApis = sysRoleApiService.lambdaQuery().eq(SysRoleApi::getRoleId, roleId).list();
-            List<Long> apiIds = sysRoleApis.stream().map(SysRoleApi::getApiId).collect(Collectors.toList());
-            List<SysApi> sysApiList = sysApiService.listByIds(apiIds);
-            if (CollUtil.isNotEmpty(sysApiList)) {
-                sysApis.addAll(sysApiList);
+            List<SysRoleMenu> sysRoleMenuList = sysRoleMenuService.lambdaQuery().eq(SysRoleMenu::getRoleId, roleId).list();
+            if (CollUtil.isEmpty(sysRoleMenuList)){
+                continue;
+            }
+            List<Long> menuIds = sysRoleMenuList.stream().map(SysRoleMenu::getMenuId).collect(Collectors.toList());
+            List<SysMenu> sysMenuList = sysMenuService.lambdaQuery().eq(SysMenu::getType, MenuTypeE.BUTTON.getId()).in(SysMenu::getId,menuIds).list();
+            if (CollUtil.isNotEmpty(sysMenuList)) {
+                sysMenus.addAll(sysMenuList);
             }
         }
 
         UserInfo userInfo = new UserInfo();
         userInfo.setSysUser(user);
-        userInfo.setSysApis(sysApis);
+        userInfo.setButtons(sysMenus);
         return userInfo;
     }
 
@@ -207,9 +209,9 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public List<SysApi> resourceList() {
-        List<SysApi> list = sysApiService.lambdaQuery().eq(SysApi::getStatus, StatusE.Normal.getId()).list();
-        return list.stream().map(t -> Convert.convert(SysApi.class, t)).collect(Collectors.toList());
+    public List<SysMenu> resourceList() {
+        List<SysMenu> list = sysMenuService.lambdaQuery().eq(SysMenu::getStatus, StatusE.Normal.getId()).list();
+        return list;
     }
 
     @Override

@@ -21,4 +21,6 @@ public interface ExcelService {
     String getFileName();
 
     void exportData(HttpServletResponse response, ExcelReq excelReq);
+
+    void downloadExcelTemp(HttpServletResponse response);
 }

@@ -4,7 +4,7 @@ package com.jwk.common.log.enums;
  * @author Jiwk
  * @version 0.1.6
  * <p>
- * 错误码
+ * 日志类型
  * @date 2022/10/17
  */
 public enum LogStatusE {
