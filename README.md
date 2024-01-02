@@ -26,7 +26,7 @@ jcloud-ui: https://github.com/63777887/jcloud-ui
 jcloud: https://gitee.com/musi1996/jcloud   
 jcloud-ui: https://gitee.com/musi1996/jcloud-ui   
 
-### 核心依赖
+## 核心依赖
 
 | 依赖                   | 版本         |
 | ---------------------- |------------|
@@ -38,7 +38,7 @@ jcloud-ui: https://gitee.com/musi1996/jcloud-ui
 | hutool                 | 5.8.9      |
 
 
-### 模块结构
+## 模块结构
 ```lua
 jCloud
 ├── jwk-uaa -- 授权服务提供
@@ -67,7 +67,7 @@ jCloud
 ├── jwk-admin -- Admin监控
 └── jwk-gateway -- Spring Cloud Gateway网关
 ```
-### 使用方式
+## 使用方式
 
 请查看每个模块的使用说明
 
@@ -99,3 +99,6 @@ jCloud
 ### 菜单管理
 ![jcloud-menu.png](docs%2Fimages%2Freadme%2Fjcloud-menu.png)
 ![jcloud-menu-add.png](docs%2Fimages%2Freadme%2Fjcloud-menu-add.png)
+
+### 系统设置
+![jcloud-system-redisMonitor.png](docs%2Fimages%2Freadme%2Fjcloud-system-redisMonitor.png)
