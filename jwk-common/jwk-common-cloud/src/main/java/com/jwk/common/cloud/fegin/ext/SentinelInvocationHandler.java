@@ -1,7 +1,5 @@
 package com.jwk.common.cloud.fegin.ext;
 
-import static feign.Util.checkNotNull;
-
 import com.alibaba.cloud.sentinel.feign.SentinelContractHolder;
 import com.alibaba.csp.sentinel.Entry;
 import com.alibaba.csp.sentinel.EntryType;
@@ -9,19 +7,22 @@ import com.alibaba.csp.sentinel.SphU;
 import com.alibaba.csp.sentinel.Tracer;
 import com.alibaba.csp.sentinel.context.ContextUtil;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
-import com.jwk.common.core.model.InnerResponse;
+import com.jwk.common.core.model.RestResponse;
 import feign.Feign;
 import feign.InvocationHandlerFactory;
 import feign.MethodMetadata;
 import feign.Target;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.openfeign.FallbackFactory;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.cloud.openfeign.FallbackFactory;
+
+import static feign.Util.checkNotNull;
 
 /**
  * @author Jiwk
@@ -128,11 +129,11 @@ public class SentinelInvocationHandler implements InvocationHandler {
 					}
 					else {
 						// 若是业务统一类型 执行自动降级返回R
-						if (InnerResponse.class == method.getReturnType()) {
+						if (RestResponse.class == method.getReturnType()) {
 							if (log.isErrorEnabled()) {
 								log.error("feign 服务间调用异常", ex);
 							}
-							return InnerResponse.error().setMsg(ex.getLocalizedMessage());
+							return RestResponse.error().setMsg(ex.getLocalizedMessage());
 						}
 						else {
 							throw ex;

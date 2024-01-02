@@ -29,6 +29,7 @@ import org.redisson.config.ClusterServersConfig;
 import org.redisson.config.Config;
 import org.redisson.config.SentinelServersConfig;
 import org.redisson.config.SingleServerConfig;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties.Sentinel;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
@@ -196,6 +197,18 @@ public class RedisUtil {
 
 	public RedisSerializer<String> stringValueSerializer() {
 		return RedisSerializer.string();
+	}
+
+	public RedisSerializer<Object> jsonSerializer(ObjectProvider<ObjectMapper> objectProvider) {
+		// jackson findAndRegisterModules，use copy
+		ObjectMapper objectMapper = objectProvider.getIfAvailable(ObjectMapper::new).copy();
+		objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+		// findAndRegisterModules
+		objectMapper.findAndRegisterModules();
+		// class type info to json
+		GenericJackson2JsonRedisSerializer.registerNullValueSerializer(objectMapper, null);
+		objectMapper.activateDefaultTyping(objectMapper.getPolymorphicTypeValidator(), ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
+		return new GenericJackson2JsonRedisSerializer(objectMapper);
 	}
 
 	public String[] replaceName(String name, String delimiter) {

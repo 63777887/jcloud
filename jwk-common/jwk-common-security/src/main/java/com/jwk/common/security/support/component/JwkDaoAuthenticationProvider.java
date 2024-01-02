@@ -3,11 +3,13 @@ package com.jwk.common.security.support.component;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.servlet.ServletUtil;
 import cn.hutool.extra.spring.SpringUtil;
+import com.jwk.common.core.constant.JwkSecurityConstants;
 import com.jwk.common.core.utils.WebUtils;
 import com.jwk.common.security.support.properties.JwkAuthProperties;
 import com.jwk.common.security.support.service.JwkUserDetailsService;
 import java.util.Comparator;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Supplier;
 import javax.servlet.http.HttpServletRequest;
@@ -67,6 +69,16 @@ public class JwkDaoAuthenticationProvider extends AbstractUserDetailsAuthenticat
 			UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
 
 		// 这边可以设置不需要校验密码的认证模式，如验证码模式
+		String grantType = WebUtils.getRequest().get().getParameter(OAuth2ParameterNames.GRANT_TYPE);
+		Map<String, JwkUserDetailsService> userDetailsServiceMap = SpringUtil
+				.getBeansOfType(JwkUserDetailsService.class);
+
+		Optional<JwkUserDetailsService> optional = userDetailsServiceMap.values().stream()
+				.filter(service -> service.supportGrantType(grantType))
+				.max(Comparator.comparingInt(Ordered::getOrder));
+		if (!optional.get().needPassword()) {
+			return;
+		}
 
 		if (authentication.getCredentials() == null) {
 			if (this.logger.isDebugEnabled()) {

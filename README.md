@@ -50,11 +50,13 @@ jCloud
      ├── jwk-common-canal-rocketmq -- RocketMQ同步Canal
      ├── jwk-common-cloud -- Spring Cloud Alibaba
      ├── jwk-common-core -- 公共工具类核心包
+     ├── jwk-common-log -- 日志插件
      ├── jwk-common-dynamic-datasource -- 动态数据源
      ├── jwk-common-id-generater -- ID生成方案
      ├── jwk-common-knife4j -- 接口文档
      ├── jwk-common-mybatis -- Mybatis Plus数据源包
      ├── jwk-common-prometheus -- 普罗米修斯监控
+     ├── jwk-common-zookeeper -- zk插件
      ├── jwk-common-rabbitmq -- RabbitMQ整合
      ├── jwk-common-redis -- redis和多级缓存
      ├── jwk-common-rocketmq -- RocektMQ整合

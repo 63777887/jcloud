@@ -3,12 +3,7 @@ package com.jwk.uaa.config;
 import cn.hutool.extra.spring.SpringUtil;
 import com.jwk.common.core.constant.JwkSecurityConstants;
 import com.jwk.common.security.dto.AdminUserDetails;
-import com.jwk.common.security.support.component.CustomeOAuth2TokenCustomizer;
-import com.jwk.common.security.support.component.JwkDaoAuthenticationProvider;
-import com.jwk.common.security.support.component.JwkOAuth2AccessTokenGenerator;
-import com.jwk.common.security.support.component.JwkOAuth2AuthorizationCodeRequestAuthenticationConverter;
-import com.jwk.common.security.support.component.JwkOAuth2RefreshTokenGenerator;
-import com.jwk.common.security.support.component.JwkOidcTokenGenerator;
+import com.jwk.common.security.support.component.*;
 import com.jwk.common.security.support.grant.password.PasswordAuthenticationProvider;
 import com.jwk.common.security.support.grant.password.PasswordTokenGranter;
 import com.jwk.common.security.support.handler.JwkAuthenticationFailureEventHandler;
@@ -16,6 +11,8 @@ import com.jwk.common.security.support.handler.JwkAuthenticationSuccessEventHand
 import com.jwk.common.security.support.properties.JwkAuthProperties;
 import com.jwk.uaa.constant.JwkOAuth2Urls;
 import com.jwk.uaa.constant.JwkOIDCConstant;
+import com.jwk.uaa.grant.captcha.SmsAuthenticationGranter;
+import com.jwk.uaa.grant.captcha.SmsAuthenticationProvider;
 import com.jwk.uaa.grant.email.EmailAuthenticationGranter;
 import com.jwk.uaa.grant.email.EmailAuthenticationProvider;
 import com.jwk.uaa.grant.phone.PhoneAuthenticationGranter;
@@ -26,17 +23,6 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
-import java.io.IOException;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.Principal;
-import java.security.cert.CertificateException;
-import java.security.interfaces.RSAPublicKey;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.context.annotation.Bean;
@@ -44,6 +30,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -66,6 +54,18 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationConverter;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
+import java.io.IOException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.Principal;
+import java.security.cert.CertificateException;
+import java.security.interfaces.RSAPublicKey;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Jiwk
  * @version 0.1.4
@@ -78,6 +78,7 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 public class AuthorizationServerConfiguration {
 
 	private final OAuth2AuthorizationService authorizationService;
+	private final StringRedisTemplate stringRedisTemplate;
 
 	@Bean
 	@Order(Ordered.HIGHEST_PRECEDENCE)
@@ -217,6 +218,8 @@ public class AuthorizationServerConfiguration {
 				new PhoneAuthenticationGranter(),
 				// 邮箱模式
 				new EmailAuthenticationGranter(),
+				// 短信模式
+				new SmsAuthenticationGranter(stringRedisTemplate),
 				// 密码模式
 				new PasswordTokenGranter(),
 				// 访问令牌请求用于OAuth 2.0刷新令牌授权 ——刷新token
@@ -251,6 +254,9 @@ public class AuthorizationServerConfiguration {
 		EmailAuthenticationProvider emailAuthenticationProvider = new EmailAuthenticationProvider(authenticationManager,
 				authorizationService, oAuth2TokenGenerator());
 
+		SmsAuthenticationProvider smsAuthenticationProvider = new SmsAuthenticationProvider(authenticationManager,
+				authorizationService, oAuth2TokenGenerator());
+
 		// 处理 UsernamePasswordAuthenticationToken
 		JwkAuthProperties properties = SpringUtil.getBean(JwkAuthProperties.class);
 		JwkDaoAuthenticationProvider authenticationProvider = new JwkDaoAuthenticationProvider();
@@ -262,6 +268,7 @@ public class AuthorizationServerConfiguration {
 		http.authenticationProvider(phoneAuthenticationProvider);
 		// 处理 EmailAuthenticationToken
 		http.authenticationProvider(emailAuthenticationProvider);
+		http.authenticationProvider(smsAuthenticationProvider);
 	}
 
 }

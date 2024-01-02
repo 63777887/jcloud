@@ -3,7 +3,6 @@ package com.jwk.upms.web.controller;
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jwk.common.core.excel.ExcelReq;
-import com.jwk.common.core.model.InnerResponse;
 import com.jwk.common.core.model.RestResponse;
 import com.jwk.common.core.utils.AssertUtil;
 import com.jwk.common.security.annotation.Inner;
@@ -62,8 +61,8 @@ public class SysUserController {
      */
     @Inner
     @GetMapping(value = "/findUserByName")
-    public InnerResponse<UserInfo> findUserByName(@RequestParam("name") String name) {
-        return InnerResponse.success(authService.findUserByName(name));
+    public RestResponse<UserInfo> findUserByName(@RequestParam("name") String name) {
+        return RestResponse.success(authService.findUserByName(name));
     }
 
     /**
@@ -71,8 +70,8 @@ public class SysUserController {
      */
     @Inner
     @GetMapping(value = "/findUserByPhone")
-    public InnerResponse<UserInfo> findUserByPhone(@RequestParam("phone") String phone) {
-        return InnerResponse.success(authService.findUserByPhone(phone));
+    public RestResponse<UserInfo> findUserByPhone(@RequestParam("phone") String phone) {
+        return RestResponse.success(authService.findUserByPhone(phone));
     }
 
     /**
@@ -80,16 +79,16 @@ public class SysUserController {
      */
     @Inner
     @GetMapping(value = "/findUserByEmail")
-    public InnerResponse<UserInfo> findUserByEmail(@RequestParam("email") String mail) {
-        return InnerResponse.success(authService.findUserByEmail(mail));
+    public RestResponse<UserInfo> findUserByEmail(@RequestParam("email") String mail) {
+        return RestResponse.success(authService.findUserByEmail(mail));
     }
 
     /**
      * 根据token查找用户
      */
     @GetMapping(value = "/get")
-    public InnerResponse<UserInfo> get(@UserParam SysUser user) {
-        return InnerResponse.success(sysUserService.findUserById(user.getId()));
+    public RestResponse<UserInfo> get(@UserParam SysUser user) {
+        return RestResponse.success(sysUserService.findUserById(user.getId()));
     }
 
     /**
@@ -97,8 +96,8 @@ public class SysUserController {
      */
     @PostMapping(value = "/register")
     @PreAuthorize("@pms.hasPermission()")
-    public InnerResponse register(@RequestBody @Validated RegisterReq registerReq) {
-        return InnerResponse.success(authService.register(registerReq));
+    public RestResponse register(@RequestBody @Validated RegisterReq registerReq) {
+        return RestResponse.success(authService.register(registerReq));
     }
 
 //    /**
@@ -106,8 +105,8 @@ public class SysUserController {
 //     */
 //    @PostMapping(value = "/importUser", consumes = "multipart/form-data")
 ////    @PreAuthorize("@pms.hasPermission()")
-//    public InnerResponse exportUser(@RequestParam("file") MultipartFile file, @RequestPart("excelReq") ExcelReq excelReq) {
-//        return InnerResponse.success(excelService.importData(file,excelReq));
+//    public RestResponse exportUser(@RequestParam("file") MultipartFile file, @RequestPart("excelReq") ExcelReq excelReq) {
+//        return RestResponse.success(excelService.importData(file,excelReq));
 //    }
 
     /**
@@ -115,8 +114,8 @@ public class SysUserController {
      */
     @PostMapping(value = "/importUser")
 //    @PreAuthorize("@pms.hasPermission()")
-    public InnerResponse exportUser(@RequestParam("file") MultipartFile file) {
-        return InnerResponse.success(excelService.importData(file));
+    public RestResponse exportUser(@RequestParam("file") MultipartFile file) {
+        return RestResponse.success(excelService.importData(file));
     }
 
     /**
@@ -133,19 +132,19 @@ public class SysUserController {
      */
     @PostMapping(value = "/update")
     @PreAuthorize("@pms.hasPermission()")
-    public InnerResponse update(@RequestBody @Validated UserDto userDto) {
-        return InnerResponse.success(sysUserService.updateUser(userDto));
+    public RestResponse update(@RequestBody @Validated UserDto userDto) {
+        return RestResponse.success(sysUserService.updateUser(userDto));
     }
 
     /**
      * 更新密码
      */
     @PostMapping(value = "/updatePassword")
-    public InnerResponse updatePassword(@UserParam SysUser sysUser, @RequestBody @Validated UpdatePasswordDto updatePasswordDto) {
+    public RestResponse updatePassword(@UserParam SysUser sysUser, @RequestBody @Validated UpdatePasswordDto updatePasswordDto) {
         AssertUtil.isTrue(passwordEncoder.matches(updatePasswordDto.getOldPassword(), sysUser.getPassword()), "原密码错误");
         AssertUtil.isTrue(updatePasswordDto.getNewPassword().equals(updatePasswordDto.getConfirmPassword()), "两次输入密码不一致");
         sysUser.setPassword(passwordEncoder.encode(updatePasswordDto.getNewPassword()));
-        return InnerResponse.success(sysUserService.updateById(sysUser));
+        return RestResponse.success(sysUserService.updateById(sysUser));
     }
 
     /**

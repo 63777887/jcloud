@@ -19,4 +19,15 @@ spring:
 #  servlet:
 #    multipart:
 #      max-file-size: 10MB
-#      max-request-size: 10MB
+  # 配置文件上传大小限制
+  servlet:
+    multipart:
+      max-file-size: 500MB
+      max-request-size: 500MB
+jwk:
+  oss:
+    address: http://127.0.0.1:9000
+    access-key: 5KEIqaN5OUMIs2YGKVb8
+    secret-key: 69zbH4UMAgklddza6b56Q6iGV3MKKRQtcPm3XHXb
+    bucket: ${spring.application.name}
+    enabled: true

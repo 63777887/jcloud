@@ -2,7 +2,7 @@ package com.jwk.upms.base.api;
 
 import com.jwk.common.core.constant.JwkSecurityConstants;
 import com.jwk.common.core.constant.ServerNameConstants;
-import com.jwk.common.core.model.InnerResponse;
+import com.jwk.common.core.model.RestResponse;
 import com.jwk.upms.base.dto.SysOauthClientDto;
 import com.jwk.upms.base.dto.UserInfo;
 import com.jwk.upms.base.entity.SysMenu;
@@ -29,7 +29,7 @@ public interface UpmsRemoteService {
 	 * @return
 	 */
 	@GetMapping(value = "/user/findUserByName", headers = JwkSecurityConstants.HEADER_FROM_IN)
-	InnerResponse<UserInfo> findUserByName(@RequestParam("name") String name);
+	RestResponse<UserInfo> findUserByName(@RequestParam("name") String name);
 
 	/**
 	 * 根据手机找用户
@@ -37,7 +37,7 @@ public interface UpmsRemoteService {
 	 * @return
 	 */
 	@GetMapping(value = "/user/findUserByPhone", headers = JwkSecurityConstants.HEADER_FROM_IN)
-	InnerResponse<UserInfo> findUserByPhone(@RequestParam("phone") String phone);
+	RestResponse<UserInfo> findUserByPhone(@RequestParam("phone") String phone);
 
 	/**
 	 * 根据邮箱找用户
@@ -45,14 +45,14 @@ public interface UpmsRemoteService {
 	 * @return
 	 */
 	@GetMapping(value = "/user/findUserByEmail", headers = JwkSecurityConstants.HEADER_FROM_IN)
-	InnerResponse<UserInfo> findUserByEmail(@RequestParam("email") String email);
+	RestResponse<UserInfo> findUserByEmail(@RequestParam("email") String email);
 
 	/**
 	 * 获取资源列表
 	 * @return
 	 */
 	@GetMapping(value = "/sysMenu/loadUserAuthoritiesByRole", headers = JwkSecurityConstants.HEADER_FROM_IN)
-	InnerResponse<List<SysMenu>> loadUserAuthoritiesByRole(@RequestParam("roleCodeList") List<String> roleCode);
+	RestResponse<List<SysMenu>> loadUserAuthoritiesByRole(@RequestParam("roleCodeList") List<String> roleCode);
 
 	/**
 	 * 通过clientId 查询客户端信息
@@ -60,9 +60,9 @@ public interface UpmsRemoteService {
 	 * @return
 	 */
 	@GetMapping(value = "/oauthClient/getClientDetailsById/{clientId}", headers = JwkSecurityConstants.HEADER_FROM_IN)
-	InnerResponse<SysOauthClientDto> getClientDetailsById(@PathVariable("clientId") String clientId);
+	RestResponse<SysOauthClientDto> getClientDetailsById(@PathVariable("clientId") String clientId);
 
 	@GetMapping("/inner/admin/testSeata")
-	InnerResponse<Integer> testSeata();
+	RestResponse<Integer> testSeata();
 
 }

@@ -16,6 +16,19 @@
 
 
   <dependencies>
+
+    <dependency>
+      <groupId>io.minio</groupId>
+      <artifactId>minio</artifactId>
+      <version>8.5.7</version>
+    </dependency>
+
+    <!--    阿里云短信服务-->
+    <dependency>
+      <groupId>com.aliyun</groupId>
+      <artifactId>dysmsapi20170525</artifactId>
+    </dependency>
+
     <!--        springboot相关依赖-->
     <dependency>
       <groupId>org.springframework.boot</groupId>

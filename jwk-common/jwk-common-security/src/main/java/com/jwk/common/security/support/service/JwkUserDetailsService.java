@@ -40,6 +40,14 @@ public interface JwkUserDetailsService extends UserDetailsService, Ordered {
 	}
 
 	/**
+	 * 是否需要密码校验
+	 * @return true/false
+	 */
+	default boolean needPassword() {
+		return true;
+	}
+
+	/**
 	 * 排序值 默认取最大的
 	 * @return 排序值
 	 */

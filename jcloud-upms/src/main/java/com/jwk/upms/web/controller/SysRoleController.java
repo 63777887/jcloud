@@ -1,10 +1,7 @@
 package com.jwk.upms.web.controller;
 
-import static com.jwk.upms.constants.CacheConstants.ROLE_ALL;
-
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jwk.common.core.exception.ServiceException;
-import com.jwk.common.core.model.InnerResponse;
 import com.jwk.common.core.model.RestResponse;
 import com.jwk.upms.base.entity.SysRole;
 import com.jwk.upms.dto.RoleDto;
@@ -12,7 +9,6 @@ import com.jwk.upms.dto.SetRoleMenuDto;
 import com.jwk.upms.enums.ErrorCodeStatusE;
 import com.jwk.upms.web.service.SysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -73,9 +69,9 @@ public class SysRoleController {
 	 */
 	@PostMapping(value = "/update")
 	@PreAuthorize("@pms.hasPermission()")
-	public InnerResponse update(@RequestBody @Validated RoleDto roleDto) {
+	public RestResponse update(@RequestBody @Validated RoleDto roleDto) {
 
-		return InnerResponse.success(sysRoleService.updateRole(roleDto));
+		return RestResponse.success(sysRoleService.updateRole(roleDto));
 	}
 
 	/**

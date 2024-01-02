@@ -61,7 +61,7 @@ public class JwkTokenEndpoint {
 
 	private final UpmsRemoteService upmsRemoteService;
 
-	private static Set<ScopeWithDescription> withDescription(Set<String> scopes, List<SysRole> scopeList) {
+	private Set<ScopeWithDescription> withDescription(Set<String> scopes, List<SysRole> scopeList) {
 		Set<ScopeWithDescription> scopeWithDescriptions = new LinkedHashSet<>();
 		for (String scope : scopes) {
 			for (SysRole sysRole : scopeList) {

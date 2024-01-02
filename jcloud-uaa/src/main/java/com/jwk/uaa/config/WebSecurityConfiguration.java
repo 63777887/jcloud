@@ -3,6 +3,7 @@ package com.jwk.uaa.config;
 import cn.hutool.extra.spring.SpringUtil;
 import com.jwk.common.security.support.component.JwkDaoAuthenticationProvider;
 import com.jwk.common.security.support.properties.JwkAuthProperties;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -19,7 +20,10 @@ import org.springframework.security.web.SecurityFilterChain;
  */
 @EnableWebSecurity(debug = true)
 @Configuration
+@RequiredArgsConstructor
 public class WebSecurityConfiguration {
+
+	private final JwkAuthProperties permitAllUrl;
 
 	/**
 	 * spring security 默认的安全策略
@@ -30,7 +34,7 @@ public class WebSecurityConfiguration {
 	@Bean
 	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
 		JwkAuthProperties properties = SpringUtil.getBean(JwkAuthProperties.class);
-		http.authorizeRequests(authorizeRequests -> authorizeRequests.antMatchers("/token/*").permitAll()// 开放自定义的部分端点
+		http.authorizeRequests(authorizeRequests -> authorizeRequests.antMatchers(permitAllUrl.getNoAuthArray()).permitAll()// 开放自定义的部分端点
 				.anyRequest().authenticated()).headers().frameOptions().sameOrigin()// 避免iframe同源无法登录
 				.and().apply(new FormIdentityLoginConfigurer()); // 表单登录个性化
 		// 处理 UsernamePasswordAuthenticationToken

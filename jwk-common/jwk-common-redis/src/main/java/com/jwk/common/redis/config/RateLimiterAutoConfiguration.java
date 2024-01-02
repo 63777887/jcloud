@@ -1,8 +1,12 @@
 package com.jwk.common.redis.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jwk.common.redis.properties.RedisRateLimiterProperties;
 import com.jwk.common.redis.ratelimiter.RedisRateLimiterAspect;
 import com.jwk.common.redis.ratelimiter.RedisRateLimiterClient;
+import com.jwk.common.redis.utils.RedisUtil;
+import org.redisson.spring.data.connection.RedissonConnectionFactory;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -37,13 +41,32 @@ public class RateLimiterAutoConfiguration {
 		return redisScript;
 	}
 
+	/**
+	 * Object RedisTemplate
+	 * @param redissonConnectionFactory
+	 * @return
+	 */
+	@Bean
+	@ConditionalOnMissingBean(name = "jsonRedisTemplate")
+	public RedisTemplate<String, Object> jsonRedisTemplate(RedissonConnectionFactory redissonConnectionFactory,
+													   ObjectProvider<ObjectMapper> objectProvider) {
+		RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+		redisTemplate.setKeySerializer(RedisUtil.keySerializer());
+		redisTemplate.setHashKeySerializer(RedisUtil.keySerializer());
+		redisTemplate.setValueSerializer(RedisUtil.jsonSerializer(objectProvider));
+		redisTemplate.setHashValueSerializer(RedisUtil.jsonSerializer(objectProvider));
+		redisTemplate.setConnectionFactory(redissonConnectionFactory);
+		return redisTemplate;
+	}
+
+
 	@Bean
 	@ConditionalOnMissingBean
 	public RedisRateLimiterClient redisRateLimiter(
-			@Qualifier("redisTemplate") RedisTemplate<String, Object> redisTemplate, Environment environment,
+			@Qualifier("jsonRedisTemplate") RedisTemplate<String, Object> jsonRedisTemplate, Environment environment,
 			RedisRateLimiterProperties redisRateLimiterProperties) {
 		RedisScript<Long> redisRateLimiterScript = redisRateLimiterScript(redisRateLimiterProperties);
-		return new RedisRateLimiterClient(redisTemplate, redisRateLimiterScript, environment,
+		return new RedisRateLimiterClient(jsonRedisTemplate, redisRateLimiterScript, environment,
 				redisRateLimiterProperties);
 	}
 

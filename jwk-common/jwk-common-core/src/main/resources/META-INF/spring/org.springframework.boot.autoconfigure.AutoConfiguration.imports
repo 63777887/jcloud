@@ -1,1 +1,2 @@
 com.jwk.common.core.handler.GlobalBizExceptionHandler
+com.jwk.common.core.JwkCoreAutoConfiguration

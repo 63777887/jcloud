@@ -1,6 +1,6 @@
 package com.jwk.upms.base.api.handler;
 
-import com.jwk.common.core.model.InnerResponse;
+import com.jwk.common.core.model.RestResponse;
 import com.jwk.upms.base.api.UpmsRemoteService;
 import com.jwk.upms.base.dto.SysOauthClientDto;
 import com.jwk.upms.base.dto.UserInfo;
@@ -27,35 +27,35 @@ public class UpmsRemoteServiceFallBackServiceImpl implements UpmsRemoteService {
 	private Throwable cause;
 
 	@Override
-	public InnerResponse<UserInfo> findUserByName(String name) {
+	public RestResponse<UserInfo> findUserByName(String name) {
 		log.error("feign findUserByName fail:{}", name, cause);
 		return null;
 	}
 
 	@Override
-	public InnerResponse<UserInfo> findUserByPhone(String phone) {
+	public RestResponse<UserInfo> findUserByPhone(String phone) {
 		log.error("feign findUserByPhone fail:{}", phone, cause);
 		return null;
 	}
 
 	@Override
-	public InnerResponse<UserInfo> findUserByEmail(String email) {
+	public RestResponse<UserInfo> findUserByEmail(String email) {
 		return null;
 	}
 
 	@Override
-	public InnerResponse<List<SysMenu>> loadUserAuthoritiesByRole(List<String> roleCode) {
-		return InnerResponse.success(Collections.singletonList(new SysMenu()));
+	public RestResponse<List<SysMenu>> loadUserAuthoritiesByRole(List<String> roleCode) {
+		return RestResponse.success(Collections.singletonList(new SysMenu()));
 	}
 
 	@Override
-	public InnerResponse<SysOauthClientDto> getClientDetailsById(String clientId) {
+	public RestResponse<SysOauthClientDto> getClientDetailsById(String clientId) {
 		log.error("feign getClientDetailsById fail:", cause);
-		return InnerResponse.success(new SysOauthClientDto());
+		return RestResponse.success(new SysOauthClientDto());
 	}
 
 	@Override
-	public InnerResponse<Integer> testSeata() {
+	public RestResponse<Integer> testSeata() {
 		return null;
 	}
 

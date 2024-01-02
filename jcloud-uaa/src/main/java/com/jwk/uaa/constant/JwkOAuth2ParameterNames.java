@@ -20,6 +20,15 @@ public interface JwkOAuth2ParameterNames {
 	String EMAIL = "email";
 
 	/**
+	 * {@code captcha} - used in Access Token Request.
+	 */
+	String SMS = "sms";
+	/**
+	 * sms captcha
+	 */
+	String CAPTCHA = "captcha";
+
+	/**
 	 * 短信登录 参数名称
 	 */
 	/**

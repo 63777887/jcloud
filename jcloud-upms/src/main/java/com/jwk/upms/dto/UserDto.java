@@ -54,6 +54,11 @@ public class UserDto {
 	 */
 	private String email;
 
+	/**
+	 * 头像
+	 */
+	private String icon;
+
 	private List<Long> roles;
 
 }

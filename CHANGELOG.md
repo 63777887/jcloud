@@ -2,7 +2,10 @@
 
 ### v0.1.6 - 2023-11-16
 - :sparkles: [jwk-common-redis](jwk-common/jwk-common-redis) 新增注解和方法形式的分布式锁组件，简化加锁逻辑
+- :sparkles: [jcloud-upms](jcloud-upms) 增加redis可视化监控模块
+- :sparkles: [jcloud-uaa](jcloud-uaa) 增加短信登陆
 - :sparkles: [jcloud-uaa](jcloud-uaa) 增加前端所需的登陆，用户，权限，菜单等模块接口
+- :sparkles: [jwk-common-core](jwk-common/jwk-common-core) 增加minio存储，用于保存用户头像
 
 ### v0.1.5 - 2023-9-15
 - :sparkles: 模块拆分，独立出zk模块
