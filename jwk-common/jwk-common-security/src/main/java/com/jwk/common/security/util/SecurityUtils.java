@@ -5,10 +5,13 @@ import com.jwk.common.security.dto.AdminUserDetails;
 import com.jwk.upms.base.entity.SysUser;
 import java.io.IOException;
 import java.time.temporal.ChronoUnit;
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import lombok.experimental.UtilityClass;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
@@ -62,6 +65,18 @@ public class SecurityUtils {
 			return null;
 		}
 		return getUser(authentication);
+	}
+
+	/**
+	 * 获取用户
+	 */
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		Authentication authentication = getAuthentication();
+		if (authentication == null) {
+			return null;
+		}
+		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+		return authorities;
 	}
 
 	public MultiValueMap<String, String> getParameters(HttpServletRequest request) {

@@ -1,15 +1,24 @@
 package com.jwk.upms.web.controller;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.lang.tree.TreeNode;
+import cn.hutool.core.lang.tree.TreeUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jwk.common.core.excel.ExcelReq;
 import com.jwk.common.core.model.RestResponse;
+import com.jwk.common.core.properties.MinioConfigProperties;
 import com.jwk.common.core.utils.AssertUtil;
 import com.jwk.common.security.annotation.Inner;
 import com.jwk.common.security.annotation.UserParam;
+import com.jwk.common.security.dto.ResourceConfigAttribute;
+import com.jwk.common.security.util.SecurityUtils;
 import com.jwk.upms.base.dto.RegisterReq;
 import com.jwk.upms.base.dto.UserInfo;
+import com.jwk.upms.base.entity.SysMenu;
 import com.jwk.upms.base.entity.SysUser;
+import com.jwk.upms.enums.MenuTypeE;
+import com.jwk.upms.utils.UserUtil;
 import com.jwk.upms.web.dao.SysUserMapper;
 import com.jwk.upms.dto.UpdatePasswordDto;
 import com.jwk.upms.dto.UserDto;
@@ -17,9 +26,13 @@ import com.jwk.upms.web.service.AuthService;
 import com.jwk.upms.web.service.ExcelService;
 import com.jwk.upms.web.service.SysUserService;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.jwk.upms.utils.MenuUtil;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -53,6 +66,9 @@ public class SysUserController {
 
     @Autowired
     private ExcelService excelService;
+
+    @Autowired
+    MinioConfigProperties minioConfigProperties;
 
     private final PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
@@ -88,7 +104,8 @@ public class SysUserController {
      */
     @GetMapping(value = "/get")
     public RestResponse<UserInfo> get(@UserParam SysUser user) {
-        return RestResponse.success(sysUserService.findUserById(user.getId()));
+        user.setIcon(UserUtil.getRealIconAddr(user,minioConfigProperties));
+        return RestResponse.success(UserUtil.getUserInfo(user));
     }
 
     /**

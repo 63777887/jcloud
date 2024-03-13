@@ -19,16 +19,13 @@ import com.jwk.upms.enums.MenuTypeE;
 import com.jwk.upms.web.service.SysMenuService;
 import com.jwk.upms.web.service.SysRoleMenuService;
 import com.jwk.upms.web.service.SysRoleService;
+import com.jwk.upms.utils.MenuUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -60,7 +57,7 @@ public class SysMenuController {
 		if (StrUtil.isNotBlank(menuName)) {
 			all.forEach(t -> t.setParentId(-1L));
 		}
-		List<TreeNode<Long>> collect = all.stream().map(getNodeFunction()).collect(Collectors.toList());
+		List<TreeNode<Long>> collect = all.stream().map(MenuUtil.getNodeFunction()).collect(Collectors.toList());
 		return RestResponse.success(TreeUtil.build(collect, -1L));
 	}
 
@@ -69,7 +66,7 @@ public class SysMenuController {
 		List<SysMenu> all = sysMenuService.lambdaQuery().eq(SysMenu::getStatus, MenuStatusE.Normal.getId())
 				.eq(SysMenu::getType, MenuTypeE.MENU.getId()).list();
 
-		List<TreeNode<Long>> collect = all.stream().map(getNodeFunction()).collect(Collectors.toList());
+		List<TreeNode<Long>> collect = all.stream().map(MenuUtil.getNodeFunction()).collect(Collectors.toList());
 		return RestResponse.success(TreeUtil.build(collect, 0L));
 	}
 
@@ -136,39 +133,13 @@ public class SysMenuController {
 			return RestResponse.success();
 		}
 		List<Long> menuIds = sysRoleMenuList.stream().map(SysRoleMenu::getMenuId).collect(Collectors.toList());
-		List<SysMenu> sysApis = sysMenuService.lambdaQuery().eq(SysMenu::getType,MenuTypeE.BUTTON.getId()).in(SysMenu::getId,menuIds).list();
+		List<SysMenu> sysApis = sysMenuService.lambdaQuery().in(SysMenu::getId,menuIds).list();
 		return RestResponse.success(sysApis);
 	}
 
 	@GetMapping("/getMenuListByRole/{roleId}")
 	public RestResponse getAllMenu(@PathVariable Long roleId, Integer menuType) {
 		return RestResponse.success(sysMenuService.getMenuListByRole(roleId, menuType));
-	}
-
-	@NotNull
-	private Function<SysMenu, TreeNode<Long>> getNodeFunction() {
-		return menu -> {
-			TreeNode<Long> node = new TreeNode<>();
-			node.setId(menu.getId());
-			node.setName(menu.getMenuName());
-			node.setParentId(menu.getParentId());
-			node.setWeight(menu.getSort());
-			// 扩展属性
-			Map<String, Object> extra = new HashMap<>();
-			extra.put("icon", menu.getIcon());
-			extra.put("menuName", menu.getMenuName());
-			extra.put("path", menu.getPath());
-			extra.put("type", menu.getType());
-			extra.put("permission", menu.getPermission());
-			extra.put("status", menu.getStatus());
-			extra.put("sort", menu.getSort());
-			extra.put("hidden", menu.getHidden());
-			extra.put("tab", menu.getTab());
-			extra.put("createTime", menu.getCreateTime());
-			extra.put("updateTime", menu.getUpdateTime());
-			node.setExtra(extra);
-			return node;
-		};
 	}
 
 }

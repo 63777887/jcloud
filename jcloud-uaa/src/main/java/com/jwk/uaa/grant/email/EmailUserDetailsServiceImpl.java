@@ -34,4 +34,8 @@ public class EmailUserDetailsServiceImpl implements JwkUserDetailsService {
 		return JwkOAuth2ParameterNames.EMAIL.equals(grantType);
 	}
 
+	@Override
+	public int getOrder() {
+		return 1;
+	}
 }

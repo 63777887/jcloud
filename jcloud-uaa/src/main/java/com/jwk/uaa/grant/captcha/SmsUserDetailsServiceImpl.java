@@ -39,4 +39,9 @@ public class SmsUserDetailsServiceImpl implements JwkUserDetailsService {
 		// 验证码模式不需要密码校验
 		return false;
 	}
+
+	@Override
+	public int getOrder() {
+		return 1;
+	}
 }

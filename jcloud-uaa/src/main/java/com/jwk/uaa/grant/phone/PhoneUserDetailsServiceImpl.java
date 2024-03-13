@@ -34,4 +34,8 @@ public class PhoneUserDetailsServiceImpl implements JwkUserDetailsService {
 		return JwkOAuth2ParameterNames.PHONE.equals(grantType);
 	}
 
+	@Override
+	public int getOrder() {
+		return 1;
+	}
 }

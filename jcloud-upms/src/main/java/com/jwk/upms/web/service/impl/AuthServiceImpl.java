@@ -190,7 +190,7 @@ public class AuthServiceImpl implements AuthService {
                 continue;
             }
             List<Long> menuIds = sysRoleMenuList.stream().map(SysRoleMenu::getMenuId).collect(Collectors.toList());
-            List<SysMenu> sysMenuList = sysMenuService.lambdaQuery().eq(SysMenu::getType, MenuTypeE.BUTTON.getId()).in(SysMenu::getId,menuIds).list();
+            List<SysMenu> sysMenuList = sysMenuService.lambdaQuery().in(SysMenu::getId,menuIds).list();
             if (CollUtil.isNotEmpty(sysMenuList)) {
                 sysMenus.addAll(sysMenuList);
             }

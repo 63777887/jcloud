@@ -1,4 +1,4 @@
-package com.jwk.common.security.constants;
+package com.jwk.upms.base.constants;
 
 /**
  * @author Jiwk
@@ -10,5 +10,6 @@ package com.jwk.common.security.constants;
 public interface OAuth2Constant {
 
 	String TOKEN = "token";
+	String RECORD = "record";
 
 }

@@ -2,12 +2,15 @@ package com.jwk.upms.base.api.handler;
 
 import com.jwk.common.core.model.RestResponse;
 import com.jwk.upms.base.api.UpmsRemoteService;
+import com.jwk.upms.base.dto.RemoveTokenDto;
 import com.jwk.upms.base.dto.SysOauthClientDto;
 import com.jwk.upms.base.dto.UserInfo;
 import com.jwk.upms.base.entity.SysMenu;
+import com.jwk.upms.base.entity.SysSetting;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Collections;
 import java.util.List;
@@ -58,5 +61,16 @@ public class UpmsRemoteServiceFallBackServiceImpl implements UpmsRemoteService {
 	public RestResponse<Integer> testSeata() {
 		return null;
 	}
+
+	@Override
+	public RestResponse<List<SysSetting>> getSysSetting(Long orgIdString, String paramKey, Byte paramType) {
+		return null;
+	}
+
+	@Override
+	public RestResponse<List<SysSetting>> removeToken(RemoveTokenDto removeTokenDto) {
+		return null;
+	}
+
 
 }

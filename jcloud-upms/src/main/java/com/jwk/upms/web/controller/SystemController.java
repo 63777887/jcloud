@@ -1,10 +1,19 @@
 package com.jwk.upms.web.controller;
 
 
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.jwk.common.core.model.RestResponse;
 import com.jwk.common.security.annotation.Inner;
+import com.jwk.common.security.annotation.UserParam;
+import com.jwk.common.security.util.SecurityUtils;
+import com.jwk.upms.base.dto.RemoveTokenDto;
+import com.jwk.upms.base.entity.SysSetting;
+import com.jwk.upms.base.entity.SysUser;
+import com.jwk.upms.base.utils.TokenUtil;
+import com.jwk.upms.web.service.SysSettingService;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +22,9 @@ import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.Cursor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ScanOptions;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
+import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -35,6 +44,9 @@ public class SystemController {
     @Autowired
     RedisTemplate redisTemplate;
 
+    @Autowired
+    SysSettingService sysSettingService;
+
     // 不需要加入redis命令统计的命令
     private final List<String> excludeCommandList = Arrays.asList("ping", "info", "type", "scan");
 
@@ -50,6 +62,50 @@ public class SystemController {
         jsonObject.put("info", info);
         jsonObject.put("keys", keyCount);
         return RestResponse.success(jsonObject);
+    }
+
+    @PostMapping("/removeToken")
+    @Inner(needFrom = false)
+    public RestResponse removeToken(@RequestBody RemoveTokenDto removeTokenDto) {
+        String recordAccessTokenKey = TokenUtil.buildRecordKey(OAuth2ParameterNames.ACCESS_TOKEN, removeTokenDto.getUserId());
+        String recordRefreshTokenKey = TokenUtil.buildRecordKey(OAuth2ParameterNames.REFRESH_TOKEN, removeTokenDto.getUserId());
+        Long orgId = removeTokenDto.getOrgId() == null || removeTokenDto.getOrgId() == 0L ? SecurityUtils.getUser().getOrgId() : removeTokenDto.getOrgId();
+        List<SysSetting> settingList = sysSettingService.getSysSetting(orgId, "allowMultiLogin", (byte) 1);
+        if (CollUtil.isNotEmpty(settingList) && settingList.size() > 0) {
+            SysSetting sysSetting = settingList.get(0);
+            if (sysSetting.getParamValue().equals("2")) {
+                if (log.isInfoEnabled()) {
+                    log.info("踢掉以前的登录信息");
+                }
+                // 踢掉以前的登录信息
+                // 先获取以前的所有token
+                for (Object member : redisTemplate.boundSetOps(recordAccessTokenKey).members()) {
+                    redisTemplate.delete(TokenUtil.buildKey(OAuth2ParameterNames.ACCESS_TOKEN, (String) member));
+                }
+                for (Object member : redisTemplate.boundSetOps(recordRefreshTokenKey).members()) {
+                    redisTemplate.delete(TokenUtil.buildKey(OAuth2ParameterNames.REFRESH_TOKEN, (String) member));
+                }
+
+                redisTemplate.delete(recordAccessTokenKey);
+                redisTemplate.delete(recordRefreshTokenKey);
+            } else {
+                removeTokenRecord(removeTokenDto, recordAccessTokenKey, recordRefreshTokenKey);
+            }
+        } else {
+            removeTokenRecord(removeTokenDto, recordAccessTokenKey, recordRefreshTokenKey);
+        }
+        return RestResponse.success();
+    }
+
+    private void removeTokenRecord(RemoveTokenDto removeTokenDto, String recordAccessTokenKey, String recordRefreshTokenKey) {
+
+        if (StrUtil.isNotBlank(removeTokenDto.getAccessToken())) {
+            redisTemplate.boundSetOps(recordAccessTokenKey).remove(removeTokenDto.getAccessToken());
+        }
+
+        if (StrUtil.isNotBlank(removeTokenDto.getRefreshToken())) {
+            redisTemplate.boundSetOps(recordRefreshTokenKey).remove(removeTokenDto.getRefreshToken());
+        }
     }
 
     @NotNull

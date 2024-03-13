@@ -1,11 +1,6 @@
 package com.jwk.common.security.support.service;
 
-import com.jwk.common.security.constants.OAuth2Constant;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.concurrent.TimeUnit;
+import com.jwk.upms.base.utils.TokenUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.lang.Nullable;
@@ -18,6 +13,12 @@ import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.util.Assert;
+
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Jiwk
@@ -62,7 +63,7 @@ public class JwkRedisOAuth2AuthorizationService implements OAuth2AuthorizationSe
 
 		if (isState(authorization)) {
 			String token = authorization.getAttribute("state");
-			redisTemplate.opsForValue().set(buildKey(OAuth2ParameterNames.STATE, token), authorization, TIMEOUT,
+			redisTemplate.opsForValue().set(TokenUtil.buildKey(OAuth2ParameterNames.STATE, token), authorization, TIMEOUT,
 					TimeUnit.MINUTES);
 		}
 
@@ -72,7 +73,7 @@ public class JwkRedisOAuth2AuthorizationService implements OAuth2AuthorizationSe
 			OAuth2AuthorizationCode authorizationCodeToken = authorizationCode.getToken();
 			long between = ChronoUnit.MINUTES.between(authorizationCodeToken.getIssuedAt(),
 					authorizationCodeToken.getExpiresAt());
-			redisTemplate.opsForValue().set(buildKey(OAuth2ParameterNames.CODE, authorizationCodeToken.getTokenValue()),
+			redisTemplate.opsForValue().set(TokenUtil.buildKey(OAuth2ParameterNames.CODE, authorizationCodeToken.getTokenValue()),
 					authorization, between, TimeUnit.MINUTES);
 		}
 
@@ -81,7 +82,7 @@ public class JwkRedisOAuth2AuthorizationService implements OAuth2AuthorizationSe
 			if (refreshToken.getExpiresAt() != null) {
 				long between = ChronoUnit.SECONDS.between(refreshToken.getIssuedAt(), refreshToken.getExpiresAt());
 				redisTemplate.opsForValue().set(
-						buildKey(OAuth2ParameterNames.REFRESH_TOKEN, refreshToken.getTokenValue()), authorization,
+						TokenUtil.buildKey(OAuth2ParameterNames.REFRESH_TOKEN, refreshToken.getTokenValue()), authorization,
 						between, TimeUnit.SECONDS);
 			}
 		}
@@ -91,7 +92,7 @@ public class JwkRedisOAuth2AuthorizationService implements OAuth2AuthorizationSe
 			if (accessToken.getExpiresAt() != null) {
 				long between = ChronoUnit.SECONDS.between(accessToken.getIssuedAt(), accessToken.getExpiresAt());
 				redisTemplate.opsForValue().set(
-						buildKey(OAuth2ParameterNames.ACCESS_TOKEN, accessToken.getTokenValue()), authorization,
+						TokenUtil.buildKey(OAuth2ParameterNames.ACCESS_TOKEN, accessToken.getTokenValue()), authorization,
 						between, TimeUnit.SECONDS);
 			}
 		}
@@ -102,7 +103,7 @@ public class JwkRedisOAuth2AuthorizationService implements OAuth2AuthorizationSe
 			if (oidcIdToken.getExpiresAt() != null) {
 				long between = ChronoUnit.SECONDS.between(oidcIdToken.getIssuedAt(), oidcIdToken.getExpiresAt());
 				redisTemplate.opsForValue().set(
-						buildKey(OAuth2ParameterNames.ACCESS_TOKEN, oidcIdToken.getTokenValue()), authorization,
+						TokenUtil.buildKey(OAuth2ParameterNames.ACCESS_TOKEN, oidcIdToken.getTokenValue()), authorization,
 						between, TimeUnit.SECONDS);
 			}
 		}
@@ -115,30 +116,30 @@ public class JwkRedisOAuth2AuthorizationService implements OAuth2AuthorizationSe
 		List<String> keys = new ArrayList<>();
 		if (isState(authorization)) {
 			String token = authorization.getAttribute("state");
-			keys.add(buildKey(OAuth2ParameterNames.STATE, token));
+			keys.add(TokenUtil.buildKey(OAuth2ParameterNames.STATE, token));
 		}
 
 		if (isCode(authorization)) {
 			OAuth2Authorization.Token<OAuth2AuthorizationCode> authorizationCode = authorization
 					.getToken(OAuth2AuthorizationCode.class);
 			OAuth2AuthorizationCode authorizationCodeToken = authorizationCode.getToken();
-			keys.add(buildKey(OAuth2ParameterNames.CODE, authorizationCodeToken.getTokenValue()));
+			keys.add(TokenUtil.buildKey(OAuth2ParameterNames.CODE, authorizationCodeToken.getTokenValue()));
 		}
 
 		if (isRefreshToken(authorization)) {
 			OAuth2RefreshToken refreshToken = authorization.getRefreshToken().getToken();
-			keys.add(buildKey(OAuth2ParameterNames.REFRESH_TOKEN, refreshToken.getTokenValue()));
+			keys.add(TokenUtil.buildKey(OAuth2ParameterNames.REFRESH_TOKEN, refreshToken.getTokenValue()));
 		}
 
 		if (isAccessToken(authorization)) {
 			OAuth2AccessToken accessToken = authorization.getAccessToken().getToken();
-			keys.add(buildKey(OAuth2ParameterNames.ACCESS_TOKEN, accessToken.getTokenValue()));
+			keys.add(TokenUtil.buildKey(OAuth2ParameterNames.ACCESS_TOKEN, accessToken.getTokenValue()));
 		}
 
 		if (isIdToken(authorization)) {
 			OAuth2Authorization.Token<OidcIdToken> oidcIdTokenAuthorization = authorization.getToken(OidcIdToken.class);
 			OidcIdToken oidcIdToken = oidcIdTokenAuthorization.getToken();
-			keys.add(buildKey(OAuth2ParameterNames.ACCESS_TOKEN, oidcIdToken.getTokenValue()));
+			keys.add(TokenUtil.buildKey(OAuth2ParameterNames.ACCESS_TOKEN, oidcIdToken.getTokenValue()));
 		}
 		redisTemplate.delete(keys);
 	}
@@ -154,11 +155,7 @@ public class JwkRedisOAuth2AuthorizationService implements OAuth2AuthorizationSe
 	public OAuth2Authorization findByToken(String token, @Nullable OAuth2TokenType tokenType) {
 		Assert.hasText(token, "token cannot be empty");
 		Assert.notNull(tokenType, "tokenType cannot be empty");
-		return (OAuth2Authorization) redisTemplate.opsForValue().get(buildKey(tokenType.getValue(), token));
-	}
-
-	private String buildKey(String type, String id) {
-		return String.format("%s:%s:%s", OAuth2Constant.TOKEN, type, id);
+		return (OAuth2Authorization) redisTemplate.opsForValue().get(TokenUtil.buildKey(tokenType.getValue(), token));
 	}
 
 }

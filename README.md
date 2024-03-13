@@ -102,3 +102,4 @@ jCloud
 
 ### 系统设置
 ![jcloud-system-redisMonitor.png](docs%2Fimages%2Freadme%2Fjcloud-system-redisMonitor.png)
+![jcloud-setting.png](docs%2Fimages%2Freadme%2Fjcloud-setting.png)

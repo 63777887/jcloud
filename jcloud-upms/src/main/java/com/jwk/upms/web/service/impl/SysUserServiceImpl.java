@@ -19,6 +19,7 @@ import com.jwk.upms.base.entity.SysRole;
 import com.jwk.upms.base.entity.SysRoleMenu;
 import com.jwk.upms.base.entity.SysUser;
 import com.jwk.upms.base.entity.SysUserRole;
+import com.jwk.upms.utils.UserUtil;
 import com.jwk.upms.web.dao.SysUserMapper;
 import com.jwk.upms.dto.UserDto;
 import com.jwk.upms.enums.MenuTypeE;
@@ -27,17 +28,15 @@ import com.jwk.upms.web.service.SysRoleMenuService;
 import com.jwk.upms.web.service.SysRoleService;
 import com.jwk.upms.web.service.SysUserRoleService;
 import com.jwk.upms.web.service.SysUserService;
+import com.jwk.upms.utils.MenuUtil;
 import com.jwk.upms.web.vo.UserVo;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
-import javax.validation.constraints.NotNull;
 
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -85,24 +84,21 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             }
         }
         List<TreeNode<Long>> collect = sysMenus.stream().filter(menu -> MenuTypeE.MENU.getId().equals(menu.getType()))
-                .filter(menu -> StrUtil.isNotBlank(menu.getPath())).map(getNodeFunction()).collect(Collectors.toList());
+                .filter(menu -> StrUtil.isNotBlank(menu.getPath())).map(MenuUtil.getNodeFunction()).collect(Collectors.toList());
 
-        List<SysMenu> buttons = sysMenus.stream().filter(menu -> MenuTypeE.BUTTON.getId().equals(menu.getType()))
-                .collect(Collectors.toList());
+//        List<SysMenu> buttons = sysMenus.stream().filter(menu -> MenuTypeE.BUTTON.getId().equals(menu.getType()))
+//                .collect(Collectors.toList());
 
         // 更新完整的头像地址
-        user.setIcon(getRealIconAddr(user));
+        user.setIcon(UserUtil.getRealIconAddr(user,minioConfigProperties));
         UserInfo userInfo = new UserInfo();
         userInfo.setSysUser(user);
-        userInfo.setButtons(buttons);
+        userInfo.setButtons(sysMenus);
         userInfo.setSysMenu(TreeUtil.build(collect, -1L));
         return userInfo;
     }
 
-    @org.jetbrains.annotations.NotNull
-    private String getRealIconAddr(SysUser user) {
-        return minioConfigProperties.getAddress() + CharConstants.SLASH + minioConfigProperties.getBucket() + CharConstants.SLASH + user.getIcon();
-    }
+
 
     @Override
     public Page<UserVo> getUserList(Page<SysUser> page, UserDto userDto) {
@@ -191,26 +187,4 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         sysUserRoleService.lambdaUpdate().in(SysUserRole::getUserId, userIds).remove();
         return Boolean.TRUE;
     }
-
-    @NotNull
-    private Function<SysMenu, TreeNode<Long>> getNodeFunction() {
-        return menu -> {
-            TreeNode<Long> node = new TreeNode<>();
-            node.setId(menu.getId());
-            node.setName(menu.getMenuName());
-            node.setParentId(menu.getParentId());
-            node.setWeight(menu.getSort());
-            // 扩展属性
-            Map<String, Object> extra = new HashMap<>();
-            extra.put("icon", menu.getIcon());
-            extra.put("path", menu.getPath());
-            extra.put("menuName", menu.getMenuName());
-            extra.put("sort", menu.getSort());
-            extra.put("hidden", menu.getHidden());
-            extra.put("tab", menu.getTab());
-            node.setExtra(extra);
-            return node;
-        };
-    }
-
 }

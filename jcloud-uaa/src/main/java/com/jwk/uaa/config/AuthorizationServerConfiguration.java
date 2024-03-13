@@ -6,6 +6,8 @@ import com.jwk.common.security.dto.AdminUserDetails;
 import com.jwk.common.security.support.component.*;
 import com.jwk.common.security.support.grant.password.PasswordAuthenticationProvider;
 import com.jwk.common.security.support.grant.password.PasswordTokenGranter;
+import com.jwk.common.security.support.grant.refresh.JwkRefreshAuthenticationProvider;
+import com.jwk.common.security.support.grant.refresh.RefreshTokenGranter;
 import com.jwk.common.security.support.handler.JwkAuthenticationFailureEventHandler;
 import com.jwk.common.security.support.handler.JwkAuthenticationSuccessEventHandler;
 import com.jwk.common.security.support.properties.JwkAuthProperties;
@@ -17,6 +19,7 @@ import com.jwk.uaa.grant.email.EmailAuthenticationGranter;
 import com.jwk.uaa.grant.email.EmailAuthenticationProvider;
 import com.jwk.uaa.grant.phone.PhoneAuthenticationGranter;
 import com.jwk.uaa.grant.phone.PhoneAuthenticationProvider;
+import com.jwk.upms.base.api.UpmsRemoteService;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
@@ -30,8 +33,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -79,6 +82,8 @@ public class AuthorizationServerConfiguration {
 
 	private final OAuth2AuthorizationService authorizationService;
 	private final StringRedisTemplate stringRedisTemplate;
+	private final RedisTemplate redisTemplate;
+	private final UpmsRemoteService upmsRemoteService;
 
 	@Bean
 	@Order(Ordered.HIGHEST_PRECEDENCE)
@@ -91,7 +96,7 @@ public class AuthorizationServerConfiguration {
 			tokenEndpoint
 					// 注入自定义的授权认证Converter
 					.accessTokenRequestConverter(accessTokenRequestConverter())
-					.accessTokenResponseHandler(new JwkAuthenticationSuccessEventHandler()) // 登录成功处理器
+					.accessTokenResponseHandler(new JwkAuthenticationSuccessEventHandler(upmsRemoteService, redisTemplate)) // 登录成功处理器
 					// 登录失败处理器
 					.errorResponseHandler(new JwkAuthenticationFailureEventHandler());
 		}));
@@ -222,6 +227,8 @@ public class AuthorizationServerConfiguration {
 				new SmsAuthenticationGranter(stringRedisTemplate),
 				// 密码模式
 				new PasswordTokenGranter(),
+
+				new RefreshTokenGranter(),
 				// 访问令牌请求用于OAuth 2.0刷新令牌授权 ——刷新token
 				new OAuth2RefreshTokenAuthenticationConverter(),
 				// 客户端模式
@@ -257,6 +264,9 @@ public class AuthorizationServerConfiguration {
 		SmsAuthenticationProvider smsAuthenticationProvider = new SmsAuthenticationProvider(authenticationManager,
 				authorizationService, oAuth2TokenGenerator());
 
+		JwkRefreshAuthenticationProvider refreshTokenAuthenticationProvider =
+				new JwkRefreshAuthenticationProvider(authenticationManager,authorizationService, oAuth2TokenGenerator());
+
 		// 处理 UsernamePasswordAuthenticationToken
 		JwkAuthProperties properties = SpringUtil.getBean(JwkAuthProperties.class);
 		JwkDaoAuthenticationProvider authenticationProvider = new JwkDaoAuthenticationProvider();
@@ -269,6 +279,7 @@ public class AuthorizationServerConfiguration {
 		// 处理 EmailAuthenticationToken
 		http.authenticationProvider(emailAuthenticationProvider);
 		http.authenticationProvider(smsAuthenticationProvider);
+		http.authenticationProvider(refreshTokenAuthenticationProvider);
 	}
 
 }

@@ -1,5 +1,6 @@
 com.jwk.common.security.SecurityCoreAutoConfiguration
 com.jwk.common.security.support.grant.password.JwkUserDetailsServiceImpl
+com.jwk.common.security.support.grant.refresh.RefreshUserDetailsServiceImpl
 com.jwk.common.security.support.service.JwkRemoteRegisteredClientRepository
 com.jwk.common.security.support.component.JwkSecurityInnerAspect
 com.jwk.common.security.support.service.JwkRedisOAuth2AuthorizationService
