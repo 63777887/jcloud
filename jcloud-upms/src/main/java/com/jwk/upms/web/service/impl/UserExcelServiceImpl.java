@@ -36,141 +36,148 @@ import java.util.*;
 @RequiredArgsConstructor
 public class UserExcelServiceImpl implements ExcelService {
 
-    private final AuthService authService;
+	private final AuthService authService;
 
-    private final SysUserService sysUserService;
+	private final SysUserService sysUserService;
 
-    private final int BATCH_COUNT = 50;
+	private final int BATCH_COUNT = 50;
 
-    @Override
-    public Boolean importData(MultipartFile file) {
-        try {
-            EasyExcel.read(file.getInputStream()).head(UserImportDto.class).registerReadListener(new JwkPageReadListener<UserImportDto>(datalist -> {
-                log.info("导入数据：{}", datalist);
-                authService.registerImportUsers(datalist);
-            }, BATCH_COUNT)).sheet().doRead();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return Boolean.TRUE;
-    }
+	@Override
+	public Boolean importData(MultipartFile file) {
+		try {
+			EasyExcel.read(file.getInputStream()).head(UserImportDto.class)
+					.registerReadListener(new JwkPageReadListener<UserImportDto>(datalist -> {
+						log.info("导入数据：{}", datalist);
+						authService.registerImportUsers(datalist);
+					}, BATCH_COUNT)).sheet().doRead();
+		}
+		catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+		return Boolean.TRUE;
+	}
 
+	@Override
+	public Boolean support(@Nullable String type) {
+		return ExcelConstants.USER.equals(type);
+	}
 
-    @Override
-    public Boolean support(@Nullable String type) {
-        return ExcelConstants.USER.equals(type);
-    }
+	@Override
+	public String getFileName() {
+		return "用户名单" + CharConstants.DASHED + DateHelper.getLongDate(DateHelper.nowDate());
+	}
 
-    @Override
-    public String getFileName() {
-        return "用户名单" + CharConstants.DASHED + DateHelper.getLongDate(DateHelper.nowDate());
-    }
+	@Override
+	public void exportData(HttpServletResponse response, ExcelReq excelReq) {
+		List<SysUser> userList;
+		if (!excelReq.getIsAll()) {
+			UserDto userDto = JSON.parseObject(JSON.toJSONString(excelReq.getConditions()), UserDto.class);
+			userList = sysUserService.lambdaQuery()
+					.like(StrUtil.isNotBlank(userDto.getUsername()), SysUser::getUsername, userDto.getUsername())
+					.list();
+		}
+		else {
+			userList = sysUserService.list();
+		}
 
-    @Override
-    public void exportData(HttpServletResponse response, ExcelReq excelReq) {
-        List<SysUser> userList;
-        if (!excelReq.getIsAll()) {
-            UserDto userDto = JSON.parseObject(JSON.toJSONString(excelReq.getConditions()), UserDto.class);
-            userList = sysUserService.lambdaQuery()
-                    .like(StrUtil.isNotBlank(userDto.getUsername()), SysUser::getUsername, userDto.getUsername()).list();
-        } else {
-            userList = sysUserService.list();
-        }
+		List<UserImportDto> userImportDtoList = Convert.toList(UserImportDto.class, userList);
 
-        List<UserImportDto> userImportDtoList = Convert.toList(UserImportDto.class, userList);
+		// 下载excel
+		download(response, getFileName(), () -> {
+			Set<String> includeColumnFiledNames = new HashSet<>();
+			// 动态获取header
+			excelReq.getExportFields().forEach(t -> {
+				includeColumnFiledNames.add(t);
+			});
 
-        // 下载excel
-        download(response, getFileName(), () -> {
-            Set<String> includeColumnFiledNames = new HashSet<>();
-            // 动态获取header
-            excelReq.getExportFields().forEach(t -> {
-                includeColumnFiledNames.add(t);
-            });
+			EasyExcel.write(response.getOutputStream(), UserImportDto.class)
+					// 自动长宽格式
+					.registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
+					// 生成excel类型
+					.excelType(ExcelTypeEnum.XLSX)
+					// 动态导出的字段
+					.includeColumnFiledNames(includeColumnFiledNames)
+					// sheet名
+					.sheet("用户信息")
+					// 数据
+					.doWrite(userImportDtoList);
+		});
 
+	}
 
-            EasyExcel.write(response.getOutputStream(), UserImportDto.class)
-//                    自动长宽格式
-                    .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
-//                    生成excel类型
-                    .excelType(ExcelTypeEnum.XLSX)
-//                    动态导出的字段
-                    .includeColumnFiledNames(includeColumnFiledNames)
-//                    sheet名
-                    .sheet("用户信息")
-//                    数据
-                    .doWrite(userImportDtoList);
-        });
+	@Override
+	public void downloadExcelTemp(HttpServletResponse response) {
+		try {
+			// 下载excel
+			download(response, "用户模版", () -> {
+				EasyExcel.write(response.getOutputStream(), UserImportDto.class)
+						// 自动长宽格式
+						.registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
+						.excludeColumnFieldNames(Arrays.asList("userId"))
+						// 生成excel类型
+						.excelType(ExcelTypeEnum.XLSX)
+						// sheet名
+						.sheet("用户信息")
+						// 数据
+						.doWrite(ArrayList::new);
+			});
+		}
+		catch (Exception e) {
+			// 重置response
+			response.reset();
+			response.setContentType("application/json");
+			response.setCharacterEncoding(JwkSecurityConstants.UTF8);
+			Map<String, String> map = MapUtils.newHashMap();
+			map.put("code", "-1");
+			map.put("msg", "下载文件失败" + e.getMessage());
+			try {
+				response.getWriter().println(JSON.toJSONString(map));
+			}
+			catch (IOException ex) {
+				throw new RuntimeException(ex);
+			}
+		}
+	}
 
-    }
+	private void setDownloadExcelHeader(HttpServletResponse response, String fileName) {
+		response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+		response.setCharacterEncoding(JwkSecurityConstants.UTF8);
+		response.setHeader("Content-Disposition",
+				"attachment;filename=" + UrlUtil.encode(fileName, StandardCharsets.UTF_8) + ".xlsx");
+		response.setHeader("Content-Download", "true");
+	}
 
-    @Override
-    public void downloadExcelTemp(HttpServletResponse response) {
-        try {
-            // 下载excel
-            download(response, "用户模版", () -> {
-                EasyExcel.write(response.getOutputStream(), UserImportDto.class)
-//                    自动长宽格式
-                        .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
-                        .excludeColumnFieldNames(Arrays.asList("userId"))
-//                    生成excel类型
-                        .excelType(ExcelTypeEnum.XLSX)
-//                    sheet名
-                        .sheet("用户信息")
-//                    数据
-                        .doWrite(ArrayList::new);
-            });
-        } catch (Exception e) {
-            // 重置response
-            response.reset();
-            response.setContentType("application/json");
-            response.setCharacterEncoding(JwkSecurityConstants.UTF8);
-            Map<String, String> map = MapUtils.newHashMap();
-            map.put("code", "-1");
-            map.put("msg", "下载文件失败" + e.getMessage());
-            try {
-                response.getWriter().println(JSON.toJSONString(map));
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-        }
-    }
+	private void download(HttpServletResponse response, String fileName, DownloadDate downloadDate) {
+		try {
+			setDownloadExcelHeader(response, fileName);
+			downloadDate.download();
+		}
+		catch (Exception e) {
+			// 重置response
+			response.reset();
+			response.setContentType("application/json");
+			response.setCharacterEncoding(JwkSecurityConstants.UTF8);
+			Map<String, String> map = MapUtils.newHashMap();
+			map.put("code", "-1");
+			map.put("msg", "下载文件失败" + e.getMessage());
+			try {
+				response.getWriter().println(JSON.toJSONString(map));
+			}
+			catch (IOException ex) {
+				throw new RuntimeException(ex);
+			}
+		}
+	}
 
+	@FunctionalInterface
+	public interface DownloadDate {
 
-    private void setDownloadExcelHeader(HttpServletResponse response, String fileName) {
-        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-        response.setCharacterEncoding(JwkSecurityConstants.UTF8);
-        response.setHeader("Content-Disposition", "attachment;filename=" + UrlUtil.encode(fileName, StandardCharsets.UTF_8) + ".xlsx");
-        response.setHeader("Content-Download", "true");
-    }
+		/**
+		 * Gets a result.
+		 * @return a result
+		 */
+		void download() throws IOException;
 
-    private void download(HttpServletResponse response, String fileName, DownloadDate downloadDate) {
-        try {
-            setDownloadExcelHeader(response, fileName);
-            downloadDate.download();
-        } catch (Exception e) {
-            // 重置response
-            response.reset();
-            response.setContentType("application/json");
-            response.setCharacterEncoding(JwkSecurityConstants.UTF8);
-            Map<String, String> map = MapUtils.newHashMap();
-            map.put("code", "-1");
-            map.put("msg", "下载文件失败" + e.getMessage());
-            try {
-                response.getWriter().println(JSON.toJSONString(map));
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-        }
-    }
+	}
 
-    @FunctionalInterface
-    public interface DownloadDate {
-
-        /**
-         * Gets a result.
-         *
-         * @return a result
-         */
-        void download() throws IOException;
-    }
 }

@@ -2,8 +2,10 @@ package com.jwk.common.core.handler;
 
 import com.jwk.common.core.enums.ErrorCodeStatusE;
 import com.jwk.common.core.exception.ServiceException;
-import com.jwk.common.core.model.RestResponse;
+import com.jwk.common.core.model.R;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
@@ -17,7 +19,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
-import java.nio.file.AccessDeniedException;
 import java.util.List;
 
 /**
@@ -31,6 +32,7 @@ import java.util.List;
 @Order(10000)
 @RestControllerAdvice
 @Configuration
+@ConditionalOnMissingBean(GlobalBizExceptionHandler.class)
 public class GlobalBizExceptionHandler {
 
 	/**
@@ -38,22 +40,11 @@ public class GlobalBizExceptionHandler {
 	 * @param exception
 	 * @return RestResponse
 	 */
-	@ExceptionHandler({ ServiceException.class })
-	public RestResponse serviceExceptionHandler(ServiceException exception) {
+	@ExceptionHandler(ServiceException.class)
+	@ResponseStatus(HttpStatus.OK)
+	public R serviceExceptionHandler(ServiceException exception) {
 		log.warn("业务异常,ex = {}", exception.getMessage());
-		return RestResponse.error(exception.getErrorCode(), exception.getMessage());
-	}
-
-	/**
-	 * 全局异常.
-	 * @param e the e
-	 * @return RestResponse
-	 */
-	@ExceptionHandler(Exception.class)
-	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-	public RestResponse handleGlobalException(Exception e) {
-		log.error("全局异常信息 ex={}", e.getMessage(), e);
-		return RestResponse.error(e.getLocalizedMessage());
+		return R.error(exception.getErrorCode(), exception.getMessage());
 	}
 
 	/**
@@ -63,9 +54,9 @@ public class GlobalBizExceptionHandler {
 	 */
 	@ExceptionHandler(NoHandlerFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
-	public RestResponse handleNotFoundException(NoHandlerFoundException e) {
+	public R handleNotFoundException(NoHandlerFoundException e) {
 		log.error("404异常信息 ex={}", e.getMessage(), e);
-		return RestResponse.error(e.getLocalizedMessage());
+		return R.error(e.getLocalizedMessage());
 	}
 
 	/**
@@ -74,9 +65,9 @@ public class GlobalBizExceptionHandler {
 	 * @return RestResponse
 	 */
 	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-	public RestResponse handleNotFoundException(HttpRequestMethodNotSupportedException e) {
+	public R handleNotFoundException(HttpRequestMethodNotSupportedException e) {
 		log.error("非法请求方式异常信息 ex={}", e.getMessage(), e);
-		return RestResponse.error(ErrorCodeStatusE.REQUEST_METHOD_NOT_SUPPORTED.getCode(),
+		return R.error(ErrorCodeStatusE.REQUEST_METHOD_NOT_SUPPORTED.getCode(),
 				ErrorCodeStatusE.REQUEST_METHOD_NOT_SUPPORTED.getMsg(), e.getMessage());
 	}
 
@@ -92,21 +83,9 @@ public class GlobalBizExceptionHandler {
 	 */
 	@ExceptionHandler(IllegalArgumentException.class)
 	@ResponseStatus(HttpStatus.OK)
-	public RestResponse handleIllegalArgumentException(IllegalArgumentException exception) {
+	public R handleIllegalArgumentException(IllegalArgumentException exception) {
 		log.error("非法参数,ex = {}", exception.getMessage(), exception);
-		return RestResponse.error(exception.getMessage());
-	}
-
-	/**
-	 * AccessDeniedException
-	 * @param e the e
-	 * @return RestResponse
-	 */
-	@ExceptionHandler(AccessDeniedException.class)
-	@ResponseStatus(HttpStatus.FORBIDDEN)
-	public RestResponse handleAccessDeniedException(AccessDeniedException e) {
-		log.warn("拒绝授权异常信息 ex={}", e.getMessage());
-		return RestResponse.error(e.getLocalizedMessage());
+		return R.error(exception.getMessage());
 	}
 
 	/**
@@ -116,11 +95,10 @@ public class GlobalBizExceptionHandler {
 	 */
 	@ExceptionHandler({ MethodArgumentNotValidException.class })
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	public RestResponse handleBodyValidException(MethodArgumentNotValidException exception) {
+	public R handleBodyValidException(MethodArgumentNotValidException exception) {
 		List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
 		log.warn("参数绑定异常,ex = {}", fieldErrors.get(0).getDefaultMessage());
-		return RestResponse
-				.error(String.format("%s %s", fieldErrors.get(0).getField(), fieldErrors.get(0).getDefaultMessage()));
+		return R.error(String.format("%s %s", fieldErrors.get(0).getField(), fieldErrors.get(0).getDefaultMessage()));
 	}
 
 	/**
@@ -130,10 +108,22 @@ public class GlobalBizExceptionHandler {
 	 */
 	@ExceptionHandler({ BindException.class })
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	public RestResponse bindExceptionHandler(BindException exception) {
+	public R bindExceptionHandler(BindException exception) {
 		List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
 		log.warn("参数绑定异常,ex = {}", fieldErrors.get(0).getDefaultMessage());
-		return RestResponse.error(fieldErrors.get(0).getDefaultMessage());
+		return R.error(fieldErrors.get(0).getDefaultMessage());
+	}
+
+	/**
+	 * 全局异常.
+	 * @param e the e
+	 * @return RestResponse
+	 */
+	@ExceptionHandler(Exception.class)
+	@ResponseStatus(HttpStatus.OK)
+	public R handleGlobalException(Exception e) {
+		log.error("全局异常信息 ex={}", e.getMessage(), e);
+		return R.error(e.getLocalizedMessage());
 	}
 
 }

@@ -5,7 +5,7 @@ import com.jwk.upms.base.entity.SysSetting;
 
 /**
  * <p>
- *  Mapper 接口
+ * Mapper 接口
  * </p>
  *
  * @author jiwk

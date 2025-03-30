@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-
 public class PrometheusMetricsInterceptor implements HandlerInterceptor {
 
 	/**

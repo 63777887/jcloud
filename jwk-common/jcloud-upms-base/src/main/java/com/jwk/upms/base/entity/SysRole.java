@@ -70,9 +70,4 @@ public class SysRole extends Model<SysRole> {
 	 */
 	private Date updateTime;
 
-	@Override
-	protected Serializable pkVal() {
-		return this.id;
-	}
-
 }

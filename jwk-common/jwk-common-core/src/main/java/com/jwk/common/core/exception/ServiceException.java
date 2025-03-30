@@ -4,11 +4,10 @@ import com.jwk.common.core.constant.ResponseConstants;
 
 /**
  * @author Jiwk
- * @date 2022/6/11
  * @version 0.1.0
  * <p>
  * 业务异常
- *
+ * @date 2022/6/11
  */
 public class ServiceException extends RuntimeException {
 
@@ -40,6 +39,30 @@ public class ServiceException extends RuntimeException {
 
 	public void setErrorCode(String errorCode) {
 		this.errorCode = errorCode;
+	}
+
+	public static void throwError() {
+		throw new ServiceException();
+	}
+
+	public static ServiceException buildInvalidParamsError(String message) {
+		return new ServiceException(ResponseConstants.INVALID_PARAMS_ERROR_CODE, message);
+	}
+
+	public static void throwInvalidParamsError(String message) {
+		throw buildInvalidParamsError(message);
+	}
+
+	public static void throwError(String message) {
+		throw new ServiceException(message);
+	}
+
+	public static void throwError(Throwable cause) {
+		throw new ServiceException(cause);
+	}
+
+	public static void throwError(String errorCode, String msg) {
+		throw new ServiceException(errorCode, msg);
 	}
 
 }

@@ -22,57 +22,51 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class SysDict extends Model<SysDict> {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * 编号
-     */
-    private Long id;
+	/**
+	 * 编号
+	 */
+	private Long id;
 
-    /**
-     * 字典类型
-     */
-    private String dictType;
+	/**
+	 * 字典类型
+	 */
+	private String dictType;
 
-    /**
-     * 描述
-     */
-    private String description;
+	/**
+	 * 描述
+	 */
+	private String description;
 
-    /**
-     * 备注信息
-     */
-    private String remarks;
+	/**
+	 * 备注信息
+	 */
+	private String remarks;
 
-    /**
-     * 状态
-     */
-    private Byte status;
+	/**
+	 * 状态
+	 */
+	private Byte status;
 
-    /**
-     * createBy
-     */
-    private String createBy;
+	/**
+	 * createBy
+	 */
+	private String createBy;
 
-    /**
-     * createTime
-     */
-    private Date createTime;
+	/**
+	 * createTime
+	 */
+	private Date createTime;
 
-    /**
-     * updateBy
-     */
-    private String updateBy;
+	/**
+	 * updateBy
+	 */
+	private String updateBy;
 
-    /**
-     * updateTime
-     */
-    private Date updateTime;
-
-
-    @Override
-    protected Serializable pkVal() {
-        return this.id;
-    }
+	/**
+	 * updateTime
+	 */
+	private Date updateTime;
 
 }

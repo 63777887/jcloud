@@ -23,7 +23,7 @@ import org.springframework.data.redis.core.ValueOperations;
  */
 @Configuration
 @EnableConfigurationProperties(IdGeneraterProperties.class)
-@Import({IdGeneratorServiceImpl.class,RedisGeneratorManage.class})
+@Import({ IdGeneratorServiceImpl.class, RedisGeneratorManage.class })
 public class IdGeneraterAutoConfiguration {
 
 	@Bean

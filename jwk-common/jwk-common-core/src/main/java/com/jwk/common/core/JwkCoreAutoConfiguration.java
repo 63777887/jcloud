@@ -16,23 +16,20 @@ import org.springframework.context.annotation.Bean;
  * @version 0.1.6
  * @date 2023/12/13
  */
-@EnableConfigurationProperties({SmsConfigProperties.class, MinioConfigProperties.class})
+@EnableConfigurationProperties({ SmsConfigProperties.class, MinioConfigProperties.class })
 public class JwkCoreAutoConfiguration {
 
+	@Bean
+	@ConditionalOnProperty(prefix = "jwk.oss", name = "enabled", havingValue = "true")
+	public MinioClient minioClient(MinioConfigProperties minioConfigProperties) {
+		return MinioClient.builder().endpoint(minioConfigProperties.getAddress())
+				.credentials(minioConfigProperties.getAccessKey(), minioConfigProperties.getSecretKey()).build();
+	}
 
-    @Bean
-    @ConditionalOnProperty(prefix = "jwk.oss", name = "enabled", havingValue = "true")
-    public MinioClient minioClient(MinioConfigProperties minioConfigProperties) {
-        return MinioClient.builder()
-                .endpoint(minioConfigProperties.getAddress())
-                .credentials(minioConfigProperties.getAccessKey(), minioConfigProperties.getSecretKey())
-                .build();
-    }
-
-    @Bean
-    @ConditionalOnBean(MinioClient.class)
-    public MinioService minioService(MinioClient minioClient,MinioConfigProperties minioConfigProperties) {
-        return new MinioService(minioClient,minioConfigProperties);
-    }
+	@Bean
+	@ConditionalOnBean(MinioClient.class)
+	public MinioService minioService(MinioClient minioClient, MinioConfigProperties minioConfigProperties) {
+		return new MinioService(minioClient, minioConfigProperties);
+	}
 
 }

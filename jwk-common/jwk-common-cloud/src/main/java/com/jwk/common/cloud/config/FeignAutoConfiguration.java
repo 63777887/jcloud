@@ -8,9 +8,13 @@ import com.jwk.common.cloud.fegin.ext.promethus.PrometheusHandlerConfiguration;
 import com.jwk.common.cloud.fegin.handle.UrlBlockHandler;
 import com.jwk.common.cloud.fegin.parser.HeaderRequestOriginParser;
 import feign.Feign;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.cloud.openfeign.JwkFeignClientsRegistrar;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -23,9 +27,10 @@ import org.springframework.context.annotation.Scope;
  * sentinel 配置
  * @date 2022/6/11
  */
-@Configuration(proxyBeanMethods = false)
-@AutoConfigureBefore(SentinelFeignAutoConfiguration.class)
-@Import(PrometheusHandlerConfiguration.class)
+@Configuration
+@ConditionalOnClass(Feign.class)
+@Import({ PrometheusHandlerConfiguration.class, JwkFeignClientsRegistrar.class })
+@AutoConfigureAfter(EnableFeignClients.class)
 public class FeignAutoConfiguration {
 
 	@Bean

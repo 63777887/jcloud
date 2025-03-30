@@ -6,7 +6,7 @@ import cn.hutool.core.lang.tree.TreeNode;
 import cn.hutool.core.lang.tree.TreeUtil;
 import cn.hutool.core.util.StrUtil;
 import com.jwk.common.core.exception.ServiceException;
-import com.jwk.common.core.model.RestResponse;
+import com.jwk.common.core.model.R;
 import com.jwk.common.core.utils.DateUtil;
 import com.jwk.common.security.annotation.Inner;
 import com.jwk.upms.base.entity.SysMenu;
@@ -48,7 +48,7 @@ public class SysMenuController {
 	private final SysRoleMenuService sysRoleMenuService;
 
 	@GetMapping("/tree")
-	public RestResponse tree(@RequestParam(name = "menuName", required = false) String menuName,
+	public R tree(@RequestParam(name = "menuName", required = false) String menuName,
 			@RequestParam(name = "menuType", required = false) Integer menuType) {
 		List<SysMenu> all = sysMenuService.lambdaQuery()
 				.like(StrUtil.isNotBlank(menuName), SysMenu::getMenuName, menuName)
@@ -58,50 +58,50 @@ public class SysMenuController {
 			all.forEach(t -> t.setParentId(-1L));
 		}
 		List<TreeNode<Long>> collect = all.stream().map(MenuUtil.getNodeFunction()).collect(Collectors.toList());
-		return RestResponse.success(TreeUtil.build(collect, -1L));
+		return R.ok(TreeUtil.build(collect, -1L));
 	}
 
 	@GetMapping("/allMenu")
-	public RestResponse getAllMenu() {
+	public R getAllMenu() {
 		List<SysMenu> all = sysMenuService.lambdaQuery().eq(SysMenu::getStatus, MenuStatusE.Normal.getId())
 				.eq(SysMenu::getType, MenuTypeE.MENU.getId()).list();
 
 		List<TreeNode<Long>> collect = all.stream().map(MenuUtil.getNodeFunction()).collect(Collectors.toList());
-		return RestResponse.success(TreeUtil.build(collect, 0L));
+		return R.ok(TreeUtil.build(collect, 0L));
 	}
 
 	@PostMapping("/add")
-	@PreAuthorize("@pms.hasPermission()")
-	public RestResponse add(@RequestBody @Valid MenuDto menuDto) {
+	@PreAuthorize("@pms.hasPermission('sys_menu_add')")
+	public R add(@RequestBody @Valid MenuDto menuDto) {
 		SysMenu sysMenu = Convert.convert(SysMenu.class, menuDto);
-		return RestResponse.success(sysMenuService.save(sysMenu));
+		return R.ok(sysMenuService.save(sysMenu));
 	}
 
 	/**
 	 * 根据ID删除菜单信息
 	 */
 	@DeleteMapping(value = "/delete/{id}")
-	@PreAuthorize("@pms.hasPermission()")
-	public RestResponse delete(@PathVariable Long id) {
-		return RestResponse.success(sysMenuService.deleteMenu(id));
+	@PreAuthorize("@pms.hasPermission('sys_menu_del')")
+	public R delete(@PathVariable Long id) {
+		return R.ok(sysMenuService.deleteMenu(id));
 	}
 
 	/**
 	 * 根据ID查找用户信息
 	 */
 	@GetMapping(value = "/{id}")
-	public RestResponse getMenuById(@PathVariable Long id) {
-		return RestResponse.success(sysMenuService.getById(id));
+	public R getMenuById(@PathVariable Long id) {
+		return R.ok(sysMenuService.getById(id));
 	}
 
 	@PostMapping("/update")
-	@PreAuthorize("@pms.hasPermission()")
-	public RestResponse update(@RequestBody MenuDto menuDto) {
+	@PreAuthorize("@pms.hasPermission('sys_menu_update')")
+	public R update(@RequestBody MenuDto menuDto) {
 		if (null == menuDto.getId() || menuDto.getId() <= 0) {
 			throw new ServiceException(ErrorCodeStatusE.MENU_ID_EMPTY.getCode(),
 					ErrorCodeStatusE.MENU_ID_EMPTY.getMsg());
 		}
-		return RestResponse.success(sysMenuService.lambdaUpdate()
+		return R.ok(sysMenuService.lambdaUpdate()
 				.set(StrUtil.isNotBlank(menuDto.getMenuName()), SysMenu::getMenuName, menuDto.getMenuName())
 				.set(StrUtil.isNotBlank(menuDto.getPermission()), SysMenu::getPermission, menuDto.getPermission())
 				.set(StrUtil.isNotBlank(menuDto.getPath()), SysMenu::getPath, menuDto.getPath())
@@ -120,26 +120,27 @@ public class SysMenuController {
 	 */
 	@Inner
 	@GetMapping(value = "/loadUserAuthoritiesByRole")
-	public RestResponse loadUserAuthoritiesByRole(@RequestParam("roleCodeList") List<String> roleCodeList) {
+	public R loadUserAuthoritiesByRole(@RequestParam("roleCodeList") List<String> roleCodeList) {
 		// 加载用户角色列表
 		List<SysRole> sysRoleList = sysRoleService.lambdaQuery().in(SysRole::getCode, roleCodeList).list();
 		if (CollUtil.isEmpty(sysRoleList)) {
-			return RestResponse.success();
+			return R.ok();
 		}
 		List<Long> sysRoleIds = sysRoleList.stream().map(SysRole::getId).collect(Collectors.toList());
 		// 通过用户角色列表加载用户的资源权限列表
-		List<SysRoleMenu> sysRoleMenuList = sysRoleMenuService.lambdaQuery().in(SysRoleMenu::getRoleId, sysRoleIds).list();
+		List<SysRoleMenu> sysRoleMenuList = sysRoleMenuService.lambdaQuery().in(SysRoleMenu::getRoleId, sysRoleIds)
+				.list();
 		if (CollUtil.isEmpty(sysRoleMenuList)) {
-			return RestResponse.success();
+			return R.ok();
 		}
 		List<Long> menuIds = sysRoleMenuList.stream().map(SysRoleMenu::getMenuId).collect(Collectors.toList());
-		List<SysMenu> sysApis = sysMenuService.lambdaQuery().in(SysMenu::getId,menuIds).list();
-		return RestResponse.success(sysApis);
+		List<SysMenu> sysApis = sysMenuService.lambdaQuery().in(SysMenu::getId, menuIds).list();
+		return R.ok(sysApis);
 	}
 
 	@GetMapping("/getMenuListByRole/{roleId}")
-	public RestResponse getAllMenu(@PathVariable Long roleId, Integer menuType) {
-		return RestResponse.success(sysMenuService.getMenuListByRole(roleId, menuType));
+	public R getAllMenu(@PathVariable Long roleId, Integer menuType) {
+		return R.ok(sysMenuService.getMenuListByRole(roleId, menuType));
 	}
 
 }

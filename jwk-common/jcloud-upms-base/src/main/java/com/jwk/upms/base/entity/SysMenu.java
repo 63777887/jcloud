@@ -100,9 +100,4 @@ public class SysMenu extends Model<SysMenu> {
 	 */
 	private Date updateTime;
 
-	@Override
-	protected Serializable pkVal() {
-		return this.id;
-	}
-
 }

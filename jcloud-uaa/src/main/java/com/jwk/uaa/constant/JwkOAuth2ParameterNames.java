@@ -23,6 +23,7 @@ public interface JwkOAuth2ParameterNames {
 	 * {@code captcha} - used in Access Token Request.
 	 */
 	String SMS = "sms";
+
 	/**
 	 * sms captcha
 	 */

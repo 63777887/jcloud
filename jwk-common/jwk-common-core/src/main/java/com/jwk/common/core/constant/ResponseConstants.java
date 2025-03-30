@@ -13,6 +13,8 @@ public interface ResponseConstants {
 
 	String ERROR_CODE = "-1";
 
+	String INVALID_PARAMS_ERROR_CODE = "20001";
+
 	String SUCCESS_MSG = "success";
 
 	String ERROR_MSG = "error";

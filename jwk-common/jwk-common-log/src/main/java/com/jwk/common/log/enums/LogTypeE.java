@@ -9,12 +9,10 @@ package com.jwk.common.log.enums;
  */
 public enum LogTypeE {
 
-
 	/**
 	 * 登陆
 	 */
-	USER_LOGIN((byte) 1, "登陆系统"),
-	USER_LOGOUT((byte) 2, "退出系统");
+	USER_LOGIN((byte) 1, "登陆系统"), USER_LOGOUT((byte) 2, "退出系统");
 
 	private final Byte code;
 

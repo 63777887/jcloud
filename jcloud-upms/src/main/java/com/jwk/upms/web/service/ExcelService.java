@@ -14,13 +14,14 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface ExcelService {
 
-    Boolean importData(MultipartFile file);
+	Boolean importData(MultipartFile file);
 
-    Boolean support(String type);
+	Boolean support(String type);
 
-    String getFileName();
+	String getFileName();
 
-    void exportData(HttpServletResponse response, ExcelReq excelReq);
+	void exportData(HttpServletResponse response, ExcelReq excelReq);
 
-    void downloadExcelTemp(HttpServletResponse response);
+	void downloadExcelTemp(HttpServletResponse response);
+
 }

@@ -19,25 +19,25 @@ import java.util.function.Function;
 @UtilityClass
 public class MenuUtil {
 
-    @NotNull
-    public Function<SysMenu, TreeNode<Long>> getNodeFunction() {
-        return menu -> {
-            TreeNode<Long> node = new TreeNode<>();
-            node.setId(menu.getId());
-            node.setName(menu.getMenuName());
-            node.setParentId(menu.getParentId());
-            node.setWeight(menu.getSort());
-            // 扩展属性
-            Map<String, Object> extra = new HashMap<>();
-            extra.put("icon", menu.getIcon());
-            extra.put("path", menu.getPath());
-            extra.put("menuName", menu.getMenuName());
-            extra.put("sort", menu.getSort());
-            extra.put("hidden", menu.getHidden());
-            extra.put("tab", menu.getTab());
-            node.setExtra(extra);
-            return node;
-        };
-    }
+	@NotNull
+	public Function<SysMenu, TreeNode<Long>> getNodeFunction() {
+		return menu -> {
+			TreeNode<Long> node = new TreeNode<>();
+			node.setId(menu.getId());
+			node.setName(menu.getMenuName());
+			node.setParentId(menu.getParentId());
+			node.setWeight(menu.getSort());
+			// 扩展属性
+			Map<String, Object> extra = new HashMap<>();
+			extra.put("icon", menu.getIcon());
+			extra.put("path", menu.getPath());
+			extra.put("menuName", menu.getMenuName());
+			extra.put("sort", menu.getSort());
+			extra.put("hidden", menu.getHidden());
+			extra.put("tab", menu.getTab());
+			node.setExtra(extra);
+			return node;
+		};
+	}
 
 }

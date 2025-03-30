@@ -22,30 +22,33 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class SmsServiceImpl implements SmsService {
 
-    private final ValueOperations valueOperations;
+	private final ValueOperations valueOperations;
 
-    private final SmsConfigProperties smsConfigProperties;
-    /**
-     * 发送短信的单例线程池
-     */
-    private static ExecutorService sendSmsThreadPool = ThreadPoolUtil.newSingleThreadPool("JcloudUpms","SendSms");
+	private final SmsConfigProperties smsConfigProperties;
 
-    @Override
-    public String sendCode(String phone) {
-        String code = SmsUtil.generateCaptchaCode();
-        if (log.isDebugEnabled()){
-            log.debug("发送短信验证码：{}", code);
-        }
-        valueOperations.set(SmsUtil.getCaptchaKey(phone), code, smsConfigProperties.getExpireTime(), TimeUnit.MINUTES);
-        if (smsConfigProperties.getEnable()){
-            // 发送短信
-            sendSmsThreadPool.execute(()->{
-                SendSmsResponse sendSmsResponse = SmsUtil.sendLoginSms(phone, code);
-                log.info("sendSmsResponse: {}", JSON.toJSONString(sendSmsResponse));
-            });
-            return Boolean.TRUE.toString();
-        }else {
-            return code;
-        }
-    }
+	/**
+	 * 发送短信的单例线程池
+	 */
+	private static ExecutorService sendSmsThreadPool = ThreadPoolUtil.newSingleThreadPool("JcloudUpms", "SendSms");
+
+	@Override
+	public String sendCode(String phone) {
+		String code = SmsUtil.generateCaptchaCode();
+		if (log.isDebugEnabled()) {
+			log.debug("发送短信验证码：{}", code);
+		}
+		valueOperations.set(SmsUtil.getCaptchaKey(phone), code, smsConfigProperties.getExpireTime(), TimeUnit.MINUTES);
+		if (smsConfigProperties.getEnable()) {
+			// 发送短信
+			sendSmsThreadPool.execute(() -> {
+				SendSmsResponse sendSmsResponse = SmsUtil.sendLoginSms(phone, code);
+				log.info("sendSmsResponse: {}", JSON.toJSONString(sendSmsResponse));
+			});
+			return Boolean.TRUE.toString();
+		}
+		else {
+			return code;
+		}
+	}
+
 }

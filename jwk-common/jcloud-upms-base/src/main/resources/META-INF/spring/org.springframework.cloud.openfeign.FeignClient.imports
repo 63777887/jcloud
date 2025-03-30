@@ -1,0 +1,3 @@
+com.jwk.upms.base.api.UpmsRemoteService
+com.jwk.upms.base.api.SmsRemoteService
+com.jwk.upms.base.api.LogRemoteService

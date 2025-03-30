@@ -21,7 +21,7 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-public class RestResponse<T> implements Serializable {
+public class R<T> implements Serializable {
 
 	private static final long serialVersionUID = 1078301560542522627L;
 
@@ -40,36 +40,36 @@ public class RestResponse<T> implements Serializable {
 	@Getter
 	private T data;
 
-	public static <T> RestResponse<T> success() {
+	public static <T> R<T> ok() {
 		return restResult(ResponseConstants.SUCCESS_CODE, ResponseConstants.SUCCESS_MSG, null);
 	}
 
-	public static <T> RestResponse<T> success(T data) {
+	public static <T> R<T> ok(T data) {
 		return restResult(ResponseConstants.SUCCESS_CODE, ResponseConstants.SUCCESS_MSG, data);
 	}
 
-	public static <T> RestResponse<T> success(String msg, T data) {
+	public static <T> R<T> ok(String msg, T data) {
 		return restResult(ResponseConstants.SUCCESS_CODE, msg, data);
 	}
 
-	public static <T> RestResponse<T> error() {
+	public static <T> R<T> error() {
 		return restResult(ResponseConstants.ERROR_CODE, ResponseConstants.ERROR_MSG, null);
 	}
 
-	public static <T> RestResponse<T> error(String msg) {
+	public static <T> R<T> error(String msg) {
 		return restResult(ResponseConstants.ERROR_CODE, msg, null);
 	}
 
-	public static <T> RestResponse<T> error(String code, String msg) {
+	public static <T> R<T> error(String code, String msg) {
 		return restResult(code, msg, null);
 	}
 
-	public static <T> RestResponse<T> error(String code, String msg, T data) {
+	public static <T> R<T> error(String code, String msg, T data) {
 		return restResult(code, msg, data);
 	}
 
-	private static <T> RestResponse<T> restResult(String code, String msg, T data) {
-		RestResponse<T> apiResult = new RestResponse<>();
+	private static <T> R<T> restResult(String code, String msg, T data) {
+		R<T> apiResult = new R<>();
 		apiResult.setCode(code);
 		apiResult.setData(data);
 		apiResult.setMsg(msg);

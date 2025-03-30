@@ -23,12 +23,11 @@ import java.util.Map;
  * @date 2022/6/11
  */
 @Slf4j
-public class SmsAuthenticationProvider
-		extends OAuth2ResourceOwnerBaseAuthenticationProvider<SmsAuthenticationToken> {
+public class SmsAuthenticationProvider extends OAuth2ResourceOwnerBaseAuthenticationProvider<SmsAuthenticationToken> {
 
 	public SmsAuthenticationProvider(AuthenticationManager authenticationManager,
-									 OAuth2AuthorizationService authorizationService,
-									 OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator) {
+			OAuth2AuthorizationService authorizationService,
+			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator) {
 		super(authenticationManager, authorizationService, tokenGenerator);
 	}
 

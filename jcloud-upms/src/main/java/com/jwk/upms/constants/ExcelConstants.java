@@ -14,5 +14,4 @@ public interface ExcelConstants {
 	 */
 	String USER = "USER";
 
-
 }

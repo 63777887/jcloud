@@ -20,8 +20,8 @@
     <jwk.common.version>${project.version}</jwk.common.version>
     <spring-boot.version>2.7.0</spring-boot.version>
     <canal.version>1.1.5</canal.version>
-    <easyexcel.version>3.0.5</easyexcel.version>
-    <knife4j.version>2.0.9</knife4j.version>
+    <easyexcel.version>3.1.2</easyexcel.version>
+    <knife4j.version>3.0.3</knife4j.version>
     <freemarker.version>2.3.28</freemarker.version>
     <druid.version>1.1.10</druid.version>
     <mysql.version>8.0.28</mysql.version>
@@ -29,7 +29,8 @@
     <sharding-jdbc.version>4.1.1</sharding-jdbc.version>
     <curator-x-discovery.version>5.2.0</curator-x-discovery.version>
     <micrometer-registry-prometheus.version>1.9.0</micrometer-registry-prometheus.version>
-    <mybatisplus-spring-boot-starter.version>3.4.1</mybatisplus-spring-boot-starter.version>
+    <mybatisplus-spring-boot-starter.version>3.5.6</mybatisplus-spring-boot-starter.version>
+    <dynamic-datasource-spring-boot-starter.version>4.3.1</dynamic-datasource-spring-boot-starter.version>
     <seata-spring-boot-starter.version>1.5.2</seata-spring-boot-starter.version>
     <redisson.version>3.17.5</redisson.version>
     <dysmsapi.version>2.0.24</dysmsapi.version>
@@ -165,7 +166,7 @@
       <dependency>
         <groupId>com.baomidou</groupId>
         <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
-        <version>${mybatisplus-spring-boot-starter.version}</version>
+        <version>${dynamic-datasource-spring-boot-starter.version}</version>
       </dependency>
 
       <dependency>

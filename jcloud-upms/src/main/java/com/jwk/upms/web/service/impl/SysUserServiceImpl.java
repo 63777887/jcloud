@@ -53,138 +53,139 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService {
 
-    private final SysUserRoleService sysUserRoleService;
+	private final SysUserRoleService sysUserRoleService;
 
-    private final SysRoleMenuService sysRoleMenuService;
+	private final SysRoleMenuService sysRoleMenuService;
 
-    private final SysMenuService sysMenuService;
+	private final SysMenuService sysMenuService;
 
-    private final SysRoleService sysRoleService;
+	private final SysRoleService sysRoleService;
 
-    private final MinioConfigProperties minioConfigProperties;
+	private final MinioConfigProperties minioConfigProperties;
 
-    @Override
-    public UserInfo findUserById(Long id) {
-        SysUser user = getById(id);
-        if (BeanUtil.isEmpty(user)) {
-            return null;
-        }
-        // 加载用户角色列表
-        List<SysUserRole> sysUserRoles = sysUserRoleService.lambdaQuery().eq(SysUserRole::getUserId, user.getId())
-                .list();
-        List<Long> roleIds = sysUserRoles.stream().map(SysUserRole::getRoleId).collect(Collectors.toList());
+	@Override
+	public UserInfo findUserById(Long id) {
+		SysUser user = getById(id);
+		if (BeanUtil.isEmpty(user)) {
+			return null;
+		}
+		// 加载用户角色列表
+		List<SysUserRole> sysUserRoles = sysUserRoleService.lambdaQuery().eq(SysUserRole::getUserId, user.getId())
+				.list();
+		List<Long> roleIds = sysUserRoles.stream().map(SysUserRole::getRoleId).collect(Collectors.toList());
 
-        List<SysMenu> sysMenus = new ArrayList<>();
-        for (Long roleId : roleIds) {
-            // 通过用户角色列表加载用户的资源权限列表
-            List<SysRoleMenu> sysRoleApis = sysRoleMenuService.lambdaQuery().eq(SysRoleMenu::getRoleId, roleId).list();
-            List<Long> menuIds = sysRoleApis.stream().map(SysRoleMenu::getMenuId).collect(Collectors.toList());
-            if (CollUtil.isNotEmpty(menuIds)) {
-                sysMenus = sysMenuService.listByIds(menuIds);
-            }
-        }
-        List<TreeNode<Long>> collect = sysMenus.stream().filter(menu -> MenuTypeE.MENU.getId().equals(menu.getType()))
-                .filter(menu -> StrUtil.isNotBlank(menu.getPath())).map(MenuUtil.getNodeFunction()).collect(Collectors.toList());
+		List<SysMenu> sysMenus = new ArrayList<>();
+		for (Long roleId : roleIds) {
+			// 通过用户角色列表加载用户的资源权限列表
+			List<SysRoleMenu> sysRoleApis = sysRoleMenuService.lambdaQuery().eq(SysRoleMenu::getRoleId, roleId).list();
+			List<Long> menuIds = sysRoleApis.stream().map(SysRoleMenu::getMenuId).collect(Collectors.toList());
+			if (CollUtil.isNotEmpty(menuIds)) {
+				sysMenus = sysMenuService.listByIds(menuIds);
+			}
+		}
+		List<TreeNode<Long>> collect = sysMenus.stream().filter(menu -> MenuTypeE.MENU.getId().equals(menu.getType()))
+				.filter(menu -> StrUtil.isNotBlank(menu.getPath())).map(MenuUtil.getNodeFunction())
+				.collect(Collectors.toList());
 
-//        List<SysMenu> buttons = sysMenus.stream().filter(menu -> MenuTypeE.BUTTON.getId().equals(menu.getType()))
-//                .collect(Collectors.toList());
+		// List<SysMenu> buttons = sysMenus.stream().filter(menu ->
+		// MenuTypeE.BUTTON.getId().equals(menu.getType()))
+		// .collect(Collectors.toList());
 
-        // 更新完整的头像地址
-        user.setIcon(UserUtil.getRealIconAddr(user,minioConfigProperties));
-        UserInfo userInfo = new UserInfo();
-        userInfo.setSysUser(user);
-        userInfo.setButtons(sysMenus);
-        userInfo.setSysMenu(TreeUtil.build(collect, -1L));
-        return userInfo;
-    }
+		// 更新完整的头像地址
+		user.setIcon(UserUtil.getRealIconAddr(user, minioConfigProperties));
+		UserInfo userInfo = new UserInfo();
+		userInfo.setSysUser(user);
+		userInfo.setButtons(sysMenus);
+		userInfo.setSysMenu(TreeUtil.build(collect, -1L));
+		return userInfo;
+	}
 
+	@Override
+	public Page<UserVo> getUserList(Page<SysUser> page, UserDto userDto) {
+		Page<SysUser> userPage = lambdaQuery()
+				.like(StrUtil.isNotBlank(userDto.getUsername()), SysUser::getUsername, userDto.getUsername())
+				.page(page);
+		List<UserVo> userVoList = userPage.getRecords().stream().map(t -> {
+			UserVo userVo = Convert.convert(UserVo.class, t);
+			userVo.setPhone(DesensitizedUtil.mobilePhone(userVo.getPhone()));
+			return userVo;
+		}).collect(Collectors.toList());
 
+		Page<UserVo> userVoPage = Convert.convert(new TypeReference<Page<UserVo>>() {
+		}, userPage);
+		userVoPage.setRecords(userVoList);
+		if (CollUtil.isNotEmpty(userVoList)) {
+			userVoList.forEach(t -> {
+				List<SysUserRole> list = sysUserRoleService.lambdaQuery().eq(SysUserRole::getUserId, t.getId()).list();
+				if (CollUtil.isNotEmpty(list)) {
+					List<Long> roleIds = list.stream().map(SysUserRole::getRoleId).collect(Collectors.toList());
+					List<SysRole> sysRoleList = sysRoleService.lambdaQuery().in(SysRole::getId, roleIds).list();
+					t.setSysRoles(sysRoleList);
+				}
+			});
+		}
+		return userVoPage;
+	}
 
-    @Override
-    public Page<UserVo> getUserList(Page<SysUser> page, UserDto userDto) {
-        Page<SysUser> userPage = lambdaQuery()
-                .like(StrUtil.isNotBlank(userDto.getUsername()), SysUser::getUsername, userDto.getUsername())
-                .page(page);
-        List<UserVo> userVoList = userPage.getRecords().stream().map(t -> {
-            UserVo userVo = Convert.convert(UserVo.class, t);
-            userVo.setPhone(DesensitizedUtil.mobilePhone(userVo.getPhone()));
-            return userVo;
-        }).collect(Collectors.toList());
+	@Override
+	public UserVo getUserById(Long id) {
+		SysUser user = getById(id);
+		UserVo userVo = Convert.convert(UserVo.class, user);
+		List<SysUserRole> list = sysUserRoleService.lambdaQuery().eq(SysUserRole::getUserId, userVo.getId()).list();
+		if (CollUtil.isNotEmpty(list)) {
+			List<Long> roleIds = list.stream().map(SysUserRole::getRoleId).collect(Collectors.toList());
+			List<SysRole> sysRoleList = sysRoleService.lambdaQuery().in(SysRole::getId, roleIds).list();
+			userVo.setSysRoles(sysRoleList);
+		}
+		return userVo;
+	}
 
-        Page<UserVo> userVoPage = Convert.convert(new TypeReference<Page<UserVo>>() {
-        }, userPage);
-        userVoPage.setRecords(userVoList);
-        if (CollUtil.isNotEmpty(userVoList)) {
-            userVoList.forEach(t -> {
-                List<SysUserRole> list = sysUserRoleService.lambdaQuery().eq(SysUserRole::getUserId, t.getId()).list();
-                if (CollUtil.isNotEmpty(list)) {
-                    List<Long> roleIds = list.stream().map(SysUserRole::getRoleId).collect(Collectors.toList());
-                    List<SysRole> sysRoleList = sysRoleService.lambdaQuery().in(SysRole::getId, roleIds).list();
-                    t.setSysRoles(sysRoleList);
-                }
-            });
-        }
-        return userVoPage;
-    }
+	@Override
+	@Transactional
+	public Boolean updateUser(UserDto userDto) {
+		// 更新用户信息
+		LambdaUpdateChainWrapper<SysUser> wrapper = lambdaUpdate()
+				.set(StrUtil.isNotBlank(userDto.getUsername()), SysUser::getUsername, userDto.getUsername())
+				.set(StrUtil.isNotBlank(userDto.getPhone()), SysUser::getPhone, userDto.getPhone())
+				.set(StrUtil.isNotBlank(userDto.getNickname()), SysUser::getNickname, userDto.getNickname())
+				.set(StrUtil.isNotBlank(userDto.getIcon()), SysUser::getIcon, userDto.getIcon())
+				.set(StrUtil.isNotBlank(userDto.getEmail()), SysUser::getEmail, userDto.getEmail());
+		if (userDto.getStatus() != null && userDto.getStatus() > 0) {
+			wrapper.set(SysUser::getStatus, userDto.getStatus().byteValue());
+		}
+		if (StrUtil.isNotBlank(userDto.getPassword())) {
+			wrapper.set(SysUser::getPassword,
+					PasswordEncoderFactories.createDelegatingPasswordEncoder().encode(userDto.getPassword()));
+		}
+		wrapper.eq(SysUser::getId, userDto.getId()).update();
+		if (CollUtil.isNotEmpty(userDto.getRoles())) {
+			// 更新角色信息
+			sysUserRoleService.lambdaUpdate().eq(SysUserRole::getUserId, userDto.getId()).remove();
 
-    @Override
-    public UserVo getUserById(Long id) {
-        SysUser user = getById(id);
-        UserVo userVo = Convert.convert(UserVo.class, user);
-        List<SysUserRole> list = sysUserRoleService.lambdaQuery().eq(SysUserRole::getUserId, userVo.getId()).list();
-        if (CollUtil.isNotEmpty(list)) {
-            List<Long> roleIds = list.stream().map(SysUserRole::getRoleId).collect(Collectors.toList());
-            List<SysRole> sysRoleList = sysRoleService.lambdaQuery().in(SysRole::getId, roleIds).list();
-            userVo.setSysRoles(sysRoleList);
-        }
-        return userVo;
-    }
+			List<SysUserRole> sysUserRoles = userDto.getRoles().stream().map(t -> {
+				SysUserRole sysUserRole = new SysUserRole();
+				sysUserRole.setUserId(userDto.getId());
+				sysUserRole.setRoleId(t);
+				return sysUserRole;
+			}).collect(Collectors.toList());
+			sysUserRoleService.saveBatch(sysUserRoles);
+		}
 
-    @Override
-    @Transactional
-    public Boolean updateUser(UserDto userDto) {
-        // 更新用户信息
-        LambdaUpdateChainWrapper<SysUser> wrapper = lambdaUpdate()
-                .set(StrUtil.isNotBlank(userDto.getUsername()), SysUser::getUsername, userDto.getUsername())
-                .set(StrUtil.isNotBlank(userDto.getPhone()), SysUser::getPhone, userDto.getPhone())
-                .set(StrUtil.isNotBlank(userDto.getNickname()), SysUser::getNickname, userDto.getNickname())
-                .set(StrUtil.isNotBlank(userDto.getIcon()), SysUser::getIcon, userDto.getIcon())
-                .set(StrUtil.isNotBlank(userDto.getEmail()), SysUser::getEmail, userDto.getEmail());
-        if (userDto.getStatus() != null && userDto.getStatus() > 0) {
-            wrapper.set(SysUser::getStatus, userDto.getStatus().byteValue());
-        }
-        if (StrUtil.isNotBlank(userDto.getPassword())) {
-            wrapper.set(SysUser::getPassword,
-                    PasswordEncoderFactories.createDelegatingPasswordEncoder().encode(userDto.getPassword()));
-        }
-        wrapper.eq(SysUser::getId, userDto.getId()).update();
-        if (CollUtil.isNotEmpty(userDto.getRoles())) {
-            // 更新角色信息
-            sysUserRoleService.lambdaUpdate().eq(SysUserRole::getUserId, userDto.getId()).remove();
+		return Boolean.TRUE;
+	}
 
-            List<SysUserRole> sysUserRoles = userDto.getRoles().stream().map(t -> {
-                SysUserRole sysUserRole = new SysUserRole();
-                sysUserRole.setUserId(userDto.getId());
-                sysUserRole.setRoleId(t);
-                return sysUserRole;
-            }).collect(Collectors.toList());
-            sysUserRoleService.saveBatch(sysUserRoles);
-        }
+	@Override
+	public Boolean deleteUser(Long id) {
+		removeById(id);
+		sysUserRoleService.lambdaUpdate().eq(SysUserRole::getUserId, id).remove();
+		return Boolean.TRUE;
+	}
 
-        return Boolean.TRUE;
-    }
+	@Override
+	public Boolean deleteBatch(List<Long> userIds) {
+		removeByIds(userIds);
+		sysUserRoleService.lambdaUpdate().in(SysUserRole::getUserId, userIds).remove();
+		return Boolean.TRUE;
+	}
 
-    @Override
-    public Boolean deleteUser(Long id) {
-        removeById(id);
-        sysUserRoleService.lambdaUpdate().eq(SysUserRole::getUserId, id).remove();
-        return Boolean.TRUE;
-    }
-
-    @Override
-    public Boolean deleteBatch(List<Long> userIds) {
-        removeByIds(userIds);
-        sysUserRoleService.lambdaUpdate().in(SysUserRole::getUserId, userIds).remove();
-        return Boolean.TRUE;
-    }
 }

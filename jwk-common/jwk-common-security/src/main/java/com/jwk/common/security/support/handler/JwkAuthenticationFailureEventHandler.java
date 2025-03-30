@@ -1,6 +1,6 @@
 package com.jwk.common.security.support.handler;
 
-import com.jwk.common.core.model.RestResponse;
+import com.jwk.common.core.model.R;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
@@ -47,13 +47,13 @@ public class JwkAuthenticationFailureEventHandler implements AuthenticationFailu
 		httpResponse.setStatusCode(HttpStatus.UNAUTHORIZED);
 		if (exception instanceof OAuth2AuthenticationException) {
 			this.errorHttpResponseConverter.write(
-					RestResponse.error(((OAuth2AuthenticationException) exception).getError().getErrorCode(),
+					R.error(((OAuth2AuthenticationException) exception).getError().getErrorCode(),
 							((OAuth2AuthenticationException) exception).getError().getDescription()),
 					MediaType.APPLICATION_JSON, httpResponse);
 		}
 		else {
-			this.errorHttpResponseConverter.write(RestResponse.error(exception.getMessage()),
-					MediaType.APPLICATION_JSON, httpResponse);
+			this.errorHttpResponseConverter.write(R.error(exception.getMessage()), MediaType.APPLICATION_JSON,
+					httpResponse);
 		}
 	}
 

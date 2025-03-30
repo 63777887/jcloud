@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author jiwk
@@ -16,7 +16,8 @@ import java.util.List;
  */
 public interface SysLogService extends IService<SysLog> {
 
-    List<SysLog> getLog(GetSysLogDto getSysLogDto);
+	List<SysLog> getLog(GetSysLogDto getSysLogDto);
 
-    List<SysLog> getLoginLog(Long userId, String serviceId);
+	List<SysLog> getLoginLog(Long userId, String serviceId);
+
 }

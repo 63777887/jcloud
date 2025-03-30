@@ -12,9 +12,7 @@ public enum ErrorCodeStatusE {
 	/**
 	 * 角色ID不能为空
 	 */
-	ROLE_ID_EMPTY("20201", "角色ID不能为空"),
-	USER_ID_EMPTY("20202", "用户名不能为空"),
-	PHONE_EMPTY("20203", "手机号不能为空"),
+	ROLE_ID_EMPTY("20201", "角色ID不能为空"), USER_ID_EMPTY("20202", "用户名不能为空"), PHONE_EMPTY("20203", "手机号不能为空"),
 	EMAIL_EMPTY("20204", "邮箱不能为空"),
 	/**
 	 * 菜单ID不能为空

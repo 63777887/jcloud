@@ -3,7 +3,7 @@ package com.jwk.common.security.support.handler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jwk.common.core.constant.JwkSecurityConstants;
 import com.jwk.common.core.constant.ResponseConstants;
-import com.jwk.common.core.model.RestResponse;
+import com.jwk.common.core.model.R;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +31,7 @@ public class ResourceAccessDeniedHandler implements AccessDeniedHandler {
 			AccessDeniedException accessDeniedException) throws IOException {
 		response.setCharacterEncoding(JwkSecurityConstants.UTF8);
 		response.setContentType(MediaType.APPLICATION_CBOR_VALUE);
-		RestResponse<String> result = new RestResponse<>();
+		R<String> result = new R<>();
 		result.setCode(ResponseConstants.ERROR_CODE);
 		response.setStatus(HttpStatus.FORBIDDEN.value());
 		if (accessDeniedException != null) {

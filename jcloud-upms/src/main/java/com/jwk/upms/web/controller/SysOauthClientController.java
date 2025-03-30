@@ -1,6 +1,6 @@
 package com.jwk.upms.web.controller;
 
-import com.jwk.common.core.model.RestResponse;
+import com.jwk.common.core.model.R;
 import com.jwk.common.security.annotation.Inner;
 import com.jwk.upms.base.dto.SysOauthClientDto;
 import com.jwk.upms.web.service.SysOauthClientService;
@@ -29,8 +29,8 @@ public class SysOauthClientController {
 	 */
 	@GetMapping(value = "/getClientDetailsById/{clientId}")
 	@Inner
-	public RestResponse<SysOauthClientDto> getClientDetailsById(@PathVariable String clientId) {
-		return RestResponse.success(sysOauthClientService.getClientDetailsById(clientId));
+	public R<SysOauthClientDto> getClientDetailsById(@PathVariable String clientId) {
+		return R.ok(sysOauthClientService.getClientDetailsById(clientId));
 	}
 
 }

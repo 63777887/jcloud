@@ -40,120 +40,119 @@ import java.util.Objects;
  * @date 2022/10/10
  */
 @Configuration(proxyBeanMethods = false)
-@AutoConfigureBefore({RedisAutoConfiguration.class,})
-@EnableConfigurationProperties({CacheConfigProperties.class, RedisConfigProperties.class})
+@AutoConfigureBefore({ RedisAutoConfiguration.class, })
+@EnableConfigurationProperties({ CacheConfigProperties.class, RedisConfigProperties.class })
 @Slf4j
-@Import({RateLimiterAutoConfiguration.class, RedisKeyExpiredEventConfiguration.class, RedisLockService.class})
+@Import({ RateLimiterAutoConfiguration.class, RedisKeyExpiredEventConfiguration.class, RedisLockService.class })
 public class JwkRedisAutoConfiguration {
 
-    /**
-     * redis配置文件
-     * @param redisProperties
-     * @param redisConfigProperties
-     * @return
-     */
-    @Bean
-    @Primary
-    public RedisProperties redisProperties(RedisProperties redisProperties,
-                                           RedisConfigProperties redisConfigProperties) {
-        CopyOptions copyOptions = new CopyOptions();
-        copyOptions.ignoreNullValue();
-        BeanUtil.copyProperties(redisConfigProperties.getRedis(), redisProperties);
-        return redisProperties;
-    }
+	/**
+	 * redis配置文件
+	 * @param redisProperties
+	 * @param redisConfigProperties
+	 * @return
+	 */
+	@Bean
+	@Primary
+	public RedisProperties redisProperties(RedisProperties redisProperties,
+			RedisConfigProperties redisConfigProperties) {
+		CopyOptions copyOptions = new CopyOptions();
+		copyOptions.ignoreNullValue();
+		BeanUtil.copyProperties(redisConfigProperties.getRedis(), redisProperties);
+		return redisProperties;
+	}
 
-    /**
-     * redisson客户端
-     * @param redisProperties
-     * @return
-     */
-    @Bean(destroyMethod = "shutdown")
-    @ConditionalOnMissingBean
-    public RedissonClient redissonClient(RedisProperties redisProperties) {
-        return Redisson.create(RedisUtil.config(redisProperties));
-    }
+	/**
+	 * redisson客户端
+	 * @param redisProperties
+	 * @return
+	 */
+	@Bean(destroyMethod = "shutdown")
+	@ConditionalOnMissingBean
+	public RedissonClient redissonClient(RedisProperties redisProperties) {
+		return Redisson.create(RedisUtil.config(redisProperties));
+	}
 
-    /**
-     * Redisson连接工厂
-     * @param redissonClient
-     * @return
-     */
-    @Bean
-    @ConditionalOnMissingBean
-    public RedissonConnectionFactory redissonConnectionFactory(RedissonClient redissonClient) {
-        return new RedissonConnectionFactory(redissonClient);
-    }
+	/**
+	 * Redisson连接工厂
+	 * @param redissonClient
+	 * @return
+	 */
+	@Bean
+	@ConditionalOnMissingBean
+	public RedissonConnectionFactory redissonConnectionFactory(RedissonClient redissonClient) {
+		return new RedissonConnectionFactory(redissonClient);
+	}
 
-    /**
-     * Object RedisTemplate
-     * @param redissonConnectionFactory
-     * @return
-     */
-    @Bean
-    @ConditionalOnMissingBean(name = "redisTemplate")
-    public RedisTemplate<String, Object> redisTemplate(RedissonConnectionFactory redissonConnectionFactory) {
-        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
-        redisTemplate.setKeySerializer(RedisUtil.keySerializer());
-        redisTemplate.setHashKeySerializer(RedisUtil.keySerializer());
-        redisTemplate.setValueSerializer(RedisUtil.valueSerializer());
-        redisTemplate.setHashValueSerializer(RedisUtil.valueSerializer());
-        redisTemplate.setConnectionFactory(redissonConnectionFactory);
-        return redisTemplate;
-    }
+	/**
+	 * Object RedisTemplate
+	 * @param redissonConnectionFactory
+	 * @return
+	 */
+	@Bean
+	@ConditionalOnMissingBean(name = "redisTemplate")
+	public RedisTemplate<String, Object> redisTemplate(RedissonConnectionFactory redissonConnectionFactory) {
+		RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+		redisTemplate.setKeySerializer(RedisUtil.keySerializer());
+		redisTemplate.setHashKeySerializer(RedisUtil.keySerializer());
+		redisTemplate.setValueSerializer(RedisUtil.valueSerializer());
+		redisTemplate.setHashValueSerializer(RedisUtil.valueSerializer());
+		redisTemplate.setConnectionFactory(redissonConnectionFactory);
+		return redisTemplate;
+	}
 
-    /**
-     * String RedisTemplate
-     * @param redissonConnectionFactory
-     * @return
-     */
-    @Bean
-    @ConditionalOnMissingBean(name = "stringRedisTemplate")
-    public StringRedisTemplate stringRedisTemplate(RedissonConnectionFactory redissonConnectionFactory) {
-        StringRedisTemplate redisTemplate = new StringRedisTemplate();
-        redisTemplate.setKeySerializer(RedisUtil.keySerializer());
-        redisTemplate.setHashKeySerializer(RedisUtil.keySerializer());
-        redisTemplate.setValueSerializer(RedisUtil.stringValueSerializer());
-        redisTemplate.setHashValueSerializer(RedisUtil.stringValueSerializer());
-        redisTemplate.setConnectionFactory(redissonConnectionFactory);
-        return redisTemplate;
-    }
+	/**
+	 * String RedisTemplate
+	 * @param redissonConnectionFactory
+	 * @return
+	 */
+	@Bean
+	@ConditionalOnMissingBean(name = "stringRedisTemplate")
+	public StringRedisTemplate stringRedisTemplate(RedissonConnectionFactory redissonConnectionFactory) {
+		StringRedisTemplate redisTemplate = new StringRedisTemplate();
+		redisTemplate.setKeySerializer(RedisUtil.keySerializer());
+		redisTemplate.setHashKeySerializer(RedisUtil.keySerializer());
+		redisTemplate.setValueSerializer(RedisUtil.stringValueSerializer());
+		redisTemplate.setHashValueSerializer(RedisUtil.stringValueSerializer());
+		redisTemplate.setConnectionFactory(redissonConnectionFactory);
+		return redisTemplate;
+	}
 
-    /**
-     * String RedisTemplate操作
-     * @param stringRedisTemplate
-     * @return
-     */
-    @Bean
-    @ConditionalOnMissingBean(ValueOperations.class)
-    public ValueOperations<String, String> valueOperations(StringRedisTemplate stringRedisTemplate) {
-        return stringRedisTemplate.opsForValue();
-    }
+	/**
+	 * String RedisTemplate操作
+	 * @param stringRedisTemplate
+	 * @return
+	 */
+	@Bean
+	@ConditionalOnMissingBean(ValueOperations.class)
+	public ValueOperations<String, String> valueOperations(StringRedisTemplate stringRedisTemplate) {
+		return stringRedisTemplate.opsForValue();
+	}
 
-    /**
-     * 监听容器
-     * @param redisTemplate
-     * @return
-     */
-    @Bean
-    @ConditionalOnMissingBean(name = "cacheMessageListenerContainer")
-    public RedisMessageListenerContainer redisMessageListenerContainer(
-            RedisTemplate<String, Object> redisTemplate) {
-        RedisMessageListenerContainer redisMessageListenerContainer = new RedisMessageListenerContainer();
-        redisMessageListenerContainer
-                .setConnectionFactory(Objects.requireNonNull(redisTemplate.getConnectionFactory()));
-        return redisMessageListenerContainer;
-    }
+	/**
+	 * 监听容器
+	 * @param redisTemplate
+	 * @return
+	 */
+	@Bean
+	@ConditionalOnMissingBean(name = "cacheMessageListenerContainer")
+	public RedisMessageListenerContainer redisMessageListenerContainer(RedisTemplate<String, Object> redisTemplate) {
+		RedisMessageListenerContainer redisMessageListenerContainer = new RedisMessageListenerContainer();
+		redisMessageListenerContainer
+				.setConnectionFactory(Objects.requireNonNull(redisTemplate.getConnectionFactory()));
+		return redisMessageListenerContainer;
+	}
 
-    @Bean
-    @ConditionalOnMissingBean
-    public KeyExpirationEventMessageListener keyExpirationEventMessageListener(
-            RedisMessageListenerContainer listenerContainer) {
-        return new KeyExpirationEventMessageListener(listenerContainer);
-    }
+	@Bean
+	@ConditionalOnMissingBean
+	public KeyExpirationEventMessageListener keyExpirationEventMessageListener(
+			RedisMessageListenerContainer listenerContainer) {
+		return new KeyExpirationEventMessageListener(listenerContainer);
+	}
 
-    @Bean
-    public RedisLockAspect redisLockAspect(RedisLockService redisLockService) {
-        return new RedisLockAspect(redisLockService);
-    }
+	@Bean
+	public RedisLockAspect redisLockAspect(RedisLockService redisLockService) {
+		return new RedisLockAspect(redisLockService);
+	}
 
 }

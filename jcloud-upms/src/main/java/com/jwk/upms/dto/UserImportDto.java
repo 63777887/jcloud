@@ -18,7 +18,6 @@ import lombok.Setter;
 @EqualsAndHashCode
 public class UserImportDto {
 
-
 	/**
 	 * 用户ID
 	 */
@@ -54,6 +53,5 @@ public class UserImportDto {
 	 */
 	@ExcelProperty(value = "邮箱")
 	private String email;
-
 
 }

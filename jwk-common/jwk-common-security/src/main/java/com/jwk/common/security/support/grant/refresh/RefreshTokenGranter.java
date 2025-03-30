@@ -30,7 +30,7 @@ public class RefreshTokenGranter extends OAuth2ResourceOwnerBaseAuthenticationCo
 
 	@Override
 	public RefreshAuthenticationToken buildToken(Authentication clientPrincipal, Set<String> requestedScopes,
-												 Map<String, Object> additionalParameters) {
+			Map<String, Object> additionalParameters) {
 		return new RefreshAuthenticationToken(AuthorizationGrantType.REFRESH_TOKEN, clientPrincipal, requestedScopes,
 				additionalParameters);
 	}

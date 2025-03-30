@@ -1,6 +1,6 @@
 package com.jwk.common.security.support.handler;
 
-import com.jwk.common.core.model.RestResponse;
+import com.jwk.common.core.model.R;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -103,7 +103,7 @@ public class JwkOAuth2AccessTokenResponseHttpMessageConverter
 			else {
 				tokenResponseParameters = this.accessTokenResponseParametersConverter.convert(tokenResponse);
 			}
-			this.jsonMessageConverter.write(RestResponse.success(tokenResponseParameters), STRING_OBJECT_MAP.getType(),
+			this.jsonMessageConverter.write(R.ok(tokenResponseParameters), STRING_OBJECT_MAP.getType(),
 					MediaType.APPLICATION_JSON, outputMessage);
 		}
 		catch (Exception ex) {

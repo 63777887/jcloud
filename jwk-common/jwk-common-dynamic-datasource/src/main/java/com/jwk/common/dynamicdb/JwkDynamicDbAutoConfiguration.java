@@ -2,9 +2,10 @@ package com.jwk.common.dynamicdb;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.dynamic.datasource.DynamicRoutingDataSource;
-import com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DataSourceProperty;
+import com.baomidou.dynamic.datasource.creator.DataSourceProperty;
 import com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration;
 import com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties;
+import java.util.ArrayList;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 import org.springframework.boot.SpringBootConfiguration;
@@ -42,7 +43,7 @@ public class JwkDynamicDbAutoConfiguration {
 	@Bean
 	@ConditionalOnMissingBean
 	public DataSource dataSource() {
-		DynamicRoutingDataSource dataSource = new DynamicRoutingDataSource();
+		DynamicRoutingDataSource dataSource = new DynamicRoutingDataSource(new ArrayList<>());
 		dataSource.setPrimary(dynamicDataSourceProperties.getPrimary());
 		dataSource.setStrict(dynamicDataSourceProperties.getStrict());
 		dataSource.setStrategy(dynamicDataSourceProperties.getStrategy());

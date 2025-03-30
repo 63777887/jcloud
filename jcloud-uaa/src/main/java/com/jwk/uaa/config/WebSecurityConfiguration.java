@@ -34,8 +34,10 @@ public class WebSecurityConfiguration {
 	@Bean
 	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
 		JwkAuthProperties properties = SpringUtil.getBean(JwkAuthProperties.class);
-		http.authorizeRequests(authorizeRequests -> authorizeRequests.antMatchers(permitAllUrl.getNoAuthArray()).permitAll()// 开放自定义的部分端点
-				.anyRequest().authenticated()).headers().frameOptions().sameOrigin()// 避免iframe同源无法登录
+		http.authorizeRequests(
+				authorizeRequests -> authorizeRequests.antMatchers(permitAllUrl.getNoAuthArray()).permitAll()// 开放自定义的部分端点
+						.anyRequest().authenticated())
+				.headers().frameOptions().sameOrigin()// 避免iframe同源无法登录
 				.and().apply(new FormIdentityLoginConfigurer()); // 表单登录个性化
 		// 处理 UsernamePasswordAuthenticationToken
 		JwkDaoAuthenticationProvider authenticationProvider = new JwkDaoAuthenticationProvider();

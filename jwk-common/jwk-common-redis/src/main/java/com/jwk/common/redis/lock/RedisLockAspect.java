@@ -32,62 +32,62 @@ import java.util.concurrent.TimeUnit;
  */
 @Aspect
 @RequiredArgsConstructor
-@Order(0)//确保比事务注解先执行，分布式锁在事务外
+@Order(0) // 确保比事务注解先执行，分布式锁在事务外
 @Slf4j
 public class RedisLockAspect implements ApplicationContextAware {
 
-    private final RedisLockService redisLockService;
+	private final RedisLockService redisLockService;
 
-    private ApplicationContext applicationContext;
+	private ApplicationContext applicationContext;
 
-    /**
-     * 表达式处理
-     */
-    private final ExpressionEvaluator evaluator = new ExpressionEvaluator();
+	/**
+	 * 表达式处理
+	 */
+	private final ExpressionEvaluator evaluator = new ExpressionEvaluator();
 
+	/**
+	 * AOP 环切 注解 @RateLimiter
+	 */
+	@Around("@annotation(lock)")
+	public Object aroundRateLimiter(ProceedingJoinPoint point, JwkRedisLock lock) throws Throwable {
+		Method method = ((MethodSignature) point.getSignature()).getMethod();
+		// el 表达式
+		String lockValue = lock.key();
+		String prefixKey = lock.prefixKey();
+		int waitTime = lock.waitTime();
+		int leaseTime = lock.leaseTime();
+		TimeUnit timeUnit = lock.unit();
 
-    /**
-     * AOP 环切 注解 @RateLimiter
-     */
-    @Around("@annotation(lock)")
-    public Object aroundRateLimiter(ProceedingJoinPoint point, JwkRedisLock lock) throws Throwable {
-        Method method = ((MethodSignature) point.getSignature()).getMethod();
-        // el 表达式
-        String lockValue = lock.key();
-        String prefixKey = lock.prefixKey();
-        int waitTime = lock.waitTime();
-        int leaseTime = lock.leaseTime();
-        TimeUnit timeUnit = lock.unit();
+		AssertUtil.isTrue(StrUtil.isNotBlank(lockValue),
+				"@JwkRedissonLock value must have length; it must not be null or empty");
+		String lockKey = evalLimitParam(point, lockValue);
+		String prefix = StrUtil.isBlank(prefixKey)
+				? method.getDeclaringClass().getName() + StrConstants.Jin + method.getName() : prefixKey;// 默认方法限定名+注解排名（可能多个）
+		lockKey = prefix + StrConstants.COLON + lockKey;
 
-        AssertUtil.isTrue(StrUtil.isNotBlank(lockValue), "@JwkRedissonLock value must have length; it must not be null or empty");
-        String lockKey = evalLimitParam(point, lockValue);
-        String prefix = StrUtil.isBlank(prefixKey) ? method.getDeclaringClass().getName() + StrConstants.Jin + method.getName() : prefixKey;//默认方法限定名+注解排名（可能多个）
-        lockKey = prefix + StrConstants.COLON + lockKey;
+		return redisLockService.executeWithLock(lockKey, waitTime, leaseTime, timeUnit, point::proceed);
+	}
 
-        return redisLockService.executeWithLock(lockKey, waitTime, leaseTime, timeUnit, point::proceed);
-    }
+	/**
+	 * 计算参数表达式
+	 * @param point ProceedingJoinPoint
+	 * @param limitParam limitParam
+	 * @return 结果
+	 */
+	private String evalLimitParam(ProceedingJoinPoint point, String limitParam) {
+		MethodSignature ms = (MethodSignature) point.getSignature();
+		Method method = ms.getMethod();
+		Object[] args = point.getArgs();
+		Object target = point.getTarget();
+		Class<?> targetClass = target.getClass();
+		EvaluationContext context = evaluator.createContext(method, args, target, targetClass, applicationContext);
+		AnnotatedElementKey elementKey = new AnnotatedElementKey(method, targetClass);
+		return evaluator.evalAsText(limitParam, elementKey, context);
+	}
 
-    /**
-     * 计算参数表达式
-     *
-     * @param point      ProceedingJoinPoint
-     * @param limitParam limitParam
-     * @return 结果
-     */
-    private String evalLimitParam(ProceedingJoinPoint point, String limitParam) {
-        MethodSignature ms = (MethodSignature) point.getSignature();
-        Method method = ms.getMethod();
-        Object[] args = point.getArgs();
-        Object target = point.getTarget();
-        Class<?> targetClass = target.getClass();
-        EvaluationContext context = evaluator.createContext(method, args, target, targetClass, applicationContext);
-        AnnotatedElementKey elementKey = new AnnotatedElementKey(method, targetClass);
-        return evaluator.evalAsText(limitParam, elementKey, context);
-    }
+	@Override
+	public void setApplicationContext(@NonNull ApplicationContext applicationContext) throws BeansException {
+		this.applicationContext = applicationContext;
+	}
 
-
-    @Override
-    public void setApplicationContext(@NonNull ApplicationContext applicationContext) throws BeansException {
-        this.applicationContext = applicationContext;
-    }
 }

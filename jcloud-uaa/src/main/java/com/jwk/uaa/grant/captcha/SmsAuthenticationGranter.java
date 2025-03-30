@@ -24,8 +24,7 @@ import java.util.Set;
  * 资源所有者邮箱令牌授予者
  * @date 2022/6/11
  */
-public class SmsAuthenticationGranter
-		extends OAuth2ResourceOwnerBaseAuthenticationConverter<SmsAuthenticationToken> {
+public class SmsAuthenticationGranter extends OAuth2ResourceOwnerBaseAuthenticationConverter<SmsAuthenticationToken> {
 
 	private StringRedisTemplate stringRedisTemplate;
 
@@ -41,7 +40,7 @@ public class SmsAuthenticationGranter
 
 	@Override
 	public SmsAuthenticationToken buildToken(Authentication clientPrincipal, Set<String> requestedScopes,
-											 Map<String, Object> additionalParameters) {
+			Map<String, Object> additionalParameters) {
 		return new SmsAuthenticationToken(new AuthorizationGrantType(JwkOAuth2ParameterNames.EMAIL), clientPrincipal,
 				requestedScopes, additionalParameters);
 	}
@@ -55,8 +54,7 @@ public class SmsAuthenticationGranter
 		MultiValueMap<String, String> parameters = SecurityUtils.getParameters(request);
 		// phone (REQUIRED)
 		String phone = parameters.getFirst(JwkOAuth2ParameterNames.PHONE_PARAMETER_NAME);
-		if (!StringUtils.hasText(phone)
-				|| parameters.get(JwkOAuth2ParameterNames.PHONE_PARAMETER_NAME).size() != 1) {
+		if (!StringUtils.hasText(phone) || parameters.get(JwkOAuth2ParameterNames.PHONE_PARAMETER_NAME).size() != 1) {
 			SecurityUtils.throwError(OAuth2ErrorCodes.INVALID_REQUEST, JwkOAuth2ParameterNames.PHONE_PARAMETER_NAME,
 					JwkSecurityConstants.ACCESS_TOKEN_REQUEST_ERROR_URI);
 		}

@@ -16,6 +16,6 @@ import java.util.List;
  */
 public interface SysDictItemService extends IService<SysDictItem> {
 
-    List<SysDictItem> getSysDictItem(SysDictItemDto sysDictItemDto);
+	List<SysDictItem> getSysDictItem(SysDictItemDto sysDictItemDto);
 
 }

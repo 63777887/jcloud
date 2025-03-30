@@ -33,7 +33,7 @@ public class SysLogUtils {
 	 */
 	public SysLogDto getSysLog() {
 		HttpServletRequest request = ((ServletRequestAttributes) Objects
-			.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
+				.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
 		SysLogDto sysLog = new SysLogDto();
 		sysLog.setRequestUri(URLUtil.getPath(request.getRequestURI()));
 		sysLog.setMethod(request.getMethod());

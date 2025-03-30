@@ -1,6 +1,6 @@
 package com.jwk.upms.base.api.handler;
 
-import com.jwk.common.core.model.RestResponse;
+import com.jwk.common.core.model.R;
 import com.jwk.upms.base.api.UpmsRemoteService;
 import com.jwk.upms.base.dto.RemoveTokenDto;
 import com.jwk.upms.base.dto.SysOauthClientDto;
@@ -10,7 +10,6 @@ import com.jwk.upms.base.entity.SysSetting;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Collections;
 import java.util.List;
@@ -30,47 +29,46 @@ public class UpmsRemoteServiceFallBackServiceImpl implements UpmsRemoteService {
 	private Throwable cause;
 
 	@Override
-	public RestResponse<UserInfo> findUserByName(String name) {
+	public R<UserInfo> findUserByName(String name) {
 		log.error("feign findUserByName fail:{}", name, cause);
 		return null;
 	}
 
 	@Override
-	public RestResponse<UserInfo> findUserByPhone(String phone) {
+	public R<UserInfo> findUserByPhone(String phone) {
 		log.error("feign findUserByPhone fail:{}", phone, cause);
 		return null;
 	}
 
 	@Override
-	public RestResponse<UserInfo> findUserByEmail(String email) {
+	public R<UserInfo> findUserByEmail(String email) {
 		return null;
 	}
 
 	@Override
-	public RestResponse<List<SysMenu>> loadUserAuthoritiesByRole(List<String> roleCode) {
-		return RestResponse.success(Collections.singletonList(new SysMenu()));
+	public R<List<SysMenu>> loadUserAuthoritiesByRole(List<String> roleCode) {
+		return R.ok(Collections.singletonList(new SysMenu()));
 	}
 
 	@Override
-	public RestResponse<SysOauthClientDto> getClientDetailsById(String clientId) {
+	public R<SysOauthClientDto> getClientDetailsById(String clientId) {
 		log.error("feign getClientDetailsById fail:", cause);
-		return RestResponse.success(new SysOauthClientDto());
+		return R.ok(new SysOauthClientDto());
 	}
 
 	@Override
-	public RestResponse<Integer> testSeata() {
+	public R<Integer> testSeata() {
 		return null;
 	}
 
 	@Override
-	public RestResponse<List<SysSetting>> getSysSetting(Long orgIdString, String paramKey, Byte paramType) {
+	public R<List<SysSetting>> getSysSetting(Long orgIdString, String paramKey, Byte paramType) {
 		return null;
 	}
 
 	@Override
-	public RestResponse<List<SysSetting>> removeToken(RemoveTokenDto removeTokenDto) {
+	public R<List<SysSetting>> removeToken(RemoveTokenDto removeTokenDto) {
 		return null;
 	}
-
 
 }

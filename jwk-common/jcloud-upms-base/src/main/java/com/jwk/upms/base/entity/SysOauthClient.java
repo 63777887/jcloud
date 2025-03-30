@@ -97,9 +97,4 @@ public class SysOauthClient extends Model<SysOauthClient> {
 	 */
 	private String updateBy;
 
-	@Override
-	protected Serializable pkVal() {
-		return this.clientId;
-	}
-
 }

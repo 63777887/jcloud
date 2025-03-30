@@ -9,12 +9,10 @@ package com.jwk.common.log.enums;
  */
 public enum LogStatusE {
 
-
 	/**
 	 * 登陆
 	 */
-	SUCCESS_LOG((byte) 1, "成功日志"),
-	FAIL_LOG((byte) 2, "失败日志");
+	SUCCESS_LOG((byte) 1, "成功日志"), FAIL_LOG((byte) 2, "失败日志");
 
 	private final Byte code;
 

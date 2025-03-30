@@ -1,4 +1,4 @@
-package com.jwk.common.knife4j.config;
+package com.jwk.common.knife4j.config.properties;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,6 +14,11 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "jwk.swagger")
 @Data
 public class JwkSwaggerProperties {
+
+	/**
+	 * 开关
+	 */
+	private Boolean enabled = false;
 
 	/**
 	 * 应用名
@@ -41,5 +46,20 @@ public class JwkSwaggerProperties {
 	 * 接口基础路径
 	 */
 	private String basePackage = "com.jwk";
+
+	/**
+	 * 授权角色
+	 */
+	private String scope = "server";
+
+	/**
+	 * 授权角色
+	 */
+	private String tokenUrl = "/oauth2/token";
+
+	/**
+	 * host
+	 */
+	private String host;
 
 }

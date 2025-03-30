@@ -88,9 +88,4 @@ public class SysOrg extends Model<SysOrg> {
 	 */
 	private Date updateTime;
 
-	@Override
-	protected Serializable pkVal() {
-		return this.id;
-	}
-
 }

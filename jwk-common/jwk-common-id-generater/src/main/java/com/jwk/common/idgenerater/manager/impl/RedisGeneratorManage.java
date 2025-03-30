@@ -41,7 +41,7 @@ public class RedisGeneratorManage implements IdGeneratorManage {
 	 */
 	@Override
 	public long generate(int slotId) throws Throwable {
-		List<Long> ids = redisLockService.executeWithLock(getIdLockKey(slotId),()-> genIds(slotId, 1));
+		List<Long> ids = redisLockService.executeWithLock(getIdLockKey(slotId), () -> genIds(slotId, 1));
 		return !ids.isEmpty() ? ids.get(0) : -1;
 	}
 
@@ -61,7 +61,7 @@ public class RedisGeneratorManage implements IdGeneratorManage {
 			}
 			throw exception;
 		}
-		return redisLockService.executeWithLock(getIdLockKey(slotId),()-> genIds(slotId, 1));
+		return redisLockService.executeWithLock(getIdLockKey(slotId), () -> genIds(slotId, 1));
 	}
 
 	/**
@@ -131,7 +131,8 @@ public class RedisGeneratorManage implements IdGeneratorManage {
 				list.add(id);
 			}
 
-		} else {
+		}
+		else {
 			// 组装返回值
 			list.add(currentCurId);
 

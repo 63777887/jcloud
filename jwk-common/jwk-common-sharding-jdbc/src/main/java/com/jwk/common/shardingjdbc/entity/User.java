@@ -27,9 +27,4 @@ public class User extends Model<User> {
 
 	private String name;
 
-	@Override
-	protected Serializable pkVal() {
-		return this.id;
-	}
-
 }

@@ -27,8 +27,8 @@ public class JwkRefreshAuthenticationProvider
 		extends OAuth2ResourceOwnerBaseAuthenticationProvider<RefreshAuthenticationToken> {
 
 	public JwkRefreshAuthenticationProvider(AuthenticationManager authenticationManager,
-											OAuth2AuthorizationService authorizationService,
-											OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator) {
+			OAuth2AuthorizationService authorizationService,
+			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator) {
 		super(authenticationManager, authorizationService, tokenGenerator);
 	}
 

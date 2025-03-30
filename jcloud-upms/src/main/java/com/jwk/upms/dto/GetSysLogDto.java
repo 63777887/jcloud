@@ -69,4 +69,5 @@ public class GetSysLogDto {
 	 * createTime
 	 */
 	private Date createTime;
+
 }

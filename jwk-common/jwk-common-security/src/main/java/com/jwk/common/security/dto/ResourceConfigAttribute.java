@@ -21,7 +21,7 @@ public class ResourceConfigAttribute implements ConfigAttribute, GrantedAuthorit
 
 	@Override
 	public String getAttribute() {
-		return sysMenu.getPath();
+		return sysMenu.getPermission();
 	}
 
 	public SysMenu getSysMenu() {

@@ -2,7 +2,7 @@ package com.jwk.upms.base.api;
 
 import com.jwk.common.core.constant.JwkSecurityConstants;
 import com.jwk.common.core.constant.ServerNameConstants;
-import com.jwk.common.core.model.RestResponse;
+import com.jwk.common.core.model.R;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +22,6 @@ public interface SmsRemoteService {
 	 * @return
 	 */
 	@PostMapping(value = "/sms/sendCode", headers = JwkSecurityConstants.HEADER_FROM_IN)
-	RestResponse sendCode(@RequestParam("phone") String phone);
+	R sendCode(@RequestParam("phone") String phone);
 
 }

@@ -17,7 +17,7 @@ import java.util.Set;
 public class SmsAuthenticationToken extends OAuth2ResourceOwnerBaseAuthenticationToken {
 
 	public SmsAuthenticationToken(AuthorizationGrantType authorizationGrantType, Authentication clientPrincipal,
-								  Set<String> scopes, Map<String, Object> additionalParameters) {
+			Set<String> scopes, Map<String, Object> additionalParameters) {
 		super(authorizationGrantType, clientPrincipal, scopes, additionalParameters);
 	}
 

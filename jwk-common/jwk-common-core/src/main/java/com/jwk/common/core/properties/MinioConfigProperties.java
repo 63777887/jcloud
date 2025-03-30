@@ -16,25 +16,29 @@ import java.util.List;
 @ConfigurationProperties("jwk.oss")
 public class MinioConfigProperties {
 
-    /**
-     * oss开关
-     */
-    private Boolean enabled = false;
+	/**
+	 * oss开关
+	 */
+	private Boolean enabled = false;
 
-    /**
-     * oss地址
-     */
-    private String address;
-    /**
-     * 授权key
-     */
-    private String accessKey;
-    /**
-     * 授权secretKey
-     */
-    private String secretKey;
-    /**
-     * 存储桶
-     */
-    private String bucket;
+	/**
+	 * oss地址
+	 */
+	private String address;
+
+	/**
+	 * 授权key
+	 */
+	private String accessKey;
+
+	/**
+	 * 授权secretKey
+	 */
+	private String secretKey;
+
+	/**
+	 * 存储桶
+	 */
+	private String bucket;
+
 }

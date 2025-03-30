@@ -37,5 +37,6 @@ public interface AuthService {
 
 	Boolean register(RegisterReq registerReq);
 
-    Boolean registerImportUsers(List<UserImportDto> datalist);
+	Boolean registerImportUsers(List<UserImportDto> datalist);
+
 }

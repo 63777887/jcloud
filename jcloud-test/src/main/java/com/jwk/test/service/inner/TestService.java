@@ -1,6 +1,6 @@
 package com.jwk.test.service.inner;
 
-import com.jwk.common.core.model.RestResponse;
+import com.jwk.common.core.model.R;
 import javax.validation.Valid;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +15,6 @@ public interface TestService {
 	 * @return
 	 */
 	@GetMapping("/inner/test")
-	RestResponse getId(@Valid @RequestParam("id") Long id);
+  R getId(@Valid @RequestParam("id") Long id);
 
 }

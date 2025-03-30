@@ -1,8 +1,9 @@
 package com.jwk.common.shardingjdbc.config;
 
+import com.baomidou.dynamic.datasource.creator.DataSourceProperty;
+import com.baomidou.dynamic.datasource.creator.DefaultDataSourceCreator;
 import com.baomidou.dynamic.datasource.provider.AbstractDataSourceProvider;
 import com.baomidou.dynamic.datasource.provider.DynamicDataSourceProvider;
-import com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DataSourceProperty;
 import com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration;
 import com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties;
 import java.util.Map;
@@ -61,7 +62,8 @@ public class JwkDataSourceConfiguration {
 	@Bean
 	public DynamicDataSourceProvider dynamicDataSourceProvider() {
 		Map<String, DataSourceProperty> datasourceMap = properties.getDatasource();
-		return new AbstractDataSourceProvider() {
+
+		return new AbstractDataSourceProvider(new DefaultDataSourceCreator()) {
 			@SneakyThrows
 			@Override
 			public Map<String, DataSource> loadDataSources() {

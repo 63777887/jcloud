@@ -74,8 +74,7 @@ public class JwkDaoAuthenticationProvider extends AbstractUserDetailsAuthenticat
 				.getBeansOfType(JwkUserDetailsService.class);
 
 		Optional<JwkUserDetailsService> optional = userDetailsServiceMap.values().stream()
-				.filter(service -> service.supportGrantType(grantType))
-				.max(Comparator.comparingInt(Ordered::getOrder));
+				.filter(service -> service.supportGrantType(grantType)).max(Comparator.comparingInt(Ordered::getOrder));
 		if (!optional.get().needPassword()) {
 			return;
 		}

@@ -21,12 +21,10 @@ public class PermissionService {
 	 * 判断用户是否有权限
 	 * @return {boolean}
 	 */
-	public boolean hasPermission() {
+	public boolean hasPermission(String permissions) {
 		if (!WebUtils.getRequest().isPresent()) {
 			return false;
 		}
-		// 获取当前url：url为我们的api权限，即访问当前接口所需要的权限
-		String requestURI = WebUtils.getRequest().get().getRequestURI();
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication == null) {
 			return false;
@@ -37,7 +35,7 @@ public class PermissionService {
 		// 比较是否匹配
 		AntPathMatcher antPathMatcher = new AntPathMatcher();
 		return authorities.stream().map(GrantedAuthority::getAuthority).filter(StringUtils::hasText)
-				.anyMatch(x -> antPathMatcher.match(x, requestURI));
+				.anyMatch(x -> antPathMatcher.match(x, permissions));
 	}
 
 }

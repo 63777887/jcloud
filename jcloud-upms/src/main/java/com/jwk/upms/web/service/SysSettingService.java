@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author jiwk
@@ -16,7 +16,8 @@ import java.util.List;
  */
 public interface SysSettingService extends IService<SysSetting> {
 
-    Boolean updateSysSetting(SysSetting sysSetting, SysUser sysUser);
+	Boolean updateSysSetting(SysSetting sysSetting, SysUser sysUser);
 
-    List<SysSetting> getSysSetting(Long orgId, String paramKey, Byte paramType);
+	List<SysSetting> getSysSetting(Long orgId, String paramKey, Byte paramType);
+
 }

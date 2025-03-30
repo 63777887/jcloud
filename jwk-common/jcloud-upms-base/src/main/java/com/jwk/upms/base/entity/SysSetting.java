@@ -12,7 +12,7 @@ import java.util.Date;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author jiwk
@@ -23,68 +23,67 @@ import java.util.Date;
 @Accessors(chain = true)
 public class SysSetting extends Model<SysSetting> {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * id
-     */
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+	/**
+	 * id
+	 */
+	@TableId(value = "id", type = IdType.AUTO)
+	private Long id;
 
-    /**
-     * createBy
-     */
-    private String createBy;
+	/**
+	 * createBy
+	 */
+	private String createBy;
 
-    /**
-     * createTime
-     */
-    private Date createTime;
+	/**
+	 * createTime
+	 */
+	private Date createTime;
 
-    /**
-     * updateBy
-     */
-    private String updateBy;
+	/**
+	 * updateBy
+	 */
+	private String updateBy;
 
-    /**
-     * updateTime
-     */
-    private Date updateTime;
+	/**
+	 * updateTime
+	 */
+	private Date updateTime;
 
-    /**
-     * 名称
-     */
-    private String paramName;
+	/**
+	 * 名称
+	 */
+	private String paramName;
 
-    /**
-     * 键
-     */
-    private String paramKey;
+	/**
+	 * 键
+	 */
+	private String paramKey;
 
-    /**
-     * 值，可为json串
-     */
-    private String paramValue;
+	/**
+	 * 值，可为json串
+	 */
+	private String paramValue;
 
-    /**
-     * 组织机构ID
-     */
-    private Long orgId;
+	/**
+	 * 描述
+	 */
+	private String paramDesc;
 
-    /**
-     * 状态，1: 正常，2:删除
-     */
-    private Byte status;
+	/**
+	 * 组织机构ID
+	 */
+	private Long orgId;
 
-    /**
-     * 类型，0未知，1系统，2业务
-     */
-    private Byte paramType;
+	/**
+	 * 状态，1: 正常，2:删除
+	 */
+	private Byte status;
 
-
-    @Override
-    protected Serializable pkVal() {
-        return this.id;
-    }
+	/**
+	 * 类型，0未知，1系统，2业务
+	 */
+	private Byte paramType;
 
 }

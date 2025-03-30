@@ -85,9 +85,4 @@ public class SysUser extends Model<SysUser> {
 	 */
 	private Date updateTime;
 
-	@Override
-	protected Serializable pkVal() {
-		return this.id;
-	}
-
 }

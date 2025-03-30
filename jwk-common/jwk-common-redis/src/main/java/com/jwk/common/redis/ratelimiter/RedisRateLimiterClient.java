@@ -61,8 +61,8 @@ public class RedisRateLimiterClient implements RateLimiterClient {
 	@Override
 	public boolean isAllowed(String key, long max, long ttl, TimeUnit timeUnit) {
 		// redis key
-		String redisKeyBuilder = REDIS_KEY_PREFIX + CharConstants.COLON + getApplicationName(environment) + CharConstants.COLON
-				+ key;
+		String redisKeyBuilder = REDIS_KEY_PREFIX + CharConstants.COLON + getApplicationName(environment)
+				+ CharConstants.COLON + key;
 		List<String> keys = Collections.singletonList(redisKeyBuilder);
 		// 毫秒，考虑主从策略和脚本回放机制，这个time由客户端获取传入
 		long now = System.currentTimeMillis();

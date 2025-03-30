@@ -2,7 +2,7 @@ package com.jwk.test.web.controller;
 
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.jwk.common.idgenerater.service.IdGeneratorService;
-import com.jwk.common.core.model.RestResponse;
+import com.jwk.common.core.model.R;
 import com.jwk.common.security.annotation.Inner;
 import com.jwk.common.security.annotation.UserParam;
 import com.jwk.test.netty.TestServerChannel;
@@ -35,14 +35,14 @@ public class TestController {
 
 	@GetMapping("/test")
 	@SentinelResource(value = "/test")
-	public RestResponse advertiseList(Long id) {
+	public R advertiseList(Long id) {
 
 		return testService.getId(id);
 	}
 
 	@GetMapping("/getId")
-	public RestResponse getId(Long id) throws Throwable {
-		return RestResponse.success(idGeneratorService.getId(id));
+	public R getId(Long id) throws Throwable {
+		return R.ok(idGeneratorService.getId(id));
 	}
 
 	@GetMapping("/test1")

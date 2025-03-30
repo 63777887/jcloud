@@ -21,26 +21,26 @@ import java.util.List;
 @NoArgsConstructor
 public class RemoveTokenDto {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * 组织机构ID
-     */
-    private Long orgId;
+	/**
+	 * 组织机构ID
+	 */
+	private Long orgId;
 
-    /**
-     * 用户ID
-     */
-    private Long userId;
+	/**
+	 * 用户ID
+	 */
+	private Long userId;
 
-    /**
-     * 用户token
-     */
-    private String accessToken;
+	/**
+	 * 用户token
+	 */
+	private String accessToken;
 
-    /**
-     * 刷新token
-     */
-    private String refreshToken;
+	/**
+	 * 刷新token
+	 */
+	private String refreshToken;
 
 }

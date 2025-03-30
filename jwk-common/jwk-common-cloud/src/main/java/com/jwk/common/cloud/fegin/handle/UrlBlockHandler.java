@@ -4,7 +4,7 @@ import cn.hutool.http.ContentType;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.csp.sentinel.adapter.spring.webmvc.callback.BlockExceptionHandler;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
-import com.jwk.common.core.model.RestResponse;
+import com.jwk.common.core.model.R;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +29,7 @@ public class UrlBlockHandler implements BlockExceptionHandler {
 
 		response.setContentType(ContentType.JSON.toString());
 		response.setStatus(HttpStatus.TOO_MANY_REQUESTS.value());
-		response.getWriter().print(JSONUtil.toJsonStr(RestResponse.error(e.getMessage())));
+		response.getWriter().print(JSONUtil.toJsonStr(R.error(e.getMessage())));
 	}
 
 }

@@ -9,11 +9,10 @@ package com.jwk.common.core.enums;
  */
 public enum ErrorCodeStatusE {
 
-
 	/**
 	 * 请求方式不支持
 	 */
-	REQUEST_METHOD_NOT_SUPPORTED("10101", "请求方式不支持");
+	REQUEST_METHOD_NOT_SUPPORTED("10101", "请求方式不支持"), REQUEST_FORBIDDEN("10102", "您没有权限操作，请联系管理员");
 
 	private final String code;
 

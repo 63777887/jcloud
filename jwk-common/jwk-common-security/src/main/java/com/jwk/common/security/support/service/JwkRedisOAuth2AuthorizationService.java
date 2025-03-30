@@ -63,8 +63,8 @@ public class JwkRedisOAuth2AuthorizationService implements OAuth2AuthorizationSe
 
 		if (isState(authorization)) {
 			String token = authorization.getAttribute("state");
-			redisTemplate.opsForValue().set(TokenUtil.buildKey(OAuth2ParameterNames.STATE, token), authorization, TIMEOUT,
-					TimeUnit.MINUTES);
+			redisTemplate.opsForValue().set(TokenUtil.buildKey(OAuth2ParameterNames.STATE, token), authorization,
+					TIMEOUT, TimeUnit.MINUTES);
 		}
 
 		if (isCode(authorization)) {
@@ -73,7 +73,8 @@ public class JwkRedisOAuth2AuthorizationService implements OAuth2AuthorizationSe
 			OAuth2AuthorizationCode authorizationCodeToken = authorizationCode.getToken();
 			long between = ChronoUnit.MINUTES.between(authorizationCodeToken.getIssuedAt(),
 					authorizationCodeToken.getExpiresAt());
-			redisTemplate.opsForValue().set(TokenUtil.buildKey(OAuth2ParameterNames.CODE, authorizationCodeToken.getTokenValue()),
+			redisTemplate.opsForValue().set(
+					TokenUtil.buildKey(OAuth2ParameterNames.CODE, authorizationCodeToken.getTokenValue()),
 					authorization, between, TimeUnit.MINUTES);
 		}
 
@@ -82,8 +83,8 @@ public class JwkRedisOAuth2AuthorizationService implements OAuth2AuthorizationSe
 			if (refreshToken.getExpiresAt() != null) {
 				long between = ChronoUnit.SECONDS.between(refreshToken.getIssuedAt(), refreshToken.getExpiresAt());
 				redisTemplate.opsForValue().set(
-						TokenUtil.buildKey(OAuth2ParameterNames.REFRESH_TOKEN, refreshToken.getTokenValue()), authorization,
-						between, TimeUnit.SECONDS);
+						TokenUtil.buildKey(OAuth2ParameterNames.REFRESH_TOKEN, refreshToken.getTokenValue()),
+						authorization, between, TimeUnit.SECONDS);
 			}
 		}
 
@@ -92,8 +93,8 @@ public class JwkRedisOAuth2AuthorizationService implements OAuth2AuthorizationSe
 			if (accessToken.getExpiresAt() != null) {
 				long between = ChronoUnit.SECONDS.between(accessToken.getIssuedAt(), accessToken.getExpiresAt());
 				redisTemplate.opsForValue().set(
-						TokenUtil.buildKey(OAuth2ParameterNames.ACCESS_TOKEN, accessToken.getTokenValue()), authorization,
-						between, TimeUnit.SECONDS);
+						TokenUtil.buildKey(OAuth2ParameterNames.ACCESS_TOKEN, accessToken.getTokenValue()),
+						authorization, between, TimeUnit.SECONDS);
 			}
 		}
 
@@ -103,8 +104,8 @@ public class JwkRedisOAuth2AuthorizationService implements OAuth2AuthorizationSe
 			if (oidcIdToken.getExpiresAt() != null) {
 				long between = ChronoUnit.SECONDS.between(oidcIdToken.getIssuedAt(), oidcIdToken.getExpiresAt());
 				redisTemplate.opsForValue().set(
-						TokenUtil.buildKey(OAuth2ParameterNames.ACCESS_TOKEN, oidcIdToken.getTokenValue()), authorization,
-						between, TimeUnit.SECONDS);
+						TokenUtil.buildKey(OAuth2ParameterNames.ACCESS_TOKEN, oidcIdToken.getTokenValue()),
+						authorization, between, TimeUnit.SECONDS);
 			}
 		}
 	}

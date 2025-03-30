@@ -2,7 +2,7 @@ package com.jwk.upms.base.api;
 
 import com.jwk.common.core.constant.JwkSecurityConstants;
 import com.jwk.common.core.constant.ServerNameConstants;
-import com.jwk.common.core.model.RestResponse;
+import com.jwk.common.core.model.R;
 import com.jwk.upms.base.dto.SysLogDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +24,6 @@ public interface LogRemoteService {
 	 * @return
 	 */
 	@PostMapping(value = "/sysLog/saveLog", headers = JwkSecurityConstants.HEADER_FROM_IN)
-	RestResponse saveLog(@RequestBody SysLogDto sysLogDto);
+	R saveLog(@RequestBody SysLogDto sysLogDto);
 
 }

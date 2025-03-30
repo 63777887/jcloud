@@ -3,7 +3,7 @@ package com.jwk.common.security.support.handler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jwk.common.core.constant.JwkSecurityConstants;
 import com.jwk.common.core.constant.ResponseConstants;
-import com.jwk.common.core.model.RestResponse;
+import com.jwk.common.core.model.R;
 import com.jwk.common.security.constants.OAuth2ErrorCodeConstant;
 import java.io.PrintWriter;
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +36,7 @@ public class ResourceAuthExceptionEntryPoint implements AuthenticationEntryPoint
 			AuthenticationException authException) {
 		response.setCharacterEncoding(JwkSecurityConstants.UTF8);
 		response.setContentType(MediaType.APPLICATION_CBOR_VALUE);
-		RestResponse<String> result = new RestResponse<>();
+		R<String> result = new R<>();
 		result.setCode(ResponseConstants.ERROR_CODE);
 		response.setStatus(HttpStatus.UNAUTHORIZED.value());
 		if (authException != null) {

@@ -17,8 +17,7 @@ public class RedisSeqCacheServerIdFactory implements CacheServerIdFactory {
 
 	protected final CacheConfigProperties properties;
 
-	public RedisSeqCacheServerIdFactory(CacheConfigProperties properties,
-			RedisTemplate<String, Object> redisTemplate) {
+	public RedisSeqCacheServerIdFactory(CacheConfigProperties properties, RedisTemplate<String, Object> redisTemplate) {
 		this.redisTemplate = redisTemplate;
 		this.properties = properties;
 	}

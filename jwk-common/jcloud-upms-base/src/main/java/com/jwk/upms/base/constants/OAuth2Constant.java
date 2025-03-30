@@ -10,6 +10,7 @@ package com.jwk.upms.base.constants;
 public interface OAuth2Constant {
 
 	String TOKEN = "token";
+
 	String RECORD = "record";
 
 }

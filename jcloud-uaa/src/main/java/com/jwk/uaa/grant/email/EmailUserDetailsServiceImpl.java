@@ -38,4 +38,5 @@ public class EmailUserDetailsServiceImpl implements JwkUserDetailsService {
 	public int getOrder() {
 		return 1;
 	}
+
 }

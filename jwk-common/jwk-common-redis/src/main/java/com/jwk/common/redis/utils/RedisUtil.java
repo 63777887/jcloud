@@ -100,7 +100,8 @@ public class RedisUtil {
 			clusterServers.setSlaveConnectionMinimumIdleSize(slaveConnectionMinimumIdleSize);
 			clusterServers.setSlaveConnectionPoolSize(slaveConnectionPoolSize);
 			clusterServers.setScanInterval(scanInterval);
-		} else if (redisProperties != null && redisProperties.getSentinel() != null) {
+		}
+		else if (redisProperties != null && redisProperties.getSentinel() != null) {
 
 			Sentinel sentinel = redisProperties.getSentinel();
 			// 哨兵
@@ -139,7 +140,8 @@ public class RedisUtil {
 			sentinelServers.setSlaveConnectionMinimumIdleSize(slaveConnectionMinimumIdleSize);
 			sentinelServers.setSlaveConnectionPoolSize(slaveConnectionPoolSize);
 			sentinelServers.setScanInterval(scanInterval);
-		} else {
+		}
+		else {
 			if (redisProperties == null) {
 				redisProperties = new RedisProperties();
 				redisProperties.setHost("127.0.0.1");
@@ -192,7 +194,8 @@ public class RedisUtil {
 		objectMapper.findAndRegisterModules();
 		// class type info to json
 		GenericJackson2JsonRedisSerializer.registerNullValueSerializer(objectMapper, null);
-		objectMapper.activateDefaultTyping(objectMapper.getPolymorphicTypeValidator(), ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
+		objectMapper.activateDefaultTyping(objectMapper.getPolymorphicTypeValidator(),
+				ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
 		return new GenericJackson2JsonRedisSerializer(objectMapper);
 	}
 

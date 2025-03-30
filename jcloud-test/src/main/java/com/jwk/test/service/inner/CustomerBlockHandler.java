@@ -4,7 +4,7 @@ import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.jwk.common.core.model.RestResponse;
+import com.jwk.common.core.model.R;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -18,12 +18,12 @@ import java.util.Set;
  */
 public class CustomerBlockHandler {
 
-	public static RestResponse handlerException(BlockException exception) {
-		return RestResponse.success("按客戶自定义,global handlerException----1");
+	public static R handlerException(BlockException exception) {
+		return R.ok("按客戶自定义,global handlerException----1");
 	}
 
-	public static RestResponse handlerException2(BlockException exception) {
-		return RestResponse.success("按客戶自定义,global handlerException----2");
+	public static R handlerException2(BlockException exception) {
+		return R.ok("按客戶自定义,global handlerException----2");
 	}
 
 	public static void main(String[] args) {

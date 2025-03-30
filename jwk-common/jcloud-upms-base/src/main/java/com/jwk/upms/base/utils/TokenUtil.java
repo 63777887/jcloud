@@ -14,19 +14,20 @@ import org.springframework.http.HttpHeaders;
  */
 @UtilityClass
 public class TokenUtil {
-    public String buildKey(String type, String id) {
-        return String.format("%s:%s:%s", OAuth2Constant.TOKEN, type, id);
-    }
 
-    public String buildRecordKey(String type, Long userId) {
-        return String.format("%s:%s:%s:%d", OAuth2Constant.TOKEN, OAuth2Constant.RECORD, type, userId);
-    }
+	public String buildKey(String type, String id) {
+		return String.format("%s:%s:%s", OAuth2Constant.TOKEN, type, id);
+	}
 
+	public String buildRecordKey(String type, Long userId) {
+		return String.format("%s:%s:%s:%d", OAuth2Constant.TOKEN, OAuth2Constant.RECORD, type, userId);
+	}
 
-    public String getToken() {
-        if (WebUtils.getRequest().isPresent()) {
-            return WebUtils.getRequest().get().getHeader(HttpHeaders.AUTHORIZATION);
-        }
-        return "";
-    }
+	public String getToken() {
+		if (WebUtils.getRequest().isPresent()) {
+			return WebUtils.getRequest().get().getHeader(HttpHeaders.AUTHORIZATION);
+		}
+		return "";
+	}
+
 }

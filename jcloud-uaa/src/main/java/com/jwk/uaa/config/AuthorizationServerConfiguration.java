@@ -3,7 +3,12 @@ package com.jwk.uaa.config;
 import cn.hutool.extra.spring.SpringUtil;
 import com.jwk.common.core.constant.JwkSecurityConstants;
 import com.jwk.common.security.dto.AdminUserDetails;
-import com.jwk.common.security.support.component.*;
+import com.jwk.common.security.support.component.CustomeOAuth2TokenCustomizer;
+import com.jwk.common.security.support.component.JwkDaoAuthenticationProvider;
+import com.jwk.common.security.support.component.JwkOAuth2AccessTokenGenerator;
+import com.jwk.common.security.support.component.JwkOAuth2AuthorizationCodeRequestAuthenticationConverter;
+import com.jwk.common.security.support.component.JwkOAuth2RefreshTokenGenerator;
+import com.jwk.common.security.support.component.JwkOidcTokenGenerator;
 import com.jwk.common.security.support.grant.password.PasswordAuthenticationProvider;
 import com.jwk.common.security.support.grant.password.PasswordTokenGranter;
 import com.jwk.common.security.support.grant.refresh.JwkRefreshAuthenticationProvider;
@@ -26,6 +31,17 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
+import java.io.IOException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.Principal;
+import java.security.cert.CertificateException;
+import java.security.interfaces.RSAPublicKey;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.context.annotation.Bean;
@@ -57,18 +73,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationConverter;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
-import java.io.IOException;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.Principal;
-import java.security.cert.CertificateException;
-import java.security.interfaces.RSAPublicKey;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * @author Jiwk
  * @version 0.1.4
@@ -81,8 +85,11 @@ import java.util.Map;
 public class AuthorizationServerConfiguration {
 
 	private final OAuth2AuthorizationService authorizationService;
+
 	private final StringRedisTemplate stringRedisTemplate;
+
 	private final RedisTemplate redisTemplate;
+
 	private final UpmsRemoteService upmsRemoteService;
 
 	@Bean
@@ -96,7 +103,8 @@ public class AuthorizationServerConfiguration {
 			tokenEndpoint
 					// 注入自定义的授权认证Converter
 					.accessTokenRequestConverter(accessTokenRequestConverter())
-					.accessTokenResponseHandler(new JwkAuthenticationSuccessEventHandler(upmsRemoteService, redisTemplate)) // 登录成功处理器
+					.accessTokenResponseHandler(
+							new JwkAuthenticationSuccessEventHandler(upmsRemoteService, redisTemplate)) // 登录成功处理器
 					// 登录失败处理器
 					.errorResponseHandler(new JwkAuthenticationFailureEventHandler());
 		}));
@@ -264,8 +272,8 @@ public class AuthorizationServerConfiguration {
 		SmsAuthenticationProvider smsAuthenticationProvider = new SmsAuthenticationProvider(authenticationManager,
 				authorizationService, oAuth2TokenGenerator());
 
-		JwkRefreshAuthenticationProvider refreshTokenAuthenticationProvider =
-				new JwkRefreshAuthenticationProvider(authenticationManager,authorizationService, oAuth2TokenGenerator());
+		JwkRefreshAuthenticationProvider refreshTokenAuthenticationProvider = new JwkRefreshAuthenticationProvider(
+				authenticationManager, authorizationService, oAuth2TokenGenerator());
 
 		// 处理 UsernamePasswordAuthenticationToken
 		JwkAuthProperties properties = SpringUtil.getBean(JwkAuthProperties.class);

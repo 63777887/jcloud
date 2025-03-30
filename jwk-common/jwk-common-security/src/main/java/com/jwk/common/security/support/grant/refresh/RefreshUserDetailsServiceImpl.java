@@ -29,40 +29,39 @@ import java.security.Principal;
 @RequiredArgsConstructor
 public class RefreshUserDetailsServiceImpl implements JwkUserDetailsService {
 
-    private final OAuth2AuthorizationService authorizationService;
+	private final OAuth2AuthorizationService authorizationService;
 
-    @Override
-    public UserDetails loadUserByUsername(String refreshToken) throws UsernameNotFoundException {
-        // 加载基础用户信息
-        refreshToken
-                = refreshToken.replace("Bearer ", "");
-        OAuth2Authorization authorization = authorizationService.findByToken(
-                refreshToken, OAuth2TokenType.REFRESH_TOKEN);
-        if (ObjectUtil.isEmpty(authorization)){
-            throw new UsernameNotFoundException("invalid authenticationToken");
-        }
-        UsernamePasswordAuthenticationToken authenticationToken = authorization.getAttribute(Principal.class.getName());
-        if (AdminUserDetails.class.isAssignableFrom(authenticationToken.getPrincipal().getClass())){
-            return (AdminUserDetails) authenticationToken.getPrincipal();
-        }
-        log.error("authenticationToken principal convert adminUserDetails error");
-        throw new UsernameNotFoundException("invalid authenticationToken");
-    }
+	@Override
+	public UserDetails loadUserByUsername(String refreshToken) throws UsernameNotFoundException {
+		// 加载基础用户信息
+		refreshToken = refreshToken.replace("Bearer ", "");
+		OAuth2Authorization authorization = authorizationService.findByToken(refreshToken,
+				OAuth2TokenType.REFRESH_TOKEN);
+		if (ObjectUtil.isEmpty(authorization)) {
+			throw new UsernameNotFoundException("invalid authenticationToken");
+		}
+		UsernamePasswordAuthenticationToken authenticationToken = authorization.getAttribute(Principal.class.getName());
+		if (AdminUserDetails.class.isAssignableFrom(authenticationToken.getPrincipal().getClass())) {
+			return (AdminUserDetails) authenticationToken.getPrincipal();
+		}
+		log.error("authenticationToken principal convert adminUserDetails error");
+		throw new UsernameNotFoundException("invalid authenticationToken");
+	}
 
+	@Override
+	public boolean supportGrantType(String grantType) {
+		return OAuth2ParameterNames.REFRESH_TOKEN.equals(grantType);
+	}
 
-    @Override
-    public boolean supportGrantType(String grantType) {
-        return OAuth2ParameterNames.REFRESH_TOKEN.equals(grantType);
-    }
+	@Override
+	public int getOrder() {
+		return 1;
+	}
 
-    @Override
-    public int getOrder() {
-        return 1;
-    }
+	@Override
+	public boolean needPassword() {
+		// 刷新token模式不需要密码校验
+		return false;
+	}
 
-    @Override
-    public boolean needPassword() {
-        // 刷新token模式不需要密码校验
-        return false;
-    }
 }

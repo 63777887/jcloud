@@ -24,15 +24,16 @@ import java.util.List;
 @Service
 public class SysDictItemServiceImpl extends ServiceImpl<SysDictItemMapper, SysDictItem> implements SysDictItemService {
 
-    @Override
-    public List<SysDictItem> getSysDictItem(SysDictItemDto sysDictItemDto) {
-        LambdaQueryChainWrapper<SysDictItem> wrapper = lambdaQuery().eq(SysDictItem::getStatus, StatusE.Normal.getId());
-        if (StrUtil.isNotBlank(sysDictItemDto.getDictType())){
-            wrapper.eq(SysDictItem::getDictType,sysDictItemDto.getDictType());
-        }
-        if (CollUtil.isNotEmpty(sysDictItemDto.getDictTypes())){
-            wrapper.in(SysDictItem::getDictType,sysDictItemDto.getDictTypes());
-        }
-        return wrapper.list();
-    }
+	@Override
+	public List<SysDictItem> getSysDictItem(SysDictItemDto sysDictItemDto) {
+		LambdaQueryChainWrapper<SysDictItem> wrapper = lambdaQuery().eq(SysDictItem::getStatus, StatusE.Normal.getId());
+		if (StrUtil.isNotBlank(sysDictItemDto.getDictType())) {
+			wrapper.eq(SysDictItem::getDictType, sysDictItemDto.getDictType());
+		}
+		if (CollUtil.isNotEmpty(sysDictItemDto.getDictTypes())) {
+			wrapper.in(SysDictItem::getDictType, sysDictItemDto.getDictTypes());
+		}
+		return wrapper.list();
+	}
+
 }

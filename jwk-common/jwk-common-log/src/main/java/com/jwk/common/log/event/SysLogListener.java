@@ -20,15 +20,15 @@ import org.springframework.scheduling.annotation.Async;
 @RequiredArgsConstructor
 public class SysLogListener {
 
-    private final LogRemoteService remoteLogService;
+	private final LogRemoteService remoteLogService;
 
-    @SneakyThrows
-    @Async
-    @Order
-    @EventListener(SysLogEvent.class)
-    public void saveSysLog(SysLogEvent event) {
-        SysLogDto source = (SysLogDto) event.getSource();
-        remoteLogService.saveLog(source);
-    }
+	@SneakyThrows
+	@Async
+	@Order
+	@EventListener(SysLogEvent.class)
+	public void saveSysLog(SysLogEvent event) {
+		SysLogDto source = (SysLogDto) event.getSource();
+		remoteLogService.saveLog(source);
+	}
 
 }

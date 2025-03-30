@@ -10,7 +10,11 @@ import java.util.Date;
 @Setter
 @EqualsAndHashCode
 public class DemoData {
-    private String string;
-    private Date date;
-    private Double doubleData;
+
+	private String string;
+
+	private Date date;
+
+	private Double doubleData;
+
 }

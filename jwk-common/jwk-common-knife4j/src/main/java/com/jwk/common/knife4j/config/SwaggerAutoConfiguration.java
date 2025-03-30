@@ -1,11 +1,13 @@
 package com.jwk.common.knife4j.config;
 
-import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
+import com.github.xiaoymin.knife4j.spring.configuration.Knife4jProperties;
+import com.github.xiaoymin.knife4j.spring.filter.ProductionSecurityFilter;
+import com.jwk.common.knife4j.config.annotation.EnableOpenApi;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.function.Predicate;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.actuate.autoconfigure.endpoint.web.CorsEndpointProperties;
 import org.springframework.boot.actuate.autoconfigure.endpoint.web.WebEndpointProperties;
 import org.springframework.boot.actuate.autoconfigure.web.server.ManagementPortType;
@@ -18,22 +20,11 @@ import org.springframework.boot.actuate.endpoint.web.WebEndpointsSupplier;
 import org.springframework.boot.actuate.endpoint.web.annotation.ControllerEndpointsSupplier;
 import org.springframework.boot.actuate.endpoint.web.annotation.ServletEndpointsSupplier;
 import org.springframework.boot.actuate.endpoint.web.servlet.WebMvcEndpointHandlerMapping;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
-import springfox.documentation.RequestHandler;
-import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * @author Jiwk
@@ -42,30 +33,47 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * 自动配置类
  * @date 2022/6/11
  */
-@EnableConfigurationProperties(JwkSwaggerProperties.class)
+
 @Configuration
-@EnableSwagger2
-@EnableKnife4j
-@Import(BeanValidatorPluginsConfiguration.class)
+@Slf4j
+@Import(Knife4jProperties.class)
 public class SwaggerAutoConfiguration {
 
-
+	/**
+	 * 自定义ProductionSecurityFilter 增加@EnableOpenApi注解权限控制
+	 * {@link com.github.xiaoymin.knife4j.spring.configuration.Knife4jAutoConfiguration#productionSecurityFilter}
+	 * @param knife4jProperties
+	 * @param environment
+	 * @param applicationContext
+	 * @return
+	 */
 	@Bean
-	public Docket createRestApi(JwkSwaggerProperties jwkSwaggerProperties) {
-		Predicate<RequestHandler> restPredicate = RequestHandlerSelectors.withClassAnnotation(RestController.class);
-		Predicate<RequestHandler> classPredicate = RequestHandlerSelectors.withClassAnnotation(Controller.class);
-		Predicate<RequestHandler> methodPredicate = RequestHandlerSelectors.withMethodAnnotation(ResponseBody.class);
-		Predicate<RequestHandler> basePackagePredicate = RequestHandlerSelectors
-				.basePackage(jwkSwaggerProperties.getBasePackage());
-		restPredicate.or(classPredicate).or(methodPredicate).or(basePackagePredicate);
+	public ProductionSecurityFilter productionSecurityFilter(Knife4jProperties knife4jProperties,
+			Environment environment, ApplicationContext applicationContext) {
+		// 获取所有使用 @EnableOpenApi 注解的 Bean 定义
+		Map<String, Object> beansWithAnnotation = applicationContext.getBeansWithAnnotation(EnableOpenApi.class);
+		// 如果结果不为空，说明存在使用 @EnableOpenApi 注解的 Bean
 
-		return new Docket(DocumentationType.SWAGGER_2).groupName(jwkSwaggerProperties.getGroupName())
-				.apiInfo(this.apiInfo(jwkSwaggerProperties)).useDefaultResponseMessages(false).select().apis(restPredicate).build();
-	}
+		boolean prod = false;
+		ProductionSecurityFilter p = null;
+		if (knife4jProperties == null) {
+			if (environment != null) {
+				String prodStr = environment.getProperty("knife4j.production");
+				if (log.isDebugEnabled()) {
+					log.debug("swagger.production:{}", prodStr);
+				}
+				prod = Boolean.valueOf(prodStr);
+			}
+			p = new ProductionSecurityFilter(prod);
+		}
+		else if (beansWithAnnotation.isEmpty()) {
+			p = new ProductionSecurityFilter(true);
+		}
+		else {
+			p = new ProductionSecurityFilter(knife4jProperties.isProduction());
+		}
 
-	private ApiInfo apiInfo(JwkSwaggerProperties jwkSwaggerProperties) {
-		return new ApiInfoBuilder().title(jwkSwaggerProperties.getTitle())
-				.description(jwkSwaggerProperties.getDescription()).version(jwkSwaggerProperties.getVersion()).build();
+		return p;
 	}
 
 	/**

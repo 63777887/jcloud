@@ -24,8 +24,7 @@ public final class FormIdentityLoginConfigurer
 			formLogin.defaultSuccessUrl(JwkOAuth2Urls.DEFAULT_SUCCESS_URL);
 			formLogin.loginProcessingUrl(JwkOAuth2Urls.LOGIN_PROCESSING_URL);
 			formLogin.failureHandler(new FormAuthenticationFailureHandler());
-		})
-		 .csrf(AbstractHttpConfigurer::disable);
+		}).csrf(AbstractHttpConfigurer::disable);
 
 	}
 

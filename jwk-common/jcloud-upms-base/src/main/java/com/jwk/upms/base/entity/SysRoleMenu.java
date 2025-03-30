@@ -34,9 +34,4 @@ public class SysRoleMenu extends Model<SysRoleMenu> {
 	@TableId(value = "id", type = IdType.AUTO)
 	private Long id;
 
-	@Override
-	protected Serializable pkVal() {
-		return this.id;
-	}
-
 }

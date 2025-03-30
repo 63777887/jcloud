@@ -44,7 +44,8 @@ public class IdGeneratorServiceImpl implements IdGeneratorService {
 				log.debug("id: {}", id);
 			}
 			return id;
-		} else {
+		}
+		else {
 			IdGeneratorException exception = new IdGeneratorException(IdExceptionCodeE.NoUserFulId);
 			if (log.isErrorEnabled()) {
 				log.error("getId error:{}", exception.toString());

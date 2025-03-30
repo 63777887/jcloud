@@ -49,7 +49,7 @@ public class RateLimiterAutoConfiguration {
 	@Bean
 	@ConditionalOnMissingBean(name = "jsonRedisTemplate")
 	public RedisTemplate<String, Object> jsonRedisTemplate(RedissonConnectionFactory redissonConnectionFactory,
-													   ObjectProvider<ObjectMapper> objectProvider) {
+			ObjectProvider<ObjectMapper> objectProvider) {
 		RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
 		redisTemplate.setKeySerializer(RedisUtil.keySerializer());
 		redisTemplate.setHashKeySerializer(RedisUtil.keySerializer());
@@ -58,7 +58,6 @@ public class RateLimiterAutoConfiguration {
 		redisTemplate.setConnectionFactory(redissonConnectionFactory);
 		return redisTemplate;
 	}
-
 
 	@Bean
 	@ConditionalOnMissingBean

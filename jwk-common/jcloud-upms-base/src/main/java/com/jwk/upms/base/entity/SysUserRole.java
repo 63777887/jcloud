@@ -34,9 +34,4 @@ public class SysUserRole extends Model<SysUserRole> {
 	@TableId(value = "id", type = IdType.AUTO)
 	private Long id;
 
-	@Override
-	protected Serializable pkVal() {
-		return this.id;
-	}
-
 }

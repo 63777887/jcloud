@@ -33,7 +33,7 @@ public class MultilevelCacheConfiguration {
 	@Bean
 	@ConditionalOnMissingBean
 	public RedisCaffeineCacheManager cacheManager(CacheConfigProperties cacheConfigProperties,
-												   RedisTemplate<String, Object> redisTemplate,
+			RedisTemplate<String, Object> redisTemplate,
 			ObjectProvider<RedisCaffeineCacheManagerCustomizer> cacheManagerCustomizers,
 			ObjectProvider<CacheServerIdFactory> cacheServerIdFactories, CacheFactory cacheFactory) {
 		Object cacheServerId = cacheConfigProperties.getServerId();

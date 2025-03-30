@@ -32,30 +32,34 @@ import java.util.stream.Collectors;
 @UtilityClass
 public class UserUtil {
 
-    @NotNull
-    public  UserInfo getUserInfo(SysUser user) {
-        UserInfo userInfo = new UserInfo();
-        userInfo.setSysUser(user);
-        if (CollUtil.isNotEmpty(SecurityUtils.getAuthorities())){
+	@NotNull
+	public UserInfo getUserInfo(SysUser user) {
+		UserInfo userInfo = new UserInfo();
+		userInfo.setSysUser(user);
+		if (CollUtil.isNotEmpty(SecurityUtils.getAuthorities())) {
 
-            List<SysMenu> sysMenus = new ArrayList<>();
+			List<SysMenu> sysMenus = new ArrayList<>();
 
-            SecurityUtils.getAuthorities().forEach(t->{
-                sysMenus.add(((ResourceConfigAttribute) t).getSysMenu());
-            });
+			SecurityUtils.getAuthorities().forEach(t -> {
+				sysMenus.add(((ResourceConfigAttribute) t).getSysMenu());
+			});
 
-            List<TreeNode<Long>> collect = sysMenus.stream().filter(menu -> MenuTypeE.MENU.getId().equals(menu.getType()))
-                    .filter(menu -> StrUtil.isNotBlank(menu.getPath())).map(MenuUtil.getNodeFunction()).collect(Collectors.toList());
-            List<SysMenu> buttons = sysMenus.stream().filter(menu -> MenuTypeE.BUTTON.getId().equals(menu.getType()))
-                    .collect(Collectors.toList());
-            userInfo.setButtons(buttons);
-            userInfo.setSysMenu(TreeUtil.build(collect, -1L));
-        }
-        return userInfo;
-    }
+			List<TreeNode<Long>> collect = sysMenus.stream()
+					.filter(menu -> MenuTypeE.MENU.getId().equals(menu.getType()))
+					.filter(menu -> StrUtil.isNotBlank(menu.getPath())).map(MenuUtil.getNodeFunction())
+					.collect(Collectors.toList());
+			List<SysMenu> buttons = sysMenus.stream().filter(menu -> MenuTypeE.BUTTON.getId().equals(menu.getType()))
+					.collect(Collectors.toList());
+			userInfo.setButtons(buttons);
+			userInfo.setSysMenu(TreeUtil.build(collect, -1L));
+		}
+		return userInfo;
+	}
 
-    @NotNull
-    public String getRealIconAddr(SysUser user,MinioConfigProperties minioConfigProperties) {
-        return minioConfigProperties.getAddress() + CharConstants.SLASH + minioConfigProperties.getBucket() + CharConstants.SLASH + user.getIcon();
-    }
+	@NotNull
+	public String getRealIconAddr(SysUser user, MinioConfigProperties minioConfigProperties) {
+		return minioConfigProperties.getAddress() + CharConstants.SLASH + minioConfigProperties.getBucket()
+				+ CharConstants.SLASH + user.getIcon();
+	}
+
 }
